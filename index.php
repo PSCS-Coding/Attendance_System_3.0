@@ -4,6 +4,7 @@ session_start();
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+require_once("connection.php");
 function status_update($student, $status, $old_status)
 {
 	global $db;
@@ -28,12 +29,11 @@ function enquote($text){
     	<?php
 		$query = 'SELECT * FROM current_stati INNER JOIN students ON current_stati.student_id = students.student_id INNER JOIN status ON current_stati.status_id = status.status_id ORDER BY first_name DESC';
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-		if (!empty($_GET['button'])) {
-			if($_GET['button'] == 'yes'){
-				status_update($_GET['student'],$_GET['new_status'] , $_GET['status']);
-				$query = 'SELECT * FROM current_stati INNER JOIN students ON current_stati.student_id = students.student_id INNER JOIN status ON current_stati.status_id = status.status_id ORDER BY first_name DESC';
-				$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-			}
+		if (!empty($_POST['change'])) {
+			status_update($_POST['student'],$_POST['new'] , $_POST['current']);
+			$query = 'SELECT * FROM current_stati INNER JOIN students ON current_stati.student_id = students.student_id INNER JOIN status ON current_stati.status_id = status.status_id ORDER BY first_name DESC';
+			$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+
 		}
 		echo '<table><tr><th>Student</th><th>Status</th></tr>';
 		foreach($stati as &$row){
