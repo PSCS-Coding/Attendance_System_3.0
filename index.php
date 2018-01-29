@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 function status_update($student, $status, $old_status)
 {
-	require_once("connection.php");
+	global $db;
 	$query = 'UPDATE current_stati SET status_id = '.$status.' WHERE student_id = '.$student;
 	$db->query($query);
     return 0;
@@ -26,17 +26,14 @@ function enquote($text){
   	</head>
 	<body>
     	<?php
-		$db = new mysqli('localhost:8889', 'root', 'root', 'attendance_new');
-		if($db->connect_errno > 0){
-			echo 'fail';
-		    die('Unable to connect to database [' . $db->connect_error . ']');
-		}
-		$query = 'SELECT * FROM current_stati INNER JOIN students ON current_stati.student_id = students.student_id INNER JOIN status ON current_stati.status_id = status.status_id ORDER BY first_name ASC';
+		$query = 'SELECT * FROM current_stati INNER JOIN students ON current_stati.student_id = students.student_id INNER JOIN status ON current_stati.status_id = status.status_id ORDER BY first_name DESC';
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-		if($_POST['change'] != Null){
-			status_update($_POST['student'],$_POST['new'] , $_POST['current']);
-			$query = 'SELECT * FROM current_stati INNER JOIN students ON current_stati.student_id = students.student_id INNER JOIN status ON current_stati.status_id = status.status_id ORDER BY first_name ASC';
-			$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+		if (!empty($_GET['button'])) {
+			if($_GET['button'] == 'yes'){
+				status_update($_GET['student'],$_GET['new_status'] , $_GET['status']);
+				$query = 'SELECT * FROM current_stati INNER JOIN students ON current_stati.student_id = students.student_id INNER JOIN status ON current_stati.status_id = status.status_id ORDER BY first_name DESC';
+				$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+			}
 		}
 		echo '<table><tr><th>Student</th><th>Status</th></tr>';
 		foreach($stati as &$row){
