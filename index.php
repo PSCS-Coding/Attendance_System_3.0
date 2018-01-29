@@ -4,13 +4,9 @@ session_start();
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+require_once("connection.php");
 function status_update($student, $status, $old_status)
 {
-	$db = new mysqli('localhost:8889', 'root', 'root', 'attendance_new');
-	if($db->connect_errno > 0){
-		echo 'fail';
-		die('Unable to connect to database [' . $db->connect_error . ']');
-	}
 	$query = 'UPDATE current_stati SET status_id = '.$status.' WHERE student_id = '.$student;
 	$db->query($query);
     return 0;
