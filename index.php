@@ -4,9 +4,9 @@ session_start();
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-require_once("connection.php");
 function status_update($student, $status, $old_status)
 {
+	require_once("connection.php");
 	$query = 'UPDATE current_stati SET status_id = '.$status.' WHERE student_id = '.$student;
 	$db->query($query);
     return 0;
@@ -31,26 +31,27 @@ function enquote($text){
 			echo 'fail';
 		    die('Unable to connect to database [' . $db->connect_error . ']');
 		}
-		$query = 'SELECT * FROM current_stati INNER JOIN students ON current_stati.student_id = students.student_id INNER JOIN status ON current_stati.status_id = status.status_id ORDER BY first_name DESC';
+		$query = 'SELECT * FROM current_stati INNER JOIN students ON current_stati.student_id = students.student_id INNER JOIN status ON current_stati.status_id = status.status_id ORDER BY first_name ASC';
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-		if($_GET['button'] == 'yes'){
-			status_update($_GET['student'],$_GET['new_status'] , $_GET['status']);
-			$query = 'SELECT * FROM current_stati INNER JOIN students ON current_stati.student_id = students.student_id INNER JOIN status ON current_stati.status_id = status.status_id ORDER BY first_name DESC';
+		if($_POST['change'] != Null){
+			status_update($_POST['student'],$_POST['new'] , $_POST['current']);
+			$query = 'SELECT * FROM current_stati INNER JOIN students ON current_stati.student_id = students.student_id INNER JOIN status ON current_stati.status_id = status.status_id ORDER BY first_name ASC';
 			$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 		}
 		echo '<table><tr><th>Student</th><th>Status</th></tr>';
 		foreach($stati as &$row){
-			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td><p>'.$row["status_name"].' </p>';
+			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td><p>'.$row["status_name"].' </p> <form action="/index.php" method="POST">';
+			echo '<input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'">';
 			if($row['status_id'] != 2 ){
-				echo '<a href="/index.php?button=yes&student='.$row["student_id"].'&new_status=2&status='.$row['status_id'].'">P</a> ';
+				echo '<input type="hidden" name="new" value=2> <input type="submit" name="change" value="P">';
 				if($row['status_id'] != 7 && $row['status_id'] != 5)
-					echo '<a href="/index.php?button=yes&student='.$row["student_id"].'&new_status=7&status='.$row["status_id"].'">A</a> ';
+					echo '<input type="hidden" name="new" value=7> <input type="submit" name="change" value="A">';
 			}
 			else{
 				if($row['status_id'] != 5)
-					echo '<a href="/index.php?button=yes&student='.$row["student_id"].'&new_status=5&status='.$row["status_id"].'">CO</a>';
+					echo '<input type="hidden" name="new" value=5> <input type="submit" name="change" value="SO">';
 			}
-			echo '</td></tr>';
+			echo '</form></td></tr>';
 		}
 		echo '</table>';
 		?>
