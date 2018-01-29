@@ -44,7 +44,7 @@ function enquote($text){
 		}
 		echo '<table><tr><th>Student</th><th>Status</th></tr>';
 		foreach($stati as &$row){
-			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td>'.$row["status_name"].'  ';
+			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td><p>'.$row["status_name"].' </p>';
 			if($row['status_id'] != 2 ){
 				echo '<a href="/index.php?button=yes&student='.$row["student_id"].'&new_status=2&status='.$row['status_id'].'">P</a> ';
 				if($row['status_id'] != 7 && $row['status_id'] != 5)
