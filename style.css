@@ -23,3 +23,11 @@ table{
 body{
 	background-color: #888;
 }
+a{
+	font-family: 'Courier';
+	text-decoration: none;
+	background-color: white;
+	border-radius: 3px;
+	color:#888;
+	padding:2px;
+}

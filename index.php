@@ -44,7 +44,17 @@ function enquote($text){
 		}
 		echo '<table><tr><th>Student</th><th>Status</th></tr>';
 		foreach($stati as &$row){
-			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td>'.$row["status_name"].' <a href="/index.php?button=yes&student='.$row["student_id"].'&new_status=2&status='.$row['status_id'].'">P</a> <a href="/index.php?button=yes&student='.$row["student_id"].'&new_status=7&status='.$row["status_id"].'">A</a> </td></tr>';
+			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td>'.$row["status_name"].'  ';
+			if($row['status_id'] != 2 ){
+				echo '<a href="/index.php?button=yes&student='.$row["student_id"].'&new_status=2&status='.$row['status_id'].'">P</a> ';
+				if($row['status_id'] != 7 && $row['status_id'] != 5)
+					echo '<a href="/index.php?button=yes&student='.$row["student_id"].'&new_status=7&status='.$row["status_id"].'">A</a> ';
+			}
+			else{
+				if($row['status_id'] != 5)
+					echo '<a href="/index.php?button=yes&student='.$row["student_id"].'&new_status=5&status='.$row["status_id"].'">CO</a>';
+			}
+			echo '</td></tr>';
 		}
 		echo '</table>';
 		?>
