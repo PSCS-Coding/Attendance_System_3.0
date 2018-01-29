@@ -23,7 +23,7 @@ function enquote($text){
 <html>
   	<head>
     	<title>
-			User Panel: Free Commerce For Sale
+			Attendance System 100% Complete Perfect No Virus Download Free Effective and Efficient
     	</title>
 	    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     	<link rel="stylesheet" type="text/css" href="style.css">
@@ -39,13 +39,13 @@ function enquote($text){
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 		if($_GET['button'] == 'yes'){
 			$newstatus = ($_GET['status']+1)%7;
-			status_update($_GET['student'], $newstatus, $_GET['status']);
+			status_update($_GET['student'],$newstatus , $_GET['status']);
 			$query = 'SELECT * FROM current_stati INNER JOIN students ON current_stati.student_id = students.student_id INNER JOIN status ON current_stati.status_id = status.status_id ORDER BY first_name DESC';
 			$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 		}
 		echo '<table><tr><th>Student</th><th>Status</th></tr>';
 		foreach($stati as &$row){
-			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td><a href="/index.php?button=yes&student='.$row["student_id"].'&status='.$row["status_id"].'">'.$row["status_name"].'</a></td></tr>';
+			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td>'.$row["status_name"].' <a href="/index.php?button=yes&student='.$row["student_id"].'&status=1">P</a> </td></tr>';
 		}
 		echo '</table>';
 		?>
