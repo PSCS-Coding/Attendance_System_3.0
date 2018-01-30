@@ -27,15 +27,12 @@ function enquote($text){
   	</head>
 	<body>
     	<?php
-		$query = 'SELECT * FROM current_stati INNER JOIN students ON current_stati.student_id = students.student_id INNER JOIN status ON current_stati.status_id = status.status_id ORDER BY first_name DESC';
-		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-		if (!empty($_POST['change'])) {
+		if ($_POST['change']){
 			status_update($_POST['student'],$_POST['new'] , $_POST['current']);
-			$query = 'SELECT * FROM current_stati INNER JOIN students ON current_stati.student_id = students.student_id INNER JOIN status ON current_stati.status_id = status.status_id ORDER BY first_name DESC';
-			$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-
 		}
 		echo '<table><tr><th>Student</th><th>Status</th></tr>';
+		$query = 'SELECT * FROM current_stati INNER JOIN students ON current_stati.student_id = students.student_id INNER JOIN status ON current_stati.status_id = status.status_id ORDER BY first_name DESC';
+		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 		foreach($stati as &$row){
 			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td><p>'.$row["status_name"].' </p> <form action="/index.php" method="POST">';
 			echo '<input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'">';
@@ -45,8 +42,7 @@ function enquote($text){
 					echo '<input type="hidden" name="new" value=7> <input type="submit" name="change" value="A">';
 			}
 			else{
-				if($row['status_id'] != 5)
-					echo '<input type="hidden" name="new" value=5> <input type="submit" name="change" value="SO">';
+				echo '<input type="hidden" name="new" value=5> <input type="submit" name="change" value="SO">';
 			}
 			echo '</form></td></tr>';
 		}
