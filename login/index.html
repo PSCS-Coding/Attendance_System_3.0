@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="google-signin-client_id" content="1049698629280-8vvjdoq9l4dq04263j1dkq707i7bv2a0.apps.googleusercontent.com">
+	</head>
+	<body>
+		<div class="g-signin2" data-onsuccess="onSignIn"></div>
+		<a href="#" onclick="signOut();">Sign out</a>
+		<script>
+			var sendUserData = function(name,imgurl) {
+			    var xmlHttp = new XMLHttpRequest();
+			    xmlHttp.open("GET", "auth.php?name=" + name+ "&imgurl=" + imgurl, false);
+			    xmlHttp.send(null);
+			    return (xmlHttp.responseText);
+			}
+			function onSignIn(googleUser) {
+		  		var profile = googleUser.getBasicProfile();
+		  		var authresult = sendUserData(profile.getName(), profile.getImageUrl());
+		  		if(authresult == "true") {
+		  			console.log("success");
+		  		} else {
+		  			console.log("failure");
+		  		}
+			}
+
+		  	function signOut() {
+		   	 	var auth2 = gapi.auth2.getAuthInstance();
+		   	 	auth2.signOut().then(function () {
+		    	  	console.log('User signed out.');
+		   	 	});
+		 	 }
+		</script>
+
+		<script src="https://apis.google.com/js/platform.js" async defer></script>
+	</body>
+</html>
