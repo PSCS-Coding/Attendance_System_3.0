@@ -1,5 +1,5 @@
 <?php
-  $db = mysqli_connect("localhost", "root", "root", "pscsorg_3.0");
+  require_once('login/connection.php');
   if(!empty($_COOKIE['user'])) {
     $user = $_COOKIE['user'];
     $studentQuery = $db->query("SELECT imgurl FROM student_data WHERE imgurl = '$user'");
