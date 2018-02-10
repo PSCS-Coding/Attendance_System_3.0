@@ -31,14 +31,24 @@
 			    xmlHttp.send(null);
 			    return (xmlHttp.responseText);
 			}
+			function signOut() {
+				var auth2 = gapi.auth2.getAuthInstance();
+				auth2.signOut().then(function () {
+					console.log('User signed out.');
+				});
+			}
 			function onSignIn(googleUser) {
 		  		var profile = googleUser.getBasicProfile();
 		  		var authresult = sendUserData(profile.getName(), profile.getImageUrl());
 		  		if(authresult >= 1) {
 						console.log(authresult);
 		  			// window.location.href = "../index.php";
-		  		}
-			}
+		  		} else  {
+						alert("It looks like you're not a user in our database. Please try a different Google account or use password login.");
+						console.log(0);
+						signOut();
+					}
+				}
     </script>
 </head>
 </html>
