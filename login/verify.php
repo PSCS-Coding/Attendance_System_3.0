@@ -1,5 +1,5 @@
 <?php
-  require_once("/login/connection.php");
+  require_once('login/connection.php');
   if(!empty($_COOKIE['user'])) {
     $user = str_replace("+", " ", $_COOKIE['user']);
     $studentQuery = $db->query("SELECT full_name FROM student_data WHERE full_name = '$user'");
