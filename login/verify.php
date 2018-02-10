@@ -5,7 +5,7 @@
     $studentQuery = $db->query("SELECT imgurl FROM student_data WHERE imgurl = '$user'");
     $row_cnt = mysqli_num_rows($studentQuery);
     if($row_cnt == 0) {
-      $adminQuery = $db->query("SELECT imgurl FROM admins WHERE full_name = '$user'");
+      $adminQuery = $db->query("SELECT imgurl FROM admins WHERE imgurl = '$user'");
       $row_cnt = mysqli_num_rows($adminQuery);
       if($row_cnt == 0) {
         header('Location: login/index.php?to=' . $_SERVER['REQUEST_URI']);
