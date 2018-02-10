@@ -48,10 +48,10 @@
 						} else {
 							window.location.href = "/test.php"; //change to be index
 						}
-		  		} else  {
-						alert("It looks like you're not a user in our database. Please try a different Google account or use password login.");
-						console.log(0);
-						signOut();
+		  		} else {
+							signOut();
+							alert("It looks like you're not a user in our database. Please try a different Google account or use password login.");
+							console.log(0);
 					}
 				}
     </script>
