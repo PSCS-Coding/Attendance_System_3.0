@@ -34,10 +34,10 @@
 			function onSignIn(googleUser) {
 		  		var profile = googleUser.getBasicProfile();
 		  		var authresult = sendUserData(profile.getName(), profile.getImageUrl());
-		  		if(authresult == "true") {
+		  		if(authresult >= 1) {
 		  			window.location.href = "../index.php";
 		  		} else {
-		  			console.log("failure");
+		  			alert("It doesn't look like you're a user in our database. Please try password sign-in.")
 		  		}
 			}
     </script>
