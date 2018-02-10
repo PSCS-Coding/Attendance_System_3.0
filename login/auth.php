@@ -24,10 +24,12 @@
           $updateImage = $db->query("UPDATE student_data SET imgurl = '$imgurl' WHERE full_name = '$name'");
 
           $studentPriv = $db->query("SELECT priv FROM student_data WHERE full_name = '$name'");
+          setcookie("user", $name, time() + (86400 * 5));
           echo $studentPriv->fetch_array()[0];
 
         } elseif(in_array($name, $adminResult)) {
           $adminPriv = $db->query("SELECT priv FROM admins WHERE full_name = '$name'");
+          setcookie("user", $name, time() + (86400 * 5));
           echo $adminPriv->fetch_array()[0];
         } else {
           echo 0;
