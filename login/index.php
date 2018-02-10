@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="google-signin-client_id" content="1049698629280-8vvjdoq9l4dq04263j1dkq707i7bv2a0.apps.googleusercontent.com">
+		<meta name="google-signin-client_id" content="1049698629280-prai66q0v2fba7d4vp701jo6d4mb9kct.apps.googleusercontent.com">
+		<script src="https://apis.google.com/js/platform.js" async defer></script>
 	</head>
 	<body>
 		<?php
 			require_once('connection.php');
+			//verify password login and set login cookie
 			if(isset($_POST['pass'])) {
 
 			}
@@ -17,7 +19,7 @@
 		</div>
 		<div class='section'>
 			<p>Password sign-in:</p>
-			<form name="login" method="post" action="index.php">
+			<form name="login" method="post" action="#">
     	<input name="pass" type="password" placeholder="Password" required>
 			<input type="submit" name="submit">
 		</form>
@@ -33,17 +35,11 @@
 		  		var profile = googleUser.getBasicProfile();
 		  		var authresult = sendUserData(profile.getName(), profile.getImageUrl());
 		  		if(authresult == "true") {
-		  			console.log("success");
+		  			window.location.href = "../index.php";
 		  		} else {
 		  			console.log("failure");
 		  		}
 			}
     </script>
 </head>
-
-<body>
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-    <a href="#" onclick="signOut();">Sign out</a>
-</body>
-
 </html>
