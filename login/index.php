@@ -35,9 +35,8 @@
 		  		var profile = googleUser.getBasicProfile();
 		  		var authresult = sendUserData(profile.getName(), profile.getImageUrl());
 		  		if(authresult >= 1) {
-		  			window.location.href = "../index.php";
-		  		} else {
-		  			alert("It doesn't look like you're a user in our database. Please try password sign-in.")
+						console.log(authresult);
+		  			// window.location.href = "../index.php";
 		  		}
 			}
     </script>
