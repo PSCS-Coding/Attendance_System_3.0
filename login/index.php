@@ -21,7 +21,7 @@
 			<p>Password sign-in:</p>
 			<form name="login" method="post" action="#">
     	<input name="pass" type="password" placeholder="Password" required>
-			<input type="submit" name="submit">
+			<input type="submit" name="submit" value="Sign In">
 		</form>
 		</div>
 		<script>
