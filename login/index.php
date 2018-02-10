@@ -42,7 +42,12 @@
 		  		var authresult = sendUserData(profile.getName(), profile.getImageUrl());
 		  		if(authresult >= 1) {
 						console.log(authresult);
-		  			// window.location.href = "../index.php";
+						if(window.location.href.includes("?to=")){
+		  				window.location.href = window.location.href.split("?to=")[1];
+							console.log(window.location.href.split("?to=")[1]);
+						} else {
+							window.location.href = "/test.php"; //change to be index
+						}
 		  		} else  {
 						alert("It looks like you're not a user in our database. Please try a different Google account or use password login.");
 						console.log(0);
