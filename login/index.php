@@ -5,34 +5,13 @@
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
 	</head>
 	<body>
-		<?php
-			require_once('connection.php');
-			//verify password login and set login cookie
-			if(isset($_POST['pass'])) {
-				$year = date(Y); //eventually change this to 2017-18 perhaps, instead of just 2018?
-				$loginQuery = $db->prepare("SELECT login_password FROM login WHERE login_year = '$year'");
-				$loginQuery->execute();
-				$loginResult = Array();
-        foreach ($loginQuery->get_result() as $row) {
-          array_push($loginResult, $row['login_password']);
-        }
-				if($loginResult[0] == crypt($_POST['pass'], 'P9')) {
-					$cook = crypt($_POST['pass'], 'P9');
-					echo 'good password';
-					setcookie("login", $cook, time() + (86400 * 5), "/");
-					header('Location: /test.php'); //eventually change to main page
-				} else {
-					echo 'Wrong password.';
-				}
-			}
-		?>
 		<div class='section'>
 			<p>Students or staff:</p>
 			<div class="g-signin2" data-onsuccess="onSignIn"></div>
 		</div>
 		<div class='section'>
 			<p>Password sign-in:</p>
-			<form name="login" method="post" action="#">
+			<form name="login" method="post" action="pass.php">
     			<input name="pass" type="password" placeholder="Password" required>
 			<input type="submit" name="submit" value="Sign In">
 		</form>
@@ -56,10 +35,10 @@
 		  		if(authresult >= 1) {
 					console.log(authresult);
 					if(window.location.href.includes("?to=")){
-		  				window.location.href = window.location.href.split("?to=")[1];
+		  				//window.location.href = window.location.href.split("?to=")[1];
 						console.log(window.location.href.split("?to=")[1]);
 					} else {
-						window.location.href = "/test.php"; //change to be index
+						//window.location.href = "/test.php"; //change to be index
 					}
 		  		} else {
 					signOut();
