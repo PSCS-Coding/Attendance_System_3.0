@@ -55,10 +55,10 @@
 		  		if(authresult >= 1) {
 					console.log(authresult);
 					if(window.location.href.includes("?to=")){
-		  				//window.location.href = window.location.href.split("?to=")[1];
+		  				window.location.href = window.location.href.split("?to=")[1];
 						console.log(window.location.href.split("?to=")[1]);
 					} else {
-						//window.location.href = "/test.php"; //change to be index
+						window.location.href = "/test.php"; //change to be index
 					}
 		  		} else {
 					signOut();
