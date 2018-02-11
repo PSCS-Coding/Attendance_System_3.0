@@ -13,8 +13,7 @@
 				$loginQuery = $db->prepare("SELECT login_password FROM login WHERE login_year = '$year'");
 				$loginQuery->execute();
 				$loginResult = Array();
-        foreach ($loginQuery->get_result() as $row)
-        {
+        foreach ($loginQuery->get_result() as $row) {
           array_push($loginResult, $row['login_password']);
         }
 				if($loginResult[0] == crypt($_POST['pass'], 'P9')) {
@@ -39,9 +38,9 @@
 		</form>
 		</div>
 		<script>
-			var sendUserData = function(name,imgurl) {
+			var sendUserData = function(name,imgurl,minute) {
 			    var xmlHttp = new XMLHttpRequest();
-			    xmlHttp.open("GET", "auth.php?name=" + name+ "&imgurl=" + imgurl, false);
+			    xmlHttp.open("GET", "auth.php?name=" + name + "&imgurl=" + imgurl + "&ver=" + minute, false);
 			    xmlHttp.send(null);
 			    return (xmlHttp.responseText);
 			}
@@ -51,7 +50,9 @@
 			}
 			function onSignIn(googleUser) {
 		  		var profile = googleUser.getBasicProfile();
-		  		var authresult = sendUserData(profile.getName(), profile.getImageUrl());
+					var d = new Date();
+    		 	var n = d.getMinutes();
+		  		var authresult = sendUserData(profile.getName(), profile.getImageUrl(), n);
 		  		if(authresult >= 1) {
 					console.log(authresult);
 					if(window.location.href.includes("?to=")){
@@ -63,7 +64,7 @@
 		  		} else {
 					signOut();
 					alert("It looks like you're not a user in our database. Please try a different Google account or use password login.");
-					console.log(0);
+					console.log(authresult);
 				}
 			}
     </script>
