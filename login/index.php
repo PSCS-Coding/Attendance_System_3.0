@@ -3,6 +3,7 @@
 	<head>
 		<meta name="google-signin-client_id" content="1049698629280-prai66q0v2fba7d4vp701jo6d4mb9kct.apps.googleusercontent.com">
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
+		<title>PSCS Attendance System Login</title>
 	</head>
 	<body>
 		<div class='section'>
@@ -35,10 +36,10 @@
 		  		if(authresult >= 1) {
 					console.log(authresult);
 					if(window.location.href.includes("?to=")){
-		  				//window.location.href = window.location.href.split("?to=")[1];
+		  				window.location.href = window.location.href.split("?to=")[1];
 						console.log(window.location.href.split("?to=")[1]);
 					} else {
-						//window.location.href = "/test.php"; //change to be index
+						window.location.href = "/test.php"; //change to be index
 					}
 		  		} else {
 					signOut();

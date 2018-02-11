@@ -1,6 +1,6 @@
 <?php
   $db = mysqli_connect("localhost", "root", "root", "pscsorg_3.0");
-  if(!empty($_COOKIE['user']) || $_COOKIE['login']) {
+  if(!empty($_COOKIE['user']) || !empty($_COOKIE['login'])) {
     $user = $_COOKIE['user'];
     $year = date(Y);
     $loginQuery = $db->prepare("SELECT login_password FROM login WHERE login_year = '$year'");

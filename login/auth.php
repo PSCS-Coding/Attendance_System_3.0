@@ -41,7 +41,8 @@
         }
     }
   } else {
-    echo "bad verification";
+    setcookie("user", $imgurl, time() - 3600, "/");
+    echo 'bad verification';
   }
 
 ?>
