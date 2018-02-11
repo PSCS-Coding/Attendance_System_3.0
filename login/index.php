@@ -21,7 +21,7 @@
 					$cook = crypt($_POST['pass'], 'P9');
 					echo 'good password';
 					setcookie("login", $cook, time() + (86400 * 5), "/");
-					header("Location: '/test.php'"); //eventually change to main page
+					header('Location: /test.php'); //eventually change to main page
 				} else {
 					echo 'Wrong password.';
 				}
