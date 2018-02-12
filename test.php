@@ -1,8 +1,7 @@
 <?php
-  require_once('connection.php');
   require_once('verify.php');
   if(!empty($_COOKIE['user'])) {
-    $imgurl = $_COOKIE['user'];
+    $imgurl = $_COOKIE['imgurl'];
     $nameQuery = $db->prepare("SELECT first_name FROM student_data WHERE imgurl = '$imgurl'");
     $nameQuery->execute();
     $nameResult = Array();

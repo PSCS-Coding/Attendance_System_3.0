@@ -18,9 +18,9 @@
 		</form>
 		</div>
 		<script>
-			var sendUserData = function(name,imgurl,minute) {
+			var sendUserData = function(name,imgurl,email,minute) {
 			    var xmlHttp = new XMLHttpRequest();
-			    xmlHttp.open("GET", "auth.php?name=" + name + "&imgurl=" + imgurl + "&ver=" + minute, false);
+			    xmlHttp.open("GET", "auth.php?name=" + name + "&imgurl=" + imgurl + "&email=" + email + "&ver=" + minute, false);
 			    xmlHttp.send(null);
 			    return (xmlHttp.responseText);
 			}
@@ -32,21 +32,21 @@
 		  		var profile = googleUser.getBasicProfile();
 					var d = new Date();
     		 	var n = d.getMinutes();
-		  		var authresult = sendUserData(profile.getName(), profile.getImageUrl(), n);
+					console.log(profile.getEmail());
+		  		var authresult = sendUserData(profile.getName(), profile.getImageUrl(), profile.getEmail(), n);
 		  		if(authresult >= 1) {
-					console.log(authresult);
-					if(window.location.href.includes("?to=")){
-		  				window.location.href = window.location.href.split("?to=")[1];
-						console.log(window.location.href.split("?to=")[1]);
-					} else {
-						window.location.href = "/test.php"; //change to be index
-					}
+						console.log(authresult);
+						if(window.location.href.includes("?to=")){
+			  				window.location.href = window.location.href.split("?to=")[1];
+							console.log(window.location.href.split("?to=")[1]);
+						} else {
+							window.location.href = "/test.php"; //change to be index
+						}
 		  		} else {
-					signOut();
-					alert("It looks like you're not a user in our database. Please try a different Google account or use password login.");
-					console.log(authresult);
+						signOut();
+						alert("It looks like you're not a user in our database. Please try a different Google account or use password login.");
+						console.log(authresult);
 				}
 			}
     </script>
-</head>
 </html>
