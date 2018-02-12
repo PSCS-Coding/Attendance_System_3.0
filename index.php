@@ -42,7 +42,7 @@ function enquote($text){
 				$_POST['return_time'] = 0;
 			}
 			else{
-				if($_POST['return_time'] > 15 && $_POST['return_time'] < 100){
+				if(($_POST['return_time'] > 15 && $_POST['return_time'] < 100) || $_POST['return_time'] < 0){
 					$_POST['return_time'] = 15;
 				}
 				if($_POST['return_time'] < 100){
