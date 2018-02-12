@@ -18,8 +18,11 @@ require_once("functions.php");
   	</head>
 	<body>
     	<?php
-		if (!empty($_POST['change']))
-			status_update($_POST['student'],$_POST['new'] , $_POST['current']);
+			$foo = "'this is also info'";
+			$bar = "'2014-11-11 12:45:34'";
+		if (!empty($_POST['change'])) {
+			status_update($_POST['student'],$_POST['new'] , $_POST['current'],"''", "''");
+		}
 		echo '<table><tr><th>Student</th><th>Status</th></tr>';
 		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
