@@ -21,6 +21,6 @@
       }
       echo 'Welcome, ' . $adminNameResult[0] . ' <img src="' . $imgurl .'">';
     }
-    echo '<br><a href="out.php" onclick="si();">Sign out</a>';
+    echo '<br><a href="out.php">Sign out</a>';
   }
 ?>
