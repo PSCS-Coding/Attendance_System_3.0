@@ -5,16 +5,7 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require_once("connection.php");
-function status_update($student, $status, $old_status)
-{
-	global $db;
-	$query = 'UPDATE current SET status_id = '.$status.' WHERE student_id = '.$student;
-	$db->query($query);
-    return 0;
-}
-function enquote($text){
-	return '"'.$text.'"';
-}
+require_once("functions.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,8 +18,11 @@ function enquote($text){
   	</head>
 	<body>
     	<?php
-		if (!empty($_POST['change']))
-			status_update($_POST['student'],$_POST['new'] , $_POST['current']);
+			$foo = "'this is also info'";
+			$bar = "'2014-11-11 12:45:34'";
+		if (!empty($_POST['change'])) {
+			status_update($_POST['student'],$_POST['new'] , $_POST['current'],"''", "''");
+		}
 		echo '<table><tr><th>Student</th><th>Status</th></tr>';
 		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
