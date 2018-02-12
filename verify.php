@@ -1,5 +1,5 @@
 <?php
-  require_once('/connection.php');
+  require_once('connection.php');
   if(!empty($_COOKIE['user']) || !empty($_COOKIE['login'])) {
     $user = $_COOKIE['user'];
     $year = date(Y);
