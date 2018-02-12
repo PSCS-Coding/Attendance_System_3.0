@@ -12,8 +12,13 @@ function status_update($student, $status, $old_status, $return_time)
 		$query = 'UPDATE current SET status_id = '.$status;
 		$db->query($query);
 	}else{
-		$query = 'UPDATE current SET status_id = '.$status.' WHERE student_id = '.$student;
-		$db->query($query);
+		if($return_time!= Null){
+			$query = 'UPDATE current SET status_id = '.$status.', return_time = '.$return_time.' WHERE student_id = '.$student;
+			$db->query($query);
+		}else{
+			$query = 'UPDATE current SET status_id = '.$status.' WHERE student_id = '.$student;
+			$db->query($query);
+		}
 	}
     return 0;
 }
@@ -36,10 +41,12 @@ function enquote($text){
 			if(empty($_POST['return_time'])){
 				$_POST['return_time'] = Null;
 			}
+			else{
+				$_POST['return_time'] = $_POST['return_time'].'00';
+			}
 			status_update($_POST['student'],$_POST['new'] , $_POST['current'] , $_POST['return_time']);
 		}
-		echo '<form action="/index.php" method="POST"><input type="hidden" name="student" value="DAILY_RESET"> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" name="change" value="Set all to \'Not checked in\'"></form>
-		<table><tr><th>Student</th><th>Status</th></tr>';
+		echo '<form action="/index.php" method="POST"><input type="hidden" name="student" value="DAILY_RESET"> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" name="change" value="Set all to \'Not checked in\'"></form> <table><tr><th>Student</th><th>Status</th></tr>';
 		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 		foreach($stati as &$row){
