@@ -37,16 +37,7 @@ function enquote($text){
   	</head>
 	<body>
     	<?php
-		if ($_POST){
-			if(!empty($_POST['present'])){
-				$_POST['new'] = 1;
-			}elseif(!empty($_POST['late'])){
-				$_POST['new'] = 5;
-			}elseif(!empty($_POST['absent'])){
-				$_POST['new'] = 7;
-			}elseif(!empty($_POST['checkout'])){
-				$_POST['new'] = 4;
-			}
+		if ($_POST && $_POST['change']){
 			if(empty($_POST['return_time'])){
 				$_POST['return_time'] = 0;
 			}
@@ -68,22 +59,22 @@ function enquote($text){
 		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 		foreach($stati as &$row){
-			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td class="status"><p>'.$row["status_name"].' </p> <form action="/index.php" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name="current" value="'.$row["status_id"].'"> ';
+			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td class="status"><p>'.$row["status_name"].' </p>';
 			if($row['status_id'] != 1 ){
-				echo '<input type="submit" name="present" value="P">';
+				echo '<form action="/index.php" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=1> <input type="submit" name="change" value="P"></form>';
 				if($row['status_id'] == 0 || $row['status_id'] == 5){
-					echo '<input class="late" type="number" name="return_time" required> <input type="submit" name="late" value="L">';
+					echo '<form action="/index.php" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=5> <input class="late" type="number" name="return_time" required> <input type="submit" name="change" value="L"></form>';
 				}
 				if($row['status_id'] != 7  && $row['status_id'] != 4){
-					echo '<input type="submit" name="absent" value="A">';
+					echo '<form action="/index.php" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=7> <input type="submit" name="change" value="A"></form>';
 				}
 			}
 			else{
 				if($row['status_id'] != 4 ){
-					echo '<input type="submit" name="checkout" value="CO">';
+					echo '<form action="/index.php" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=4> <input type="submit" name="change" value="CO"></form>';
 				}
 			}
-			echo '</form></td></tr>';
+			echo '</td></tr>';
 		}
 		echo '</table>';
 		?>
