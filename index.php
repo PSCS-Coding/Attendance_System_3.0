@@ -36,6 +36,8 @@ function enquote($text){
 
 		}
 		echo '<table><tr><th>Student</th><th>Status</th></tr>';
+		$query = 'SELECT * FROM current_stati INNER JOIN students ON current_stati.student_id = students.student_id INNER JOIN status ON current_stati.status_id = status.status_id ORDER BY first_name DESC';
+		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 		foreach($stati as &$row){
 			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td><p>'.$row["status_name"].' </p> <form action="/index.php" method="POST">';
 			echo '<input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'">';
