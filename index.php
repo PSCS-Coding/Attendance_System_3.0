@@ -5,16 +5,7 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require_once("connection.php");
-function status_update($student, $status, $old_status)
-{
-	global $db;
-	$query = 'UPDATE current SET status_id = '.$status.' WHERE student_id = '.$student;
-	$db->query($query);
-    return 0;
-}
-function enquote($text){
-	return '"'.$text.'"';
-}
+require_once("functions.php");
 ?>
 <!DOCTYPE html>
 <html>
