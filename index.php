@@ -5,7 +5,7 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require_once("connection.php");
-function status_update($student, $status, $old_status)
+function status_update($student, $status, $old_status, $return_time)
 {
 	global $db;
 	if($student == 'DAILY_RESET'){
@@ -25,7 +25,7 @@ function enquote($text){
 <html>
   	<head>
     	<title>
-			Atendance Sistim 100% Compleet Perfict No Virus Downlode Free Affective end Afficient Profetional Git it Now Easy Set Up Aply Today Has Enyone Really Been Far Even as Descided to Use Evin Go Wunt to do Look Mor Like Go Further You Can Realy be Far It's Just Commin Sense Low Price Great Deel No Charge Limited Time Ofter
+			Atendance�Sistim�100�Persent�Compleet�Perfict�No�Virus�Downlode�Free�Affective�end�Afficient�Profetional�Git�it�Now�Easy�Set�Up�Aply�Today�Has�Enyone�Really�Been�Far�Even�as�Descided�to�Use�Evin�Go�Wunt�to�do�Look�Mor�Like�Go�Further�You�Can�Realy�be�Far�It's�Just�Commin�Sense�Low�Price�Great�Deel�No�Charge�Limited�Time�Ofter
     	</title>
 	    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     	<link rel="stylesheet" type="text/css" href="style.css">
@@ -33,7 +33,10 @@ function enquote($text){
 	<body>
     	<?php
 		if ($_POST && $_POST['change']){
-			status_update($_POST['student'],$_POST['new'] , $_POST['current']);
+			if(empty($_POST['return_time'])){
+				$_POST['return_time'] = Null;
+			}
+			status_update($_POST['student'],$_POST['new'] , $_POST['current'] , $_POST['return_time']);
 		}
 		echo '<form action="/index.php" method="POST"><input type="hidden" name="student" value="DAILY_RESET"> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" name="change" value="Set all to \'Not checked in\'"></form>
 		<table><tr><th>Student</th><th>Status</th></tr>';
@@ -43,6 +46,9 @@ function enquote($text){
 			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td class="status"><p>'.$row["status_name"].' </p>';
 			if($row['status_id'] != 1 ){
 				echo '<form action="/index.php" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=1> <input type="submit" name="change" value="P"></form>';
+				if($row['status_id'] == 0 || $row['status_id'] == 5){
+					echo '<form action="/index.php" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=5> <input class="late" type="text" name="return_time" required> <input type="submit" name="change" value="L"></form>';
+				}
 				if($row['status_id'] != 7  && $row['status_id'] != 4){
 					echo '<form action="/index.php" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=7> <input type="submit" name="change" value="A"></form>';
 				}

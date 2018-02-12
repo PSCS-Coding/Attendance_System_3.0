@@ -23,7 +23,6 @@ table{
 	width:75%;
 	border-radius: 5px;
 }
-
 body{
 	padding-top: 30px;
 	margin:0 auto;
@@ -47,4 +46,11 @@ input{
 .status{
 	text-align: left;
 	padding-left: 15%;
+}
+.late{
+	padding:0 2px;
+	border:2px #888 solid;
+	border-radius: 3px;
+	text-align: center;
+	width:15%;
 }
