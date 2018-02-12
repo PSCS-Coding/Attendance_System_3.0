@@ -27,16 +27,10 @@ function enquote($text){
   	</head>
 	<body>
     	<?php
-		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
-		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-		if (!empty($_POST['change'])) {
+		if (!empty($_POST['change']))
 			status_update($_POST['student'],$_POST['new'] , $_POST['current']);
-			$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
-			$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-
-		}
 		echo '<table><tr><th>Student</th><th>Status</th></tr>';
-		$query = 'SELECT * FROM current_stati INNER JOIN students ON current_stati.student_id = students.student_id INNER JOIN status ON current_stati.status_id = status.status_id ORDER BY first_name DESC';
+		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 		foreach($stati as &$row){
 			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td><p>'.$row["status_name"].' </p> <form action="/index.php" method="POST">';
