@@ -25,7 +25,7 @@ function enquote($text){
 <html>
   	<head>
     	<title>
-			Atendance Sistim 100% Compleet Perfict No Virus Downlode Free Affective end Afficient Profetional Git it Now Easy Set Up Aply Today Has Enyone Really Been Far Even as Descided to Use Evin Go Wunt to do Look Mor Like Go Further You Can Realy be Far It's Just Commin Sense
+			Atendance Sistim 100% Compleet Perfict No Virus Downlode Free Affective end Afficient Profetional Git it Now Easy Set Up Aply Today Has Enyone Really Been Far Even as Descided to Use Evin Go Wunt to do Look Mor Like Go Further You Can Realy be Far It's Just Commin Sense Low Price Great Deel No Charge Limited Time Ofter
     	</title>
 	    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     	<link rel="stylesheet" type="text/css" href="style.css">
