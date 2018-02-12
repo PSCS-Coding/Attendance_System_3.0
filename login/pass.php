@@ -1,5 +1,5 @@
 <?php
-  require_once('connection.php');
+  require_once('/connection.php');
   //verify password login and set login cookie
   if(isset($_POST['pass'])) {
     $year = date(Y); //eventually change this to 2017-18 perhaps, instead of just 2018?

@@ -1,5 +1,5 @@
 <?php
-  $db = mysqli_connect("localhost", "root", "root", "pscsorg_3.0");
+  require_once('/connection.php');
   if(!empty($_COOKIE['user']) || !empty($_COOKIE['login'])) {
     $user = $_COOKIE['user'];
     $year = date(Y);
