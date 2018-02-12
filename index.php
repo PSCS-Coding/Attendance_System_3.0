@@ -32,7 +32,7 @@ function enquote($text){
   	</head>
 	<body>
     	<?php
-		if ($_POST['change']){
+		if ($_POST and $_POST['change']){
 			status_update($_POST['student'],$_POST['new'] , $_POST['current']);
 		}
 		echo '<form action="/index.php" method="POST"><input type="hidden" name="student" value="DAILY_RESET"> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" name="change" value="Set all to \'Not checked in\'"></form>
