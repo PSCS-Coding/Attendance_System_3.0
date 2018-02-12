@@ -32,23 +32,25 @@ function enquote($text){
   	</head>
 	<body>
     	<?php
-		if (!empty($_POST['change']))
+		if (!empty($_POST['change'])){
 			status_update($_POST['student'],$_POST['new'] , $_POST['current']);
+		}
 		echo '<form action="/index.php" method="POST"><input type="hidden" name="student" value="DAILY_RESET"> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" name="change" value="Set all to \'Not checked in\'"></form>
-
 		<table><tr><th>Student</th><th>Status</th></tr>';
 		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 		foreach($stati as &$row){
-			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td><p>'.$row["status_name"].' </p>';
+			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td class="status"><p>'.$row["status_name"].' </p>';
 			if($row['status_id'] != 1 ){
 				echo '<form action="/index.php" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=1> <input type="submit" name="change" value="P"></form>';
-				if($row['status_id'] != 7  && $row['status_id'] != 4)
+				if($row['status_id'] != 7  && $row['status_id'] != 4){
 					echo '<form action="/index.php" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=7> <input type="submit" name="change" value="A"></form>';
+				}
 			}
 			else{
-				if($row['status_id'] != 4 )
+				if($row['status_id'] != 4 ){
 					echo '<form action="/index.php" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=4> <input type="submit" name="change" value="CO"></form>';
+				}
 			}
 			echo '</td></tr>';
 		}

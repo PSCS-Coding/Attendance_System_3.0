@@ -44,3 +44,7 @@ p{
 input{
 	display:inline;
 }
+.status{
+	text-align: left;
+	padding-left: 15%;
+}
