@@ -9,7 +9,7 @@ function status_update($student, $status, $old_status, $return_time)
 {
 	global $db;
 	if($student == 'DAILY_RESET'){
-		$query = 'UPDATE current SET status_id = '.$status;
+		$query = 'UPDATE current SET status_id = '.$status.', return_time = '.$return_time;
 		$db->query($query);
 	}else{
 		if($return_time!= Null){
@@ -39,14 +39,23 @@ function enquote($text){
     	<?php
 		if ($_POST && $_POST['change']){
 			if(empty($_POST['return_time'])){
-				$_POST['return_time'] = Null;
+				$_POST['return_time'] = 0;
 			}
 			else{
-				$_POST['return_time'] = $_POST['return_time'].'00';
+				if($_POST['return_time'] > 15 && $_POST['return_time'] < 100){
+					$_POST['return_time'] = 15;
+				}
+				if($_POST['return_time'] < 100){
+					$_POST['return_time'] = $_POST['return_time'] * 100;
+				}
+				if($_POST['return_time'] < 900){
+					$_POST['return_time'] = $_POST['return_time'] + 1200;
+				}
+				$_POST['return_time'] = $_POST['return_time'] * 100;
 			}
 			status_update($_POST['student'],$_POST['new'] , $_POST['current'] , $_POST['return_time']);
 		}
-		echo '<form action="/index.php" method="POST"><input type="hidden" name="student" value="DAILY_RESET"> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" name="change" value="Set all to \'Not checked in\'"></form> <table><tr><th>Student</th><th>Status</th></tr>';
+		echo '<form action="/index.php" method="POST"><input type="hidden" name="student" value="DAILY_RESET"><input type="hidden" name="return_time" value=0> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" name="change" value="Set all to \'Not checked in\'"></form> <table><tr><th>Student</th><th>Status</th></tr>';
 		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 		foreach($stati as &$row){
@@ -54,7 +63,7 @@ function enquote($text){
 			if($row['status_id'] != 1 ){
 				echo '<form action="/index.php" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=1> <input type="submit" name="change" value="P"></form>';
 				if($row['status_id'] == 0 || $row['status_id'] == 5){
-					echo '<form action="/index.php" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=5> <input class="late" type="text" name="return_time" required> <input type="submit" name="change" value="L"></form>';
+					echo '<form action="/index.php" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=5> <input class="late" type="number" name="return_time" required> <input type="submit" name="change" value="L"></form>';
 				}
 				if($row['status_id'] != 7  && $row['status_id'] != 4){
 					echo '<form action="/index.php" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=7> <input type="submit" name="change" value="A"></form>';
