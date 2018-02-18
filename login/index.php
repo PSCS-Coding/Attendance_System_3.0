@@ -32,6 +32,7 @@
 		  		var profile = googleUser.getBasicProfile();
 					var d = new Date();
     		 	var n = d.getMinutes();
+					console.log(profile.getEmail());
 		  		var authresult = sendUserData(profile.getName(), profile.getImageUrl(), profile.getEmail(), n);
 		  		if(authresult >= 1) {
 						console.log(authresult);
