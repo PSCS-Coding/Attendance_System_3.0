@@ -35,20 +35,8 @@ function enquote($text){
   	</head>
 	<body>
 		<div class ="topbar">
-<<<<<<< HEAD
 				<input type="button" value="Submit" onclick="submitForms()" />
-=======
-			Top Buttons
->>>>>>> 5b2c4b48de15acd3484cfde072fc942a00255caf
 		</div>
-		<script type="text/javascript">var id = <?php echo json_encode($y); ?>;</script>
-		<script>
-		submitForms = function(){
-			for (var i = 0; i < id; i++) {
-				document.getElementById(i).submit();
-			}
-		}
-		</script>
     	<?php
 		if ($_POST && !empty($_POST['change'])){
 			if(empty($_POST['return_time'])){
@@ -80,10 +68,8 @@ function enquote($text){
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 		$x = 0;
 		$y = 0;
-		foreach ($stati as &$z) {
-			$y++;
-		}
 		foreach($stati as &$row){
+			$y++;
 			$x++;
 			echo '<tr><td><form id="'.$x.'" method="POST"><input type="checkbox" name="'.$row["first_name"].'"></form>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td class="status"><p>'.$row["status_name"];
 			if($row["status_name"] == "Late"){
@@ -107,6 +93,16 @@ function enquote($text){
 			echo '</td></tr>';
 		}
 		echo '</table>';
+		if(!empty($_POST["samuelcheck"])) {
+			echo $_POST["samuelcheck"];
+		}
 		?>
+		<script type="text/javascript">var d = <?php echo json_encode($y); ?>;
+		submitForms = function(){
+			for (var i = 5; i < d; i--) {
+				document.getElementById(i).submit();
+			}
+		}
+		</script>
 	</body>
 </html>
