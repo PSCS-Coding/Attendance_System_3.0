@@ -29,7 +29,7 @@
           setcookie("imgurl", $imgurl, time() + (86400 * 5), "/");
           echo $studentPriv->fetch_array()[0];
 
-        } elseif(in_array($name, $adminResult)) {
+        } elseif(in_array($email, $adminResult)) {
           $imgurl = $_GET['imgurl'];
           $updateImage = $db->query("UPDATE admins SET imgurl = '$imgurl' WHERE full_name = '$name'");
 
@@ -37,9 +37,9 @@
           $adminPriv = $db->query("SELECT priv FROM admins WHERE full_name = '$name'");
           setcookie("user", crypt($imgurl, 'P9'), time() + (86400 * 5), "/");
           setcookie("imgurl", $imgurl, time() + (86400 * 5), "/");
-          echo $adminPriv->fetch_array()[0];
+          echo '3';
         } else {
-          echo 0;
+          echo $adminPriv->fetch_array()[0];
         }
     }
   } else {
