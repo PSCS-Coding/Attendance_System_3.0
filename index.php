@@ -1,7 +1,5 @@
 <?php
 session_start();
-?>
-<?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require_once("connection.php");
@@ -36,6 +34,9 @@ function enquote($text){
     	<link rel="stylesheet" type="text/css" href="style.css">
   	</head>
 	<body>
+		<div class ="topbar">
+			//top button
+		</div>
     	<?php
 		if ($_POST && $_POST['change']){
 			if(empty($_POST['return_time'])){
