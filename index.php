@@ -36,15 +36,8 @@ function enquote($text){
 	<body>
 		<div class ="topbar">
 			<input type="button" value="Submit" onclick="submitForms()" />
-			Top Buttons
 		</div>
 		<script type="text/javascript">var id = <?php echo json_encode($y); ?>;
-		submitForms = function(){
-			for (var i = 0; i < id; i++) {
-				document.getElementById(i).submit();
-			}
-		}
-		</script>
     	<?php
 		if ($_POST && !empty($_POST['change'])){
 			if(empty($_POST['return_time'])){
@@ -106,6 +99,16 @@ function enquote($text){
 			echo '</td></tr>';
 		}
 		echo '</table>';
+		if(!empty($_POST["samuelcheck"])) {
+			echo $_POST["samuelcheck"];
+		}
 		?>
+		<script type="text/javascript">var d = <?php echo json_encode($y); ?>;
+		submitForms = function(){
+			for (var i = 5; i < d; i--) {
+				document.getElementById(i).submit();
+			}
+		}
+		</script>
 	</body>
 </html>
