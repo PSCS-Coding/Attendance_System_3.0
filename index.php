@@ -36,6 +36,9 @@ function enquote($text){
     	<link rel="stylesheet" type="text/css" href="style.css">
   	</head>
 	<body>
+		<div class ="topbar">
+			//top button
+		</div>
     	<?php
 		if ($_POST && $_POST['change']){
 			if(empty($_POST['return_time'])){
@@ -59,7 +62,7 @@ function enquote($text){
 		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 		foreach($stati as &$row){
-			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td class="status"><p>'.$row["status_name"].' </p>';
+			echo '<tr><td><form method="POST"><input type="checkbox" name="'.$row["first_name"].'check"></form>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td class="status"><p>'.$row["status_name"].' </p>';
 			if($row['status_id'] != 1 ){
 				echo '<form action="/index.php" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=1> <input type="submit" name="change" value="P"></form>';
 				if($row['status_id'] == 0 || $row['status_id'] == 5){

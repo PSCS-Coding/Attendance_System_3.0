@@ -24,7 +24,7 @@ table{
 	border-radius: 5px;
 }
 body{
-	padding-top: 30px;
+	padding-top: 10px;
 	margin:0 auto;
 	text-align: center;
 	background-color: #888;
@@ -53,4 +53,8 @@ input{
 	border-radius: 3px;
 	text-align: center;
 	width:15%;
+}
+.topbar {
+	border:1px white solid;
+	margin-bottom: 10px; 
 }
