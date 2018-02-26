@@ -38,7 +38,6 @@ function enquote($text){
 		<div class ="topbar">
 			<input type="button" value="Submit" onclick="submitForms()" />
 		</div>
-		<script type="text/javascript">var id = <?php echo json_encode($y); ?>;
     	<?php
 		//updates stati if forms are submitted
 		if ($_POST && !empty($_POST['change'])){
