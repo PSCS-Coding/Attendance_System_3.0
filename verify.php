@@ -2,7 +2,7 @@
   require_once('connection.php');
   if(!empty($_COOKIE['user']) || !empty($_COOKIE['login'])) {
     $user = $_COOKIE['user'];
-    $year = date('Y');
+    $year = date(Y);
     $loginQuery = $db->prepare("SELECT login_password FROM login WHERE login_year = '$year'");
     $loginQuery->execute();
     $loginResult = Array();
