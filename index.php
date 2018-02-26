@@ -35,7 +35,7 @@ function enquote($text){
   	</head>
 	<body>
 		<div class ="topbar">
-			top button
+			Top Buttons
 		</div>
     	<?php
 		if ($_POST && $_POST['change']){
