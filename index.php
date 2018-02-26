@@ -45,14 +45,13 @@ function enquote($text){
 			else{
 				$len = strlen((string)$_POST['return_time']);
 				$_POST['badnum'] = False;
-				if((int)((string)$_POST['return_time'][0]) > 2 && $len % 2 == 0)
 				for($b = 0 ; $b < $len ; $b++){
 					if((int)((string)$_POST['return_time'][$b]) > 6 && ($len - $b) % 2 == 0){
 						$_POST['badnum'] = True;
 					}
 				}
-				if(!is_numeric($_POST['return_time']) || ($_POST['return_time'] > 15.6667 && $_POST['return_time'] < 100) || $_POST['return_time'] < 0 || $_POST['return_time'] > 1600 || $_POST['badnum']){
-					$_POST['return_time'] = 15;
+				if(!is_numeric($_POST['return_time']) || ($_POST['return_time'] > 15.6667 && $_POST['return_time'] < 100) || $_POST['return_time'] < 1 || $_POST['return_time'] > 1600 || $_POST['badnum']){
+					$_POST['return_time'] = 9;
 				}
 				if($_POST['return_time'] < 100){
 					$_POST['return_time'] = $_POST['return_time'] * 100;
