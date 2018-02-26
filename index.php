@@ -50,7 +50,7 @@ function enquote($text){
 						$_POST['badnum'] = True;
 					}
 				}
-				if(!is_numeric($_POST['return_time']) || ($_POST['return_time'] > 15.6667 && $_POST['return_time'] < 100) || $_POST['return_time'] < 1 || $_POST['return_time'] > 1600 || $_POST['badnum']){
+				if(!is_numeric($_POST['return_time']) || ($_POST['return_time'] > 15.4 && $_POST['return_time'] < 100) || $_POST['return_time'] < 1 || $_POST['return_time'] > 1600 || $_POST['badnum']){
 					$_POST['return_time'] = 9;
 				}
 				if($_POST['return_time'] < 100){
