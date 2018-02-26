@@ -9,7 +9,7 @@ td{
 	background-color:#aaa;
 	border: 1px solid white;
 	color:#555;
-	width:33%;
+	width:50%;
 	border-radius: 4px;
 	padding:3px;
 	padding-left: 15px;
@@ -24,7 +24,6 @@ table{
 	border-radius: 5px;
 }
 body{
-	padding-top: 10px;
 	margin:0 auto;
 	text-align: center;
 	background-color: #888;
@@ -55,6 +54,11 @@ input{
 	width:15%;
 }
 .topbar {
-	border:1px white solid;
-	margin-bottom: 10px;
+	position:fixed;
+	width:100%;
+	background-color: #aaa;
+	color:#555;
+	padding:10px 0;
+	border-bottom:2px #888 solid;
+	margin-bottom: 30px;
 }

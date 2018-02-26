@@ -35,7 +35,11 @@ function enquote($text){
   	</head>
 	<body>
 		<div class ="topbar">
+<<<<<<< HEAD
 				<input type="button" value="Submit" onclick="submitForms()" />
+=======
+			Top Buttons
+>>>>>>> 5b2c4b48de15acd3484cfde072fc942a00255caf
 		</div>
 		<script type="text/javascript">var id = <?php echo json_encode($y); ?>;</script>
 		<script>
@@ -46,21 +50,20 @@ function enquote($text){
 		}
 		</script>
     	<?php
-		if ($_POST && $_POST['change']){
+		if ($_POST && !empty($_POST['change'])){
 			if(empty($_POST['return_time'])){
 				$_POST['return_time'] = 0;
 			}
 			else{
 				$len = strlen((string)$_POST['return_time']);
 				$_POST['badnum'] = False;
-				if((int)((string)$_POST['return_time'][0]) > 2 && $len % 2 == 0)
 				for($b = 0 ; $b < $len ; $b++){
 					if((int)((string)$_POST['return_time'][$b]) > 6 && ($len - $b) % 2 == 0){
 						$_POST['badnum'] = True;
 					}
 				}
-				if(!is_numeric($_POST['return_time']) || ($_POST['return_time'] > 15.6667 && $_POST['return_time'] < 100) || $_POST['return_time'] < 0 || $_POST['return_time'] > 1600 || $_POST['badnum']){
-					$_POST['return_time'] = 15;
+				if(!is_numeric($_POST['return_time']) || ($_POST['return_time'] > 15.4 && $_POST['return_time'] < 100) || $_POST['return_time'] < 1 || $_POST['return_time'] > 1600 || $_POST['badnum']){
+					$_POST['return_time'] = 9;
 				}
 				if($_POST['return_time'] < 100){
 					$_POST['return_time'] = $_POST['return_time'] * 100;
