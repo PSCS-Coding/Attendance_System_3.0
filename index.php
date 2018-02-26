@@ -35,10 +35,16 @@ function enquote($text){
   	</head>
 	<body>
 		<div class ="topbar">
-			<?php
-
-			 ?>
+				<input type="button" value="Submit" onclick="submitForms()" />
 		</div>
+		<script type="text/javascript">var id = <?php echo json_encode($y); ?>;</script>
+		<script>
+		submitForms = function(){
+			for (var i = 0; i < id; i++) {
+				document.getElementById(i).submit();
+			}
+		}
+		</script>
     	<?php
 		if ($_POST && $_POST['change']){
 			if(empty($_POST['return_time'])){
@@ -69,8 +75,14 @@ function enquote($text){
 		echo '<form action="/index.php" method="POST"><input type="hidden" name="student" value="DAILY_RESET"><input type="hidden" name="return_time" value=0> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" name="change" value="Set all to \'Not checked in\'"></form> <table><tr><th>Student</th><th>Status</th></tr>';
 		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+		$x = 0;
+		$y = 0;
+		foreach ($stati as &$z) {
+			$y++;
+		}
 		foreach($stati as &$row){
-			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td class="status"><p>'.$row["status_name"];
+			$x++;
+			echo '<tr><td><form id="'.$x.'" method="POST"><input type="checkbox" name="'.$row["first_name"].'"></form>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td class="status"><p>'.$row["status_name"];
 			if($row["status_name"] == "Late"){
 				echo ' @ '.$row["return_time"];
 			}
