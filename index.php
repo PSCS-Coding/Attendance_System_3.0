@@ -38,7 +38,7 @@ function enquote($text){
 			Top Buttons
 		</div>
     	<?php
-		if ($_POST && $_POST['change']){
+		if ($_POST && !empty($_POST['change'])){
 			if(empty($_POST['return_time'])){
 				$_POST['return_time'] = 0;
 			}
