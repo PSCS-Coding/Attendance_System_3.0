@@ -4,6 +4,7 @@ th{
 	color:white;
 	border-radius: 4px;
 	padding:3px;
+	text-align: center;
 }
 td{
 	background-color:#aaa;
@@ -12,7 +13,7 @@ td{
 	width:50%;
 	border-radius: 4px;
 	padding:3px;
-	padding-left: 15px;
+	padding-left: 20%;
 }
 form{
 	display: inline;
@@ -21,6 +22,7 @@ table{
 	background-color: white;
 	margin: 20px auto;
 	width:75%;
+	text-align: left;
 	border-radius: 5px;
 }
 body{
@@ -42,9 +44,14 @@ p{
 input{
 	display:inline;
 }
+.name{
+	width:25%;
+	text-align: left;
+	padding-left: 12%;
+}
 .status{
 	text-align: left;
-	padding-left: 15%;
+	padding-left: 10%;
 }
 .late{
 	padding:0 2px;

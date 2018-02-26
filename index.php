@@ -82,7 +82,7 @@ function enquote($text){
 		foreach($stati as &$row){
 			$y++;
 			$x++;
-			echo '<tr><td><form id="'.$x.'" method="POST"><input type="checkbox" name="'.$row["first_name"].'"></form>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td class="status"><p>'.$row["status_name"];
+			echo '<tr><td class="name"><form id="'.$x.'" method="POST"><input type="checkbox" name="'.$row["first_name"].'"></form>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td class="status"><p>'.$row["status_name"];
 			if($row["status_name"] == "Late"){
 				echo ' @ '.$row["return_time"];
 			}
