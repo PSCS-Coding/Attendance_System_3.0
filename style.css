@@ -24,10 +24,10 @@ table{
 	border-radius: 5px;
 }
 body{
-	padding-top: 10px;
 	margin:0 auto;
 	text-align: center;
 	background-color: #888;
+	height:999px;
 }
 a{
 	font-family: 'Courier';
@@ -55,12 +55,11 @@ input{
 	width:15%;
 }
 .topbar {
-	border-radius: 3px;
-	width: 70%;
+	position:fixed;
+	width:100%;
 	background-color: #aaa;
 	color:#555;
-	padding:3px;
-	margin:0 auto;
-	border:2px white solid;
-	margin-bottom: 10px;
+	padding:10px;
+	border-bottom:2px #888 solid;
+	margin-bottom: 30px;
 }
