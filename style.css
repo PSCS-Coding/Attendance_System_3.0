@@ -19,7 +19,7 @@ form{
 }
 table{
 	background-color: white;
-	margin: 30px auto;
+	margin: 20px auto;
 	width:75%;
 	border-radius: 5px;
 }
@@ -61,4 +61,7 @@ input{
 	padding:10px 0;
 	border-bottom:2px #888 solid;
 	margin-bottom: 30px;
+}
+.reset{
+	margin-top: 60px;
 }

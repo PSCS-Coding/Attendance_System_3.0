@@ -51,7 +51,12 @@ function enquote($text){
 					}
 				}
 				if(!is_numeric($_POST['return_time']) || ($_POST['return_time'] > 15.4 && $_POST['return_time'] < 100) || $_POST['return_time'] < 1 || $_POST['return_time'] > 1600 || $_POST['badnum']){
-					$_POST['return_time'] = 9;
+					if($_POST['new'] == 5){
+						$_POST['return_time'] = 9;
+					}
+					else {
+						$_POST['return_time'] = 15;
+					}
 				}
 				if($_POST['return_time'] < 100){
 					$_POST['return_time'] = $_POST['return_time'] * 100;
@@ -63,7 +68,7 @@ function enquote($text){
 			}
 			status_update($_POST['student'],$_POST['new'] , $_POST['current'] , $_POST['return_time']);
 		}
-		echo '<form action="/index.php" method="POST"><input type="hidden" name="student" value="DAILY_RESET"><input type="hidden" name="return_time" value=0> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" name="change" value="Set all to \'Not checked in\'"></form> <table><tr><th>Student</th><th>Status</th></tr>';
+		echo '<form action="/index.php" method="POST"><input type="hidden" name="student" value="DAILY_RESET"><input type="hidden" name="return_time" value=0> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" class="reset" name="change" value="Set all to \'Not checked in\'"></form> <table><tr><th>Student</th><th>Status</th></tr>';
 		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 		foreach($stati as &$row){
