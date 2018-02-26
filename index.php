@@ -104,9 +104,7 @@ function enquote($text){
 		?>
 		<script type="text/javascript">var d = <?php echo json_encode($y); ?>;
 		submitForms = function(){
-			for (var i = 5; i < d; i--) {
-				document.getElementById(i).submit();
-			}
+			alert(d);
 		}
 		</script>
 	</body>
