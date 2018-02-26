@@ -3,6 +3,7 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require_once("connection.php");
+//incomplete status update function
 function status_update($student, $status, $old_status, $return_time)
 {
 	global $db;
@@ -39,11 +40,13 @@ function enquote($text){
 		</div>
 		<script type="text/javascript">var id = <?php echo json_encode($y); ?>;
     	<?php
+		//updates stati if forms are submitted
 		if ($_POST && !empty($_POST['change'])){
 			if(empty($_POST['return_time'])){
 				$_POST['return_time'] = 0;
 			}
 			else{
+				//error handling for return times
 				$len = strlen((string)$_POST['return_time']);
 				$_POST['badnum'] = False;
 				for($b = 0 ; $b < $len ; $b++){
@@ -69,11 +72,14 @@ function enquote($text){
 			}
 			status_update($_POST['student'],$_POST['new'] , $_POST['current'] , $_POST['return_time']);
 		}
+		//sets all students to NCI
 		echo '<form action="/index.php" method="POST"><input type="hidden" name="student" value="DAILY_RESET"><input type="hidden" name="return_time" value=0> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" class="reset" name="change" value="Set all to \'Not checked in\'"></form> <table><tr><th>Student</th><th>Status</th></tr>';
+		//querys database for main table
 		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 		$x = 0;
 		$y = 0;
+		//makes rows of the table from query results
 		foreach($stati as &$row){
 			$y++;
 			$x++;
@@ -82,6 +88,7 @@ function enquote($text){
 				echo ' @ '.$row["return_time"];
 			}
 			echo ' </p>';
+			//adds buttons to students in table
 			if($row['status_id'] != 1 ){
 				echo '<form action="/index.php" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=1> <input type="submit" name="change" value="P"></form>';
 				if($row['status_id'] == 0 || $row['status_id'] == 5){
@@ -99,6 +106,7 @@ function enquote($text){
 			echo '</td></tr>';
 		}
 		echo '</table>';
+		//checks if samuel's still there
 		if(!empty($_POST["samuelcheck"])) {
 			echo $_POST["samuelcheck"];
 		}
