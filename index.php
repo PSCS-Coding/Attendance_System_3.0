@@ -1,7 +1,5 @@
 <?php
 session_start();
-?>
-<?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require_once("connection.php");
@@ -47,7 +45,15 @@ function enquote($text){
 				$_POST['return_time'] = 0;
 			}
 			else{
-				if(!is_numeric($_POST['return_time']) || ($_POST['return_time'] > 15.6667 && $_POST['return_time'] < 100) || $_POST['return_time'] < 0){
+				$len = strlen((string)$_POST['return_time']);
+				$_POST['badnum'] = False;
+				if((int)((string)$_POST['return_time'][0]) > 2 && $len % 2 == 0)
+				for($b = 0 ; $b < $len ; $b++){
+					if((int)((string)$_POST['return_time'][$b]) > 6 && ($len - $b) % 2 == 0){
+						$_POST['badnum'] = True;
+					}
+				}
+				if(!is_numeric($_POST['return_time']) || ($_POST['return_time'] > 15.6667 && $_POST['return_time'] < 100) || $_POST['return_time'] < 0 || $_POST['return_time'] > 1600 || $_POST['badnum']){
 					$_POST['return_time'] = 15;
 				}
 				if($_POST['return_time'] < 100){
@@ -64,8 +70,11 @@ function enquote($text){
 		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 		foreach($stati as &$row){
-			echo '<tr><td>'.$row["first_name"].'check"></form>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td class="status"><p>'.$row["status_name"].' </p>';
-			//echo $_POST["samuelcheck"];
+			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td class="status"><p>'.$row["status_name"];
+			if($row["status_name"] == "Late"){
+				echo ' @ '.$row["return_time"];
+			}
+			echo ' </p>';
 			if($row['status_id'] != 1 ){
 				echo '<form action="/index.php" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=1> <input type="submit" name="change" value="P"></form>';
 				if($row['status_id'] == 0 || $row['status_id'] == 5){
