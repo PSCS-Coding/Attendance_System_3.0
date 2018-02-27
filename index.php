@@ -36,7 +36,7 @@ function enquote($text){
   	</head>
 	<body>
 		<div class ="topbar">
-			<input type="button" value="Submit" onclick="submitForms()" />
+			
 		</div>
     	<?php
 		//updates stati if forms are submitted
@@ -105,15 +105,6 @@ function enquote($text){
 			echo '</td></tr>';
 		}
 		echo '</table>';
-		//checks if samuel's still there
-		if(!empty($_POST["samuelcheck"])) {
-			echo $_POST["samuelcheck"];
-		}
 		?>
-		<script type="text/javascript">var d = <?php echo json_encode($y); ?>;
-		submitForms = function(){
-			alert(d);
-		}
-		</script>
 	</body>
 </html>
