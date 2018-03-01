@@ -5,10 +5,27 @@
   </head>
   <body>
     <?php
-    $time1 = new DateTime("2018-02-26 12:00");
-    $now = new DateTime();
+		//TODO make this into function form
+		// TODO weekend or holiday if condition
+    function FunctionName($value='')
+    {
+    	# code...
+    }
+		$time1 = new DateTime("today 8:00");
+    $time2 = new DateTime();
+		$start = new DateTime($time1->format('Y-m-d') . "9:00");
+		$end = new DateTime($time2->format('Y-m-d') . "15:40");
+
+		if ($time1 <= $start){
+            $time1 = clone $start;
+        }
+        //is event 2 after the end of the school day of the same day of event 1?
+        if ($time2 >= $end){
+            $time2 = clone $end;
+        }
+
     echo $time1->format('Y-m-d H:i:s') . "<br/>";
-    $time_elapsed = ($now->getTimestamp()-$time1->getTimestamp())/60;   echo round($time_elapsed, 3) . " Decimal Minutes<br/>";
+    $time_elapsed = ($time2->getTimestamp()-$time1->getTimestamp())/60;   echo round($time_elapsed, 3) . " Decimal Minutes<br/>";
 		$time_seconds = round(($time_elapsed-floor($time_elapsed))*0.6, 2)*100;
 		$time_minutes = floor($time_elapsed);
 
