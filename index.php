@@ -48,6 +48,9 @@ function enquote($text){
 				//error handling for return times
 				$len = strlen((string)$_POST['return_time']);
 				$_POST['badnum'] = False;
+				if ($_POST['return_time'] > 99) {
+					$_POST['badnum'] = True;
+				}else {
 				do {
 					$b = 1;
 					if((int)((string)$_POST['return_time']) > 3 && ($len - $b) % 2 == 0){
@@ -55,6 +58,7 @@ function enquote($text){
 					}
 					$b++;
 				} while ($b < $len);
+			  }
 				if(!is_numeric($_POST['return_time']) || ($_POST['return_time'] > 15.4 && $_POST['return_time'] < 100) || $_POST['return_time'] < 1 || $_POST['return_time'] > 1600 || $_POST['badnum']){
 					if($_POST['new'] == 5){
 						$_POST['return_time'] = 9;
