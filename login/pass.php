@@ -2,7 +2,7 @@
   require_once('../connection.php');
   //verify password login and set login cookie
   if(isset($_POST['pass'])) {
-    $year = date(Y); //eventually change this to 2017-18 perhaps, instead of just 2018?
+    $year = date('Y'); //eventually change this to 2017-18 perhaps, instead of just 2018?
     $loginQuery = $db->prepare("SELECT login_password FROM login WHERE login_year = '$year'");
     $loginQuery->execute();
     $loginResult = Array();
