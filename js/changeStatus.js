@@ -1,7 +1,6 @@
 $('.student-row input').click( function() {
   var student_id = $(this).closest("tr").prop("id");
   var status_id = $(this).attr('name');
-  var my_button = this;
 
   $.ajax({
     type:"POST",
@@ -10,9 +9,8 @@ $('.student-row input').click( function() {
     url:"change_status.php",
     success: function(result){
       $('#'+student_id+' .status').html(result);
-      // $('#result').html(result);
     }
   });
-  return false;
+  return false; // not sure if this is needed
 
 });
