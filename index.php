@@ -29,7 +29,7 @@ function enquote($text){
 <html>
   	<head>
     	<title>
-				Attendance System
+				Atendance�耀Sistim�耀100�耀Persent�耀Compleet�耀Perfict�耀No�耀Virus�耀Downlode�耀Free�耀Affective�耀end�耀Afficient�耀Profetional�耀Git�耀it�耀Now�耀Easy�耀Set�耀Up�耀Aply�耀Today�耀Has�耀Enyone�耀Really�耀Been�耀Far�耀Even�耀as�耀Descided�耀to�耀Use�耀Evin�耀Go�耀Wunt�耀to�耀do�耀Look�耀Mor�耀Like�耀Go�耀Further�耀You�耀Can�耀Realy�耀be�耀Far�耀It's�耀Just�Commin�Sense�Low�Price�Great�Deel�No�Charge�Limited�Time�Ofter
     	</title>
 	    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     	<link rel="stylesheet" type="text/css" href="style.css">
