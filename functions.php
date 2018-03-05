@@ -21,7 +21,7 @@ function status_update($student, $status, $old_status, $info, $return_time)
   $query_insert = 'INSERT INTO history (student_id, status_id, info, return_time) VALUES ('.$student.', '.$status.', '.$info.', '.$return_time.')';
 	$db->query($query_insert);
 
-  return 0;
+  return true;
 }
 function enquote($text){
 	return '"'.$text.'"';

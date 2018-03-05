@@ -31,12 +31,15 @@ require_once("functions.php");
             echo '<tr class="student-row" id="'.$row["student_id"].'">';
             echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
             echo '<td>'.$row["status_name"];
-            echo '<input type="submit" name="present" value="P">';
-            echo '<input type="submit" name="absent" value="A">';
+            echo '<input type="submit" name="1" value="P">';
+            echo '<input type="submit" name="7" value="A">';
             echo '</td></tr>';
           }
         ?>
       </table>
+    </div>
+    <div id="result">
+
     </div>
     <script type="text/javascript" src="js/changeStatus.js"></script>
 	</body>
