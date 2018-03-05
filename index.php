@@ -36,7 +36,7 @@ function enquote($text){
   	</head>
 	<body>
 		<div class ="topbar">
-			
+
 		</div>
     	<?php
 		//updates stati if forms are submitted
