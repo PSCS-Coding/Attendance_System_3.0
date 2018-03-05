@@ -77,12 +77,10 @@ function enquote($text){
 		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 		$x = 0;
-		$y = 0;
 		//makes rows of the table from query results
 		foreach($stati as &$row){
-			$y++;
 			$x++;
-			echo '<tr><td class="name"><form id="'.$x.'" method="POST"><input type="checkbox" name="'.$row["first_name"].'"></form>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td class="status"><p>'.$row["status_name"];
+			echo '<tr><td class="name"><form id="'.$x.'" method="POST"><input type="checkbox" name="'.$x.'"></form>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td class="status"><p>'.$row["status_name"];
 			if($row["status_name"] == "Late"){
 				echo ' @ '.$row["return_time"];
 			}
