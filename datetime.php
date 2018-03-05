@@ -12,16 +12,16 @@
     	# code...
     }
 		$time1 = new DateTime("today 8:00");
-    $time2 = new DateTime();
+    $time2 = new DateTime("today 18:33");
 		$start = new DateTime($time1->format('Y-m-d') . "9:00");
 		$end = new DateTime($time2->format('Y-m-d') . "15:40");
 
 		if ($time1 <= $start){
-            $time1 = clone $start;
+            $time1 = $start;
         }
         //is event 2 after the end of the school day of the same day of event 1?
         if ($time2 >= $end){
-            $time2 = clone $end;
+            $time2 = $end;
         }
 
     echo $time1->format('Y-m-d H:i:s') . "<br/>";
