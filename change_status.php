@@ -5,11 +5,13 @@ require_once("functions.php");
   $student = $_POST['student'];
   $status = $_POST['status'];
 
-// $query_insert = 'INSERT INTO history (student_id, status_id) VALUES ('.$student.', '.$status.')';
-if (status_update($student,$status,'','','')) {
-    echo "Successfully inserted";
-  }
-  else {
-    echo "Failed to insert";
-  }
+status_update($student,$status,'','',''); 
+
+
+  $query = 'SELECT * FROM current JOIN status_data ON current.status_id = status_data.status_id WHERE student_id = '.$student;
+  $current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+  echo $current[0]['status_name'];
+
+
+
  ?>

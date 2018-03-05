@@ -1,5 +1,5 @@
 <?
-function status_update($student, $status, $old_status, $info, $return_time)
+function status_update($student, $status, $old_status, $info = '', $return_time = '')
 {
 	global $db;
   // Update current table with new event
@@ -15,13 +15,17 @@ function status_update($student, $status, $old_status, $info, $return_time)
 	// Second: Compute the elapsed time from that last event until now
 	// Third: UPDATE the elapsed time (in decmial hours? minutes?) into the event_ID line of the history table
 
-
-
+	// if (!$return_time) {
+	// 	$return_time = '';
+	// }
+	// if (!$return_time) {
+	// 	$return_time = '';
+	// }
 	// Add new event to history table
-  $query_insert = 'INSERT INTO history (student_id, status_id, info, return_time) VALUES ('.$student.', '.$status.', '.$info.', '.$return_time.')';
+  $query_insert = 'INSERT INTO history (student_id, status_id) VALUES ('.$student.', '.$status.')';
 	$db->query($query_insert);
 
-  return true;
+  return 0;
 }
 function enquote($text){
 	return '"'.$text.'"';

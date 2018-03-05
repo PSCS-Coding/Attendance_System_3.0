@@ -30,7 +30,7 @@ require_once("functions.php");
           foreach ($current as &$row) {
             echo '<tr class="student-row" id="'.$row["student_id"].'">';
             echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
-            echo '<td>'.$row["status_name"];
+            echo '<td><span class="status">'.$row["status_name"].'</span>';
             echo '<input type="submit" name="1" value="P">';
             echo '<input type="submit" name="7" value="A">';
             echo '</td></tr>';
