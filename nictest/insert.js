@@ -1,10 +1,13 @@
 
+
   $('#sub').click(function () {
     var student = $('#student').val();
     var status = $('#status').val();
+
     $.ajax({
-      type:'POST',
+      type:"POST",
       data:{student:student,status:status},
+      dataType: "text",
       url:"insert.php",
       success: function(result){
         $('#result').html(result);
