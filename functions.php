@@ -1,4 +1,5 @@
-<?
+<?php
+
 function status_update($student, $status, $old_status, $info, $return_time)
 {
 	global $db;
