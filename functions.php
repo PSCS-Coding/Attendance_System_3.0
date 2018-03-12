@@ -13,13 +13,12 @@ function elapsed_time($student_id)
 
 		$lastEventTimeQuery = $db->query("SELECT timestamp FROM history WHERE student_id = '$student_id' ORDER BY event_id DESC LIMIT 1");
 		$time1 = new DateTime($lastEventTimeQuery->fetch_array()[0]); // last event in the history table
-		print_r($time1);
-		echo "<br/>";
 		if (isWeekend($time1->format('Y-m-d'))) {
 			return 0;
 		}
-		if ($db->query("SELECT COUNT(*) FROM holidays WHERE holiday_date =" . $time1->format('Y-m-d'))) {
-			return 0
+		$holQuery = $db->query("SELECT COUNT(*) FROM holidays WHERE holiday_date =" . $time1->format('Y-m-d'));
+		if ($holQuery->fetch_array()[0] != 0) {
+			return 0;
 		}
 
 		$time2 = new DateTime();
@@ -40,13 +39,15 @@ function elapsed_time($student_id)
 		}
 		return $time_elapsed;
 }
-
 function status_update($student, $status, $old_status, $info = '', $return_time = '')
 {
 	global $db;
   // Update current table with new event
 	$query = 'UPDATE current SET status_id = '.$status.' WHERE student_id = '.$student;
 	$db->query($query);
+	$elapsed = elapsed_time($student);
+  $query = "UPDATE history SET elapsed = '$elapsed' WHERE student_id = '$student' ORDER BY event_id DESC LIMIT 1";
+  $db->query($query);
 
 
   // TODO
