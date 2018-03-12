@@ -131,7 +131,7 @@ function enquote($text){
 				if($row['status_id'] != 1 ){
 					echo '<input type="submit" name="1" value="P">';
   					if($row['status_id'] == 0 || $row['status_id'] == 5){
-  						// Late echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=5> <input class="late" type="number" name="return_time" required placeholder="Time"> <input type="submit" name="change" value="L"></form>';
+  						echo"late button/field";// Late echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=5> <input class="late" type="number" name="return_time" required placeholder="Time"> <input type="submit" name="change" value="L"></form>';
   					}
   					if($row['status_id'] != 7  && $row['status_id'] != 4){
 		            	echo '<input type="submit" name="7" value="A">';
