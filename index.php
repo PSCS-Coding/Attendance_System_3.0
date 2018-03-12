@@ -86,6 +86,10 @@ function enquote($text){
 		}
 		echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"><input type="hidden" name="student" value="DAILY_RESET"><input type="hidden" name="return_time" value=0> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" class="reset" name="change" value="Set all to \'Not checked in\'"></form>';
 		?>
+	<div class = "sidebar">
+		admin
+		<a class= "sidetext" href="/admin.php?page=hi">hi</a>
+	</div>
     <div id="main-table">
       <table>
         <tr>
@@ -109,7 +113,7 @@ function enquote($text){
 				if($row['status_id'] != 1 ){
 					echo '<input type="submit" name="1" value="P">';
   					if($row['status_id'] == 0 || $row['status_id'] == 5){
-						echo '<input name="late" type="number" class="late"><input type="submit" name="5" value="L">';
+						echo '<input name="time" type="number" class="late"><input type="submit" name="5" value="L">';
   					}
   					if($row['status_id'] != 7  && $row['status_id'] != 4){
 		            	echo '<input type="submit" name="7" value="A">';

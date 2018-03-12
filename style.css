@@ -73,3 +73,28 @@ input{
 .reset{
 	margin-top: 60px;
 }
+.sidebar{
+	word-wrap: break-word;
+	margin: -80px 0;
+	width: 15px;
+	background-color: #555;
+	height:1000px;
+	position:fixed;
+	font-family: monospace;
+	padding:3px;
+	color:rgb(100,140,50);
+	font-size: 15px;
+}
+.sidetext{
+	font-family: "Comic Sans MS";
+	visibility: hidden;
+	display:block;
+	color: #555;
+}
+.sidebar:hover{
+	width:250px;
+}
+.sidebar:hover a{
+	color:rgb(100,140,50);
+	visibility:visible;
+}
