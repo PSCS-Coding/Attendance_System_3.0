@@ -14,7 +14,7 @@
 		<?php
 		//Allotted Hours
 		if((string)$_GET['page'] == "0"){
-			
+
 		}
 		//Current Events
 		elseif((string)$_GET['page'] == "1"){
