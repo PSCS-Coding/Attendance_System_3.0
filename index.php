@@ -103,9 +103,11 @@ function enquote($text){
         <?php
          	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
          	$current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+					$i = 0;
          	foreach ($current as &$row) {
+						$i++;
             	echo '<tr class="student-row" id="'.$row["student_id"].'">';
-            	echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
+            	echo '<td> <form method="POST"> <input type="checkbox" name="c'.$i.'">'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
             	echo '<td><span class="status">'.$row["status_name"].'</span>';
 				if($row["status_name"] == "Late"){
 					echo " @ ".$row["return_time"];
@@ -113,7 +115,7 @@ function enquote($text){
 				if($row['status_id'] != 1 ){
 					echo '<input type="submit" name="1" value="P">';
   					if($row['status_id'] == 0 || $row['status_id'] == 5){
-						echo '<input name="time" type="number" class="late"><input type="submit" name="5" value="L">';
+						echo '<input name="time" type="number" class="late" placholder="Arival time"><input type="submit" name="5" value="L">';
   					}
   					if($row['status_id'] != 7  && $row['status_id'] != 4){
 		            	echo '<input type="submit" name="7" value="A">';
