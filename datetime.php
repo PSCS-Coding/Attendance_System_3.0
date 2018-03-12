@@ -12,13 +12,13 @@
     {
 				global $db;
 
-				$lastEventTimeQuery = $db->query("SELECT timestamp FROM history WHERE student_id = '$student_id' LIMIT 1");
+				$lastEventTimeQuery = $db->query("SELECT timestamp FROM history WHERE student_id = '$student_id' ORDER BY event_id DESC LIMIT 1");
 				$time1 = new DateTime($lastEventTimeQuery->fetch_array()[0]); // last event in the history table
 				print_r($time1);
 				$time2 = new DateTime();
 
 				$start = new DateTime($time1->format('Y-m-d' . '9:00'));
-				$end = new DateTime($time2->format('Y-m-d' . '15:30'));
+				$end = new DateTime($time1->format('Y-m-d' . '15:40'));
 				//is event 1 before the start of the school day of the same day?
 				if ($time1 < $start){
 		        $time1 = $start;
@@ -27,10 +27,13 @@
 		    if ($time2 > $end){
 		        $time2 = $end;
 		    }
-				$time_elapsed = ($time2->getTimestamp()-$time1->getTimestamp())/60;
+				$time_elapsed = round(($time2->getTimestamp()-$time1->getTimestamp())/60, 2);
+				if ($time_elapsed < 0) {
+						$time_elapsed = 0;
+				}
 				return $time_elapsed;
     }
-		echo elapsed_time(1);
+		echo elapsed_time(3);
 
     //echo $time1->format('Y-m-d H:i:s') . "<br/>";
     //$time_elapsed = ($time2->getTimestamp()-$time1->getTimestamp())/60;   //echo round($time_elapsed, 3) . " Decimal Minutes<br/>";
