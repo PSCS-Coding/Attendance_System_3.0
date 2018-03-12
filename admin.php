@@ -10,10 +10,52 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-<?php
-echo $_GET['page'];
+	<div>
+		<?php
+		//Allotted Hours
+		if((string)$_GET['page'] == "0"){
 
+		}
+		//Current Events
+		elseif((string)$_GET['page'] == "1"){
 
-?>
+		}
+		//Facilitator Edit View
+		elseif((string)$_GET['page'] == "2"){
+
+		}
+		//Group Edit View
+		elseif((string)$_GET['page'] == "3"){
+
+		}
+		//History
+		elseif((string)$_GET['page'] == "4"){
+
+		}
+		//Holidays
+		elseif((string)$_GET['page'] == "5"){
+
+		}
+		//Offsite Locations
+		elseif((string)$_GET['page'] == "6"){
+
+		}
+		//Passwords
+		elseif((string)$_GET['page'] == "7"){
+
+		}
+		//School Hours
+		elseif((string)$_GET['page'] == "8"){
+
+		}
+		//Student Edit View
+		elseif((string)$_GET['page'] == "9"){
+
+		}
+		else{
+			echo "<h1>Bad URL!</h1>";
+		}
+		 ?>
+	</div>
 </body>
 </html>

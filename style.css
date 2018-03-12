@@ -88,7 +88,9 @@ input{
 .sidetext{
 	font-family: "Comic Sans MS";
 	visibility: hidden;
-	display:block;
+	display: block;
+	width:90%;
+	margin: 0 5%;
 	color: #555;
 }
 .sidebar:hover{
