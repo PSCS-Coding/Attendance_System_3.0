@@ -40,7 +40,7 @@
 			  				window.location.href = window.location.href.split("?to=")[1];
 							console.log(window.location.href.split("?to=")[1]);
 						} else {
-							window.location.href = "/test.php"; //change to be index
+							window.location.href = "../";
 						}
 		  		} else {
 						signOut();
