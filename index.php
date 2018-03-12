@@ -26,23 +26,20 @@ function enquote($text){
 }
 ?>
 <!DOCTYPE html>
-<html>
-  	<head>
-    	<title>
-<<<<<<< HEAD
-				Atendance☃�耀Sistim☃�耀100☃�耀Persent☃�耀Compleet☃�耀Perfict�耀No☃�耀Virus☃�耀Downlode☃�耀Free☃�耀Affective☃�耀end☃�耀Afficient☃�耀Profetional☃�耀Git☃�耀it☃�耀Now☃�耀Easy☃�耀Set☃�耀Up☃�耀Aply☃�耀Today☃�耀Has☃�耀Enyone☃�耀Really☃�耀Been☃�耀Far☃�耀Even☃�耀as☃�耀Descided☃�耀to☃�耀Use☃�耀Evin☃�耀Go☃�耀Wunt☃�耀to☃�耀do☃�耀Look☃�耀Mor☃�耀Like☃�耀Go☃�耀Further☃�耀You☃�耀Can☃�耀Realy☃�耀be☃�耀Far☃�耀It's☃�耀Just�Commin�Sense�Low�Price�Great�Deel�No�Charge�Limited�Time�Ofter
-=======
-				Attendance System
->>>>>>> parent of 7fe9b67... Revert "Revert "Revert "Fixing Stuff"""
-    	</title>
-	    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    	<link rel="stylesheet" type="text/css" href="style.css">
-  	</head>
-	<body>
-		<div class ="topbar">
 
-		</div>
+<html>
+
     	<?php
+		/*
+		echo "  	<head>
+
+			    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		    	<link rel="stylesheet" type="text/css" href="style.css">
+		  	</head>
+			<body>
+				<div class ="topbar">
+
+				</div>";
 		//updates stati if forms are submitted
 		if ($_POST && !empty($_POST['change'])){
 			if(empty($_POST['return_time'])){
@@ -82,7 +79,6 @@ function enquote($text){
 			status_update($_POST['student'],$_POST['new'] , $_POST['current'] , $_POST['return_time']);
 		}
 		//sets all students to NCI
-		echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"><input type="hidden" name="student" value="DAILY_RESET"><input type="hidden" name="return_time" value=0> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" class="reset" name="change" value="Set all to \'Not checked in\'"></form> <table><tr><th>Student</th><th>Status</th></tr>';
 		//querys database for main table
 		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
 		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
@@ -96,23 +92,64 @@ function enquote($text){
 			}
 			echo ' </p>';
 			//adds buttons to students in table
-			if($row['status_id'] != 1 ){
-				echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=1> <input type="submit" name="change" value="P"></form>';
-				if($row['status_id'] == 0 || $row['status_id'] == 5){
-					echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=5> <input class="late" type="number" name="return_time" required placeholder="Time"> <input type="submit" name="change" value="L"></form>';
-				}
-				if($row['status_id'] != 7  && $row['status_id'] != 4){
-					echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=7> <input type="submit" name="change" value="A"></form>';
-				}
-			}
-			else{
-				if($row['status_id'] != 4 ){
-					echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=4> <input type="submit" name="change" value="CO"></form>';
-				}
-			}
+
 			echo '</td></tr>';
 		}
 		echo '</table>';
+		*/
 		?>
+
+  <head>
+	<title>
+  		Atendance�Sistim�100�Persent�Compleet�Perfict�耀No�Virus�Downlode�Free�Affective�end�Afficient�Profetional�Git�it�Now�Easy�Set�Up�Aply�Today�Has�Enyone�Really�Been�Far�Even�as�Descided�to�Use�Evin�Go�Wunt�to�do�Look�Mor�Like�Go�Further�You�Can�Realy�be�Far�It's�Just�Commin�Sense�Low�Price�Great�Deel�No�Charge�Limited�Time�Ofter
+  	</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+	<body>
+		<?php
+		echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"><input type="hidden" name="student" value="DAILY_RESET"><input type="hidden" name="return_time" value=0> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" class="reset" name="change" value="Set all to \'Not checked in\'"></form>';
+		?>
+    <div id="main-table">
+      <table>
+        <tr>
+          <th>
+            Student
+          </th>
+          <th>
+            Status
+          </th>
+        </tr>
+        <?php
+         	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
+         	$current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+         	foreach ($current as &$row) {
+            	echo '<tr class="student-row" id="'.$row["student_id"].'">';
+            	echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
+            	echo '<td><span class="status">'.$row["status_name"].'</span>';
+				if($row['status_id'] != 1 ){
+					echo '<input type="submit" name="1" value="P">';
+  					if($row['status_id'] == 0 || $row['status_id'] == 5){
+  						// Late echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=5> <input class="late" type="number" name="return_time" required placeholder="Time"> <input type="submit" name="change" value="L"></form>';
+  					}
+  					if($row['status_id'] != 7  && $row['status_id'] != 4){
+		            	echo '<input type="submit" name="7" value="A">';
+  					}
+  				}
+  				else{
+  					if($row['status_id'] != 4 ){
+		            	echo '<input type="submit" name="4" value="CO">';
+  					}
+  				}
+            	echo '</td></tr>';
+          	}
+        ?>
+      </table>
+    </div>
+    <div id="result">
+
+    </div>
+    <script type="text/javascript" src="js/changeStatus.js"></script>
 	</body>
 </html>
