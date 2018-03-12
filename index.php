@@ -11,7 +11,7 @@ function status_update($student, $status, $old_status, $return_time)
 		$query = 'UPDATE current SET status_id = '.$status.', return_time = '.$return_time;
 		$db->query($query);
 	}else{
-		if($return_time!= Null){
+		if($return_time != Null){
 			$query = 'UPDATE current SET status_id = '.$status.', return_time = '.$return_time.' WHERE student_id = '.$student;
 			$db->query($query);
 		}else{
@@ -47,35 +47,7 @@ function enquote($text){
 			}
 			else{
 				//error handling for return times
-				$len = strlen((string)$_POST['return_time']);
-				$_POST['badnum'] = False;
-				if ($_POST['return_time'] > 99) {
-					$_POST['badnum'] = True;
-				}else {
-				do {
-					$b = 1;
-					if((int)((string)$_POST['return_time']) > 3 && ($len - $b) % 2 == 0){
-						$_POST['badnum'] = True;
-					}
-					$b++;
-				} while ($b < $len);
-			  }
-				if(!is_numeric($_POST['return_time']) || ($_POST['return_time'] > 15.4 && $_POST['return_time'] < 100) || $_POST['return_time'] < 1 || $_POST['return_time'] > 1600 || $_POST['badnum']){
-					if($_POST['new'] == 5){
-						$_POST['return_time'] = 9;
-					}
-					else {
-						$_POST['return_time'] = 15;
-					}
-				}
-				if($_POST['return_time'] < 100){
-					$_POST['return_time'] = $_POST['return_time'] * 100;
-				}
-				if($_POST['return_time'] < 900){
-					$_POST['return_time'] = $_POST['return_time'] + 1200;
-				}
-				$_POST['return_time'] = $_POST['return_time'] * 100;
-			}
+				if ($_POST && !empty($_POST['change'])){
 			status_update($_POST['student'],$_POST['new'] , $_POST['current'] , $_POST['return_time']);
 		}
 		//sets all students to NCI
@@ -109,6 +81,9 @@ function enquote($text){
   </head>
 	<body>
 		<?php
+		if ($_POST && !empty($_POST['change'])){
+			status_update($_POST['student'],$_POST['new'] , $_POST['current'] , $_POST['return_time']);
+		}
 		echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"><input type="hidden" name="student" value="DAILY_RESET"><input type="hidden" name="return_time" value=0> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" class="reset" name="change" value="Set all to \'Not checked in\'"></form>';
 		?>
     <div id="main-table">
@@ -128,10 +103,13 @@ function enquote($text){
             	echo '<tr class="student-row" id="'.$row["student_id"].'">';
             	echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
             	echo '<td><span class="status">'.$row["status_name"].'</span>';
+				if($row["status_name"] == "Late"){
+					echo " @ ".$row["return_time"];
+				}
 				if($row['status_id'] != 1 ){
 					echo '<input type="submit" name="1" value="P">';
   					if($row['status_id'] == 0 || $row['status_id'] == 5){
-  						echo"late button/field";// Late echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"> <input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'"><input type="hidden" name="new" value=5> <input class="late" type="number" name="return_time" required placeholder="Time"> <input type="submit" name="change" value="L"></form>';
+						echo '<input name="late" type="number" class="late"><input type="submit" name="5" value="L">';
   					}
   					if($row['status_id'] != 7  && $row['status_id'] != 4){
 		            	echo '<input type="submit" name="7" value="A">';
