@@ -6,15 +6,28 @@
   <body>
     <?php
 		require_once('connection.php');
-		//TODO make this into function form
+
 		// TODO weekend or holiday if condition
     function elapsed_time($student_id)
     {
 				global $db;
 
+				function isWeekend($date) {
+    			return (date('N', strtotime($date)) >= 6);
+				}
+
+
 				$lastEventTimeQuery = $db->query("SELECT timestamp FROM history WHERE student_id = '$student_id' ORDER BY event_id DESC LIMIT 1");
 				$time1 = new DateTime($lastEventTimeQuery->fetch_array()[0]); // last event in the history table
 				print_r($time1);
+				echo "<br/>";
+				if (isWeekend($time1->format('Y-m-d'))) {
+					return 0;
+				}
+				if ($db->query("SELECT COUNT(*) FROM holidays WHERE holiday_date =" . $time1->format('Y-m-d'))) {
+					return 0
+				}
+
 				$time2 = new DateTime();
 
 				$start = new DateTime($time1->format('Y-m-d' . '9:00'));
@@ -33,6 +46,7 @@
 				}
 				return $time_elapsed;
     }
+
 		echo elapsed_time(3);
 
     //echo $time1->format('Y-m-d H:i:s') . "<br/>";
