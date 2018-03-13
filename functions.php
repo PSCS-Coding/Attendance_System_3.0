@@ -2,7 +2,7 @@
 
 require_once('connection.php');
 
-function elapsed_time($student_id)
+function hrs_used($student_id)
 {
 		global $db;
 
@@ -45,8 +45,8 @@ function status_update($student, $status, $old_status, $info = '', $return_time 
   // Update current table with new event
 	$query = 'UPDATE current SET status_id = '.$status.' WHERE student_id = '.$student;
 	$db->query($query);
-	$elapsed = elapsed_time($student);
-  $query = "UPDATE history SET elapsed = '$elapsed' WHERE student_id = '$student' ORDER BY event_id DESC LIMIT 1";
+	$hrs_used = hrs_used($student);
+  $query = "UPDATE history SET hrs_used = '$hrs_used' WHERE student_id = '$student' ORDER BY event_id DESC LIMIT 1";
   $db->query($query);
 
 
