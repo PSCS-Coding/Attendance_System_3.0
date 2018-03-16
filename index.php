@@ -33,40 +33,109 @@ function enquote($text){
     	</title>
       <?php require_once('header.php'); ?>
 	    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    	<link rel="stylesheet" type="text/css" href="BREAKstyle.css">
+    	<link rel="stylesheet" type="text/css" href="style.css">
   	</head>
 	<body>
 	<div class="container">
-	<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Location</th>
-      <th scope="col">Return Time</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row"><input type="checkbox" class="checkbox"></th>
-      <td>Anthony Reyes</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row"><input type="checkbox" class="checkbox"></th>
-      <td></td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row"><input type="checkbox" class="checkbox"></th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
+	<div class="row">
+
+  <div class="col-sm-4">
+    <div class="card text-white bg-dark">
+      <div class="card-body">
+        <h5 class="card-title">Anthony Reyes</h5>
+        <p class="card-text">Field Trip</p>
+      </div>
+      <div class="card-footer">
+      <small class="text-muted">Nic &bull; Returning at 11:45 pm</small>
+    </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="card text-white bg-dark border-danger">
+      <div class="card-body">
+        <h5 class="card-title">Simon Egan</h5>
+        <p class="card-text">Late</p>
+      </div>
+      <div class="card-footer">
+      <small class="text-muted">Expected arrival: 10:15 am</small>
+    </div>
+    </div>
+  </div>
+
+<div class="col-sm-4">
+    <div class="card text-white bg-dark">
+      <div class="card-body">
+        <h5 class="card-title">Graeme Stoney</h5>
+        <p class="card-text">Present</p>
+      </div>
+      <div class="card-footer">
+      <small class="text-muted">Arrived at 8:46 am</small>
+    </div>
+    </div>
+  </div>
+
+<div class="col-sm-4">
+    <div class="card text-white bg-dark">
+      <div class="card-body">
+        <h5 class="card-title">Olivia Aaron</h5>
+        <p class="card-text">Present</p>
+      </div>
+      <div class="card-footer">
+      <small class="text-muted">Arrived at 8:31 am</small>
+    </div>
+    </div>
+  </div>
+
+<div class="col-sm-4">
+    <div class="card text-white bg-dark">
+      <div class="card-body">
+        <h5 class="card-title">Angus Breon</h5>
+        <p class="card-text">Field Trip</p>
+      </div>
+      <div class="card-footer">
+      <small class="text-muted">Nic &bull; Returning at 11:45 pm</small>
+    </div>
+    </div>
+  </div>
+
+<div class="col-sm-4">
+    <div class="card border-danger text-white bg-dark">
+      <div class="card-body">
+        <h5 class="card-title">Bradley McDougald</h5>
+        <p class="card-text">Present</p>
+      </div>
+      <div class="card-footer">
+      <small class="text-muted">Arrived at 9:02 am</small>
+    </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="card text-white bg-dark">
+      <div class="card-body">
+        <h5 class="card-title">Jack Natarangelio</h5>
+        <p class="card-text">Offsite</p>
+      </div>
+      <div class="card-footer">
+      <small class="text-muted">Uwajimaya &bull; Returning at 12:15 pm</small>
+    </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="red card text-white bg-dark" id="menu">
+      <div class="card-body">
+        <h5 class="card-title">Nic Warmenhoven</h5>
+        <p class="card-text">Offsite</p>
+      </div>
+      <div class="card-footer">
+      <small class="text-muted">World Pizza &bull; Returning at 12:07 pm</small>
+    </div>
+    </div>
+  </div>
+
+</div>
 </div>
 	</body>
 </html>
