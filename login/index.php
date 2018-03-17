@@ -4,7 +4,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="google-signin-client_id" content="1049698629280-prai66q0v2fba7d4vp701jo6d4mb9kct.apps.googleusercontent.com">
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
-<<<<<<< HEAD
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -41,8 +40,6 @@
 			}
 			window.onload = load;
 		</script>
-=======
->>>>>>> parent of 077a2c0... Failsafes
 		<title>PSCS Attendance System Login</title>
 	</head>
 	<body style='background-color: #272626;'>
@@ -57,7 +54,6 @@
 					<div id ='gs'class="g-signin2" data-onsuccess="onSignIn"></div>
 				</div>
 		</div>
-<<<<<<< HEAD
 		<br>
 		<div class="card text-white bg-dark mx-auto" style="width: 18rem;">
 			<form id = "pass" name="login" method="post" action="pass.php">
@@ -71,14 +67,6 @@
 					<button class="btn btn-primary" type="submit" name="submit">Sign In</button>
 				</div>
 			</form>
-=======
-		<div class='section'>
-			<p>Password sign-in:</p>
-			<form name="login" method="post" action="pass.php">
-    			<input name="pass" type="password" placeholder="Password" required>
-			<input type="submit" name="submit" value="Sign In">
-		</form>
->>>>>>> parent of 077a2c0... Failsafes
 		</div>
 		<script>
 			var sendUserData = function(name,imgurl,email,minute) {
@@ -87,29 +75,10 @@
 			    xmlHttp.send(null);
 			    return (xmlHttp.responseText);
 			}
-<<<<<<< HEAD
 			$('#pass').submit(function() {
 			signOut();
     	return true;
 			});
-=======
-			function signOut() {
-				gapi.auth2.getAuthInstance().disconnect();
-				window.location.href = window.location.href;
-			}
-			function findGetParameter(parameterName) {
-    		var result = null,
-        tmp = [];
-    	location.search
-        .substr(1)
-        .split("&")
-        .forEach(function (item) {
-          tmp = item.split("=");
-          if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
-        });
-    		return result;
-			}
->>>>>>> parent of 077a2c0... Failsafes
 			function onSignIn(googleUser) {
 				if(findGetParameter('out') != 'true') {
 		  		var profile = googleUser.getBasicProfile();
