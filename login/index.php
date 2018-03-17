@@ -28,7 +28,20 @@
 				gapi.auth2.getAuthInstance().disconnect();
 				window.location.href = window.location.href;
 			}
+			function findGetParameter(parameterName) {
+    		var result = null,
+        tmp = [];
+    	location.search
+        .substr(1)
+        .split("&")
+        .forEach(function (item) {
+          tmp = item.split("=");
+          if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+        });
+    		return result;
+			}
 			function onSignIn(googleUser) {
+				if(findGetParameter('out') != 'true') {
 		  		var profile = googleUser.getBasicProfile();
 					var d = new Date();
     		 	var n = d.getMinutes();
@@ -47,6 +60,12 @@
 						alert("It looks like you're not a user in our database. Please try a different Google account or use password login.");
 						console.log(authresult);
 				}
+			} else {
+				signOut();
+				var xmlHttp = new XMLHttpRequest();
+				xmlHttp.open("GET", "auth.php?out=" + 'true', false);
+				xmlHttp.send(null);
+			}
 			}
     </script>
 </html>
