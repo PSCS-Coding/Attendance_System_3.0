@@ -3,6 +3,30 @@
 	<head>
 		<meta name="google-signin-client_id" content="1049698629280-prai66q0v2fba7d4vp701jo6d4mb9kct.apps.googleusercontent.com">
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script>
+		function findGetParameter(parameterName) {
+			var result = null,
+			tmp = [];
+		location.search
+			.substr(1)
+			.split("&")
+			.forEach(function (item) {
+				tmp = item.split("=");
+				if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+			});
+			return result;
+		}
+			function passSignOut(){
+				if(findGetParameter('out') == 'true') {
+				var xmlHttp = new XMLHttpRequest();
+				xmlHttp.open("GET", "auth.php?out=" + 'true', false);
+				xmlHttp.send(null);
+				window.location.href = "../login";
+			}
+			}
+			window.onload = passSignOut;
+		</script>
 		<title>PSCS Attendance System Login</title>
 	</head>
 	<body>
@@ -12,7 +36,7 @@
 		</div>
 		<div class='section'>
 			<p>Password sign-in:</p>
-			<form name="login" method="post" action="pass.php">
+			<form id = "pass" name="login" method="post" action="pass.php">
     			<input name="pass" type="password" placeholder="Password" required>
 			<input type="submit" name="submit" value="Sign In">
 		</form>
@@ -28,18 +52,10 @@
 				gapi.auth2.getAuthInstance().disconnect();
 				window.location.href = window.location.href;
 			}
-			function findGetParameter(parameterName) {
-    		var result = null,
-        tmp = [];
-    	location.search
-        .substr(1)
-        .split("&")
-        .forEach(function (item) {
-          tmp = item.split("=");
-          if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
-        });
-    		return result;
-			}
+			$('#pass').submit(function() {
+			signOut();
+    	return true;
+			});
 			function onSignIn(googleUser) {
 				if(findGetParameter('out') != 'true') {
 		  		var profile = googleUser.getBasicProfile();
