@@ -3,9 +3,6 @@
     if($_GET['ver'] == date('i') || $_GET['ver'] == (date('i') + 1)) {
     if(!empty($_GET["name"]) && !empty($_GET["imgurl"]) && !empty($_GET["email"])){
         //student table
-        if(isset($_COOKIE['login'])) {
-          setcookie("login", $_GET['imgurl'], time() - 3600, "/");
-        }
         $studentQuery = $db->prepare("SELECT email from student_data");
         $studentQuery->execute();
         $name = explode(' ', $_GET['name']);
