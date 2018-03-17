@@ -25,11 +25,9 @@
 			return result;
 		}
 			function load(){
-				if(findGetParameter('out') == 'true') {
-					var xmlHttp = new XMLHttpRequest();
-					xmlHttp.open("GET", "auth.php?out=" + 'true', false);
-					xmlHttp.send(null);
-					signOut();
+				if(findGetParameter('secondary') == 'true') {
+					$("#wrong").html('<div class="alert alert-warning alert-dismissible fade show" role="alert">  <strong>You are signed out. </strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button></div>');
+
 				}
 				if(findGetParameter('wrong') == 'true') {
 					$("#wrong").html('<div class="alert alert-warning alert-dismissible fade show" role="alert">  <strong>Wrong password.</strong> Please try again. <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button></div>');
@@ -56,7 +54,7 @@
 		</div>
 		<br>
 		<div class="card text-white bg-dark mx-auto" style="width: 18rem;">
-			<form id = "pass" name="login" method="post" action="pass.php">
+			<form name="login" method="post" action="pass.php">
   			<div class="card-body">
     			<h5 class="card-title">Password Login</h5>
 					<div class='card-text'>
@@ -76,7 +74,7 @@
 			    return (xmlHttp.responseText);
 			}
 			$('#pass').submit(function() {
-			signOut();
+			gapi.auth2.getAuthInstance().disconnect();
     	return true;
 			});
 			function onSignIn(googleUser) {
@@ -102,7 +100,8 @@
 				var xmlHttp = new XMLHttpRequest();
 				xmlHttp.open("GET", "auth.php?out=" + 'true', false);
 				xmlHttp.send(null);
-				signOut();
+				gapi.auth2.getAuthInstance().disconnect();
+				window.location.href = '../login/?secondary=true';
 			}
 			}
     </script>
