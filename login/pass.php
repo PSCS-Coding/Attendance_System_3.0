@@ -5,8 +5,7 @@
     if(isset($_COOKIE['user'])) {
       setcookie("user", '', time() - 3600, "/");
     }
-    $year = date('Y'); //eventually change this to 2017-18 perhaps, instead of just 2018?
-    $loginQuery = $db->prepare("SELECT login_password FROM login WHERE login_year = '$year'");
+    $loginQuery = $db->prepare("SELECT login_password FROM login");
     $loginQuery->execute();
     $loginResult = Array();
     foreach ($loginQuery->get_result() as $row) {
@@ -17,7 +16,7 @@
       setcookie("login", $cook, time() + (86400 * 5), "/");
       header('Location: ../');
     } else {
-      echo 'Wrong password.';
+      header('Location: ../login/?wrong=true');
     }
   }
 ?>
