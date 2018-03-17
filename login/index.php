@@ -65,6 +65,7 @@
 				var xmlHttp = new XMLHttpRequest();
 				xmlHttp.open("GET", "auth.php?out=" + 'true', false);
 				xmlHttp.send(null);
+				window.location.href = "../login";
 			}
 			}
     </script>
