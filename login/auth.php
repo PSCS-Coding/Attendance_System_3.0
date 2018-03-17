@@ -46,6 +46,7 @@
     }
   } else {
     setcookie("user", $_GET['imgurl'], time() - 3600, "/");
+    setcookie("login", $_GET['imgurl'], time() - 3600, "/");
     echo 'bad verification';
   }
 ?>

@@ -12,7 +12,7 @@
     if($loginResult[0] == crypt($_POST['pass'], 'P9')) {
       $cook = crypt($_POST['pass'], 'P9');
       setcookie("login", $cook, time() + (86400 * 5), "/");
-      header('Location: /test.php'); //eventually change to main page
+      header('Location: ../');
     } else {
       echo 'Wrong password.';
     }
