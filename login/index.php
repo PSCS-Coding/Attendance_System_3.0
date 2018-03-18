@@ -40,6 +40,9 @@
 			return result;
 		}
 			function load(){
+				if(findGetParameter('db') == 'true') {
+					$("#wrong").html('<div class="alert alert-warning alert-dismissible fade show" role="alert">  <strong>We\'re having problems connecting to our database. </strong> Please try again.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button></div>');
+				}
 				if(findGetParameter('secondary') == 'true') {
 					$("#wrong").html('<div class="alert alert-success alert-dismissible fade show" role="alert">  <strong>You are signed out. </strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button></div>');
 				}
@@ -77,6 +80,7 @@
 			<form name="login" method="post" action="pass.php">
   			<div class="card-body">
     			<h5 class="card-title">Password Login</h5>
+					<div class='container' style='height: .75rem;'></div>
 					<div class='card-text'>
 		    		<input name="pass" type="password" class="form-control" id ="pass" placeholder="Password" required>
 						<div class='container' style='height:.75rem'></div>
@@ -112,9 +116,12 @@
 						} else {
 							window.location.href = "../";
 						}
-		  		} else {
+		  		} else if(authresult.includes('Unable to connect to database')){
+						$("#wrong").html('<div class="alert alert-warning alert-dismissible fade show" role="alert">  <strong>We\'re having problems connecting to our database. </strong> Please try again.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button></div>');
+					} else {
 						gapi.auth2.getAuthInstance().disconnect();
 						window.location.href = '../login/?inv=true';
+						console.log(authresult);
 				}
 			} else {
 				var xmlHttp = new XMLHttpRequest();

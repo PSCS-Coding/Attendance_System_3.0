@@ -1,5 +1,8 @@
 <?php
-  require_once('../connection.php');
+  require_once('../connection.php?die=false');
+  if($db->connect_errno > 0){
+    header('Location: ../login/?db=true');
+  }
   //verify password login and set login cookie
   if(isset($_POST['pass'])) {
     if(isset($_COOKIE['user'])) {
