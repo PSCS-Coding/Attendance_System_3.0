@@ -12,6 +12,21 @@
 			gapi.auth2.getAuthInstance().disconnect();
 			window.location.href = '../login';
 		}
+		function getCookie(cname) {
+	    var name = cname + "=";
+	    var decodedCookie = decodeURIComponent(document.cookie);
+	    var ca = decodedCookie.split(';');
+	    for(var i = 0; i <ca.length; i++) {
+	        var c = ca[i];
+	        while (c.charAt(0) == ' ') {
+	            c = c.substring(1);
+	        }
+	        if (c.indexOf(name) == 0) {
+	            return c.substring(name.length, c.length);
+	        }
+	    }
+	    return "";
+		}
 		function findGetParameter(parameterName) {
 			var result = null,
 			tmp = [];
@@ -27,7 +42,12 @@
 			function load(){
 				if(findGetParameter('secondary') == 'true') {
 					$("#wrong").html('<div class="alert alert-warning alert-dismissible fade show" role="alert">  <strong>You are signed out. </strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button></div>');
-
+				}
+				if(findGetParameter('out') == 'true' && getCookie('login') != '') {
+					var xmlHttp = new XMLHttpRequest();
+					xmlHttp.open("GET", "auth.php?out=" + 'true', false);
+					xmlHttp.send(null);
+					window.location.href = '../login/?secondary=true';
 				}
 				if(findGetParameter('wrong') == 'true') {
 					$("#wrong").html('<div class="alert alert-warning alert-dismissible fade show" role="alert">  <strong>Wrong password.</strong> Please try again. <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button></div>');
@@ -43,7 +63,7 @@
 	<body style='background-color: #272626;'>
 	<div id ='wrong'></div>
 		<div class='container' style='height: 5rem;'></div>
-		<div class="card text-white bg-dark mx-auto" style="width: 18rem;">
+		<div class="card text-white bg-dark mx-auto" style="width: 23rem;">
 				<div class="card-body">
 					<h5 class="card-title">Google Login</h5>
 					<div class='card-text'></div>
@@ -53,12 +73,13 @@
 				</div>
 		</div>
 		<br>
-		<div class="card text-white bg-dark mx-auto" style="width: 18rem;">
+		<div class="card text-white bg-dark mx-auto" style="width: 23rem;">
 			<form name="login" method="post" action="pass.php">
   			<div class="card-body">
     			<h5 class="card-title">Password Login</h5>
 					<div class='card-text'>
 		    		<input name="pass" type="password" class="form-control" id ="pass" placeholder="Password" required>
+						<div class='container' style='height:.75rem'></div>
 					</div>
   			</div>
 				<div class="card-footer">
@@ -82,7 +103,6 @@
 		  		var profile = googleUser.getBasicProfile();
 					var d = new Date();
     		 	var n = d.getMinutes();
-					console.log(profile.getEmail());
 		  		var authresult = sendUserData(profile.getName(), profile.getImageUrl(), profile.getEmail(), n);
 		  		if(authresult >= 1) {
 						console.log(authresult);
