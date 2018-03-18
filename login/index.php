@@ -41,7 +41,7 @@
 		}
 			function load(){
 				if(findGetParameter('secondary') == 'true') {
-					$("#wrong").html('<div class="alert alert-warning alert-dismissible fade show" role="alert">  <strong>You are signed out. </strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button></div>');
+					$("#wrong").html('<div class="alert alert-success alert-dismissible fade show" role="alert">  <strong>You are signed out. </strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button></div>');
 				}
 				if(findGetParameter('out') == 'true' && getCookie('login') != '') {
 					var xmlHttp = new XMLHttpRequest();
@@ -50,10 +50,10 @@
 					window.location.href = '../login/?secondary=true';
 				}
 				if(findGetParameter('wrong') == 'true') {
-					$("#wrong").html('<div class="alert alert-warning alert-dismissible fade show" role="alert">  <strong>Wrong password.</strong> Please try again. <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button></div>');
+					$("#wrong").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">  <strong>Wrong password.</strong> Please try again. <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button></div>');
 				}
 				if(findGetParameter('inv') == 'true') {
-					$("#wrong").html('<div class="alert alert-warning alert-dismissible fade show" role="alert">  <strong>It looks like you\'re not a user.</strong> Please try a different account. <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button></div>');
+					$("#wrong").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">  <strong>It looks like you\'re not a user.</strong> Please try a different account. <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button></div>');
 				}
 			}
 			window.onload = load;
