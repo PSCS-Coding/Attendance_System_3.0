@@ -7,14 +7,12 @@ function elapsed_time($student_id)
 		global $db;
 
 		function isWeekend($date) {
-			return (date('N', strtotime($date)) >= 6);
+				return (date('N', strtotime($date)) >= 6);
 		}
 
 
 		$lastEventTimeQuery = $db->query("SELECT timestamp FROM history WHERE student_id = '$student_id' ORDER BY event_id DESC LIMIT 1");
 		$time1 = new DateTime($lastEventTimeQuery->fetch_array()[0]); // last event in the history table
-		print_r($time1);
-		echo "<br/>";
 		if (isWeekend($time1->format('Y-m-d'))) {
 			return 0;
 		}
@@ -69,7 +67,6 @@ function total_offsite_used($student){
 	  $sum = round($result->fetch_array()[0], 2);
 
 		return $sum;
-
 }
 
 ?>
