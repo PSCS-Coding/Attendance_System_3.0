@@ -61,17 +61,19 @@ require_once("connection.php");
 		else{
 			echo "<h1>Bad URL!</h1>";
 		}if($goodpage){
+			if(!empty($_POST)&&$_POST['go']){
+
+			}
 			echo '<table><tr>';
 			foreach($index as &$header){
 				echo '<th>'.str_replace('_', ' ',$header).'</th>';
 			}
 			$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 			echo '</tr>';
-			print_r($query);
-			foreach($values as &$value){
+			foreach($values as $row => &$value){
 				echo '<tr>';
-				foreach($index as &$oi){
-					echo '<td>'.$value[$oi].'</td>';
+				foreach($index as $col => &$oi){
+					echo '<td class="admin"><form method="POST"><input type="text" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" value="✔️"></form></td>';
 				}
 				echo '</tr>';
 			}
