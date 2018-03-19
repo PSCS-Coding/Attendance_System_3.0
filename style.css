@@ -90,7 +90,7 @@ input{
 	visibility: hidden;
 	display: block;
 	width:90%;
-	margin: 0 5%;
+	margin: 5px 5%;
 	color: #555;
 }
 .sidebar:hover{
@@ -123,6 +123,11 @@ td.admin{
 ::placeholder{
 	opacity:1;
 }
+<<<<<<< HEAD
 #div1 {
 	border: 1px solid black;
+=======
+.sidebar.back{
+	margin: -20px 0;
+>>>>>>> d576acf0396674798fc8aec6e7a3b0abd3e02c24
 }
