@@ -88,7 +88,7 @@ function enquote($text){
 		?>
 	<div class = "sidebar">
 		admin
-		<a class= "sidetext" href="/admin.php?page=hi">hi</a>
+		<a class= "sidetext" href="/admin.php?page=0">hi</a>
 	</div>
     <div id="main-table">
       <table>
