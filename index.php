@@ -118,7 +118,7 @@ function enquote($text){
          	$current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 					$i = 0;
          	foreach ($current as &$row) {
-						$i++;
+				$i++;
             	echo '<tr class="student-row" id="'.$row["student_id"].'">';
             	echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
             	echo '<td><span class="status">'.$row["status_name"].'</span>';

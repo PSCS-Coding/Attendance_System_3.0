@@ -113,7 +113,7 @@ require_once("connection.php");
 				if((string)$_GET['page'] == "3"){
 					foreach($index as $row => &$oi){
 		            	if ($draggeble == False) {
-							echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
+							echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" value="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
 		  				}else {
 		              		echo '<td class="admin">'.$value[$index[1]].'</td>';
 		              		echo "</tr>";
