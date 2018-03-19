@@ -21,7 +21,7 @@ require_once("connection.php");
 	<a class= "sidetext" href="/admin.php?page=3">Group Edit View</a>
 	<a class= "sidetext" href="/admin.php?page=4">History</a>
 	<a class= "sidetext" href="/admin.php?page=5">Holidays</a>
-	<a class= "sidetext" href="/admin.php?page=6">Offsit Locations</a>
+	<a class= "sidetext" href="/admin.php?page=6">Offsite Locations</a>
 	<a class= "sidetext" href="/admin.php?page=7">Passwords</a>
 	<a class= "sidetext" href="/admin.php?page=8">School Hours</a>
 	<a class= "sidetext" href="/admin.php?page=9">Student Edit View</a>
@@ -106,9 +106,15 @@ require_once("connection.php");
 			echo '</tr>';
 			foreach($values as $col => &$value){
 				echo '<tr>';
-				echo '<td class="admin">'.$value[$index[0]].'</td>';
-				foreach($index as $row => &$oi){
-					if($row != 0){
+				if((string)$_GET['page'] != "8"){
+					echo '<td class="admin">'.$value[$index[0]].'</td>';
+					foreach($index as $row => &$oi){
+						if($row != 0){
+							echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
+						}
+					}
+				}else{
+					foreach($index as $row => &$oi){
 						echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
 					}
 				}
