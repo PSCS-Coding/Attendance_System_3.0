@@ -25,6 +25,8 @@ require_once("connection.php");
 	<a class= "sidetext" href="/admin.php?page=7">Passwords</a>
 	<a class= "sidetext" href="/admin.php?page=8">School Hours</a>
 	<a class= "sidetext" href="/admin.php?page=9">Student Edit View</a>
+	front end
+	<a class= "sidetext" href="/index.php">MUI</a>
 	</div>
 	<div>
 		<?php
