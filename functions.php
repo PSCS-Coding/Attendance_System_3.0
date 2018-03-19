@@ -37,7 +37,7 @@ function hrs_used($student_id) {
 function status_update($student, $status, $info = '', $return_time = '') {
 	global $db;
   // Update current table with new event
-	$query = 'UPDATE current SET status_id = '.$status.' WHERE student_id = '.$student;
+	$query = 'UPDATE current SET status_id = '.$status.', return_time = "'.$return_time.'" WHERE student_id = '.$student;
 	$db->query($query);
 
 	// Update immediate prior record in history table with calculated duration
