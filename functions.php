@@ -2,21 +2,9 @@
 
 require_once('connection.php');
 
-<<<<<<< HEAD
 function hrs_used($student_id) {
 		global $db;
 
-=======
-function hrs_used($student_id)
-{
-		global $db;
-
-		function isWeekend($date) {
-			return (date('N', strtotime($date)) >= 6);
-		}
-
-
->>>>>>> master
 		$lastEventTimeQuery = $db->query("SELECT timestamp FROM history WHERE student_id = '$student_id' ORDER BY event_id DESC LIMIT 1");
 		$time1 = new DateTime($lastEventTimeQuery->fetch_array()[0]); // last event in the history table
 		if (isWeekend($time1->format('Y-m-d'))) {
@@ -35,11 +23,9 @@ function hrs_used($student_id)
 		if ($time1 < $start){
 				$time1 = $start;
 		}
-<<<<<<< HEAD
+
 		//is event 2 after the end of the school day of the same day of event 1?
-=======
-				//is event 2 after the end of the school day of the same day of event 1?
->>>>>>> master
+
 		if ($time2 > $end){
 				$time2 = $end;
 		}
@@ -49,13 +35,9 @@ function hrs_used($student_id)
 		}
 		return $time_elapsed;
 }
-<<<<<<< HEAD
 
 function status_update($student, $status, $info = '', $return_time = '') {
-=======
-function status_update($student, $status, $old_status, $info = '', $return_time = '')
-{
->>>>>>> master
+
 	global $db;
   // Update current table with new event
 	$query = 'UPDATE current SET status_id = '.$status.', return_time = "'.$return_time.'" WHERE student_id = '.$student;
@@ -100,4 +82,8 @@ function start_the_day() {
 	}
 }
 
+function pretty_time($SQLdatetime) {
+	$time = new DateTime($SQLdatetime);
+	return $time->format('g:i');
+}
 ?>
