@@ -33,6 +33,9 @@ require_once("connection.php");
 		//Group Edit View
 		elseif((string)$_GET['page'] == "3"){
 			$goodpage = True;
+      $index = array('veteran_year','default_offsite','default_is');
+      $query = 'SELECT * FROM allotted_hours;';
+      echo '<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"> <p>add to group</p> </div>';
 		}
 		//History
 		elseif((string)$_GET['page'] == "4"){

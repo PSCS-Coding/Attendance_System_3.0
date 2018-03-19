@@ -123,3 +123,6 @@ td.admin{
 ::placeholder{
 	opacity:1;
 }
+#div1 {
+	border: 1px solid black;
+}
