@@ -13,6 +13,12 @@ require_once("connection.php");
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+	<div class = "sidebar back">
+	admin
+	<a class= "sidetext" href="/admin.php?page=0">Allotted Hours</a>
+	<a class= "sidetext" href="/admin.php?page=1">Current Events</a>
+	<a class= "sidetext" href="/admin.php?page=2">Facilitator Edit View</a>
+	</div>
 	<div>
 		<?php
 		$goodpage = false;
@@ -21,15 +27,18 @@ require_once("connection.php");
 			$goodpage = True;
 			$index = array('veteran_year','default_offsite','default_is');
 			$database = 'allotted_hours';
-			$query = 'SELECT * FROM '.$database.';';
 		}
 		//Current Events
 		elseif((string)$_GET['page'] == "1"){
 			$goodpage = True;
+			$index = array('student_id','status_id','info','return_time');
+			$database = 'current';
 		}
 		//Facilitator Edit View
 		elseif((string)$_GET['page'] == "2"){
 			$goodpage = True;
+			$index = array('facilitator_id','facilitator_name');
+			$database = 'facilitators';
 		}
 		//Group Edit View
 		elseif((string)$_GET['page'] == "3"){
@@ -62,6 +71,7 @@ require_once("connection.php");
 		else{
 			echo "<h1>Bad URL!</h1>";
 		}if($goodpage){
+			$query = 'SELECT * FROM '.$database.';';
 			echo '<table><tr>';
 			foreach($index as &$header){
 				echo '<th>'.str_replace('_', ' ',$header).'</th>';

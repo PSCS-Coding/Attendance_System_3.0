@@ -90,7 +90,7 @@ input{
 	visibility: hidden;
 	display: block;
 	width:90%;
-	margin: 0 5%;
+	margin: 5px 5%;
 	color: #555;
 }
 .sidebar:hover{
@@ -122,4 +122,7 @@ td.admin{
 }
 ::placeholder{
 	opacity:1;
+}
+.sidebar.back{
+	margin: -20px 0;
 }
