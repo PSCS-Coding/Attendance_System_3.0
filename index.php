@@ -78,6 +78,8 @@ function enquote($text){
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="js/timepicker/jquery.timepicker.min.js" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="js/timepicker/jquery.timepicker.css" />
   </head>
 	<body>
 		<?php
@@ -124,7 +126,7 @@ function enquote($text){
 				if($row['status_id'] != 1 ){
 					echo '<input type="submit" name="1" value="P">';
   					if($row['status_id'] == 0 || $row['status_id'] == 5){
-						echo '<input name="time" type="number" class="late" placholder="Arival time"><input type="submit" name="5" value="L">';
+						echo '<input name="time" class="late" placeholder="Arrival time"><input type="submit" name="5" value="L">';
   					}
   					if($row['status_id'] != 7  && $row['status_id'] != 4){
 		            	echo '<input type="submit" name="7" value="A">';
@@ -142,7 +144,15 @@ function enquote($text){
     </div>
     <div id="result">
 
-    </div>
+	    </div>
     <script type="text/javascript" src="js/changeStatus.js"></script>
+		<script type="text/javascript">
+			$('.late').timepicker({
+		    'minTime': '9:00am',
+		    'maxTime': '3:40pm',
+				'step' : 5,
+				'scrollDefault' : 'now'
+			});
+		</script>
 	</body>
 </html>

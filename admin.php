@@ -12,8 +12,8 @@ require_once("connection.php");
   <link rel="stylesheet" type="text/css" href="style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-<body>
-	<div class = "sidebar back">
+<body class="back">
+	<div class = "sidebar">
 	admin
 	<a class= "sidetext" href="/admin.php?page=0">Allotted Hours</a>
 	<a class= "sidetext" href="/admin.php?page=1">Current Events</a>
@@ -21,10 +21,12 @@ require_once("connection.php");
 	<a class= "sidetext" href="/admin.php?page=3">Group Edit View</a>
 	<a class= "sidetext" href="/admin.php?page=4">History</a>
 	<a class= "sidetext" href="/admin.php?page=5">Holidays</a>
-	<a class= "sidetext" href="/admin.php?page=6">Offsit Locations</a>
+	<a class= "sidetext" href="/admin.php?page=6">Offsite Locations</a>
 	<a class= "sidetext" href="/admin.php?page=7">Passwords</a>
 	<a class= "sidetext" href="/admin.php?page=8">School Hours</a>
 	<a class= "sidetext" href="/admin.php?page=9">Student Edit View</a>
+	front end
+	<a class= "sidetext" href="/index.php">MUI</a>
 	</div>
 	<div>
 		<?php
@@ -107,6 +109,7 @@ require_once("connection.php");
 			}
 			echo '</tr>';
 			foreach($values as $col => &$value){
+<<<<<<< HEAD
 				echo '<tr draggeble="'.$draggeble.'" ondragstart="drag(event)">';
 				echo '<td class="admin">'.$value[$index[0]].'</td>';
 				foreach($index as $row => &$oi){
@@ -123,6 +126,20 @@ require_once("connection.php");
               echo "</tr>";
             }
           }
+=======
+				echo '<tr>';
+				if((string)$_GET['page'] != "8"){
+					echo '<td class="admin">'.$value[$index[0]].'</td>';
+					foreach($index as $row => &$oi){
+						if($row != 0){
+							echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
+						}
+					}
+				}else{
+					foreach($index as $row => &$oi){
+						echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
+					}
+>>>>>>> ecd7f8ab0acffb43ca0c68195cf46cf4fe8e84b1
 				}
 				echo '</tr>';
 			}

@@ -61,21 +61,13 @@ input{
 	text-align: center;
 	width:15%;
 }
-.topbar {
-	position:fixed;
-	width:100%;
-	background-color: #aaa;
-	color:#555;
-	padding:10px 0;
-	border-bottom:2px #888 solid;
-	margin-bottom: 30px;
-}
 .reset{
-	margin-top: 60px;
+	position:fixed;
+	margin-top: -18px;
 }
 .sidebar{
 	word-wrap: break-word;
-	margin: -80px 0;
+	margin: -20px 0;
 	width: 15px;
 	background-color: #555;
 	height:1000px;
@@ -134,4 +126,7 @@ td.admin{
 	margin:0 auto;
 	text-align: center;
 	width:20%;
+}
+.back > .sidebar{
+	padding-top:20px;
 }
