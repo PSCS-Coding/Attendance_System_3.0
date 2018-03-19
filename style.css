@@ -9,19 +9,37 @@ body {
 .card-title {
 	font-size: 1.6rem !important;
 }
-
 .card:hover{
 	background-color:#25292d !important;
 	color: #444c54 !important;
-	webkit-filter: blur(1px); /* Chrome, Safari, Opera */
-	filter: blur(1px);
-	display:block !important;
 }
-.red {
-	color: red;
-	z-index: 10;
+.card .stat_Button {
 	display: none;
+	z-index: 10;
+
 }
-.card:hover + .red{
-	display:block !important;
-   }
+.card:hover .stat_Button {
+	display: inline !important;
+	webkit-filter: blur(0px) !important; /* Chrome, Safari, Opera */
+	filter: blur(0px) !important;
+}
+.plzwork.surf{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+#search-bg {
+	/* Absolutely position it, but stretch it to all four corners, then put it just behind #search's z-index */
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+	z-index: 99;
+  
+	/* Pull the background 70px higher to the same place as #bg's */
+	background-position: center -70px;
+  
+	-webkit-filter: blur(10px);
+	filter: blur(10px);
+  }
