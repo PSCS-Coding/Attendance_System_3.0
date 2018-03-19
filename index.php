@@ -100,6 +100,8 @@ function enquote($text){
 		<a class= "sidetext" href="/admin.php?page=7">Passwords</a>
 		<a class= "sidetext" href="/admin.php?page=8">School Hours</a>
 		<a class= "sidetext" href="/admin.php?page=9">Student Edit View</a>
+		front end
+		<a class= "sidetext" href="/index.php">Front Page</a>
 	</div>
     <div id="main-table">
       <table>
