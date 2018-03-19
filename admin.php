@@ -62,7 +62,7 @@ require_once("connection.php");
 		//History
 		elseif((string)$_GET['page'] == "4"){
 			$goodpage = True;
-			$index = array('event_id','student_id','timestamp','status_id','info','return_time','offsite_hours_used');
+			$index = array('event_id','student_id','timestamp','status_id','info','return_time','offsite_hrs_used');
 			$database = 'history';
 		}
 		//Holidays
