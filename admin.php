@@ -37,62 +37,71 @@ require_once("connection.php");
 			$goodpage = True;
 			$index = array('veteran_year','default_offsite','default_is');
 			$database = 'allotted_hours';
+      $draggeble = False;
 		}
 		//Current Events
 		elseif((string)$_GET['page'] == "1"){
 			$goodpage = True;
 			$index = array('student_id','status_id','info','return_time');
 			$database = 'current';
+      $draggeble = False;
 		}
 		//Facilitator Edit View
 		elseif((string)$_GET['page'] == "2"){
 			$goodpage = True;
 			$index = array('facilitator_id','facilitator_name');
 			$database = 'facilitators';
+      $draggeble = False;
 		}
 		//Group Edit View
 		elseif((string)$_GET['page'] == "3"){
 			$goodpage = True;
-      		$index = array('first_name','last_name');
-      		$database = 'student_data';
-      		echo '<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"> <p>add to group</p> </div>';
-      		$draggeble = True;
+      $index = array('first_name','last_name');
+      $database = 'student_data';
+      echo '<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"> <p>add to group</p> </div>';
+      $draggeble = True;
 		}
 		//History
 		elseif((string)$_GET['page'] == "4"){
 			$goodpage = True;
 			$index = array('event_id','student_id','timestamp','status_id','info','return_time','offsite_hours_used');
 			$database = 'history';
+      $draggeble = False;
 		}
 		//Holidays
 		elseif((string)$_GET['page'] == "5"){
 			$goodpage = True;
 			$index = array('holiday_id','holiday_name','holiday_date');
 			$database = 'holidays';
+      $draggeble = False;
 		}
 		//Offsite Locations
 		elseif((string)$_GET['page'] == "6"){
 			$goodpage = True;
 			$index = array('location_id','location_name');
 			$database = 'offsite_locations';
+      $draggeble = False;
 		}
 		//Passwords
 		elseif((string)$_GET['page'] == "7"){
 			$goodpage = True;
 			$index = array('login_year','login_password');
 			$database = 'login';
+      $draggeble = False;
 		}
 		//School Hours
 		elseif((string)$_GET['page'] == "8"){
 			$goodpage = True;
 			$index = array('start_time','end_time');
 			$database = 'globals';
+      $draggeble = False;
 		}
 		//Student Edit View
 		elseif((string)$_GET['page'] == "9"){
 			$goodpage = True;
 			$index = array('student_id','first_name','last_name','imgurl','grad_year','veteran_year','current_offsite_hours','current_is_hours','priv','user_id','active');
 			$database = 'student_data';
+      $draggeble = False;
 		}
 		else{
 			echo "<h1>Bad URL!</h1>";
