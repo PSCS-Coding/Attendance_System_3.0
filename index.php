@@ -173,11 +173,10 @@ function enquote($text){
 
 <script>
 
-$(".btn").click(function(e) {
-   e.stopPropagation();
-});
-$(".label").click(function () {
+$(".label").click(function (e) {
+	if(!e.target.className.includes('btn')) {
    	$('.label').toggleClass("toggled");
+	}
 });
 
 </script>
