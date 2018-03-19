@@ -26,7 +26,7 @@ require_once("connection.php");
 	<a class= "sidetext" href="/admin.php?page=8">School Hours</a>
 	<a class= "sidetext" href="/admin.php?page=9">Student Edit View</a>
 	front end
-	<a class= "sidetext" href="/index.php">MUI</a>
+	<a class= "sidetext" href="/index.php">Front Page</a>
 	</div>
 	<div>
 		<?php
@@ -53,10 +53,10 @@ require_once("connection.php");
 		//Group Edit View
 		elseif((string)$_GET['page'] == "3"){
 			$goodpage = True;
-      $index = array('first_name','last_name');
-      $database = 'student_data';
-      echo '<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"> <p>add to group</p> </div>';
-      $draggeble = True;
+      		$index = array('first_name','last_name');
+      		$database = 'student_data';
+      		echo '<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"> <p>add to group</p> </div>';
+      		$draggeble = True;
 		}
 		//History
 		elseif((string)$_GET['page'] == "4"){
@@ -91,7 +91,7 @@ require_once("connection.php");
 		//Student Edit View
 		elseif((string)$_GET['page'] == "9"){
 			$goodpage = True;
-			$index = array('student_id','full_name','firat_name','last_name','imgurl','grad_year','veteran_year','current_offsite_hours','current_is_hours','priv','user_id','active');
+			$index = array('student_id','first_name','last_name','imgurl','grad_year','veteran_year','current_offsite_hours','current_is_hours','priv','user_id','active');
 			$database = 'student_data';
 		}
 		else{
