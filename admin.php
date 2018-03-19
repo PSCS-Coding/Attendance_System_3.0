@@ -105,7 +105,12 @@ require_once("connection.php");
 			}
 			$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 			if(!empty($_POST)&&$_POST['go']){
-				$db->query('UPDATE '.$database.' SET '.$index[$_POST['row']].' = '.$_POST['new'].' WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]]);
+				if(!empty($values[$_POST['col']][$index[0]])){
+					$db->query('UPDATE '.$database.' SET '.$index[$_POST['row']].' = '.$_POST['new'].' WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]]);
+				}else{
+					//add column to table
+					//$db->query('UPDATE '.$database.' SET '.$index[$_POST['row']].' = '.$_POST['new'].' WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]]);
+				}
 				$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 			}
 			echo '</tr>';
@@ -142,9 +147,17 @@ require_once("connection.php");
 						}
 					}
 					echo '</tr>';
+
 				}
 			}
-			echo '</table>';
+			echo '<form method="POST">';
+			foreach($index as $row => &$oi){
+				if($row > 0){
+					echo'</td>';
+				}
+				echo '<td class="admin"><input type="text" name="new" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'">';
+			}
+			echo '<input type="submit" name="go" class="submit" value="￭"></td></form></table>';
 		}
 		 ?>
 	</div>
