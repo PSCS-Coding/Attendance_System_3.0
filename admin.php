@@ -81,5 +81,10 @@ require_once("connection.php");
 		}
 		 ?>
 	</div>
+  <script>
+    function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+    }
+  </script>
 </body>
 </html>
