@@ -42,9 +42,6 @@ function status_update($student, $status, $info = '', $return_time = '') {
   // Update current table with new event
 	$query = 'UPDATE current SET status_id = '.$status.', return_time = "'.$return_time.'" WHERE student_id = '.$student;
 	$db->query($query);
-	$hrs_used = hrs_used($student);
-  $query = "UPDATE history SET hrs_used = '$hrs_used' WHERE student_id = '$student' ORDER BY event_id DESC LIMIT 1";
-  $db->query($query);
 
 	// Update immediate prior record in history table with calculated duration
 	$hrs_used = hrs_used($student);
@@ -52,7 +49,7 @@ function status_update($student, $status, $info = '', $return_time = '') {
   $db->query($query);
 
 	// Add new event to history table
-  $query_insert = 'INSERT INTO history (student_id, status_id) VALUES ('.$student.', '.$status.')';
+  $query_insert = 'INSERT INTO history (student_id, status_id, return_time) VALUES ('.$student.', '.$status.', "'.$return_time.'")';
 	$db->query($query_insert);
 
   return 0;
