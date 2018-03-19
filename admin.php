@@ -18,6 +18,13 @@ require_once("connection.php");
 	<a class= "sidetext" href="/admin.php?page=0">Allotted Hours</a>
 	<a class= "sidetext" href="/admin.php?page=1">Current Events</a>
 	<a class= "sidetext" href="/admin.php?page=2">Facilitator Edit View</a>
+	<a class= "sidetext" href="/admin.php?page=3">Group Edit View</a>
+	<a class= "sidetext" href="/admin.php?page=4">History</a>
+	<a class= "sidetext" href="/admin.php?page=5">Holidays</a>
+	<a class= "sidetext" href="/admin.php?page=6">Offsit Locations</a>
+	<a class= "sidetext" href="/admin.php?page=7">Passwords</a>
+	<a class= "sidetext" href="/admin.php?page=8">School Hours</a>
+	<a class= "sidetext" href="/admin.php?page=9">Student Edit View</a>
 	</div>
 	<div>
 		<?php
@@ -47,26 +54,38 @@ require_once("connection.php");
 		//History
 		elseif((string)$_GET['page'] == "4"){
 			$goodpage = True;
+			$index = array('event_id','student_id','timestamp','status_id','info','return_time','offsite_hours_used');
+			$database = 'history';
 		}
 		//Holidays
 		elseif((string)$_GET['page'] == "5"){
 			$goodpage = True;
+			$index = array('holiday_id','holiday_name','holiday_date');
+			$database = 'holidays';
 		}
 		//Offsite Locations
 		elseif((string)$_GET['page'] == "6"){
 			$goodpage = True;
+			$index = array('location_id','location_name');
+			$database = 'offsite_locations';
 		}
 		//Passwords
 		elseif((string)$_GET['page'] == "7"){
 			$goodpage = True;
+			$index = array('login_year','login_password');
+			$database = 'login';
 		}
 		//School Hours
 		elseif((string)$_GET['page'] == "8"){
 			$goodpage = True;
+			$index = array('start_time','end_time');
+			$database = 'globals';
 		}
 		//Student Edit View
 		elseif((string)$_GET['page'] == "9"){
 			$goodpage = True;
+			$index = array('student_id','full_name','firat_name','last_name','imgurl','grad_year','veteran_year','current_offsite_hours','current_is_hours','priv','user_id','active');
+			$database = 'student_data';
 		}
 		else{
 			echo "<h1>Bad URL!</h1>";
@@ -87,7 +106,7 @@ require_once("connection.php");
 				echo '<td class="admin">'.$value[$index[0]].'</td>';
 				foreach($index as $row => &$oi){
 					if($row != 0){
-						echo '<td class="admin"><form method="POST"><input type="text" name="new" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" value="✔️"></form></td>';
+						echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
 					}
 				}
 				echo '</tr>';

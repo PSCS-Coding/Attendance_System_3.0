@@ -126,3 +126,11 @@ td.admin{
 .sidebar.back{
 	margin: -20px 0;
 }
+.newval{
+	width:55%;
+}
+.submit{
+	margin:0 auto;
+	text-align: center;
+	width:20%;
+}

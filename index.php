@@ -88,7 +88,16 @@ function enquote($text){
 		?>
 	<div class = "sidebar">
 		admin
-		<a class= "sidetext" href="/admin.php?page=0">hi</a>
+		<a class= "sidetext" href="/admin.php?page=0">Allotted Hours</a>
+		<a class= "sidetext" href="/admin.php?page=1">Current Events</a>
+		<a class= "sidetext" href="/admin.php?page=2">Facilitator Edit View</a>
+		<a class= "sidetext" href="/admin.php?page=3">Group Edit View</a>
+		<a class= "sidetext" href="/admin.php?page=4">History</a>
+		<a class= "sidetext" href="/admin.php?page=5">Holidays</a>
+		<a class= "sidetext" href="/admin.php?page=6">Offsit Locations</a>
+		<a class= "sidetext" href="/admin.php?page=7">Passwords</a>
+		<a class= "sidetext" href="/admin.php?page=8">School Hours</a>
+		<a class= "sidetext" href="/admin.php?page=9">Student Edit View</a>
 	</div>
     <div id="main-table">
       <table>
