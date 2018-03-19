@@ -20,7 +20,8 @@ require_once("connection.php");
 		if((string)$_GET['page'] == "0"){
 			$goodpage = True;
 			$index = array('veteran_year','default_offsite','default_is');
-			$query = 'SELECT * FROM allotted_hours;';
+			$database = 'allotted_hours';
+			$query = 'SELECT * FROM '.$database.';';
 		}
 		//Current Events
 		elseif((string)$_GET['page'] == "1"){
@@ -61,19 +62,23 @@ require_once("connection.php");
 		else{
 			echo "<h1>Bad URL!</h1>";
 		}if($goodpage){
-			if(!empty($_POST)&&$_POST['go']){
-
-			}
 			echo '<table><tr>';
 			foreach($index as &$header){
 				echo '<th>'.str_replace('_', ' ',$header).'</th>';
 			}
 			$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+			if(!empty($_POST)&&$_POST['go']){
+				$db->query('UPDATE '.$database.' SET '.$index[$_POST['row']].' = '.$_POST['new'].' WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]]);
+				$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+			}
 			echo '</tr>';
-			foreach($values as $row => &$value){
+			foreach($values as $col => &$value){
 				echo '<tr>';
-				foreach($index as $col => &$oi){
-					echo '<td class="admin"><form method="POST"><input type="text" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" value="✔️"></form></td>';
+				echo '<td class="admin">'.$value[$index[0]].'</td>';
+				foreach($index as $row => &$oi){
+					if($row != 0){
+						echo '<td class="admin"><form method="POST"><input type="text" name="new" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" value="✔️"></form></td>';
+					}
 				}
 				echo '</tr>';
 			}
@@ -83,7 +88,17 @@ require_once("connection.php");
 	</div>
   <script>
     function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
+      ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop(ev) {
+      ev.preventDefault();
+      var data = ev.dataTransfer.getData("text");
+      ev.target.appendChild(document.getElementById(data));
+    }
+
+    function allowDrop(ev) {
+      ev.preventDefault();
     }
   </script>
 </body>
