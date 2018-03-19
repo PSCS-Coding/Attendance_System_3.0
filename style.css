@@ -10,18 +10,59 @@ body {
 	font-size: 1.6rem !important;
 }
 
-.card:hover{
+/* .card:hover{
 	background-color:#25292d !important;
 	color: #444c54 !important;
-	webkit-filter: blur(1px); /* Chrome, Safari, Opera */
+	webkit-filter: blur(1px);
 	filter: blur(1px);
 	display:block !important;
+} */
+
+/* entire container, keeps perspective */
+.flip-container {
+	perspective: 1000px;
 }
-.red {
-	color: red;
-	z-index: 10;
-	display: none;
+	/* flip the pane when hovered */
+	.flip-container:hover .flipper, .flip-container.hover .flipper {
+		transform: rotateY(180deg);
+	}
+
+.flip-container, .front, .back {
+	width: 350px;
+	height: 200px;
+
 }
-.card:hover + .red{
-	display:block !important;
-   }
+
+/* flip speed goes here */
+.flipper {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+
+	position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+	backface-visibility: hidden;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+	z-index: 2;
+	/* for firefox 31 */
+	transform: rotateY(0deg);
+}
+
+/* back, initially hidden pane */
+.back {
+	transform: rotateY(180deg);
+}
+
+.label.toggled .card {
+	background-color:#25292d !important;
+	color: white !important;
+}

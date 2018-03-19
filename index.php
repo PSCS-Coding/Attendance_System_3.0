@@ -124,18 +124,62 @@ function enquote($text){
   </div>
 
   <div class="col-sm-4">
-    <div class="red card text-white bg-dark" id="menu">
-      <div class="card-body">
-        <h5 class="card-title">Nic Warmenhoven</h5>
-        <p class="card-text">Offsite</p>
-      </div>
-      <div class="card-footer">
-      <small class="text-muted">World Pizza &bull; Returning at 12:07 pm</small>
-    </div>
-    </div>
-  </div>
+		<input type="checkbox" id="nicstudent" hidden>
+		<label for="nicstudent">
+		<div class="flip-container">
+			<div class="flipper">
+				<div class="label">
+				<div class="front">
 
+					<!-- front content -->
+					<div class="card text-white bg-dark">
+			      <div class="card-body">
+			        <h5 class="card-title">Nic Warmenhoven</h5>
+			        <p class="card-text">Present</p>
+			      </div>
+			      <div class="card-footer">
+			      <small class="text-muted">Arrived at 8:46 am</small>
+			    </div>
+			    </div>
+
+				</div>
+				<div class="back">
+					<!-- back content -->
+
+					<div class="card text-white bg-dark">
+			      <div class="card-body">
+			        <h5 class="card-title">Nic Warmenhoven</h5>
+			        <p class="card-text"></p>
+							<button class="btn btn-danger present" id="present" type="button">P</button>
+							<button class="btn btn-danger late" type="button">L</button>
+							<button class="btn btn-danger absent" type="button">A</button>
+			      </div>
+						<div class="card-footer">
+							<button class='btn'>
+			      <i class="fas fa-home"></i>
+					</button>
+			    </div>
+			    </div>
+					</div>
+				</div>
+			</div>
+		</label>
+	</div>
+		</div>
+  </div>
 </div>
 </div>
+
+
+<script>
+
+$(".btn").click(function(e) {
+   e.stopPropagation();
+});
+$(".label").click(function () {
+   	$('.label').toggleClass("toggled");
+});
+
+</script>
 	</body>
 </html>
