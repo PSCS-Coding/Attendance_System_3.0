@@ -67,9 +67,9 @@ function total_offsite_used($student){
 		$query = "SELECT SUM(hrs_used) FROM history WHERE student_id = 2 AND (status_id = 0 OR status_id = 2 OR status_id = 4 OR status_id = 5 OR status_id = 7) LIMIT 500";
 	  $result = $db->query($query);
 	  $sum = round($result->fetch_array()[0], 2);
-	  //print_r($sum);
-			echo $sum;
+
+		return $sum;
 
 }
-total_offsite_used(2);
+
 ?>
