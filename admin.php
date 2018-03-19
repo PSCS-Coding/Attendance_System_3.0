@@ -67,11 +67,11 @@ require_once("connection.php");
 			}
 			$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 			echo '</tr>';
-			print_r($values);
+			print_r($query);
 			foreach($values as &$value){
 				echo '<tr>';
 				foreach($index as &$oi){
-					echo '<td>'.$value[$oi].'<td>';
+					echo '<td>'.$value[$oi].'</td>';
 				}
 				echo '</tr>';
 			}
