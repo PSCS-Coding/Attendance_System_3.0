@@ -37,7 +37,7 @@
 	  	$time = $time * 100;
 	}
   // need error handling on the following query
-  status_update($student,$status,'','',$time);
+  status_update($student,$status,'',$time);
 
 
   $query = 'SELECT * FROM current JOIN status_data ON current.status_id = status_data.status_id WHERE student_id = '.$student;
