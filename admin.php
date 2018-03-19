@@ -125,6 +125,7 @@ require_once("connection.php");
               echo "</tr>";
             }
           }
+        }
 				echo '<tr>';
 				if((string)$_GET['page'] != "8"){
 					echo '<td class="admin">'.$value[$index[0]].'</td>';
