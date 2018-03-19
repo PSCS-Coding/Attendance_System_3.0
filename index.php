@@ -124,11 +124,7 @@ function enquote($text){
   </div>
 
   <div class="col-sm-4">
-    <div class="card text-white bg-dark" id="menu">
-      <div id="search-bg"></div>
-    <div class="stat_Button">
-      <button class="btn btn-danger surf" type="button">WOOOOOO</button>
-      </div>
+    <div class="red card text-white bg-dark" id="menu">
       <div class="card-body">
         <h5 class="card-title">Nic Warmenhoven</h5>
         <p class="card-text">Offsite</p>
