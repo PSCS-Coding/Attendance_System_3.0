@@ -27,9 +27,7 @@ require_once("functions.php");
         <?php
          	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
          	$current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-					$i = 0;
          	foreach ($current as &$row) {
-						$i++;
             	echo '<tr class="student-row" id="'.$row["student_id"].'">';
             	echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
             	echo '<td><span class="status">'.$row["status_name"];
