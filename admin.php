@@ -30,6 +30,7 @@ require_once("connection.php");
 	</div>
 	<div>
 		<?php
+    $draggeble = false;
 		$goodpage = false;
 		//Allotted Hours
 		if((string)$_GET['page'] == "0"){
@@ -52,9 +53,10 @@ require_once("connection.php");
 		//Group Edit View
 		elseif((string)$_GET['page'] == "3"){
 			$goodpage = True;
-      $index = array('veteran_year','default_offsite','default_is');
-      $query = 'SELECT * FROM allotted_hours;';
+      $index = array('first_name','last_name');
+      $database = 'student_data';
       echo '<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"> <p>add to group</p> </div>';
+      $draggeble = True;
 		}
 		//History
 		elseif((string)$_GET['page'] == "4"){
@@ -107,6 +109,24 @@ require_once("connection.php");
 			}
 			echo '</tr>';
 			foreach($values as $col => &$value){
+<<<<<<< HEAD
+				echo '<tr draggeble="'.$draggeble.'" ondragstart="drag(event)">';
+				echo '<td class="admin">'.$value[$index[0]].'</td>';
+				foreach($index as $row => &$oi){
+					if($row != 0 ){
+            if ($draggeble == False) {
+  						echo '<td class="admin"><form method="POST">';
+              echo '<input type="text" name="new" class="newval" placeholder="'.$value[$oi].'">';
+              echo '<input type="hidden" name="row" value="'.$row.'">';
+              echo '<input type="hidden" name="col" value="'.$col.'">';
+              echo '<input type="submit" name="go" class="submit" value="￭">';
+              echo '</form></td>';
+  					}else {
+              echo '<td class="admin">'.$value[$index[1]].'</td>';
+              echo "</tr>";
+            }
+          }
+=======
 				echo '<tr>';
 				if((string)$_GET['page'] != "8"){
 					echo '<td class="admin">'.$value[$index[0]].'</td>';
@@ -119,6 +139,7 @@ require_once("connection.php");
 					foreach($index as $row => &$oi){
 						echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
 					}
+>>>>>>> ecd7f8ab0acffb43ca0c68195cf46cf4fe8e84b1
 				}
 				echo '</tr>';
 			}
