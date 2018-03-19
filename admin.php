@@ -141,7 +141,7 @@ require_once("connection.php");
 				echo '</tr>';
 			}
 			echo '</table>';
-		}
+    }
 		 ?>
 	</div>
   <script>
