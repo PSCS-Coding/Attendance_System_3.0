@@ -19,7 +19,7 @@ function elapsed_time($student_id)
 			return 0;
 		}
 		if ($db->query("SELECT COUNT(*) FROM holidays WHERE holiday_date =" . $time1->format('Y-m-d'))) {
-			return 0
+			return 0;
 		}
 
 		$time2 = new DateTime();
@@ -58,7 +58,18 @@ function status_update($student, $status, $old_status, $info, $return_time)
 	  return 0;
 }
 function enquote($text){
-	return '"'.$text.'"';
+		return '"'.$text.'"';
 }
 
+function total_offsite_used($student){
+		global $db;
+
+		$query = "SELECT SUM(hrs_used) FROM history WHERE student_id = 2 AND (status_id = 0 OR status_id = 2 OR status_id = 4 OR status_id = 5 OR status_id = 7) LIMIT 500";
+	  $result = $db->query($query);
+	  $sum = round($result->fetch_array()[0], 2);
+	  //print_r($sum);
+			echo $sum;
+
+}
+total_offsite_used(2);
 ?>
