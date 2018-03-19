@@ -26,11 +26,11 @@
       }
       if($row_cnt == 0) {
         if($_COOKIE['login'] != $loginResult[0]) {
-          header('Location: login/index.php?to=' . $_SERVER['REQUEST_URI']);
+          header('Location: login/?to=' . $_SERVER['REQUEST_URI']);
         }
       }
     }
   } else {
-    header('Location: /login/index.php?to=' . $_SERVER['REQUEST_URI']);
+    header('Location: /login/?to=' . $_SERVER['REQUEST_URI']);
   }
 ?>

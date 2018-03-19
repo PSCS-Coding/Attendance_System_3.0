@@ -3,6 +3,7 @@
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="google-signin-client_id" content="1049698629280-prai66q0v2fba7d4vp701jo6d4mb9kct.apps.googleusercontent.com">
+		<link rel="stylesheet" type="text/css" href="style.css">
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -66,7 +67,7 @@
 	<body style='background-color: #272626;'>
 	<div id ='wrong'></div>
 		<div class='container' style='height: 5rem;'></div>
-		<div class="card text-white bg-dark mx-auto" style="width: 23rem;">
+		<div class="card text-white bg-dark mx-auto">
 				<div class="card-body">
 					<h5 class="card-title">Google Login</h5>
 					<div class='card-text'></div>
@@ -76,7 +77,7 @@
 				</div>
 		</div>
 		<br>
-		<div class="card text-white bg-dark mx-auto" style="width: 23rem;">
+		<div class="card text-white bg-dark mx-auto"">
 			<form name="login" method="post" action="pass.php">
   			<div class="card-body">
     			<h5 class="card-title">Password Login</h5>

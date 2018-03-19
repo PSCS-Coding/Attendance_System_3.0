@@ -1,0 +1,9 @@
+.card {
+  width: 23rem;
+}
+
+  @media only screen and (max-width: 450px) {
+    .card {
+        width: 18rem;
+    }
+}
