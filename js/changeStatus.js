@@ -1,11 +1,11 @@
-$('.student-row input').click( function() {
+$('.student-row input:submit').click( function() {
   var student_id = $(this).closest("tr").prop("id");
   var status_id = $(this).attr('name');
   var return_time = 0;
   if (status_id == 5) {
     var return_time = $(this).siblings('.late').val();
   }
-  if(is_numeric(status_id)) {
+
     $.ajax({
       type:"POST",
       data:{student:student_id,status:status_id,time:return_time},
@@ -16,6 +16,5 @@ $('.student-row input').click( function() {
       }
     });
     return false; // not sure if this is needed
-  }
 
 });
