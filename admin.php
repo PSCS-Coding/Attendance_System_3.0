@@ -12,8 +12,8 @@ require_once("connection.php");
   <link rel="stylesheet" type="text/css" href="style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-<body>
-	<div class = "sidebar back">
+<body class="back">
+	<div class = "sidebar">
 	admin
 	<a class= "sidetext" href="/admin.php?page=0">Allotted Hours</a>
 	<a class= "sidetext" href="/admin.php?page=1">Current Events</a>

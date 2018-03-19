@@ -144,7 +144,7 @@ function enquote($text){
     </div>
     <div id="result">
 
-    </div>
+	    </div>
     <script type="text/javascript" src="js/changeStatus.js"></script>
 		<script type="text/javascript">
 			$('.late').timepicker({
