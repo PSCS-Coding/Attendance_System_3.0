@@ -70,7 +70,6 @@
 		<div class="card text-white bg-dark mx-auto">
 				<div class="card-body">
 					<h5 class="card-title">Google Login</h5>
-					<div class='card-text'></div>
 				</div>
 				<div class="card-footer">
 					<div id ='gs'class="g-signin2" data-onsuccess="onSignIn"></div>
@@ -83,13 +82,14 @@
     			<h5 class="card-title">Password Login</h5>
 					<div class='container' style='height: .75rem;'></div>
 					<div class='card-text'>
-		    		<input name="pass" type="password" class="form-control" id ="pass" placeholder="Password" required>
-						<div class='container' style='height:.75rem'></div>
+						<div class="input-group mb-3">
+	  					<input name = "pass" type="password" class="form-control" id="pass" placeholder="Password" aria-label="Password" aria-describedby="Password" required>
+	  					<div class="input-group-append">
+	    					<button class="btn btn-primary" type="submit" name="submit">Sign in</button>
+	  					</div>
+						</div>
 					</div>
   			</div>
-				<div class="card-footer">
-					<button class="btn btn-primary" type="submit" name="submit">Sign In</button>
-				</div>
 			</form>
 		</div>
 		<script>
