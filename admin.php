@@ -64,7 +64,7 @@ require_once("connection.php");
 		//History
 		elseif((string)$_GET['page'] == "4"){
 			$goodpage = True;
-			$index = array('event_id','student_id','timestamp','status_id','info','return_time','offsite_hours_used');
+			$index = array('event_id','student_id','timestamp','status_id','info','return_time','offsite_hrs_used');
 			$database = 'history';
       $draggeble = False;
 		}
@@ -118,32 +118,7 @@ require_once("connection.php");
 			}
 			echo '</tr>';
 			foreach($values as $col => &$value){
-<<<<<<< HEAD
-				echo '<tr draggeble="'.$draggeble.'" ondragstart="drag(event)">';
-				echo '<td class="admin">'.$value[$index[0]].'</td>';
-				foreach($index as $row => &$oi){
-					if($row != 0 ){
-            if ($draggeble == False) {
-  						echo '<td class="admin"><form method="POST">';
-              echo '<input type="text" name="new" class="newval" placeholder="'.$value[$oi].'">';
-              echo '<input type="hidden" name="row" value="'.$row.'">';
-              echo '<input type="hidden" name="col" value="'.$col.'">';
-              echo '<input type="submit" name="go" class="submit" value="￭">';
-              echo '</form></td>';
-  					}else {
-              echo '<td class="admin">'.$value[$index[1]].'</td>';
-              echo "</tr>";
-            }
-          }
-        }
-				echo '<tr>';
-        if((string)$_GET['page'] != "8"){
-					echo '<td class="admin">'.$value[$index[0]].'</td>';
-=======
-				/*echo '<tr draggeble="'.$draggeble.'" ondragstart="drag(event)">';
-				echo '<td class="admin">'.$value[$index[0]].'</td>';*/
 				if((string)$_GET['page'] == "3"){
->>>>>>> 3ccb134796403571ea16faf92ffd584390d1dd5e
 					foreach($index as $row => &$oi){
 		            	if ($draggeble == False) {
 							echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
