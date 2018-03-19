@@ -110,8 +110,6 @@ require_once("connection.php");
 			}
 			echo '</tr>';
 			foreach($values as $col => &$value){
-				/*echo '<tr draggeble="'.$draggeble.'" ondragstart="drag(event)">';
-				echo '<td class="admin">'.$value[$index[0]].'</td>';*/
 				if((string)$_GET['page'] == "3"){
 					foreach($index as $row => &$oi){
 		            	if ($draggeble == False) {
