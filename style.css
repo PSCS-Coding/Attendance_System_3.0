@@ -105,3 +105,21 @@ input{
 	background-color: black;
 	color: white;
 }
+.admin{
+	width:3%;
+}
+td.admin{
+	background-color:#aaa;
+	border: 1px solid white;
+	color:#555;
+	border-radius: 4px;
+	padding:3px;
+	text-align: center;
+}
+.admin > form > input{
+	color:black;
+	text-align: center;
+}
+::placeholder{
+	opacity:1;
+}
