@@ -48,5 +48,10 @@
 
   $query = 'SELECT * FROM current JOIN status_data ON current.status_id = status_data.status_id WHERE student_id = '.$student;
   $current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-  echo $current[0]['status_name'] . $time;
+  $output = $current[0]['status_name'];
+  if ($current[0]['status_name'] == "Late") {
+    $return = new DateTime($current[0]['return_time']);
+    $output .= " arriving at " . $return->format('g:i');
+  }
+  echo $output;
 ?>
