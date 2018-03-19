@@ -7,7 +7,6 @@
     <?php
 		require_once('connection.php');
 
-		// TODO weekend or holiday if condition
     function elapsed_time($student_id)
     {
 				global $db;
