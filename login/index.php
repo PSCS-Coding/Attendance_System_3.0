@@ -77,7 +77,7 @@
 				</div>
 		</div>
 		<br>
-		<div class="card text-white bg-dark mx-auto"">
+		<div class="card text-white bg-dark mx-auto">
 			<form name="login" method="post" action="pass.php">
   			<div class="card-body">
     			<h5 class="card-title">Password Login</h5>
