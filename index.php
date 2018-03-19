@@ -107,7 +107,7 @@ function enquote($text){
          	foreach ($current as &$row) {
 						$i++;
             	echo '<tr class="student-row" id="'.$row["student_id"].'">';
-            	echo '<td> <form method="POST"> <input type="checkbox" name="c'.$i.'">'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
+            	echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
             	echo '<td><span class="status">'.$row["status_name"].'</span>';
 				if($row["status_name"] == "Late"){
 					echo " @ ".$row["return_time"];
