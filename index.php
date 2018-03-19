@@ -78,6 +78,8 @@ function enquote($text){
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="js/timepicker/jquery.timepicker.min.js" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="js/timepicker/jquery.timepicker.css" />
   </head>
 	<body>
 		<?php
@@ -86,63 +88,71 @@ function enquote($text){
 		}
 		echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"><input type="hidden" name="student" value="DAILY_RESET"><input type="hidden" name="return_time" value=0> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" class="reset" name="change" value="Set all to \'Not checked in\'"></form>';
 		?>
-		<div class = "sidebar">
-			admin
-			<a class= "sidetext" href="/admin.php?page=0">Allotted Hours</a>
-			<a class= "sidetext" href="/admin.php?page=1">Current Events</a>
-			<a class= "sidetext" href="/admin.php?page=2">Facilitator Edit View</a>
-			<a class= "sidetext" href="/admin.php?page=3">Group Edit View</a>
-			<a class= "sidetext" href="/admin.php?page=4">History</a>
-			<a class= "sidetext" href="/admin.php?page=5">Holidays</a>
-			<a class= "sidetext" href="/admin.php?page=6">Offsit Locations</a>
-			<a class= "sidetext" href="/admin.php?page=7">Passwords</a>
-			<a class= "sidetext" href="/admin.php?page=8">School Hours</a>
-			<a class= "sidetext" href="/admin.php?page=9">Student Edit View</a>
-		</div>
-	    <div>
-	      <table>
-	        <tr>
-	          <th>
-	            Student
-	          </th>
-	          <th>
-	            Status
-	          </th>
-	        </tr>
-	        <?php
-	         	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
-	         	$current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-						$i = 0;
-	         	foreach ($current as &$row) {
-							$i++;
-	            	echo '<tr class="student-row" id="'.$row["student_id"].'">';
-	            	echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
-	            	echo '<td><span class="status">'.$row["status_name"].'</span>';
-					if($row["status_name"] == "Late"){
-						echo " @ ".$row["return_time"];
-					}
-					if($row['status_id'] != 1 ){
-						echo '<input type="submit" name="1" value="P">';
-	  					if($row['status_id'] == 0 || $row['status_id'] == 5){
-							echo '<input name="time" type="number" class="late" placholder="Arival time"><input type="submit" name="5" value="L">';
-	  					}
-	  					if($row['status_id'] != 7  && $row['status_id'] != 4){
-			            	echo '<input type="submit" name="7" value="A">';
-	  					}
-	  				}
-	  				else{
-	  					if($row['status_id'] != 4 ){
-			            	echo '<input type="submit" name="4" value="CO">';
-	  					}
-	  				}
-	            	echo '</td></tr>';
-	          	}
-	        ?>
-	      </table>
-	    </div>
-	    <div id="result">
+	<div class = "sidebar">
+		admin
+		<a class= "sidetext" href="/admin.php?page=0">Allotted Hours</a>
+		<a class= "sidetext" href="/admin.php?page=1">Current Events</a>
+		<a class= "sidetext" href="/admin.php?page=2">Facilitator Edit View</a>
+		<a class= "sidetext" href="/admin.php?page=3">Group Edit View</a>
+		<a class= "sidetext" href="/admin.php?page=4">History</a>
+		<a class= "sidetext" href="/admin.php?page=5">Holidays</a>
+		<a class= "sidetext" href="/admin.php?page=6">Offsit Locations</a>
+		<a class= "sidetext" href="/admin.php?page=7">Passwords</a>
+		<a class= "sidetext" href="/admin.php?page=8">School Hours</a>
+		<a class= "sidetext" href="/admin.php?page=9">Student Edit View</a>
+	</div>
+    <div id="main-table">
+      <table>
+        <tr>
+          <th>
+            Student
+          </th>
+          <th>
+            Status
+          </th>
+        </tr>
+        <?php
+         	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
+         	$current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+					$i = 0;
+         	foreach ($current as &$row) {
+						$i++;
+            	echo '<tr class="student-row" id="'.$row["student_id"].'">';
+            	echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
+            	echo '<td><span class="status">'.$row["status_name"].'</span>';
+				if($row["status_name"] == "Late"){
+					echo " @ ".$row["return_time"];
+				}
+				if($row['status_id'] != 1 ){
+					echo '<input type="submit" name="1" value="P">';
+  					if($row['status_id'] == 0 || $row['status_id'] == 5){
+						echo '<input name="time" class="late" placeholder="Arrival time"><input type="submit" name="5" value="L">';
+  					}
+  					if($row['status_id'] != 7  && $row['status_id'] != 4){
+		            	echo '<input type="submit" name="7" value="A">';
+  					}
+  				}
+  				else{
+  					if($row['status_id'] != 4 ){
+		            	echo '<input type="submit" name="4" value="CO">';
+  					}
+  				}
+            	echo '</td></tr>';
+          	}
+        ?>
+      </table>
+    </div>
+    <div id="result">
 
 	    </div>
     <script type="text/javascript" src="js/changeStatus.js"></script>
+		<script type="text/javascript">
+			$('.late').timepicker({
+		    'minTime': '9:00am',
+		    'maxTime': '3:40pm',
+				'step' : 5,
+				'scrollDefault' : 'now'
+			});
+		</script>
 	</body>
 </html>
