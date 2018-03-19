@@ -73,7 +73,7 @@ function enquote($text){
 
   <head>
 	<title>
-		Atendance�Sistim�100�Persent�Compleet�Perfict�耀No�Virus�Downlode�Free�Affective�end�Afficient�Profetional�Git�it�Now�Easy�Set�Up�Aply�Today�Has�Enyone�Really�Been�Far�Even�as�Descided�to�Use�Evin�Go�Wunt�to�do�Look�Mor�Like�Go�Further�You�Can�Realy�be�Far�It's�Just�Commin�Sense�Low�Price�Great�Deel�No�Charge�Limited�Time�Ofter
+  		Atendance�Sistim�100�Persent�Compleet�Perfict�耀No�Virus�Downlode�Free�Affective�end�Afficient�Profetional�Git�it�Now�Easy�Set�Up�Aply�Today�Has�Enyone�Really�Been�Far�Even�as�Descided�to�Use�Evin�Go�Wunt�to�do�Look�Mor�Like�Go�Further�You�Can�Realy�be�Far�It's�Just�Commin�Sense�Low�Price�Great�Deel�No�Charge�Limited�Time�Ofter
   	</title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -107,7 +107,7 @@ function enquote($text){
          	foreach ($current as &$row) {
 						$i++;
             	echo '<tr class="student-row" id="'.$row["student_id"].'">';
-            	echo '<td> <form method="POST"> <input type="checkbox" name="c'.$i.'">'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
+            	echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
             	echo '<td><span class="status">'.$row["status_name"].'</span>';
 				if($row["status_name"] == "Late"){
 					echo " @ ".$row["return_time"];
