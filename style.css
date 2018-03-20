@@ -35,7 +35,7 @@ body {
 
 /* flip speed goes here */
 .flipper {
-	transition: 0.3s;
+	transition: 0.2s;
 	transform-style: preserve-3d;
 
 	position: relative;

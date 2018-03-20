@@ -35,7 +35,7 @@ function enquote($text){
 	    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     	<link rel="stylesheet" type="text/css" href="style.css">
   	</head>
-	<body>
+	<body onload='onload'>
 	<div class="container">
 	<div class="row">
 
@@ -100,7 +100,7 @@ function enquote($text){
   </div>
 
 <div class="col-sm-4">
-    <div class="card border-danger text-white bg-dark">
+    <div class="card border-danger text-white bg-dark bk">
       <div class="card-body">
         <h5 class="card-title">Bradley McDougald</h5>
         <p class="card-text">Present</p>
@@ -112,7 +112,7 @@ function enquote($text){
   </div>
 
   <div class="col-sm-4">
-    <div class="card text-white bg-dark test">
+    <div class="card text-white bg-dark test bk">
       <div class="card-body">
         <h5 class="card-title">Jack Natarangelio</h5>
         <p class="card-text">Offsite</p>
@@ -145,7 +145,7 @@ function enquote($text){
 				<div class="back">
 					<!-- back content -->
 						<div class="label">
-					<div class="card text-white bg-dark">
+					<div class="card text-white bg-dark bk">
 			      <div class="card-body">
 			        <h5 class="card-title">Nic Warmenhoven</h5>
 			        <p class="card-text"></p>
@@ -169,12 +169,15 @@ function enquote($text){
 
 
 <script>
-$('.bg-dark').width($('.test').width());
-$('.bg-dark').height($('.test').height());
+function onload() {
+$('.bg-dark bk').width($('.test').width());
+$('.bg-dark bk').height($('.test').height());
 $('.flip-container').width($('.test').width());
 $('.flip-container').height($('.test').height());
 $('.back').width($('.test').width());
 $('.back').height($('.test').height());
+}
+window.onload = onload;
 $( window ).resize(function() {
 	$('.bg-dark').width($('.test').width());
 	$('.bg-dark').height($('.test').height());
