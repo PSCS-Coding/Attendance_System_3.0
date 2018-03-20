@@ -40,7 +40,7 @@ function enquote($text){
 	<div class="row">
 
   <div class="col-sm-4">
-    <div class="card text-white bg-dark">
+    <div class="card text-white test">
       <div class="card-body">
         <h5 class="card-title">Anthony Reyes</h5>
         <p class="card-text">Field Trip</p>
@@ -128,9 +128,8 @@ function enquote($text){
 		<label for="nicstudent">
 		<div class="flip-container">
 			<div class="flipper">
-				<div class="label">
 				<div class="front">
-
+					<div class="label">
 					<!-- front content -->
 					<div class="card text-white bg-dark">
 			      <div class="card-body">
@@ -141,11 +140,11 @@ function enquote($text){
 			      <small class="text-muted">Arrived at 8:46 am</small>
 			    </div>
 			    </div>
-
+</div>
 				</div>
 				<div class="back">
 					<!-- back content -->
-
+						<div class="label">
 					<div class="card text-white bg-dark">
 			      <div class="card-body">
 			        <h5 class="card-title">Nic Warmenhoven</h5>
@@ -170,10 +169,21 @@ function enquote($text){
 
 
 <script>
-alert($('.flip-container').height());
-$('.card').height($('.front > .card').height());
-alert($('.flip-container').height());
+$('.bg-dark').width($('.test').width());
+$('.bg-dark').height($('.test').height());
+$('.flip-container').width($('.test').width());
+$('.flip-container').height($('.test').height());
+$('.back').width($('.test').width());
+$('.back').height($('.test').height());
+$( window ).resize(function() {
+	$('.bg-dark').width($('.test').width());
+	$('.bg-dark').height($('.test').height());
+	$('.flip-container').width($('.test').width());
+	$('.flip-container').height($('.test').height());
+	$('.back').width($('.test').width());
+	$('.back').height($('.test').height());
 
+});
 $(".label").click(function (e) {
 	if(!e.target.className.includes('btn')) {
    	$('.label').toggleClass("toggled");
