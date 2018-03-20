@@ -112,7 +112,7 @@ function enquote($text){
   </div>
 
   <div class="col-sm-4">
-    <div class="card text-white bg-dark">
+    <div class="card text-white bg-dark test">
       <div class="card-body">
         <h5 class="card-title">Jack Natarangelio</h5>
         <p class="card-text">Offsite</p>
@@ -153,12 +153,10 @@ function enquote($text){
 							<button class="btn btn-danger present" id="present" type="button">P</button>
 							<button class="btn btn-danger late" type="button">L</button>
 							<button class="btn btn-danger absent" type="button">A</button>
-			      </div>
-						<div class="card-footer">
 							<button class='btn'>
 			      <i class="fas fa-home"></i>
 					</button>
-			    </div>
+			      </div>
 			    </div>
 					</div>
 				</div>
@@ -172,13 +170,15 @@ function enquote($text){
 
 
 <script>
+alert($('.flip-container').height());
+$('.card').height($('.front > .card').height());
+alert($('.flip-container').height());
 
 $(".label").click(function (e) {
 	if(!e.target.className.includes('btn')) {
    	$('.label').toggleClass("toggled");
 	}
 });
-
 </script>
 	</body>
 </html>
