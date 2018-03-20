@@ -35,7 +35,7 @@ function enquote($text){
 	    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     	<link rel="stylesheet" type="text/css" href="style.css">
   	</head>
-	<body onload='onload'>
+	<body>
 	<div class="container">
 	<div class="row">
 
@@ -149,12 +149,17 @@ function enquote($text){
 			      <div class="card-body">
 			        <h5 class="card-title">Nic Warmenhoven</h5>
 			        <p class="card-text"></p>
-							<button class="btn btn-danger present" id="present" type="button">P</button>
-							<button class="btn btn-danger late" type="button">L</button>
-							<button class="btn btn-danger absent" type="button">A</button>
 							<button class='btn'>
 			      <i class="fas fa-home"></i>
 					</button>
+					<button class="btn btn-danger present" id="present" type="button">P</button>
+					<button class="btn btn-danger absent" type="button">A</button>
+							<div class="input-group mb-3 late">
+  							<input type="text" class="form-control" placeholder="Arrival time" aria-label="Arrival time" aria-describedby="Arrival time">
+  								<div class="input-group-append">
+    								<button class="btn btn-danger" type="button">L</button>
+  								</div>
+							</div>
 			      </div>
 			    </div>
 					</div>
@@ -169,15 +174,15 @@ function enquote($text){
 
 
 <script>
-function onload() {
-$('.bg-dark bk').width($('.test').width());
-$('.bg-dark bk').height($('.test').height());
-$('.flip-container').width($('.test').width());
-$('.flip-container').height($('.test').height());
-$('.back').width($('.test').width());
-$('.back').height($('.test').height());
+function load() {
+	$('.bg-dark').width($('.test').width());
+	$('.bg-dark').height($('.test').height());
+	$('.flip-container').width($('.test').width());
+	$('.flip-container').height($('.test').height());
+	$('.back').width($('.test').width());
+	$('.back').height($('.test').height());
 }
-window.onload = onload;
+window.onload = load;
 $( window ).resize(function() {
 	$('.bg-dark').width($('.test').width());
 	$('.bg-dark').height($('.test').height());
@@ -188,7 +193,7 @@ $( window ).resize(function() {
 
 });
 $(".label").click(function (e) {
-	if(!e.target.className.includes('btn')) {
+	if(!e.target.className.includes('btn') && !e.target.className.includes('form')) {
    	$('.label').toggleClass("toggled");
 	}
 });
