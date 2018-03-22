@@ -105,10 +105,6 @@ require_once("connection.php");
 					if($_POST['go']){
 						$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]].';';
 						$db->query($q);
-						$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-						if((string)$_GET['page'] == "9"){
-							$q = 'INSERT INTO current (student_id,status_id) VALUES ("'.$values[count($values)-1].'",0)';
-						}
 					}elseif($_POST['add']){
 						$id = "";
 						$v = "";
@@ -125,9 +121,14 @@ require_once("connection.php");
 								}
 							}
 						}
-						//add column to table   THIS IS PSEUDOcODE!
 						$q = 'INSERT INTO '.$database.' ('.$id.') VALUES ('.$v.')';
 						$db->query($q);
+						$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+						if((string)$_GET['page'] == "9"){
+							$q = 'INSERT INTO current (student_id,status_id) VALUES ("'.$values[count($values)-1][$index[0]].'", 0)';
+							print_r($q);
+							$db->query($q);
+						}
 					}
 					elseif($_POST['del']){
 						foreach($values as &$column){
