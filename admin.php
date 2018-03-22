@@ -134,7 +134,7 @@ require_once("connection.php");
 				$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 			}
 			if($_GET['page'] != '3'){
-				echo '<div class="del"><form method="POST"><table><tr><th class="admin">X</th></tr>';
+				echo '<div class="del"><form method="POST"><table><tr><th class="admin">Del.</th></tr>';
 				foreach($values as &$o){
 					echo '<tr><td class="admin"><input name="'.$o[$index[0]].'" type="checkbox"></td></tr>';
 				}
