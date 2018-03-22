@@ -103,7 +103,6 @@ require_once("connection.php");
 			if(!empty($_POST)){
 				if($_POST['go']){
 					$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]].';';
-					print_r($q);
 					$db->query($q);
 				}elseif($_POST['add']){
 					$id = "";
@@ -123,19 +122,25 @@ require_once("connection.php");
 					}
 					//add column to table   THIS IS PSEUDOcODE!
 					$q = 'INSERT INTO '.$database.' ('.$id.') VALUES ('.$v.')';
-					print_r($q);
 					$db->query($q);
 				}
 				elseif($_POST['del']){
-					//delete unwanted lines from DB
+					foreach($values as &$column){
+						if($_POST[$column[$index[0]]] == true){
+							$db->query('DELETE FROM '.$database.' WHERE '.$index[0].' = "'.$column[$index[0]].'"');
+						}
+					}
 				}
 				$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 			}
-			echo '<div class="del"><form method="POST"><table><tr><th>Del.</th></tr>';
-			foreach($values as &$o){
-				echo '<tr><td class="admin"><input name="'.$o[$index[0]].'" type="checkbox"></td></tr>';
+			if($_GET['page'] != '3'){
+				echo '<div class="del"><form method="POST"><table><tr><th>Del.</th></tr>';
+				foreach($values as &$o){
+					echo '<tr><td class="admin"><input name="'.$o[$index[0]].'" type="checkbox"></td></tr>';
+				}
+				echo '<tr><td class="admin"><input value="X" name="del" type="submit"></td></tr></table></form></div>';
 			}
-			echo '<tr><td class="admin"><input value="X" name="del" type="submit"></td></tr></table></form></div><table><tr>';
+			echo '<table><tr>';
 			foreach($index as &$header){
 				echo '<th>'.str_replace('_', ' ',$header).'</th>';
 			}
