@@ -1,40 +1,72 @@
-
-th{
-	background-color: black;
-	color:white;
-	border-radius: 4px;
-	padding:3px;
-}
-td{
-	background-color:#aaa;
-	border: 1px solid white;
-	color:#555;
-	width:33%;
-	border-radius: 4px;
-	padding:3px;
-	padding-left: 15px;
-}
-table{
-	background-color: white;
-	margin: 30px auto;
-	width:75%;
-	border-radius: 5px;
+body {
+	background-color: #272626;
 }
 
-body{
-	background-color: #888;
+.card {
+	margin-top: 2em !important;
 }
-a{
-	font-family: 'Courier';
-	text-decoration: none;
-	background-color: white;
-	border-radius: 3px;
-	color:#888;
-	padding:2px;
+
+.card-title {
+	font-size: 1.6rem !important;
 }
-p{
-	display:inline;
+
+/* .card:hover{
+	background-color:#25292d !important;
+	color: #444c54 !important;
+	webkit-filter: blur(1px);
+	filter: blur(1px);
+	display:block !important;
+} */
+
+/* entire container, keeps perspective */
+.flip-container {
+	perspective: 1000px;
 }
-input{
-	display:inline;
+	/* flip the pane when hovered */
+	.flip-container:hover .flipper, .flip-container.hover .flipper {
+		transform: rotateY(180deg);
+	}
+
+.flip-container, .front, .back {
+	width: 350px;
+	height: 200px;
+
+}
+
+/* flip speed goes here */
+.flipper {
+	transition: 0.2s;
+	transform-style: preserve-3d;
+
+	position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+	backface-visibility: hidden;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+	z-index: 2;
+	/* for firefox 31 */
+	transform: rotateY(0deg);
+}
+
+/* back, initially hidden pane */
+.back {
+	transform: rotateY(180deg);
+}
+
+.label.toggled .card {
+	background-color:#25292d !important;
+	color: white !important;
+}
+
+.late {
+	width: 5rem !important;
 }
