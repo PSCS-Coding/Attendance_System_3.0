@@ -134,15 +134,15 @@ require_once("connection.php");
 				$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 			}
 			if($_GET['page'] != '3'){
-				echo '<div class="del"><form method="POST"><table><tr><th>Del.</th></tr>';
+				echo '<div class="del"><form method="POST"><table><tr><th class="admin">X</th></tr>';
 				foreach($values as &$o){
 					echo '<tr><td class="admin"><input name="'.$o[$index[0]].'" type="checkbox"></td></tr>';
 				}
 				echo '<tr><td class="admin"><input value="X" name="del" type="submit"></td></tr></table></form></div>';
 			}
-			echo '<table><tr>';
+			echo '<table class="table"><tr>';
 			foreach($index as &$header){
-				echo '<th>'.str_replace('_', ' ',$header).'</th>';
+				echo '<th class="admin">'.str_replace('_', ' ',$header).'</th>';
 			}
 			echo '</tr>';
 			foreach($values as $col => &$value){
@@ -151,10 +151,10 @@ require_once("connection.php");
 		            	if ($draggeble == False) {
 							echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" value="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
 		  				}else {
-		              		echo '<td class="admin">'.$value[$index[1]].'</td>';
-		              		echo "</tr>";
+		              		echo '<td class="admin">'.$value[$oi].'</td>';
 		            	}
 	          		}
+					echo "</tr>";
 				}
 				else{
 					foreach($index as $row => &$oi){

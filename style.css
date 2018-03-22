@@ -99,7 +99,9 @@ input{
 	color: white;
 }
 .admin{
-	width:3%;
+	white-space:nowrap;
+	padding-right:2px;
+	width:inherit;
 }
 td.admin{
 	background-color:#aaa;
@@ -107,11 +109,14 @@ td.admin{
 	color:#555;
 	height:23px;
 	border-radius: 4px;
-	padding:3px;
+	padding:1px;
 	text-align: center;
 }
 .admin > form > input{
+	border-radius: 3px;
+	border:1px solid grey;
 	color:black;
+	width:35%;
 	text-align: center;
 }
 ::placeholder{
@@ -122,6 +127,7 @@ td.admin{
 
 }
 .newval{
+	text-align: center;
 	width:55%;
 }
 .submit{
@@ -133,9 +139,12 @@ td.admin{
 	padding-top:20px;
 }
 .del{
-	width:1%;
-	position:absolute;
+	margin:-20px 0 0 7%;
+	width:5px;
+	position: relative;
 	display:inline-block;
-	left:7%;
-	margin-top: -20px;
+	float:left;
+}
+.table{
+	margin-left:15%;
 }
