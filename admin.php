@@ -99,19 +99,45 @@ require_once("connection.php");
 			echo "<h1>Bad URL!</h1>";
 		}if($goodpage){
 			$query = 'SELECT * FROM '.$database.';';
-			echo '<table><tr>';
-			foreach($index as &$header){
-				echo '<th>'.str_replace('_', ' ',$header).'</th>';
-			}
 			$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-			if(!empty($_POST)&&$_POST['go']){
-				if(!empty($values[$_POST['col']][$index[0]])){
-					$db->query('UPDATE '.$database.' SET '.$index[$_POST['row']].' = '.$_POST['new'].' WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]]);
-				}else{
-					//add column to table
-					//$db->query('UPDATE '.$database.' SET '.$index[$_POST['row']].' = '.$_POST['new'].' WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]]);
+			if(!empty($_POST)){
+				if($_POST['go']){
+					$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]].';';
+					print_r($q);
+					$db->query($q);
+				}elseif($_POST['add']){
+					$id = "";
+					$v = "";
+					foreach($index as $i => &$es){
+						if($id != ""){
+							if(!empty($_POST[$es])){
+								$id = $id.', '.$es;
+								$v = $v.', "'.$_POST[$es].'"';
+							}
+						}else{
+							if(!empty($_POST[$es])){
+								$id = $es;
+								$v = '"'.$_POST[$es].'"';
+							}
+						}
+					}
+					//add column to table   THIS IS PSEUDOcODE!
+					$q = 'INSERT INTO '.$database.' ('.$id.') VALUES ('.$v.')';
+					print_r($q);
+					$db->query($q);
+				}
+				elseif($_POST['del']){
+					//delete unwanted lines from DB
 				}
 				$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+			}
+			echo '<div class="del"><form method="POST"><table><tr><th>Del.</th></tr>';
+			foreach($values as &$o){
+				echo '<tr><td class="admin"><input name="'.$o[$index[0]].'" type="checkbox"></td></tr>';
+			}
+			echo '<tr><td class="admin"><input value="X" name="del" type="submit"></td></tr></table></form></div><table><tr>';
+			foreach($index as &$header){
+				echo '<th>'.str_replace('_', ' ',$header).'</th>';
 			}
 			echo '</tr>';
 			foreach($values as $col => &$value){
@@ -155,9 +181,9 @@ require_once("connection.php");
 				if($row > 0){
 					echo'</td>';
 				}
-				echo '<td class="admin"><input type="text" name="new" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'">';
+				echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'">';
 			}
-			echo '<input type="submit" name="go" class="submit" value="￭"></td></form></table>';
+			echo '<input type="submit" name="add" class="submit" value="￭"></td></form></table>';
 		}
 		 ?>
 	</div>
