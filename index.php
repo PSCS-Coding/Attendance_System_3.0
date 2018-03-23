@@ -27,6 +27,7 @@ require_once('header.php');
 
   <div class="col-sm-4">
     <div class="card text-white bg-dark test">
+			<input type="checkbox" hidden>
       <div class="card-body">
         <h5 class="card-title">Anthony R</h5>
         <p class="card-text">Field Trip</p>
@@ -39,6 +40,7 @@ require_once('header.php');
 
   <div class="col-sm-4">
     <div class="card text-white bg-dark border-danger">
+			<input type="checkbox" hidden>
       <div class="card-body">
         <h5 class="card-title">Simon E</h5>
         <p class="card-text">Late</p>
@@ -51,6 +53,7 @@ require_once('header.php');
 
 <div class="col-sm-4">
     <div class="card text-white bg-dark">
+			<input type="checkbox" hidden>
       <div class="card-body">
         <h5 class="card-title">Graeme S</h5>
         <p class="card-text">Present</p>
@@ -63,6 +66,7 @@ require_once('header.php');
 
 <div class="col-sm-4">
     <div class="card text-white bg-dark">
+			<input type="checkbox" hidden>
       <div class="card-body">
         <h5 class="card-title">Olivia A</h5>
         <p class="card-text">Present</p>
@@ -75,6 +79,7 @@ require_once('header.php');
 
 <div class="col-sm-4">
     <div class="card text-white bg-dark">
+			<input type="checkbox" hidden>
       <div class="card-body">
         <h5 class="card-title">Angus B</h5>
         <p class="card-text">Field Trip</p>
@@ -87,6 +92,7 @@ require_once('header.php');
 
 <div class="col-sm-4">
     <div class="card border-danger text-white bg-dark bk">
+			<input type="checkbox" hidden>
       <div class="card-body">
         <h5 class="card-title">Bradley M</h5>
         <p class="card-text">Present</p>
@@ -98,8 +104,8 @@ require_once('header.php');
   </div>
 
   <div class="col-sm-4">
-		<input type="checkbox" id="nicstudent" hidden>
     <div class="card text-white bg-dark nicstudentc">
+			<input type="checkbox" hidden>
       <div class="card-body">
         <h5 class="card-title">Jack N</h5>
         <p class="card-text">Offsite</p>
@@ -111,8 +117,8 @@ require_once('header.php');
   </div>
 
 	<div class="col-sm-4">
-		<input type="checkbox" id="nicstudent" hidden>
 		<div class="card text-white bg-dark nicstudentc">
+			<input type="checkbox" hidden>
 			<div class="card-body">
 				<h5 class="card-title">Jack N</h5>
 				<p class="card-text">Offsite</p>
@@ -123,68 +129,8 @@ require_once('header.php');
 		</div>
 	</div>
 	<div class="col-sm-4">
-		<input type="checkbox" id="nicstudent" hidden>
     <div class="card text-white bg-dark nicstudentc">
-      <div class="card-body">
-        <h5 class="card-title">Jack N</h5>
-        <p class="card-text">Offsite</p>
-      </div>
-      <div class="card-footer">
-      <small class="text-muted">Uwajimaya &bull; Returning at 12:15 pm</small>
-    </div>
-    </div>
-  </div>
-	<div class="col-sm-4">
-		<input type="checkbox" id="nicstudent" hidden>
-    <div class="card text-white bg-dark nicstudentc">
-      <div class="card-body">
-        <h5 class="card-title">Jack N</h5>
-        <p class="card-text">Offsite</p>
-      </div>
-      <div class="card-footer">
-      <small class="text-muted">Uwajimaya &bull; Returning at 12:15 pm</small>
-    </div>
-    </div>
-  </div>
-	<div class="col-sm-4">
-		<input type="checkbox" id="nicstudent" hidden>
-    <div class="card text-white bg-dark nicstudentc">
-      <div class="card-body">
-        <h5 class="card-title">Jack N</h5>
-        <p class="card-text">Offsite</p>
-      </div>
-      <div class="card-footer">
-      <small class="text-muted">Uwajimaya &bull; Returning at 12:15 pm</small>
-    </div>
-    </div>
-  </div>
-	<div class="col-sm-4">
-		<input type="checkbox" id="nicstudent" hidden>
-    <div class="card text-white bg-dark nicstudentc">
-      <div class="card-body">
-        <h5 class="card-title">Jack N</h5>
-        <p class="card-text">Offsite</p>
-      </div>
-      <div class="card-footer">
-      <small class="text-muted">Uwajimaya &bull; Returning at 12:15 pm</small>
-    </div>
-    </div>
-  </div>
-	<div class="col-sm-4">
-		<input type="checkbox" id="nicstudent" hidden>
-    <div class="card text-white bg-dark nicstudentc">
-      <div class="card-body">
-        <h5 class="card-title">Jack N</h5>
-        <p class="card-text">Offsite</p>
-      </div>
-      <div class="card-footer">
-      <small class="text-muted">Uwajimaya &bull; Returning at 12:15 pm</small>
-    </div>
-    </div>
-  </div>
-	<div class="col-sm-4">
-		<input type="checkbox" id="nicstudent" hidden>
-    <div class="card text-white bg-dark nicstudentc">
+			<input type="checkbox" hidden>
       <div class="card-body">
         <h5 class="card-title">Jack N</h5>
         <p class="card-text">Offsite</p>
@@ -196,7 +142,67 @@ require_once('header.php');
   </div>
 	<div class="col-sm-4">
     <div class="card text-white bg-dark nicstudentc">
-			<input type="checkbox" id="nistudent" hidden>
+			<input type="checkbox" hidden>
+      <div class="card-body">
+        <h5 class="card-title">Jack N</h5>
+        <p class="card-text">Offsite</p>
+      </div>
+      <div class="card-footer">
+      <small class="text-muted">Uwajimaya &bull; Returning at 12:15 pm</small>
+    </div>
+    </div>
+  </div>
+	<div class="col-sm-4">
+    <div class="card text-white bg-dark nicstudentc">
+			<input type="checkbox" hidden>
+      <div class="card-body">
+        <h5 class="card-title">Jack N</h5>
+        <p class="card-text">Offsite</p>
+      </div>
+      <div class="card-footer">
+      <small class="text-muted">Uwajimaya &bull; Returning at 12:15 pm</small>
+    </div>
+    </div>
+  </div>
+	<div class="col-sm-4">
+    <div class="card text-white bg-dark nicstudentc">
+			<input type="checkbox" hidden>
+      <div class="card-body">
+        <h5 class="card-title">Jack N</h5>
+        <p class="card-text">Offsite</p>
+      </div>
+      <div class="card-footer">
+      <small class="text-muted">Uwajimaya &bull; Returning at 12:15 pm</small>
+    </div>
+    </div>
+  </div>
+	<div class="col-sm-4">
+    <div class="card text-white bg-dark nicstudentc">
+			<input type="checkbox" hidden>
+      <div class="card-body">
+        <h5 class="card-title">Jack N</h5>
+        <p class="card-text">Offsite</p>
+      </div>
+      <div class="card-footer">
+      <small class="text-muted">Uwajimaya &bull; Returning at 12:15 pm</small>
+    </div>
+    </div>
+  </div>
+	<div class="col-sm-4">
+    <div class="card text-white bg-dark nicstudentc">
+			<input type="checkbox" hidden>
+      <div class="card-body">
+        <h5 class="card-title">Jack N</h5>
+        <p class="card-text">Offsite</p>
+      </div>
+      <div class="card-footer">
+      <small class="text-muted">Uwajimaya &bull; Returning at 12:15 pm</small>
+    </div>
+    </div>
+  </div>
+	<div class="col-sm-4">
+    <div class="card text-white bg-dark nicstudentc">
+			<input type="checkbox" hidden>
       <div class="card-body">
         <h5 class="card-title">Jack N</h5>
         <p class="card-text">Offsite</p>
@@ -228,6 +234,23 @@ $(".card").click(function (e) {
 			$(this).toggleClass("toggled-red");
 		} else {
 			$(this).toggleClass("toggled");
+		}
+		var checked = false;
+		$(".students-cards :checked").each(function() {
+			checked = true;
+		});
+
+		if(checked) {
+			$('.index-actions').html('<li><button class="btn btn-danger">Test</button></li>');
+			if($(window).width() < 992) {
+				$('.navbar-collapse').collapse('show');
+			}
+		}
+		else {
+			$('.index-actions').html('');
+			if($(window).width() < 992) {
+				$('.navbar-collapse').collapse('hide');
+			}
 		}
 	}
 });
