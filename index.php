@@ -10,6 +10,7 @@ require_once('header.php');
     	<title>
 				Attendence System
     	</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1">
 	    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     	<link rel="stylesheet" type="text/css" href="style.css">
 
@@ -218,12 +219,22 @@ require_once('header.php');
 <script>
 $(document).ready(function(){
     createNav();
+		$('.index-actions').html('<li class="nav-item"><a href="#" class="nav-link">Groups</a>');
 
 });
 
 
 $(".card").click(function (e) {
 	if(!e.target.className.includes('btn') && !e.target.className.includes('form')) {
+		var checked = 0;
+		$(".students-cards :checked").each(function() {
+			checked += 1;
+		});
+		if(checked > 0) {
+			$('.index-actions').html('<li class="nav-item"><button class="btn btn-danger testbt">Test</button></li>');
+			} else {
+			$('.index-actions').html('<li class="nav-item"><button class="btn btn-danger animated fadeIn testbt">Test</button></li>');
+		}
 		if(!$(this).find("input[type=checkbox]").is(':checked')) {
 
 			$(this).find("input[type=checkbox]").prop('checked', true);
@@ -235,13 +246,12 @@ $(".card").click(function (e) {
 		} else {
 			$(this).toggleClass("toggled");
 		}
-		var checked = false;
+		var checked = 0;
 		$(".students-cards :checked").each(function() {
-			checked = true;
+			checked += 1;
 		});
 
-		if(checked) {
-			$('.index-actions').html('<li><button class="btn btn-danger">Test</button></li>');
+		if(checked > 0) {
 			if($(window).width() < 992) {
 				$('.navbar-collapse').collapse('show');
 			}
