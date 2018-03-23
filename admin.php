@@ -126,7 +126,6 @@ require_once("connection.php");
 						$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 						if((string)$_GET['page'] == "9"){
 							$q = 'INSERT INTO current (student_id,status_id) VALUES ("'.$values[count($values)-1][$index[0]].'", 0)';
-							print_r($q);
 							$db->query($q);
 						}
 					}
