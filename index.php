@@ -219,11 +219,16 @@ $(document).ready(function(){
 $(".card").click(function (e) {
 	if(!e.target.className.includes('btn') && !e.target.className.includes('form')) {
 		if(!$(this).find("input[type=checkbox]").is(':checked')) {
+
 			$(this).find("input[type=checkbox]").prop('checked', true);
 		} else {
 			$(this).find("input[type=checkbox]").prop('checked', false);
 		}
-   	$(this).toggleClass("toggled");
+		if($(this).hasClass('border-danger')) {
+			$(this).toggleClass("toggled-red");
+		} else {
+			$(this).toggleClass("toggled");
+		}
 	}
 });
 </script>

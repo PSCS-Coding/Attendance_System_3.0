@@ -14,3 +14,8 @@ body {
 	background-color:#25292d !important;
 	color: white !important;
 }
+.toggled-red {
+	background-color:#25292d !important;
+	color: white !important;
+	border-color: darkred !important;
+}
