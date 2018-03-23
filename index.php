@@ -20,7 +20,7 @@ require_once('header.php');
 	<?php require_once('nav.html');?>
 
 </nav>
-<div class="container-fluid sticky-top" style="height:.4rem;background-color: #272626;z-index:-1"></div>
+<div class="container-fluid" style="height:.4rem;background-color: #272626;z-index:-1"></div>
 </div>
 	<div class="container students-cards">
 	<div class="row">
@@ -214,6 +214,7 @@ require_once('header.php');
 <script>
 $(document).ready(function(){
     createNav();
+		
 });
 
 
