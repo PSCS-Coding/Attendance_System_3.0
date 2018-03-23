@@ -54,10 +54,9 @@ require_once("connection.php");
 		//Group Edit View
 		elseif((string)$_GET['page'] == "3"){
 			$goodpage = True;
-      		$index = array('first_name','last_name');
-      		$database = 'student_data';
-      		echo '<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"> <p>add to group</p> </div>';
-      		$draggeble = True;
+      $index = array('group_name','students');
+      $database = 'groups';
+      echo '<a class="glink" href="groups.html">Edit groups</a>';
 		}
 		//History
 		elseif((string)$_GET['page'] == "4"){
@@ -148,18 +147,5 @@ require_once("connection.php");
 		}
 		 ?>
 	</div>
-  <script>
-    function drag(ev) {
-      ev.dataTransfer.setData("text", ev.target.id);
-    }
-    function drop(ev) {
-      ev.preventDefault();
-      var data = ev.dataTransfer.getData("text");
-      ev.target.appendChild(document.getElementById(data));
-    }
-    function allowDrop(ev) {
-      ev.preventDefault();
-    }
-  </script>
 </body>
 </html>
