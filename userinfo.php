@@ -28,8 +28,14 @@
               {
                 $dev = "~" . $row['dev'];
               }
+              $repQuery = $db->prepare("SELECT current_rep FROM student_data WHERE imgurl = '$imgurl' AND active = 1");
+              $repQuery->execute();
+                foreach ($repQuery->get_result() as $row)
+                {
+                  $rep = "~" . $row['current_rep'];
+                }
         if(isset($fName)) {
-        echo $fName . "~" . $lName . "~" . $email . "~" . $imgurl . $dev;
+        echo $fName . "~" . $lName . "~" . $email . "~" . $imgurl . $dev . $rep;
       } else {
         $fnameQuery = $db->prepare("SELECT first_name FROM admins WHERE imgurl = '$imgurl'");
         $fnameQuery->execute();
