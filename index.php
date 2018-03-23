@@ -195,9 +195,8 @@ require_once('header.php');
     </div>
   </div>
 	<div class="col-sm-4">
-		<input type="checkbox" id="nistudent" hidden>
-		<label for="nistudent" class='container'>
     <div class="card text-white bg-dark nicstudentc">
+			<input type="checkbox" id="nistudent" hidden>
       <div class="card-body">
         <h5 class="card-title">Jack N</h5>
         <p class="card-text">Offsite</p>
@@ -206,7 +205,6 @@ require_once('header.php');
       <small class="text-muted">Uwajimaya &bull; Returning at 12:15 pm</small>
     </div>
     </div>
-	</label>
   </div>
 </div>
 </div>
@@ -214,12 +212,17 @@ require_once('header.php');
 <script>
 $(document).ready(function(){
     createNav();
-		
+
 });
 
 
 $(".card").click(function (e) {
 	if(!e.target.className.includes('btn') && !e.target.className.includes('form')) {
+		if(!$(this).find("input[type=checkbox]").is(':checked')) {
+			$(this).find("input[type=checkbox]").prop('checked', true);
+		} else {
+			$(this).find("input[type=checkbox]").prop('checked', false);
+		}
    	$(this).toggleClass("toggled");
 	}
 });
