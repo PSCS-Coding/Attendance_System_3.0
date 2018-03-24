@@ -219,7 +219,7 @@ require_once('header.php');
 <script>
 $(document).ready(function(){
     createNav();
-		$('.index-actions').html('<li class="nav-item"><a href="#" class="nav-link">Groups</a>');
+		$('.grouplink').html('<li class="nav-item"><a href="#" class="nav-link">Groups</a>');
 
 });
 
