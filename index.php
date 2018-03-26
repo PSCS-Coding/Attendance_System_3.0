@@ -79,8 +79,10 @@ function enquote($text){
 				if($row["status_name"] == "Late"){
 					if((int)(($row["return_time"][0].$row["return_time"][1])) > 12){
 						$row["return_time"] = (string)((int)($row["return_time"][0].$row["return_time"][1]) - 12).$row["return_time"][2].$row["return_time"][3].$row["return_time"][4];
+					}elseif((int)(($row["return_time"][0].$row["return_time"][1])) < 10){
+						$row["return_time"] = substr($row["return_time"],1,4);
 					}
-					echo " arriving at ".str_replace(':00', '',$row["return_time"]).'</span>';
+					echo " arriving at ".substr($row["return_time"],0,5).'</span>';
 				}else{
 					echo '</span>';
 				}
