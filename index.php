@@ -45,6 +45,7 @@ function enquote($text){
 		}
 		echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"><input type="hidden" name="student" value="DAILY_RESET"><input type="hidden" name="return_time" value=0> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" class="reset" name="change" value="Set all to \'Not checked in\'"></form>';
 		?>
+	<a href="statusview.php">Status</a>
 	<div class = "sidebar">
 		admin
 		<a class= "sidetext" href="admin.php?page=0">Allotted Hours</a>
