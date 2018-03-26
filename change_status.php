@@ -11,10 +11,10 @@
     else {
       $time = '';
     }
+    $info = ""; // TODO implement info handling for field trip, offsite
 
-  // need error handling on the following query
-  status_update($student,$status,'',$time);
-
+  // TODO error handling on the following query
+  status_update($student,$status,$info,$time);
 
   $query = 'SELECT * FROM current JOIN status_data ON current.status_id = status_data.status_id WHERE student_id = '.$student;
   $current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
