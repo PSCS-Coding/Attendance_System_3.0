@@ -45,7 +45,6 @@ function enquote($text){
 		}
 		echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"><input type="hidden" name="student" value="DAILY_RESET"><input type="hidden" name="return_time" value=0> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" class="reset" name="change" value="Set all to \'Not checked in\'"></form>';
 		?>
-	<a href="statusview.php">Status</a>
 	<div class = "sidebar">
 		admin
 		<a class= "sidetext" href="admin.php?page=0">Allotted Hours</a>
@@ -60,6 +59,7 @@ function enquote($text){
 		<a class= "sidetext" href="admin.php?page=9">Student Edit View</a>
 		front end
 		<a class= "sidetext" href="index.php">Front Page</a>
+		<a class= "sidetext" href="statusview.php">Status</a>
 	</div>
     <div id="main-table">
       <table>
@@ -74,16 +74,12 @@ function enquote($text){
         <?php
          	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id WHERE student_data.active = 1 ORDER BY first_name DESC';
          	$current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-					$i = 0;
          	foreach ($current as &$row) {
-				$i++;
-            	echo '<tr class="student-row" id="'.$row["student_id"].'">';
-            	echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
-            	echo '<td><span class="status">'.$row["status_name"];
+            	echo '<tr class="student-row" id="'.$row["student_id"].'"><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td><span class="status">'.$row["status_name"];
 				if($row["status_name"] == "Late"){
-					/*if((int)($row["return_time"][0].$row["return_time"][1]) > 12){
-						$row["return_time"] = 12 - (string)((int)($row["return_time"][0].$row["return_time"][1])).$row["return_time"][2].$row["return_time"][3].$row["return_time"][4].$row["return_time"][5].$row["return_time"][6].$row["return_time"][7];
-					}*/ //Broken
+					if((int)(($row["return_time"][0].$row["return_time"][1])) > 12){
+						$row["return_time"] = (string)((int)($row["return_time"][0].$row["return_time"][1]) - 12).$row["return_time"][2].$row["return_time"][3].$row["return_time"][4];
+					}
 					echo " arriving at ".str_replace(':00', '',$row["return_time"]).'</span>';
 				}else{
 					echo '</span>';
