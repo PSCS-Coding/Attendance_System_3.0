@@ -1,6 +1,6 @@
 <?php
     require_once('../connection.php');
-    if($_GET['ver'] == date('i') || $_GET['ver'] == (date('i') + 1)) {
+    if($_GET['ver'] == date('i') || $_GET['ver'] == (date('i') - 1)) {
     if(!empty($_GET["name"]) && !empty($_GET["imgurl"]) && !empty($_GET["email"])){
         //student table
         if(isset($_COOKIE['login'])) {

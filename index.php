@@ -20,8 +20,7 @@ require_once('header.php');
 	<body>
 		<div class='sticky-top'>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar" style="box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.1);">
-	<?php require_once('nav.html');?>
-
+<?php require_once('nav.html');?>
 </nav>
 </div>
 
@@ -94,6 +93,7 @@ require_once('header.php');
 	<div class="container students-cards">
 	<div class="row">
 
+		<div class='container-fluid' style='heigth:2em;'></div>
 </div>
 </div>
 <script src='js/nav.js'></script>
@@ -102,13 +102,12 @@ require_once('header.php');
 $(document).ready(function(){
 	$('#offsitereturn').timepicker({ 'step': 10, 'scrollDefault': 'now' });
 	$('#fieldtripreturn').timepicker({ 'step': 10, 'scrollDefault': 'now' });
-		$("body").tooltip({ selector: '[data-toggle=tooltip]' });
-    createNav();
-		$('.links').html('<li class="nav-item"><a href="#" class="nav-link">Groups</a></li><li class="nav-item"><a href="#" class="nav-link">Status view</a></li><li class="nav-item"><a href="#" class="nav-link">View reports</a></li>' + $('.links').html());
-		  });
+	$("body").tooltip({ selector: '[data-toggle=tooltip]' });
+	$('.links').html('<li class="nav-item"><a href="#" class="nav-link">Groups</a></li><li class="nav-item"><a href="#" class="nav-link">Status view</a></li><li class="nav-item"><a href="#" class="nav-link">View reports</a></li>' + $('.links').html());
+	createNav();
+});
 
 function build() {
-
 					var current = query('current');
 					for(var i = 0; i < current.length; i++) {
 						if(query('statusIdToName', current[i]['status_id']) == 'Field Trip') {
