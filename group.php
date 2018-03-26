@@ -10,6 +10,25 @@
       $query = "SELECT first_name, last_name FROM student_data WHERE active = 1";
       $values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
     ?>
+    <script>
+    var group = [];
+      function allowDrop(ev) {
+          ev.preventDefault();
+      }
+
+      function drag(ev) {
+          ev.dataTransfer.setData("text", ev.target.id);
+      }
+      function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+        if (confirm("Add " + document.getElementById(data).textContent + " to group")) {
+          group.push(document.getElementId(data)[0].textContent);
+        }
+      }
+  </script>
+    <p id="1">text</p>
     <div class = "sidebar">
   	admin
   	<a class= "sidetext" href="/admin.php?page=0">Allotted Hours</a>
@@ -25,41 +44,17 @@
   	front end
   	<a class= "sidetext" href="/index.php">Front Page</a>
   	</div>
-    <script>
-      function allowDrop(ev) {
-          ev.preventDefault();
-      }
-
-      function drag(ev) {
-          ev.dataTransfer.setData("text", ev.target.id);
-      }
-
-      function drop(ev) {
-          ev.preventDefault();
-          var data = ev.dataTransfer.getData("text");
-          ev.target.appendChild(document.getElementById(data));
-      }
-      var students = <?php echo json_encode($values); ?>;
-      for (var i = 0; i < students.length; i++) {
-        var td = document.createElement("td");
-        var t = document.createTextNode(students[i]["first_name"] + " " + students[i]["last_name"][0] + ".");
-        var tr = document.createElement("tr");
-        var x = i;
-      }
-      td.appendChild(t);
-      getElementById(x).appendChild(td);
-  </script>
   <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"><p id="div1">test2</p></div>
   <div id="drag1">
     <table>
-      <th id="t1">
-        <td>students</td>
-      </th>
-      <?php
-        for ($i=0; $i <= count($values); $i++) {
-          echo "<tr id='".$i."' draggable='true' ondragstart='drag(event)'></tr>";
-        }
-       ?>
+      <tbody>
+        <th id="t1">students</th>
+        <?php
+          for ($i=0; $i <= count($values) - 1; $i++) {
+            echo "<tr id='".$i."' draggable='true' ondragstart='drag(event)'><td id='".$i."'>".$values[$i]['first_name']."</td></tr>";
+          }
+         ?>
+     </tbody>
     </table>
   </div>
   </body>
