@@ -2,8 +2,10 @@
   require_once('../connection.php');
   //verify password login and set login cookie
   if(isset($_POST['pass'])) {
-    $year = date(Y); //eventually change this to 2017-18 perhaps, instead of just 2018?
-    $loginQuery = $db->prepare("SELECT login_password FROM login WHERE login_year = '$year'");
+    if(isset($_COOKIE['user'])) {
+      setcookie("user", '', time() - 3600, "/");
+    }
+    $loginQuery = $db->prepare("SELECT login_password FROM login");
     $loginQuery->execute();
     $loginResult = Array();
     foreach ($loginQuery->get_result() as $row) {
@@ -12,9 +14,9 @@
     if($loginResult[0] == crypt($_POST['pass'], 'P9')) {
       $cook = crypt($_POST['pass'], 'P9');
       setcookie("login", $cook, time() + (86400 * 5), "/");
-      header('Location: /test.php'); //eventually change to main page
+      header('Location: ../');
     } else {
-      echo 'Wrong password.';
+      header('Location: ../login/?wrong=true');
     }
   }
 ?>

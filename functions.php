@@ -2,8 +2,7 @@
 
 require_once('connection.php');
 
-
-function elapsed($student_id) {
+function mins_used($student_id) {
 		global $db;
 
 		$lastEventTimeQuery = $db->query("SELECT timestamp FROM history WHERE student_id = '$student_id' ORDER BY event_id DESC LIMIT 1");
@@ -11,7 +10,6 @@ function elapsed($student_id) {
 		if (isWeekend($time1->format('Y-m-d'))) {
 			return 0;
 		}
-
 		$holQuery = $db->query("SELECT COUNT(*) FROM holidays WHERE holiday_date =" . $time1->format('Y-m-d'));
 		if ($holQuery->fetch_array()[0] != 0) {
 			return 0;
@@ -21,13 +19,12 @@ function elapsed($student_id) {
 
 		$start = new DateTime($time1->format('Y-m-d' . '9:00'));
 		$end = new DateTime($time1->format('Y-m-d' . '15:40'));
+
 		//is event 1 before the start of the school day of the same day?
 		if ($time1 < $start){
 				$time1 = $start;
 		}
-
 		//is event 2 after the end of the school day of the same day of event 1?
-
 		if ($time2 > $end){
 				$time2 = $end;
 		}
@@ -38,20 +35,23 @@ function elapsed($student_id) {
 		return $time_elapsed;
 }
 
+
+
 function status_update($student, $status, $info = '', $return_time = '') {
 
 	global $db;
   // Update current table with new event
-	$query = 'UPDATE current SET status_id = '.$status.', return_time = "'.$return_time.'" WHERE student_id = '.$student;
+	$query = 'UPDATE current SET status_id = '.$status.', info = "'.$info.'", return_time = "'.$return_time.'" WHERE student_id = '.$student;
+	// $query = 'UPDATE current SET status_id = '.$status.', return_time = "'.$return_time.'" WHERE student_id = '.$student;
 	$db->query($query);
 
 	// Update immediate prior record in history table with calculated duration
-	$elapsed = elapsed($student);
-  $query = "UPDATE history SET elapsed = '$elapsed' WHERE student_id = '$student' ORDER BY event_id DESC LIMIT 1";
+	$minutes_used = mins_used($student);
+  $query = "UPDATE history SET elapsed = '$minutes_used' WHERE student_id = '$student' ORDER BY event_id DESC LIMIT 1";
   $db->query($query);
 
 	// Add new event to history table
-  $query_insert = 'INSERT INTO history (student_id, status_id, return_time) VALUES ('.$student.', '.$status.', "'.$return_time.'")';
+  $query_insert = 'INSERT INTO history (student_id, status_id, info, return_time) VALUES ('.$student.', '.$status.', "'.$info.'", "'.$return_time.'")';
 	$db->query($query_insert);
 
 	  return 0;

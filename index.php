@@ -1,46 +1,69 @@
 <?php
 session_start();
-?>
-<?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 require_once("connection.php");
 require_once("functions.php");
+start_the_day();
 ?>
 <!DOCTYPE html>
 <html>
-  	<head>
-    	<title>
-			Attendance System 100% Complete Perfect No Virus Download Free Effective and Efficient
-    	</title>
-	    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    	<link rel="stylesheet" type="text/css" href="style.css">
-  	</head>
+  <head>
+	<title>PSCS Attendance</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="js/timepicker/jquery.timepicker.min.js" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="js/timepicker/jquery.timepicker.css" />
+  </head>
 	<body>
-    	<?php
-			$foo = "'this is also info'";
-			$bar = "'2014-11-11 12:45:34'";
-		if (!empty($_POST['change'])) {
-			status_update($_POST['student'],$_POST['new'] , $_POST['current'],"''", "''");
-		}
-		echo '<table><tr><th>Student</th><th>Status</th></tr>';
-		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
-		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-		foreach($stati as &$row){
-			echo '<tr><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td><p>'.$row["status_name"].' </p> <form action="/index.php" method="POST">';
-			echo '<input type="hidden" name="student" value="'.$row["student_id"].'"> <input type=hidden name=current value="'.$row["status_id"].'">';
-			if($row['status_id'] != 1 ){
-				echo '<input type="hidden" name="new" value=1> <input type="submit" name="change" value="P">';
-				if($row['status_id'] != 7  && $row['status_id'] != 4)
-					echo '<input type="hidden" name="new" value=7> <input type="submit" name="change" value="A">';
-			}
-			else{
-				if($row['status_id'] != 4 )
-					echo '<input type="hidden" name="new" value=4> <input type="submit" name="change" value="CO">';
-			}
-			echo '</form></td></tr>';
-		}
-		echo '</table>';
-		?>
+    <div id="main-table">
+      <table>
+        <tr>
+          <th>
+            Student
+          </th>
+          <th>
+            Status
+          </th>
+        </tr>
+        <?php
+         	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
+         	$current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+         	foreach ($current as &$row) {
+            	echo '<tr class="student-row" id="'.$row["student_id"].'">';
+            	echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
+            	echo '<td><span class="status">'.$row["status_name"];
+							if($row["status_name"] == "Late") {
+								echo " arriving at ".pretty_time($row["return_time"]);
+							}
+							echo '</span>';
+							if($row['status_id'] != 1 ) { // if not present, show the present button
+								echo '<input type="submit" name="1" value="P">';
+			  					if($row['status_id'] == 0 || $row['status_id'] == 5) { // if not checked in or late, show late fields
+										echo '<input name="time" type="text" class="late" placeholder="Arrival time"><input type="submit" name="5" value="L">';
+			  					}
+			  					if($row['status_id'] != 7  && $row['status_id'] != 4) { // if not absent or checked out, show absent button
+					            	echo '<input type="submit" name="7" value="A">';
+			  					}
+			  				}
+		  				else { // student is present
+		  					if($row['status_id'] != 4 ) { // if not checked out, show check out button
+				            	echo '<input type="submit" name="4" value="CO">';
+		  					}
+		  				}
+            	echo '</td></tr>';
+          	}
+        ?>
+      </table>
+    </div>
+
+    <script type="text/javascript" src="js/changeStatus.js"></script>
+		<script type="text/javascript">
+			$('.late').timepicker({
+		    'minTime': '9:00am',
+		    'maxTime': '3:40pm',
+				'step' : 5,
+				'scrollDefault' : 'now'
+			});
+		</script>
 	</body>
 </html>
