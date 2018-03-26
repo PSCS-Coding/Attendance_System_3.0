@@ -28,49 +28,6 @@ function enquote($text){
 <!DOCTYPE html>
 
 <html>
-
-    	<?php
-		/*
-		echo "  	<head>
-
-			    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-		    	<link rel="stylesheet" type="text/css" href="style.css">
-		  	</head>
-			<body>
-				<div class ="topbar">
-
-				</div>";
-		//updates stati if forms are submitted
-		if ($_POST && !empty($_POST['change'])){
-			if(empty($_POST['return_time'])){
-				$_POST['return_time'] = 0;
-			}
-			else{
-				//error handling for return times
-				if ($_POST && !empty($_POST['change'])){
-			status_update($_POST['student'],$_POST['new'] , $_POST['current'] , $_POST['return_time']);
-		}
-		//sets all students to NCI
-		//querys database for main table
-		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
-		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-		$x = 0;
-		//makes rows of the table from query results
-		foreach($stati as &$row){
-			$x++;
-			echo '<tr><td class="name"><form id="'.$x.'" method="POST"><input type="checkbox" name="'.$x.'"></form>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td class="status"><p>'.$row["status_name"];
-			if($row["status_name"] == "Late"){
-				echo ' @ '.$row["return_time"];
-			}
-			echo ' </p>';
-			//adds buttons to students in table
-
-			echo '</td></tr>';
-		}
-		echo '</table>';
-		*/
-		?>
-
   <head>
 	<title>
 		Atendance�Sistim�100�Persent�Compleet�Perfict�No�Virus�Downlode�Free�Affective�end�Afficient�Profetional�Git�it�Now�Easy�Set�Up�Aply�Today�Has�Enyone�Really�Been�Far�Even�as�Descided�to�Use�Evin�Go�Wunt�to�do�Look�Mor�Like�Go�Further�You�Can�Realy�be�Far�It's�Just�Commin�Sense�Low�Price�Great�Deel�No�Charge�Limited�Time�Ofter
@@ -78,8 +35,8 @@ function enquote($text){
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="js/timepicker/jquery.timepicker.min.js" type="text/javascript"></script>
-		<link rel="stylesheet" type="text/css" href="js/timepicker/jquery.timepicker.css" />
+	<script src="js/timepicker/jquery.timepicker.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="js/timepicker/jquery.timepicker.css" />
   </head>
 	<body>
 		<?php
