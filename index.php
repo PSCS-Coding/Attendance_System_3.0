@@ -1,20 +1,8 @@
 <?php
 session_start();
-require_once("connection.php");
-require_once("functions.php");
+require_once("head.php");
 start_the_day();
 ?>
-<!DOCTYPE html>
-<html>
-  <head>
-	<title>PSCS Attendance</title>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="js/timepicker/jquery.timepicker.min.js" type="text/javascript"></script>
-		<link rel="stylesheet" type="text/css" href="js/timepicker/jquery.timepicker.css" />
-  </head>
-	<body>
     <div id="main-table">
       <table>
         <tr>
