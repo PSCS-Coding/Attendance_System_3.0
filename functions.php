@@ -35,8 +35,10 @@ function mins_used($student_id) {
 		return $time_elapsed;
 }
 
-function status_update($student, $status, $info, $return_time) {
 
+
+function status_update($student, $status, $info = '', $return_time = '') {
+  
 	global $db;
   // Update current table with new event
 	$query = 'UPDATE current SET status_id = '.$status.', info = "'.$info.'", return_time = "'.$return_time.'" WHERE student_id = '.$student;
