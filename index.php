@@ -38,9 +38,7 @@ require_once('header.php');
 					<div class="input-group-prepend location-custom">
     				<a style="color:#fff" class="btn btn-danger dropdown-toggle customtog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Location<span class="glyphicon glyphicon-triangle-bottom"></a>
 							<div class="dropdown-menu">
-	      			<span class="as">
-								<a class="dropdown-item" onclick='setCustom("Uwajimaya")' href="#">Uwajimaya</a>
-								<a class="dropdown-item" onclick='setCustom("Pings")' href="#">Pings</a>
+	      			<span class="locationdrop">
 							</span>
 	      			<div role="separator" class="dropdown-divider"></div>
 	      			<a class="dropdown-item custom-location" onclick="toggleCustomLocation()" href="#">Custom</a>
@@ -70,11 +68,9 @@ require_once('header.php');
       <div class="modal-body">
 				<div class="input-group">
 					<div class="input-group-prepend facilitator-custom">
-    				<a style='color:#fff' class="btn btn-danger dropdown-toggle fieldtog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Location<span class="glyphicon glyphicon-triangle-bottom"></a>
+    				<a style='color:#fff' class="btn btn-danger dropdown-toggle fieldtog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Facilitator<span class="glyphicon glyphicon-triangle-bottom"></a>
     				<div class="dropdown-menu">
-	      			<span class="as">
-								<a class="dropdown-item" onclick='setFacil("Nic")' href="#">Nic</a>
-								<a class="dropdown-item" onclick='setFacil("Liana")' href="#">Liana</a>
+	      			<span class="facilitatordrop">
 							</span>
     				</div>
   				</div>
@@ -172,6 +168,31 @@ function build() {
 								)
 							)
 					}
+					var locations = [];
+					locations = query('getLocations');
+					for(var i = 0; i < locations.length; i++) {
+						$('.locationdrop')
+							.append(
+								$('<a>')
+									.attr('class', 'dropdown-item')
+									.attr('onclick', 'setLocation(' + locations[i] + ')')
+									.attr('href', '#')
+									.text(locations[i])
+							);
+					}
+					var facils = [];
+					facils = query('getFacilitators');
+					for(var i = 0; i < locations.length; i++) {
+						$('.facilitatordrop')
+							.append(
+								$('<a>')
+									.attr('class', 'dropdown-item')
+									.attr('onclick', 'setLocation(' + facils[i] + ')')
+									.attr('href', '#')
+									.text(facils[i])
+							);
+					}
+
 }
 $.when( build() ).done(function( x ) {
 

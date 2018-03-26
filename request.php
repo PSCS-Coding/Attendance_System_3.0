@@ -2,7 +2,7 @@
 
   require_once('connection.php');
 if(!empty($_GET['f'])) {
-  if(!empty($_GET['f']) && $_GET['f'] == 'current') {
+  if($_GET['f'] == 'current') {
     $query = $db->query('SELECT * FROM current');
     $result = Array();
     while($row = $query->fetch_array()) {
@@ -31,6 +31,16 @@ if(!empty($_GET['f'])) {
   if($_GET['f'] == 'statusIdToName') {
     $query = $db->query('SELECT status_name FROM status_data WHERE status_id = ' . $_GET["id"]);
     $result = $query->fetch_row()[0];
+    echo json_encode($result, JSON_PRETTY_PRINT);
+  }
+  if($_GET['f'] == 'getFacilitators') {
+    $query = $db->query('SELECT facilitator_name FROM facilitators');
+    $result = $query->fetch_all();
+    echo json_encode($result, JSON_PRETTY_PRINT);
+  }
+  if($_GET['f'] == 'getLocations') {
+    $query = $db->query('SELECT location_name FROM offsite_locations');
+    $result = $query->fetch_all();
     echo json_encode($result, JSON_PRETTY_PRINT);
   }
 }
