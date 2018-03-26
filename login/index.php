@@ -67,30 +67,32 @@
 	<body style='background-color: #272626;'>
 	<div id ='wrong'></div>
 		<div class='container' style='height: 5rem;'></div>
-		<div class="card text-white bg-dark mx-auto">
-				<div class="card-body">
-					<h5 class="card-title">Google Login</h5>
-					<div class='card-text'></div>
-				</div>
-				<div class="card-footer">
-					<div id ='gs'class="g-signin2" data-onsuccess="onSignIn"></div>
-				</div>
-		</div>
-		<br>
-		<div class="card text-white bg-dark mx-auto">
-			<form name="login" method="post" action="pass.php">
-  			<div class="card-body">
-    			<h5 class="card-title">Password Login</h5>
-					<div class='container' style='height: .75rem;'></div>
-					<div class='card-text'>
-		    		<input name="pass" type="password" class="form-control" id ="pass" placeholder="Password" required>
-						<div class='container' style='height:.75rem'></div>
+		<div class='cds'>
+			<div class="card text-white bg-dark mx-auto">
+					<div class="card-body">
+						<h5 class="card-title">Google Login</h5>
 					</div>
-  			</div>
-				<div class="card-footer">
-					<button class="btn btn-primary" type="submit" name="submit">Sign In</button>
-				</div>
-			</form>
+					<div class="card-footer">
+						<div id ='gs'class="g-signin2" data-onsuccess="onSignIn"></div>
+					</div>
+			</div>
+			<br>
+			<div class="card text-white bg-dark mx-auto">
+				<form name="login" method="post" action="pass.php">
+	  			<div class="card-body">
+	    			<h5 class="card-title">Password Login</h5>
+						<div class='container' style='height: .75rem;'></div>
+						<div class='card-text'>
+							<div class="input-group mb-3">
+		  					<input name = "pass" type="password" class="form-control" id="pass" placeholder="Password" aria-label="Password" aria-describedby="Password" required>
+		  					<div class="input-group-append">
+		    					<button class="btn btn-primary" type="submit" name="submit">Sign in</button>
+		  					</div>
+							</div>
+						</div>
+	  			</div>
+				</form>
+			</div>
 		</div>
 		<script>
 			var sendUserData = function(name,imgurl,email,minute) {

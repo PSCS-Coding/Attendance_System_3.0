@@ -19,10 +19,12 @@ function hrs_used($student_id) {
 
 		$start = new DateTime($time1->format('Y-m-d' . '9:00'));
 		$end = new DateTime($time1->format('Y-m-d' . '15:40'));
+  
 		//is event 1 before the start of the school day of the same day?
 		if ($time1 < $start){
 				$time1 = $start;
 		}
+
 		//is event 2 after the end of the school day of the same day of event 1?
 		if ($time2 > $end){
 				$time2 = $end;
@@ -34,10 +36,12 @@ function hrs_used($student_id) {
 		return $time_elapsed;
 }
 
-function status_update($student, $status, $old_status, $info = '', $return_time = '') {
+
+function status_update($student, $status, $info = '', $return_time = '') {
+  
 	global $db;
   // Update current table with new event
-	$query = 'UPDATE current SET status_id = '.$status.' WHERE student_id = '.$student;
+	$query = 'UPDATE current SET status_id = '.$status.', return_time = "'.$return_time.'" WHERE student_id = '.$student;
 	$db->query($query);
 
 	// Update immediate prior record in history table with calculated duration
@@ -46,7 +50,7 @@ function status_update($student, $status, $old_status, $info = '', $return_time 
   $db->query($query);
 
 	// Add new event to history table
-  $query_insert = 'INSERT INTO history (student_id, status_id) VALUES ('.$student.', '.$status.')';
+  $query_insert = 'INSERT INTO history (student_id, status_id, return_time) VALUES ('.$student.', '.$status.', "'.$return_time.'")';
 	$db->query($query_insert);
 
   return 0;
@@ -76,4 +80,8 @@ function start_the_day() {
 	}
 }
 
+function pretty_time($SQLdatetime) {
+	$time = new DateTime($SQLdatetime);
+	return $time->format('g:i');
+}
 ?>
