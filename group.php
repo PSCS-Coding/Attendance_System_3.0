@@ -9,6 +9,7 @@
      require_once("connection.php");
       $query = "SELECT first_name, last_name FROM student_data WHERE active = 1";
       $values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+      $foo = count($values);
     ?>
     <script>
     var group = [];
@@ -22,13 +23,12 @@
       function drop(ev) {
         ev.preventDefault();
         var data = ev.dataTransfer.getData("text");
-        ev.target.appendChild(document.getElementById(data));
         if (confirm("Add " + document.getElementById(data).textContent + " to group")) {
           group.push(document.getElementId(data)[0].textContent);
+          ev.target.appendChild(document.getElementById(data));
         }
       }
   </script>
-    <p id="1">text</p>
     <div class = "sidebar">
   	admin
   	<a class= "sidetext" href="/admin.php?page=0">Allotted Hours</a>
@@ -50,8 +50,12 @@
       <tbody>
         <th id="t1">students</th>
         <?php
-          for ($i=0; $i <= count($values) - 1; $i++) {
-            echo "<tr id='".$i."' draggable='true' ondragstart='drag(event)'><td id='".$i."'>".$values[$i]['first_name']."</td></tr>";
+          for ($i=0; $i < $foo; $i++) {
+            $x = $i;
+            if($i == 1) {
+              $x++;
+            }
+              echo "<tr id='".$i."' draggable='true' ondragstart='drag(event)'><td id='".$x."'>".$values[$i]['first_name']."</td></tr>";
           }
          ?>
      </tbody>
