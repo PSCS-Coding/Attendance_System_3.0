@@ -19,7 +19,7 @@ require_once('header.php');
   	</head>
 	<body>
 		<div class='sticky-top'>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar" style="box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.1);">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar" style="box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.1);cursor:auto;">
 <?php require_once('nav.html');?>
 </nav>
 </div>
@@ -36,8 +36,8 @@ require_once('header.php');
       <div class="modal-body">
 				<div class="input-group">
 					<div class="input-group-prepend location-custom">
-    				<input value='Location' class="btn btn-danger dropdown-toggle customtog" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></input>
-    				<div class="dropdown-menu">
+    				<a style="color:#fff" class="btn btn-danger dropdown-toggle customtog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Location<span class="glyphicon glyphicon-triangle-bottom"></a>
+							<div class="dropdown-menu">
 	      			<span class="as">
 								<a class="dropdown-item" onclick='setCustom("Uwajimaya")' href="#">Uwajimaya</a>
 								<a class="dropdown-item" onclick='setCustom("Pings")' href="#">Pings</a>
@@ -70,11 +70,11 @@ require_once('header.php');
       <div class="modal-body">
 				<div class="input-group">
 					<div class="input-group-prepend facilitator-custom">
-    				<input value='Facilitator' class="btn btn-danger dropdown-toggle customtog" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></input>
+    				<a style='color:#fff' class="btn btn-danger dropdown-toggle fieldtog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Location<span class="glyphicon glyphicon-triangle-bottom"></a>
     				<div class="dropdown-menu">
 	      			<span class="as">
-								<a class="dropdown-item" onclick='setCustom("Nic")' href="#">Nic</a>
-								<a class="dropdown-item" onclick='setCustom("Liana")' href="#">Liana</a>
+								<a class="dropdown-item" onclick='setFacil("Nic")' href="#">Nic</a>
+								<a class="dropdown-item" onclick='setFacil("Liana")' href="#">Liana</a>
 							</span>
     				</div>
   				</div>
@@ -93,9 +93,10 @@ require_once('header.php');
 	<div class="container students-cards">
 	<div class="row">
 
-		<div class='container-fluid' style='heigth:2em;'></div>
+
 </div>
 </div>
+<div style='height:2em;'></div>
 <script src='js/nav.js'></script>
 <script src='js/functions.js'></script>
 <script>
@@ -272,22 +273,38 @@ $(".fieldtripbutton").click(function () {
 
 function toggleCustomLocation() {
 	if($('.customtog').hasClass('btn')) {
+		$('.customtog').replaceWith('<input class="customtog">');
 		$('.customtog').attr('type', 'text');
+		$('.customtog').attr('data-toggle', 'dropdown');
+		$('.customtog').attr('aria-haspopup', 'true');
+		$('.customtog').attr('aria-expanded', 'true');
+		$('.customtog').addClass('dropdown-toggle customtog');
 		$('.customtog').attr('value', '');
 		$('.customtog').attr('placeholder', 'Location');
 		$('.custom-location').text('Choose from dropdown');
 		$('.customtog').removeClass('btn');
 		$('.customtog').removeClass('btn-danger');
 	} else {
-		$('.customtog').attr('type', 'button');
+		$('.customtog').replaceWith('<a class="customtog"><span class="glyphicon glyphicon-triangle-bottom"></a>');
+		$('.customtog').addClass('customtog');
 		$('.custom-location').text('Custom');
-		$('.customtog').attr('value', 'Location');
-		$('.customtog').addClass('btn');
-		$('.customtog').addClass('btn-danger');
+		$('.customtog').text('Location');
+		$('.customtog').attr('style', 'color:#fff');
+		$('.customtog').attr('data-toggle', 'dropdown');
+		$('.customtog').attr('aria-haspopup', 'true');
+		$('.customtog').attr('aria-expanded', 'true');
+		$('.customtog').addClass('btn btn-danger dropdown-toggle');
 	}
 }
-function setCustom(name) {
-	$('.customtog').attr('value', name);
+function setCustom(location) {
+	if($('.customtog').is('a')) {
+		$('.customtog').text(location);
+	} else {
+		$('.customtog').attr('value', location);
+	}
+}
+function setFacil(name) {
+		$('.fieldtog').text(name);
 }
 </script>
 	</body>
