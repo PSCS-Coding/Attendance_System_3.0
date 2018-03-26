@@ -32,13 +32,76 @@ require_once("connection.php");
 	</div>
 	<div>
 		<?php
-    		$draggeble = false;
-			$goodpage = false;
-			//Allotted Hours
-			if((string)$_GET['page'] == "0"){
-				$goodpage = True;
-				$index = array('veteran_year','default_offsite','default_is');
-				$database = 'allotted_hours';
+    $draggeble = false;
+		$goodpage = false;
+		//Allotted Hours
+		if((string)$_GET['page'] == "0"){
+			$goodpage = True;
+			$index = array('veteran_year','default_offsite','default_is');
+			$database = 'allotted_hours';
+		}
+		//Current Events
+		elseif((string)$_GET['page'] == "1"){
+			$goodpage = True;
+			$index = array('student_id','status_id','info','return_time');
+			$database = 'current';
+		}
+		//Facilitator Edit View
+		elseif((string)$_GET['page'] == "2"){
+			$goodpage = True;
+			$index = array('facilitator_id','facilitator_name');
+			$database = 'facilitators';
+		}
+		//Group Edit View
+		elseif((string)$_GET['page'] == "3"){
+			$goodpage = True;
+      $index = array('group_name','students');
+      $database = 'groups';
+      echo '<a class="glink" href="groups.html">Edit groups</a>';
+		}
+		//History
+		elseif((string)$_GET['page'] == "4"){
+			$goodpage = True;
+			$index = array('event_id','student_id','timestamp','status_id','info','return_time','offsite_hrs_used');
+			$database = 'history';
+		}
+		//Holidays
+		elseif((string)$_GET['page'] == "5"){
+			$goodpage = True;
+			$index = array('holiday_id','holiday_name','holiday_date');
+			$database = 'holidays';
+		}
+		//Offsite Locations
+		elseif((string)$_GET['page'] == "6"){
+			$goodpage = True;
+			$index = array('location_id','location_name');
+			$database = 'offsite_locations';
+		}
+		//Passwords
+		elseif((string)$_GET['page'] == "7"){
+			$goodpage = True;
+			$index = array('login_year','login_password');
+			$database = 'login';
+		}
+		//School Hours
+		elseif((string)$_GET['page'] == "8"){
+			$goodpage = True;
+			$index = array('start_time','end_time');
+			$database = 'globals';
+		}
+		//Student Edit View
+		elseif((string)$_GET['page'] == "9"){
+			$goodpage = True;
+			$index = array('student_id','first_name','last_name','imgurl','grad_year','veteran_year','current_offsite_hours','current_is_hours','priv','user_id','active');
+			$database = 'student_data';
+		}
+		else{
+			echo "<h1>Bad URL!</h1>";
+		}if($goodpage){
+			$query = 'SELECT * FROM '.$database.';';
+			echo '<table><tr>';
+			foreach($index as &$header){
+				echo '<th>'.str_replace('_', ' ',$header).'</th>';
 			}
 			//Current Events
 			elseif((string)$_GET['page'] == "1"){
@@ -197,18 +260,5 @@ require_once("connection.php");
 			}
 		 ?>
 	</div>
-  <script>
-    function drag(ev) {
-      ev.dataTransfer.setData("text", ev.target.id);
-    }
-    function drop(ev) {
-      ev.preventDefault();
-      var data = ev.dataTransfer.getData("text");
-      ev.target.appendChild(document.getElementById(data));
-    }
-    function allowDrop(ev) {
-      ev.preventDefault();
-    }
-  </script>
 </body>
 </html>

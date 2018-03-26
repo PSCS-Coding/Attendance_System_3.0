@@ -138,6 +138,10 @@ td.admin{
 .back > .sidebar{
 	padding-top:20px;
 }
+.glink {
+	background-color: #888;
+	color: black;
+}
 .del{
 	margin:-20px 0 0 7%;
 	width:5px;
