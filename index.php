@@ -97,8 +97,10 @@ require_once('header.php');
 <script src='js/functions.js'></script>
 <script>
 $(document).ready(function(){
-	$('#offsitereturn').timepicker({ 'step': 10, 'scrollDefault': 'now' });
-	$('#fieldtripreturn').timepicker({ 'step': 10, 'scrollDefault': 'now' });
+	$('#offsitereturn').timepicker({ 'step': 10, 'scrollDefault': 'now', 'minTime': '9:00am',
+    'maxTime': '3:40pm'});
+	$('#fieldtripreturn').timepicker({ 'step': 10, 'scrollDefault': 'now','minTime': '9:00am',
+    'maxTime': '3:40pm'});
 	$("body").tooltip({ selector: '[data-toggle=tooltip]' });
 	$('.links').html('<li class="nav-item"><a href="#" class="nav-link">Groups</a></li><li class="nav-item"><a href="#" class="nav-link">Status view</a></li><li class="nav-item"><a href="#" class="nav-link">View reports</a></li>' + $('.links').html());
 	createNav();
@@ -133,7 +135,7 @@ function build() {
 						$('.row')
 							.append(
 								$('<div>')
-								.attr('class', 'col-sm-4')
+								.attr('class', 'col-sm-3')
 								.append(
 									$('<div>')
 									.attr('class', 'card text-white bg-dark test')
@@ -148,7 +150,7 @@ function build() {
 										.append(
 											$('<h5>')
 											.attr('class', 'card-title')
-											.text(query('studentIdToName', current[i]['student_id']))
+											.text(query('studentIdToName', current[i]['student_id']).split(' ')[0] + ' ' + query('studentIdToName', current[i]['student_id']).split(' ')[1][0] + '.')
 										)
 										.append(
 											$('<p>')
@@ -175,7 +177,7 @@ function build() {
 							.append(
 								$('<a>')
 									.attr('class', 'dropdown-item')
-									.attr('onclick', 'setLocation(' + locations[i] + ')')
+									.attr('onclick', 'setLocation("' + locations[i] + '")')
 									.attr('href', '#')
 									.text(locations[i])
 							);
@@ -187,7 +189,7 @@ function build() {
 							.append(
 								$('<a>')
 									.attr('class', 'dropdown-item')
-									.attr('onclick', 'setLocation(' + facils[i] + ')')
+									.attr('onclick', 'setFacil("' + facils[i] + '")')
 									.attr('href', '#')
 									.text(facils[i])
 							);
@@ -317,7 +319,8 @@ function toggleCustomLocation() {
 		$('.customtog').addClass('btn btn-danger dropdown-toggle');
 	}
 }
-function setCustom(location) {
+function setLocation(location) {
+  alert('test');
 	if($('.customtog').is('a')) {
 		$('.customtog').text(location);
 	} else {
