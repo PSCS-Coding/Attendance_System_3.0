@@ -13,9 +13,8 @@ require_once('header.php');
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 	    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     	<link rel="stylesheet" type="text/css" href="style.css">
-			<link rel="stylesheet" type="text/css" href="jquery.timepicker.min.css">
-			<script src='jquery.timepicker.min.js'></script>
-
+			<link rel="stylesheet" type="text/css" href="js/timepicker/jquery.timepicker.min.css">
+			<script src='js/timepicker/jquery.timepicker.min.js'></script>
   	</head>
 	<body>
 		<div class='sticky-top'>
@@ -76,7 +75,7 @@ require_once('header.php');
   				</div>
   				<input class="form-control" id="fieldtripreturn" placeholder="Return time" aria-label="Return time" aria-describedby="Return time">
 					<div class="input-group-append">
-    				<button type='submit' class='btn btn-danger'>Field trip</button>
+    				<button type='submit' class='btn btn-danger fieldtripsubmit'>Field trip</button>
   				</div>
 				</div>
       </div>
@@ -320,7 +319,6 @@ function toggleCustomLocation() {
 	}
 }
 function setLocation(location) {
-  alert('test');
 	if($('.customtog').is('a')) {
 		$('.customtog').text(location);
 	} else {
@@ -330,6 +328,14 @@ function setLocation(location) {
 function setFacil(name) {
 		$('.fieldtog').text(name);
 }
+$(".fieldtripsubmit").click(function () {
+  if($('.fieldtog').text() != 'Facilitator' && $('#fieldtripreturn').val() != '') {
+    var facil = $('.fieldtog').text();
+    var returntime = $('#fieldtripreturn').val();
+  } else if($('.fieldtog').text() == 'Facilitator' || $('#fieldtripreturn').val() == '') {
+    alert('Please choose a facilitator and return time!');
+  }
+});
 </script>
 	</body>
 </html>

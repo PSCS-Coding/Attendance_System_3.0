@@ -23,6 +23,27 @@ if(!empty($_GET['f'])) {
     $name = $result['first_name'] . ' ' . $result['last_name'];
     echo json_encode($name, JSON_PRETTY_PRINT);
   }
+  if($_GET['f'] == 'studentNameToId') {
+    $q = 'SELECT student_id FROM student_data WHERE first_name = "' . $_GET["fname"] . '" AND last_name = "' . $_GET["lname"] . '"';
+    $query = $db->query($q);
+    $result = $query->fetch_row()[0];
+    $name = $result['student_id'];
+    echo json_encode($name, JSON_PRETTY_PRINT);
+  }
+  if($_GET['f'] == 'locationNameToId') {
+    $q = 'SELECT location_id FROM offsite_locations WHERE location_name = "' . $_GET["location"] . '"';
+    $query = $db->query($q);
+    $result = $query->fetch_row()[0];
+    $name = $result['location_id'];
+    echo json_encode($name, JSON_PRETTY_PRINT);
+  }
+  if($_GET['f'] == 'facilitatorNameToId') {
+    $q = 'SELECT facilitator_id FROM facilitators WHERE facilitator_name = "' . $_GET["facilitator"] . '"';
+    $query = $db->query($q);
+    $result = $query->fetch_row()[0];
+    $name = $result['facilitator_id'];
+    echo json_encode($name, JSON_PRETTY_PRINT);
+  }
   if($_GET['f'] == 'locationIdToName') {
     $query = $db->query('SELECT location_name FROM offsite_locations WHERE location_id = ' . $_GET["id"]);
     $result = $query->fetch_row()[0];
