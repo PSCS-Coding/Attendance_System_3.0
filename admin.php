@@ -118,6 +118,7 @@ require_once("connection.php");
 				echo "<h1>Bad URL!</h1>";
 			}
 			if($goodpage){
+				$query = 'SELECT * FROM '.$database.';';
 				$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 				if(!empty($_POST)){
 					if($_POST['go']){
@@ -190,11 +191,7 @@ require_once("connection.php");
 				foreach($values as $col => &$value){
 					if((string)$_GET['page'] == "3"){
 						foreach($index as $row => &$oi){
-			            	if ($draggeble == False) {
 								echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" value="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
-			  				}else {
-			              		echo '<td class="admin">'.$value[$oi].'</td>';
-			            	}
 		          		}
 						echo "</tr>";
 					}
@@ -224,7 +221,6 @@ require_once("connection.php");
 							}
 						}
 						echo '</tr>';
-
 					}
 				}
 				echo '<form method="POST">';
@@ -235,7 +231,7 @@ require_once("connection.php");
 					echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'">';
 				}
 				echo '<input type="submit" name="add" class="submit" value="￭"></td></form></table>';
-			}
+
 		 ?>
 	</div>
 </body>
