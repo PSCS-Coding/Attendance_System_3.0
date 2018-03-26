@@ -37,17 +37,17 @@ start_the_day();
 							}
 							echo '</span>';
 							if($row['status_id'] != 1 ) { // if not present, show the present button
-								echo '<input type="submit" name="1" value="P">';
+								echo '<div class="present"><input type="submit" name="1" value="P"></div>';
 			  					if($row['status_id'] == 0 || $row['status_id'] == 5) { // if not checked in or late, show late fields
-										echo '<input name="time" type="text" class="late" placeholder="Arrival time"><input type="submit" name="5" value="L">';
+										echo '<div class="late"><input name="time" type="text" class="late" placeholder="Arrival time"><input type="submit" name="5" value="L"></div>';
 			  					}
 			  					if($row['status_id'] != 7  && $row['status_id'] != 4) { // if not absent or checked out, show absent button
-					            	echo '<input type="submit" name="7" value="A">';
+					            	echo '<div class="absent"><input type="submit" name="7" value="A"></div>';
 			  					}
 			  				}
 		  				else { // student is present
 		  					if($row['status_id'] != 4 ) { // if not checked out, show check out button
-				            	echo '<input type="submit" name="4" value="CO">';
+				            	echo '<div class="checked-out"><input type="submit" name="4" value="CO"></div>';
 		  					}
 		  				}
             	echo '</td></tr>';

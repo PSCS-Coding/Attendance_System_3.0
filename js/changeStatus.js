@@ -13,6 +13,9 @@ $('.student-row input:submit').click( function() {
       url:"change_status.php",
       success: function(result){
         $('#'+student_id+' .status').html(result);
+        if (status_id == 7 || status_id == 1) { // if absent or present, hide the other buttons
+          $('#'+student_id+' td').children('.absent, .present, .late, .checked-out').hide();
+        }
       }
     });
     return false; // not sure if this is needed
