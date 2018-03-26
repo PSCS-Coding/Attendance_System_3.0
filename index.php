@@ -28,56 +28,15 @@ function enquote($text){
 <!DOCTYPE html>
 
 <html>
-
-    	<?php
-		/*
-		echo "  	<head>
-
-			    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-		    	<link rel="stylesheet" type="text/css" href="style.css">
-		  	</head>
-			<body>
-				<div class ="topbar">
-
-				</div>";
-		//updates stati if forms are submitted
-		if ($_POST && !empty($_POST['change'])){
-			if(empty($_POST['return_time'])){
-				$_POST['return_time'] = 0;
-			}
-			else{
-				//error handling for return times
-				if ($_POST && !empty($_POST['change'])){
-			status_update($_POST['student'],$_POST['new'] , $_POST['current'] , $_POST['return_time']);
-		}
-		//sets all students to NCI
-		//querys database for main table
-		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
-		$stati = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-		$x = 0;
-		//makes rows of the table from query results
-		foreach($stati as &$row){
-			$x++;
-			echo '<tr><td class="name"><form id="'.$x.'" method="POST"><input type="checkbox" name="'.$x.'"></form>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td class="status"><p>'.$row["status_name"];
-			if($row["status_name"] == "Late"){
-				echo ' @ '.$row["return_time"];
-			}
-			echo ' </p>';
-			//adds buttons to students in table
-
-			echo '</td></tr>';
-		}
-		echo '</table>';
-		*/
-		?>
-
   <head>
 	<title>
 		Atendance�Sistim�100�Persent�Compleet�Perfict�No�Virus�Downlode�Free�Affective�end�Afficient�Profetional�Git�it�Now�Easy�Set�Up�Aply�Today�Has�Enyone�Really�Been�Far�Even�as�Descided�to�Use�Evin�Go�Wunt�to�do�Look�Mor�Like�Go�Further�You�Can�Realy�be�Far�It's�Just�Commin�Sense�Low�Price�Great�Deel�No�Charge�Limited�Time�Ofter
   	</title>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="js/timepicker/jquery.timepicker.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="js/timepicker/jquery.timepicker.css" />
   </head>
 	<body>
 		<?php
@@ -89,16 +48,18 @@ function enquote($text){
 	<a href="statusview.php">Status</a>
 	<div class = "sidebar">
 		admin
-		<a class= "sidetext" href="/admin.php?page=0">Allotted Hours</a>
-		<a class= "sidetext" href="/admin.php?page=1">Current Events</a>
-		<a class= "sidetext" href="/admin.php?page=2">Facilitator Edit View</a>
-		<a class= "sidetext" href="/admin.php?page=3">Group Edit View</a>
-		<a class= "sidetext" href="/admin.php?page=4">History</a>
-		<a class= "sidetext" href="/admin.php?page=5">Holidays</a>
-		<a class= "sidetext" href="/admin.php?page=6">Offsit Locations</a>
-		<a class= "sidetext" href="/admin.php?page=7">Passwords</a>
-		<a class= "sidetext" href="/admin.php?page=8">School Hours</a>
-		<a class= "sidetext" href="/admin.php?page=9">Student Edit View</a>
+		<a class= "sidetext" href="admin.php?page=0">Allotted Hours</a>
+		<a class= "sidetext" href="admin.php?page=1">Current Events</a>
+		<a class= "sidetext" href="admin.php?page=2">Facilitator Edit View</a>
+		<a class= "sidetext" href="admin.php?page=3">Group Edit View</a>
+		<a class= "sidetext" href="admin.php?page=4">History</a>
+		<a class= "sidetext" href="admin.php?page=5">Holidays</a>
+		<a class= "sidetext" href="admin.php?page=6">Offsit Locations</a>
+		<a class= "sidetext" href="admin.php?page=7">Passwords</a>
+		<a class= "sidetext" href="admin.php?page=8">School Hours</a>
+		<a class= "sidetext" href="admin.php?page=9">Student Edit View</a>
+		front end
+		<a class= "sidetext" href="index.php">Front Page</a>
 	</div>
     <div id="main-table">
       <table>
@@ -111,21 +72,26 @@ function enquote($text){
           </th>
         </tr>
         <?php
-         	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
+         	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id WHERE student_data.active = 1 ORDER BY first_name DESC';
          	$current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 					$i = 0;
          	foreach ($current as &$row) {
-						$i++;
+				$i++;
             	echo '<tr class="student-row" id="'.$row["student_id"].'">';
             	echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
-            	echo '<td><span class="status">'.$row["status_name"].'</span>';
+            	echo '<td><span class="status">'.$row["status_name"];
 				if($row["status_name"] == "Late"){
-					echo " @ ".$row["return_time"];
+					/*if((int)($row["return_time"][0].$row["return_time"][1]) > 12){
+						$row["return_time"] = 12 - (string)((int)($row["return_time"][0].$row["return_time"][1])).$row["return_time"][2].$row["return_time"][3].$row["return_time"][4].$row["return_time"][5].$row["return_time"][6].$row["return_time"][7];
+					}*/ //Broken
+					echo " arriving at ".str_replace(':00', '',$row["return_time"]).'</span>';
+				}else{
+					echo '</span>';
 				}
 				if($row['status_id'] != 1 ){
 					echo '<input type="submit" name="1" value="P">';
   					if($row['status_id'] == 0 || $row['status_id'] == 5){
-						echo '<input name="time" type="number" class="late" placholder="Arival time"><input type="submit" name="5" value="L">';
+						echo '<input name="time" type="text" class="late" placeholder="Arrival time"><input type="submit" name="5" value="L">';
   					}
   					if($row['status_id'] != 7  && $row['status_id'] != 4){
 		            	echo '<input type="submit" name="7" value="A">';
@@ -143,7 +109,15 @@ function enquote($text){
     </div>
     <div id="result">
 
-    </div>
+	    </div>
     <script type="text/javascript" src="js/changeStatus.js"></script>
+		<script type="text/javascript">
+			$('.late').timepicker({
+		    'minTime': '9:00am',
+		    'maxTime': '3:40pm',
+				'step' : 5,
+				'scrollDefault' : 'now'
+			});
+		</script>
 	</body>
 </html>

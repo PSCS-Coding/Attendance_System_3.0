@@ -61,21 +61,14 @@ input{
 	text-align: center;
 	width:15%;
 }
-.topbar {
-	position:fixed;
-	width:100%;
-	background-color: #aaa;
-	color:#555;
-	padding:10px 0;
-	border-bottom:2px #888 solid;
-	margin-bottom: 30px;
-}
 .reset{
-	margin-top: 60px;
+	position:fixed;
+	margin-top: -18px;
 }
 .sidebar{
+	z-index: 1;
 	word-wrap: break-word;
-	margin: -80px 0;
+	margin: -20px 0;
 	width: 15px;
 	background-color: #555;
 	height:1000px;
@@ -90,14 +83,14 @@ input{
 	visibility: hidden;
 	display: block;
 	width:90%;
-	margin: 0 5%;
+	margin: 5px 5%;
 	color: #555;
 }
 .sidebar:hover{
 	width:250px;
 }
 .sidebar:hover a{
-	color:rgb(100,140,50);
+	color:rgb(120,180,90);
 	visibility:visible;
 }
 .BigBox{
@@ -106,18 +99,24 @@ input{
 	color: white;
 }
 .admin{
-	width:3%;
+	white-space:nowrap;
+	padding-right:2px;
+	width:inherit;
 }
 td.admin{
 	background-color:#aaa;
 	border: 1px solid white;
 	color:#555;
+	height:23px;
 	border-radius: 4px;
-	padding:3px;
+	padding:1px;
 	text-align: center;
 }
 .admin > form > input{
+	border-radius: 3px;
+	border:1px solid grey;
 	color:black;
+	width:35%;
 	text-align: center;
 }
 ::placeholder{
@@ -128,10 +127,28 @@ td.admin{
 
 }
 .newval{
+	text-align: center;
 	width:55%;
 }
 .submit{
 	margin:0 auto;
 	text-align: center;
 	width:20%;
+}
+.back > .sidebar{
+	padding-top:20px;
+}
+.glink {
+	background-color: #888;
+	color: black;
+}
+.del{
+	margin:-20px 0 0 7%;
+	width:5px;
+	position: relative;
+	display:inline-block;
+	float:left;
+}
+.table{
+	margin-left:15%;
 }
