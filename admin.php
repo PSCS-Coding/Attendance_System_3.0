@@ -32,7 +32,6 @@ require_once("connection.php");
 	</div>
 	<div>
 		<?php
-    $draggeble = false;
 		$goodpage = false;
 		//Allotted Hours
 		if((string)$_GET['page'] == "0"){
@@ -57,7 +56,7 @@ require_once("connection.php");
 			$goodpage = True;
       $index = array('group_name','students');
       $database = 'groups';
-      echo '<a class="glink" href="groups.html">Edit groups</a>';
+      echo '<a class="glink" href="group.php">Edit groups</a>';
 		}
 		//History
 		elseif((string)$_GET['page'] == "4"){
@@ -97,7 +96,7 @@ require_once("connection.php");
 		}
 		else{
 			echo "<h1>Bad URL!</h1>";
-		}if($goodpage){
+		}/*if($goodpage){
 			$query = 'SELECT * FROM '.$database.';';
 			echo '<table><tr>';
 			foreach($index as &$header){
@@ -120,7 +119,6 @@ require_once("connection.php");
 				$goodpage = True;
 	      		$index = array('first_name','last_name');
 	      		$database = 'student_data';
-	      		echo '<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"> <p>add to group</p> </div>';
 	      		$draggeble = True;
 			}
 			//History
@@ -161,7 +159,8 @@ require_once("connection.php");
 			}
 			else{
 				echo "<h1>Bad URL!</h1>";
-			}if($goodpage){
+			}
+			*/if($goodpage){
 				$query = 'SELECT * FROM '.$database.';';
 				$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 				if(!empty($_POST)){
@@ -216,20 +215,12 @@ require_once("connection.php");
 				foreach($values as $col => &$value){
 					if((string)$_GET['page'] == "3"){
 						foreach($index as $row => &$oi){
-			            	if ($draggeble == False) {
 								echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" value="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
-			  				}else {
-			              		echo '<td class="admin">'.$value[$oi].'</td>';
-			            	}
 		          		}
 						echo "</tr>";
 					}
 					else{
 						foreach($index as $row => &$oi){
-			            	if ($draggeble == False) {
-			  				}else {
-			              		echo '<td class="admin">'.$value[$index[1]].'</td>';
-			              		echo "</tr>";
 			            	}
 		          		}
 						echo '<tr>';
@@ -246,7 +237,6 @@ require_once("connection.php");
 							}
 						}
 						echo '</tr>';
-
 					}
 				}
 				echo '<form method="POST">';
@@ -257,7 +247,7 @@ require_once("connection.php");
 					echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'">';
 				}
 				echo '<input type="submit" name="add" class="submit" value="￭"></td></form></table>';
-			}
+			
 		 ?>
 	</div>
 </body>
