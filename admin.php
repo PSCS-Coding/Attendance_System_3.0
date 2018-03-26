@@ -62,6 +62,7 @@ require_once("connection.php");
 	      $index = array('group_name','students');
 	      $database = 'groups';
 	      echo '<a class="glink" href="groups.html">Edit groups</a>';
+		  $query = 'SELECT * FROM '.$database.';';
 			}
 			//History
 			elseif((string)$_GET['page'] == "4"){
