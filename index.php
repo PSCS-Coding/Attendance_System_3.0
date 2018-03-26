@@ -31,25 +31,15 @@ start_the_day();
          	foreach ($current as &$row) {
             	echo '<tr class="student-row" id="'.$row["student_id"].'">';
             	echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
-            	echo '<td><span class="status">'.$row["status_name"];
+            	echo '<td><div class="status">'.$row["status_name"];
 							if($row["status_name"] == "Late") {
 								echo " arriving at ".pretty_time($row["return_time"]);
 							}
-							echo '</span>';
-							if($row['status_id'] != 1 ) { // if not present, show the present button
-								echo '<div class="present"><input type="submit" name="1" value="P"></div>';
-			  					if($row['status_id'] == 0 || $row['status_id'] == 5) { // if not checked in or late, show late fields
-										echo '<div class="late"><input name="time" type="text" class="late" placeholder="Arrival time"><input type="submit" name="5" value="L"></div>';
-			  					}
-			  					if($row['status_id'] != 7  && $row['status_id'] != 4) { // if not absent or checked out, show absent button
-					            	echo '<div class="absent"><input type="submit" name="7" value="A"></div>';
-			  					}
-			  				}
-		  				else { // student is present
-		  					if($row['status_id'] != 4 ) { // if not checked out, show check out button
-				            	echo '<div class="checked-out"><input type="submit" name="4" value="CO"></div>';
-		  					}
-		  				}
+							echo '</div>';
+							echo '<div class="status-button present"><input type="submit" name="1" value="P"></div>';
+							echo '<div class="status-button late"><input name="time" type="text" class="late-time" placeholder="Arrival time"><input type="submit" name="5" value="L"></div>';
+					    echo '<div class="status-button absent"><input type="submit" name="7" value="A"></div>';
+              echo '<div class="status-button checked-out"><input type="submit" name="4" value="CO"></div>';
             	echo '</td></tr>';
           	}
         ?>
@@ -58,12 +48,15 @@ start_the_day();
 
     <script type="text/javascript" src="js/changeStatus.js"></script>
 		<script type="text/javascript">
-			$('.late').timepicker({
+			$('.late-time').timepicker({
 		    'minTime': '9:00am',
 		    'maxTime': '3:40pm',
 				'step' : 5,
 				'scrollDefault' : 'now'
 			});
+      $('#main-table tr.student-row').each(function() {
+        frontPageButtons($(this).attr("id"));
+      });
 		</script>
 	</body>
 </html>

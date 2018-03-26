@@ -130,6 +130,6 @@ td.admin{
 .back > .sidebar{
 	padding-top:20px;
 }
-.present, .late, .absent, .checked-out {
+.present, .late, .absent, .checked-out, .status {
     display: inline;
 }
