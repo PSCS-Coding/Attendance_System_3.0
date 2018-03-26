@@ -38,7 +38,7 @@ function mins_used($student_id) {
 
 
 function status_update($student, $status, $info = '', $return_time = '') {
-  
+
 	global $db;
   // Update current table with new event
 	$query = 'UPDATE current SET status_id = '.$status.', info = "'.$info.'", return_time = "'.$return_time.'" WHERE student_id = '.$student;
@@ -54,7 +54,17 @@ function status_update($student, $status, $info = '', $return_time = '') {
   $query_insert = 'INSERT INTO history (student_id, status_id, info, return_time) VALUES ('.$student.', '.$status.', "'.$info.'", "'.$return_time.'")';
 	$db->query($query_insert);
 
-  return 0;
+	  return 0;
+}
+
+function total_offsite_used($student){
+		global $db;
+
+		$query = "SELECT SUM(elapsed) FROM history WHERE student_id = ".$student." AND (status_id = 0 OR status_id = 2 OR status_id = 4 OR status_id = 5 OR status_id = 7) LIMIT 500";
+	  $result = $db->query($query);
+	  $sum = round($result->fetch_array()[0], 2);
+
+		return $sum;
 }
 
 function enquote($text) {
