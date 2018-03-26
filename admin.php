@@ -97,6 +97,7 @@ require_once("connection.php");
 			}
 			else{
 				echo "<h1>Bad URL!</h1>";
+			}
 			if($goodpage){
 				$query = 'SELECT * FROM '.$database.';';
 				$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
