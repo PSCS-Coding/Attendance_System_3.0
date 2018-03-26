@@ -208,7 +208,7 @@ require_once("connection.php");
 										echo '<option value="'.$v['student_id'].'" class="newval">'.$v[$oi].'</option>';
 									}
 								}
-								echo '</select><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
+								echo '</select><input type="hidden" name="student" value="'.$_POST['student'].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
 							}elseif($oi == 'status_name'){
 								$statorstu = $db->query('SELECT * FROM status_data ORDER BY status_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
 								echo '<td class="admin"><form method="POST"><select name="new" class="newval"> <option value="'.$value[$oi].'">'.$value[$oi].'</option>';
@@ -217,9 +217,9 @@ require_once("connection.php");
 										echo '<option value="'.$v['status_id'].'" class="newval">'.$v[$oi].'</option>';
 									}
 								}
-								echo '</select><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
+								echo '</select><input type="hidden" name="student" value="'.$_POST['student'].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
 							}else{
-								echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
+								echo '<td class="admin"><form method="POST"><input type="hidden" name="student" value="'.$_POST['student'].'"><input type="text" name="new" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
 							}
 						}
 						echo '</tr>';
@@ -230,7 +230,7 @@ require_once("connection.php");
 					if($row > 0){
 						echo'</td>';
 					}
-					echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'">';
+					echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="student" value="'.$_POST['student'].'"><input type="hidden" name="col" value="'.$col.'">';
 				}
 				echo '<input type="submit" name="add" class="submit" value="￭"></td></form></table>';
 			}
