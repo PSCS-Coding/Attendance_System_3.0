@@ -4,7 +4,7 @@
     <title>Group Edit View</title>
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
-  <body>
+  <body class="top">
     <?php
      require_once("connection.php");
       $query = "SELECT first_name, last_name FROM student_data WHERE active = 1";
@@ -43,6 +43,7 @@
   	<a class= "sidetext" href="/admin.php?page=9">Student Edit View</a>
   	front end
   	<a class= "sidetext" href="/index.php">Front Page</a>
+	<a class= "sidetext" href="statusview.php">Status View</a>
   	</div>
   <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"><p id="div1">test2</p></div>
   <div id="drag1">
