@@ -157,3 +157,8 @@ td.admin{
 select {
 	margin: 0 4px;
 }
+.droppable{
+	margin:5px 40%;
+	width:20%;
+	height:500px;
+}
