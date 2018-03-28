@@ -74,3 +74,21 @@ function studentNameToId(fname, lname) {
     });
     return (JSON.parse(data));
 }
+function changeStatus(student_id, status_id, info, return_time) {
+  var url = '/request.php?f=changeStatus';
+    url += '&student_id=' + student_id + '&status_id=' + status_id + '&info=' + info + '&return_time=' + return_time;
+
+  var data = "";
+
+    $.ajax({
+        type: "GET",
+        data: {},
+        async: false,
+        dataType: "text",
+        url: url,
+        success: function(result) {
+            data = result;
+        }
+    });
+    return 1;
+}

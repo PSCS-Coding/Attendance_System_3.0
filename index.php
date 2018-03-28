@@ -23,7 +23,7 @@ require_once('header.php');
 </nav>
 </div>
 
-<div class="modal fade" id="offsiteModal" tabindex="-1" role="dialog" aria-labelledby="offsiteModalLabel" aria-hidden="true">
+<div class="modal fade" id="offsiteModal" tabindex="-1" role="dialog" aria-labelledby="offsiteModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -55,7 +55,7 @@ require_once('header.php');
 
 
 
-<div class="modal fade" id="fieldtripModal" tabindex="-1" role="dialog" aria-labelledby="fieldtripModalLabel" aria-hidden="true">
+<div class="modal fade" id="fieldtripModal" tabindex="-1" role="dialog" aria-labelledby="fieldtripModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -332,9 +332,47 @@ $(".fieldtripsubmit").click(function () {
   if($('.fieldtog').text() != 'Facilitator' && $('#fieldtripreturn').val() != '') {
     var facil = $('.fieldtog').text();
     var returntime = $('#fieldtripreturn').val();
+  	var checked = $(".students-cards :checked");
+    var current = query('current');
+    var all_ids = [];
+    for(var i = 0; i < current.length;i++) {
+      all_ids.push(current[i]['student_id']);
+    }
+    //student id - doesn't work, wierd!
+    var ids = [];
+  	for (var k = 0; k < checked.length; k++){
+      if(typeof checked[k] != 'undefined') {
+        for(var i = 0; i < current.length; i++) {
+          if((query('studentIdToName', current[i]['student_id']).split(' ')[0] + ' ' + query('studentIdToName', current[i]['student_id']).split(' ')[1][0] + '.') == $(checked[k]).parent().find('.card-title').text()) {
+            ids.push(all_ids[i]);
+          }
+        }
+      }
+  	}
+    for(var i = 0; i < ids.length; i++) {
+      var res = changeStatus(ids[i], 3, facil, returntime);
+      while(res != 1) {
+        return 0;
+      }
+      $(function () {
+        $('#fieldtripModal').modal('toggle');
+      });
+      $('.row').html('');
+      build();
+    }
+
   } else if($('.fieldtog').text() == 'Facilitator' || $('#fieldtripreturn').val() == '') {
     alert('Please choose a facilitator and return time!');
   }
+});
+
+$("#fieldtripModal").on("hidden.bs.modal", function () {
+    setFacil('Facilitator');
+    $('#fieldtripreturn').val('');
+});
+$("#offsiteModal").on("hidden.bs.modal", function () {
+    setLocation('Location');
+    $('#offsitereturn').val('');
 });
 </script>
 	</body>

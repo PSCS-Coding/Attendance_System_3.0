@@ -1,6 +1,7 @@
 <?php
 
   require_once('connection.php');
+  require_once('functions.php');
 if(!empty($_GET['f'])) {
   if($_GET['f'] == 'current') {
     $query = $db->query('SELECT * FROM current');
@@ -63,6 +64,20 @@ if(!empty($_GET['f'])) {
     $query = $db->query('SELECT location_name FROM offsite_locations');
     $result = $query->fetch_all();
     echo json_encode($result, JSON_PRETTY_PRINT);
+  }
+  if($_GET['f'] == 'changeStatus') {
+    $query = 'UPDATE current SET status_id = '.$_GET['status_id'].', info = "'.$_GET['info'].'", return_time = "'.$_GET['return_time'].'" WHERE student_id = '.$_GET['student_id'];
+  	$db->query($query);
+
+  	// Update immediate prior record in history table with calculated duration
+  	$minutes_used = mins_used($_GET['student_id']);
+    $id = $_GET['student_id'];
+    $query = "UPDATE history SET elapsed = '$minutes_used' WHERE student_id = '$id' ORDER BY event_id DESC LIMIT 1";
+    $db->query($query);
+
+  	// Add new event to history table
+    $query_insert = 'INSERT INTO history (student_id, status_id, info, return_time) VALUES ('.$id.', '.$_GET['status_id'].', "'.$_GET['info'].'", "'.$_GET['return_time'].'")';
+  	$db->query($query_insert);
   }
 }
 ?>
