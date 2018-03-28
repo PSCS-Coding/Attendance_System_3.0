@@ -65,37 +65,21 @@
 	      }
 	    });
 
-	    // Image deletion function
-	    function deleteImage( $item ) {
-	      $item.fadeOut(function() {
-	        var $list = $( "ul", $trash ).length ?
-	          $( "ul", $trash ) :
-	          $( "<ul class='gallery ui-helper-reset'></ul>" ).appendTo( $trash );
 
-	        $item.find( "a.ui-icon-trash" ).remove();
-	        $item.appendTo( $list ).fadeIn(function() {
-	          $item
-	            .animate({ width: "96px" })
-	              .animate({ height: "25px" });
-	        });
-	      });
-	    }
+		$("html").on("drop", function(event) {
+    		event.preventDefault();
+    		event.stopPropagation();
+			alert("Dropped!");
+			  	var $student_id = $(this).siblings('input').val();
+				var $group_name = "volleyball";
 
-	    // Image recycle function
-	    function recycleImage( $item ) {
-	      $item.fadeOut(function() {
-	        $item
-	          .find( "a.ui-icon-refresh" )
-	            .remove()
-	          .end()
-	          .css( "width", "96px")
-	          .find( "img" )
-	            .css( "height", "72px" )
-	          .end()
-	          .appendTo( $gallery )
-	          .fadeIn();
-	      });
-	    }
+				$.ajax({
+					type:"POST",
+					data:{student:student_id,group:group_name},
+					dataType: "text",
+					url:"addtogroup.php"
+			    });
+		});
 
 	  } );
 	  </script>
@@ -103,7 +87,7 @@
 	<body class="top">
       <?php
       	require_once("connection.php");
-  		$query = "SELECT first_name, last_name FROM student_data WHERE active = 1";
+  		$query = "SELECT first_name, last_name, student_id FROM student_data WHERE active = 1";
   		$values = $db->query($query)->fetch_all($restablettype = MYSQLI_ASSOC);
   		$foo = count($values);
       ?>
@@ -138,7 +122,7 @@
 
         <?php
           for ($i=0; $i < $foo; $i++) {
-              echo '<li class="ui-widget-content ui-corner-tr"><h5 class="ui-widget-header">'.$values[$i]['first_name'].' '.$values[$i]['last_name'][0].'.</h5></li>';
+              echo '<li class="ui-widget-content ui-corner-tr"><input type="hidden" value="'.$values[$i]['student_id'].'"><h5 class="ui-widget-header">'.$values[$i]['first_name'].' '.$values[$i]['last_name'][0].'.</h5></li>';
 
           }
          ?>
