@@ -45,7 +45,7 @@ require_once('header.php');
   				</div>
   				<input class="form-control" id="offsitereturn" placeholder="Return time" aria-label="Return time" aria-describedby="Return time">
 					<div class="input-group-append">
-    				<button type='submit' class='btn btn-danger'>Offsite</button>
+    				<button type='submit' class='btn btn-danger offsitesubmit'>Offsite</button>
   				</div>
 				</div>
       </div>
@@ -127,6 +127,13 @@ function build() {
 							} else {
 								var info = 'Returning at ' + current[i]['return_time'].split(':')[0] + ':' + current[i]['return_time'].split(':')[1] + 'am';
 							}
+						} else if(query('statusIdToName', current[i]['status_id']) == 'Offsite') {
+							var info = current[i]['info'] + ' • Returning at ' + current[i]['return_time'];
+							if(current[i]['return_time'].split(':')[0] >= 13) {
+								var info = current[i]['info'] + ' • Returning at ' + (current[i]['return_time'].split(':')[0] - 12) + ':' +  current[i]['return_time'].split(':')[1] + 'pm';
+							} else {
+								var info = current[i]['info'] + ' • Returning at ' + current[i]['return_time'].split(':')[0] + ':' + current[i]['return_time'].split(':')[1] + 'am';
+							}
 						} else {
 							//What to put here?
 							var info = 'Arrived at 8:48am';
@@ -195,7 +202,7 @@ function build() {
 					}
 
 }
-$.when( build() ).done(function( x ) {
+$.when(build()).done(function( x ) {
 
 $(".card").click(function (e) {
 	if(!e.target.className.includes('btn') && !e.target.className.includes('form')) {
@@ -358,11 +365,133 @@ $(".fieldtripsubmit").click(function () {
         $('#fieldtripModal').modal('toggle');
       });
       $('.row').html('');
-      build();
+      $('.facilitatordrop').html('');
+      $('.locationdrop').html('');
+      $.when(build()).done(function( x ) {
+
+      $(".card").click(function (e) {
+      	if(!e.target.className.includes('btn') && !e.target.className.includes('form')) {
+      		if(!$(this).find("input[type=checkbox]").is(':checked')) {
+
+      			$(this).find("input[type=checkbox]").prop('checked', true);
+      		} else {
+      			$(this).find("input[type=checkbox]").prop('checked', false);
+      		}
+      		if($(this).hasClass('border-danger')) {
+      			$(this).toggleClass("toggled-red");
+      		} else {
+      			$(this).toggleClass("toggled");
+      		}
+      		var checked = 0;
+      		$(".students-cards :checked").each(function() {
+      			checked += 1;
+      		});
+      		var checked = 0;
+      		$(".students-cards :checked").each(function() {
+      			checked += 1;
+      		});
+      		if(checked > 0) {
+      			$('.index-actions').removeAttr('hidden');
+      		} else {
+      			$('.index-actions').attr('hidden', 'true');
+      		}
+      		if(checked > 0) {
+      			if($(window).width() < 992) {
+      				$('.navbar-collapse').collapse('show');
+      			}
+      		}
+      		else {
+      			if($(window).width() < 992) {
+      				$('.navbar-collapse').collapse('hide');
+      			}
+      		}
+      	}
+      });
+      });
     }
 
   } else if($('.fieldtog').text() == 'Facilitator' || $('#fieldtripreturn').val() == '') {
     alert('Please choose a facilitator and return time!');
+  }
+});
+
+$(".offsitesubmit").click(function () {
+  if($('.customtog').text() != 'Locations' && $('#offsitereturn').val() != '') {
+    var loc = $('.customtog').text();
+    var returntime = $('#offsitereturn').val();
+  	var checked = $(".students-cards :checked");
+    var current = query('current');
+    var all_ids = [];
+    for(var i = 0; i < current.length;i++) {
+      all_ids.push(current[i]['student_id']);
+    }
+    //student id - doesn't work, wierd!
+    var ids = [];
+  	for (var k = 0; k < checked.length; k++){
+      if(typeof checked[k] != 'undefined') {
+        for(var i = 0; i < current.length; i++) {
+          if((query('studentIdToName', current[i]['student_id']).split(' ')[0] + ' ' + query('studentIdToName', current[i]['student_id']).split(' ')[1][0] + '.') == $(checked[k]).parent().find('.card-title').text()) {
+            ids.push(all_ids[i]);
+          }
+        }
+      }
+  	}
+    for(var i = 0; i < ids.length; i++) {
+      var res = changeStatus(ids[i], 2, loc, returntime);
+      while(res != 1) {
+        return 0;
+      }
+      $(function () {
+        $('#offsiteModal').modal('toggle');
+      });
+      $('.row').html('');
+      $('.facilitatordrop').html('');
+      $('.locationdrop').html('');
+      $.when(build()).done(function( x ) {
+
+      $(".card").click(function (e) {
+      	if(!e.target.className.includes('btn') && !e.target.className.includes('form')) {
+      		if(!$(this).find("input[type=checkbox]").is(':checked')) {
+
+      			$(this).find("input[type=checkbox]").prop('checked', true);
+      		} else {
+      			$(this).find("input[type=checkbox]").prop('checked', false);
+      		}
+      		if($(this).hasClass('border-danger')) {
+      			$(this).toggleClass("toggled-red");
+      		} else {
+      			$(this).toggleClass("toggled");
+      		}
+      		var checked = 0;
+      		$(".students-cards :checked").each(function() {
+      			checked += 1;
+      		});
+      		var checked = 0;
+      		$(".students-cards :checked").each(function() {
+      			checked += 1;
+      		});
+      		if(checked > 0) {
+      			$('.index-actions').removeAttr('hidden');
+      		} else {
+      			$('.index-actions').attr('hidden', 'true');
+      		}
+      		if(checked > 0) {
+      			if($(window).width() < 992) {
+      				$('.navbar-collapse').collapse('show');
+      			}
+      		}
+      		else {
+      			if($(window).width() < 992) {
+      				$('.navbar-collapse').collapse('hide');
+      			}
+      		}
+      	}
+      });
+      });
+    }
+
+  } else if($('.customtog').text() == 'Location' || $('#offsitereturn').val() == '') {
+    alert('Please choose a location and return time!');
   }
 });
 
