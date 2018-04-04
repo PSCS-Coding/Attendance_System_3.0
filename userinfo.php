@@ -28,14 +28,14 @@
               {
                 $dev = "~" . $row['dev'];
               }
-              $repQuery = $db->prepare("SELECT current_rep FROM student_data WHERE imgurl = '$imgurl' AND active = 1");
-              $repQuery->execute();
-                foreach ($repQuery->get_result() as $row)
+              $coinQuery = $db->prepare("SELECT coins FROM student_data WHERE imgurl = '$imgurl' AND active = 1");
+              $coinQuery->execute();
+                foreach ($coinQuery->get_result() as $row)
                 {
-                  $rep = "~" . $row['current_rep'];
+                  $coin = "~" . $row['coins'];
                 }
         if(isset($fName)) {
-        echo $fName . "~" . $lName . "~" . $email . "~" . $imgurl . $dev . $rep;
+        echo $fName . "~" . $lName . "~" . $email . "~" . $imgurl . $dev . $coin;
       } else {
         $fnameQuery = $db->prepare("SELECT first_name FROM admins WHERE imgurl = '$imgurl'");
         $fnameQuery->execute();

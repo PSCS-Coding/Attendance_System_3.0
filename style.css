@@ -115,6 +115,7 @@ td.admin {
   width: 100%;
   font-size: 25px;
   border: 0px;
+  border-bottom: 1px solid rgb(117, 117, 117);
   outline: none;
   width: 100%;
   -webkit-box-sizing: border-box;
@@ -130,7 +131,4 @@ td.admin {
   -ms-transition: all 0.1s ease-in-out;
   -o-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
-}
-.ghost-input:focus {
-  border-bottom: 1px solid rgb(117, 117, 117);
 }

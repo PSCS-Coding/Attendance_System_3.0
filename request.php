@@ -4,7 +4,7 @@ require_once 'connection.php';
 require_once 'functions.php';
 if (!empty($_GET['f'])) {
     if ($_GET['f'] == 'current') {
-        $query = $db->query('SELECT * FROM current');
+        $query = $db->query('SELECT * FROM current ORDER BY student_id ASC'); // eventually order by name
         $result = array();
         while ($row = $query->fetch_array()) {
             array_push($result, $row);
