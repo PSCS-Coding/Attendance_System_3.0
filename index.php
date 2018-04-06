@@ -100,12 +100,12 @@
 		<script src='js/nav.js'></script>
 		<script src='js/functions.js'></script>
 		<script>
-			$.fn.focusWithoutScrolling = function() {
-  				var x = window.scrollX,
-				y = window.scrollY;
-  				this.focus();
-  				window.scrollTo(x, y);
-  				return this;
+			$.fn.focusWithoutScrolling = function () {
+				var x = window.scrollX,
+					y = window.scrollY;
+				this.focus();
+				window.scrollTo(x, y);
+				return this;
 			};
 			function filter(element) {
 				var value = $(element).val();
@@ -267,9 +267,10 @@
 				}
 
 			}
-			$.when(build()).done(function (x) {
+			function wbd() {
+				$.when(build()).done(function (x) {
 				if ($(window).width() < 450) {
-					$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">');
+					$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">&nbsp&nbspAttendance');
 				} else {
 					$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">&nbsp&nbspPSCS Attendance System');
 				}
@@ -282,7 +283,7 @@
 					} else if ($(window).width() < 768) {
 						cols = 8;
 					} if ($(window).width() < 450) {
-						$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">');
+						$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">&nbsp&nbspAttendance');
 					} else {
 						$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">&nbsp&nbspPSCS Attendance System');
 					}
@@ -319,7 +320,7 @@
 							filter($('.ghost-input'));
 						} else {
 							$('.index-actions').attr('hidden', 'true');
-							if($('.navbar-collapse').is(':visible')) {
+							if ($('.navbar-collapse').is(':visible')) {
 								$('.navbar-collapse').collapse('hide');
 							}
 						}
@@ -335,6 +336,8 @@
 					}
 				});
 			});
+			}
+			wbd();
 
 			$(".offsitebutton").click(function () {
 				var names = "";
@@ -464,75 +467,7 @@
 						$('.facilitatordrop').html('');
 						$('.locationdrop').html('');
 						$('.index-actions').attr('hidden', 'true');
-						$.when(build()).done(function (x) {
-							$('.navbar-collapse').collapse('hide');
-							if ($(window).width() < 450) {
-								$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">');
-							} else {
-								$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">&nbsp&nbspPSCS Attendance System');
-							}
-							$(window).resize(function () {
-								var cols = 3;
-								if ($(window).width() < 1200 && $(window).width() > 991) {
-									cols = 4;
-								} else if ($(window).width() < 992 && $(window).width() > 767) {
-									cols = 6;
-								} else if ($(window).width() < 768) {
-									cols = 8;
-								} if ($(window).width() < 450) {
-									$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">');
-								} else {
-									$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">&nbsp&nbspPSCS Attendance System');
-								}
-								$('.cols').removeClass('col-sm-3');
-								$('.cols').removeClass('col-sm-4');
-								$('.cols').removeClass('col-sm-6');
-								$('.cols').removeClass('col-sm-8');
-								$('.cols').addClass('col-sm-' + cols);
-							});
-							$(".card").click(function (e) {
-								if (!e.target.className.includes('btn') && !e.target.className.includes('form')) {
-									if (!$(this).find("input[type=checkbox]").is(':checked')) {
-
-										$(this).find("input[type=checkbox]").prop('checked', true);
-									} else {
-										$(this).find("input[type=checkbox]").prop('checked', false);
-									}
-									if ($(this).hasClass('border-danger')) {
-										$(this).toggleClass("toggled-red");
-									} else {
-										$(this).toggleClass("toggled");
-									}
-									var checked = 0;
-									$(".students-cards :checked").each(function () {
-										checked += 1;
-									});
-									var checked = 0;
-									$(".students-cards :checked").each(function () {
-										checked += 1;
-									});
-									if (checked > 0) {
-										$('.index-actions').removeAttr('hidden');
-										$('.ghost-input').val('').focusWithoutScrolling();
-										filter($('.ghost-input'));
-									} else {
-										$('.index-actions').attr('hidden', 'true');
-										if($('.navbar-collapse').is(':visible')) {
-											$('.navbar-collapse').collapse('hide');
-										}
-									}
-									if (checked > 0) {
-										if ($(window).width() < 992) {
-											if ($(this).hasClass('toggled') && $('.navbar-collapse').is(':hidden')) {
-												$.when($('.navbar-toggler').removeClass('animated shake')).then(function () {
-													$('.navbar-toggler').addClass('animated shake');
-												});
-											}
-										}
-									}
-								}
-							});
-						});
+						wbd();
 					}
 
 				} else if ($('.fieldtog').text() == 'Facilitator' || $('#fieldtripreturn').val() == '') {
@@ -579,66 +514,7 @@
 						$('.facilitatordrop').html('');
 						$('.locationdrop').html('');
 						$('.index-actions').attr('hidden', 'true');
-						$.when(build()).done(function (x) {
-							$('.navbar-collapse').collapse('hide');
-							$(window).resize(function () {
-								var cols = 3;
-								if ($(window).width() < 1200 && $(window).width() > 991) {
-									cols = 4;
-								} else if ($(window).width() < 992 && $(window).width() > 767) {
-									cols = 6;
-								} else if ($(window).width() < 768) {
-									cols = 8;
-								}
-								$('.cols').removeClass('col-sm-3');
-								$('.cols').removeClass('col-sm-4');
-								$('.cols').removeClass('col-sm-6');
-								$('.cols').removeClass('col-sm-8');
-								$('.cols').addClass('col-sm-' + cols);
-							});
-							$(".card").click(function (e) {
-								if (!e.target.className.includes('btn') && !e.target.className.includes('form')) {
-									if (!$(this).find("input[type=checkbox]").is(':checked')) {
-
-										$(this).find("input[type=checkbox]").prop('checked', true);
-									} else {
-										$(this).find("input[type=checkbox]").prop('checked', false);
-									}
-									if ($(this).hasClass('border-danger')) {
-										$(this).toggleClass("toggled-red");
-									} else {
-										$(this).toggleClass("toggled");
-									}
-									var checked = 0;
-									$(".students-cards :checked").each(function () {
-										checked += 1;
-									});
-									var checked = 0;
-									$(".students-cards :checked").each(function () {
-										checked += 1;
-									});
-									if (checked > 0) {
-										$('.index-actions').removeAttr('hidden');
-										$('.ghost-input').val('').focusWithoutScrolling();
-										filter($('.ghost-input'));
-									} else {
-										$('.index-actions').attr('hidden', 'true');
-										if($('.navbar-collapse').is(':visible')) {
-											$('.navbar-collapse').collapse('hide');
-										}
-									}
-									if (checked > 0) {
-										if ($(window).width() < 992) {
-											if ($(this).hasClass('toggled') && $('.navbar-collapse').is(':hidden')) {
-												$.when($('.navbar-toggler').removeClass('animated shake')).then(function () {
-													$('.navbar-toggler').addClass('animated shake');
-												});
-											}
-										}
-									}
-								}
-							});
-						});
+						wbd();
 					}
 
 				} else if ($('.customtog').text() == 'Location' || $('#offsitereturn').val() == '') {
@@ -673,75 +549,7 @@
 					$('.facilitatordrop').html('');
 					$('.locationdrop').html('');
 					$('.index-actions').attr('hidden', 'true');
-					$.when(build()).done(function (x) {
-						$('.navbar-collapse').collapse('hide');
-						if ($(window).width() < 450) {
-							$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">');
-						} else {
-							$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">&nbsp&nbspPSCS Attendance System');
-						}
-						$(window).resize(function () {
-							var cols = 3;
-							if ($(window).width() < 1200 && $(window).width() > 991) {
-								cols = 4;
-							} else if ($(window).width() < 992 && $(window).width() > 767) {
-								cols = 6;
-							} else if ($(window).width() < 768) {
-								cols = 8;
-							} if ($(window).width() < 450) {
-								$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">');
-							} else {
-								$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">&nbsp&nbspPSCS Attendance System');
-							}
-							$('.cols').removeClass('col-sm-3');
-							$('.cols').removeClass('col-sm-4');
-							$('.cols').removeClass('col-sm-6');
-							$('.cols').removeClass('col-sm-8');
-							$('.cols').addClass('col-sm-' + cols);
-						});
-						$(".card").click(function (e) {
-							if (!e.target.className.includes('btn') && !e.target.className.includes('form')) {
-								if (!$(this).find("input[type=checkbox]").is(':checked')) {
-
-									$(this).find("input[type=checkbox]").prop('checked', true);
-								} else {
-									$(this).find("input[type=checkbox]").prop('checked', false);
-								}
-								if ($(this).hasClass('border-danger')) {
-									$(this).toggleClass("toggled-red");
-								} else {
-									$(this).toggleClass("toggled");
-								}
-								var checked = 0;
-								$(".students-cards :checked").each(function () {
-									checked += 1;
-								});
-								var checked = 0;
-								$(".students-cards :checked").each(function () {
-									checked += 1;
-								});
-								if (checked > 0) {
-									$('.index-actions').removeAttr('hidden');
-									$('.ghost-input').val('').focusWithoutScrolling();
-									filter($('.ghost-input'));
-								} else {
-									$('.index-actions').attr('hidden', 'true');
-									if($('.navbar-collapse').is(':visible')) {
-										$('.navbar-collapse').collapse('hide');
-									}
-								}
-								if (checked > 0) {
-									if ($(window).width() < 992) {
-										if ($(this).hasClass('toggled') && $('.navbar-collapse').is(':hidden')) {
-											$.when($('.navbar-toggler').removeClass('animated shake')).then(function () {
-												$('.navbar-toggler').addClass('animated shake');
-											});
-										}
-									}
-								}
-							}
-						});
-					});
+					wbd();
 				}
 			});
 
@@ -772,75 +580,7 @@
 					$('.facilitatordrop').html('');
 					$('.locationdrop').html('');
 					$('.index-actions').attr('hidden', 'true');
-					$.when(build()).done(function (x) {
-						$('.navbar-collapse').collapse('hide');
-						if ($(window).width() < 450) {
-							$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">');
-						} else {
-							$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">&nbsp&nbspPSCS Attendance System');
-						}
-						$(window).resize(function () {
-							var cols = 3;
-							if ($(window).width() < 1200 && $(window).width() > 991) {
-								cols = 4;
-							} else if ($(window).width() < 992 && $(window).width() > 767) {
-								cols = 6;
-							} else if ($(window).width() < 768) {
-								cols = 8;
-							} if ($(window).width() < 450) {
-								$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">');
-							} else {
-								$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">&nbsp&nbspPSCS Attendance System');
-							}
-							$('.cols').removeClass('col-sm-3');
-							$('.cols').removeClass('col-sm-4');
-							$('.cols').removeClass('col-sm-6');
-							$('.cols').removeClass('col-sm-8');
-							$('.cols').addClass('col-sm-' + cols);
-						});
-						$(".card").click(function (e) {
-							if (!e.target.className.includes('btn') && !e.target.className.includes('form')) {
-								if (!$(this).find("input[type=checkbox]").is(':checked')) {
-
-									$(this).find("input[type=checkbox]").prop('checked', true);
-								} else {
-									$(this).find("input[type=checkbox]").prop('checked', false);
-								}
-								if ($(this).hasClass('border-danger')) {
-									$(this).toggleClass("toggled-red");
-								} else {
-									$(this).toggleClass("toggled");
-								}
-								var checked = 0;
-								$(".students-cards :checked").each(function () {
-									checked += 1;
-								});
-								var checked = 0;
-								$(".students-cards :checked").each(function () {
-									checked += 1;
-								});
-								if (checked > 0) {
-									$('.index-actions').removeAttr('hidden');
-									$('.ghost-input').val('').focusWithoutScrolling();
-									filter($('.ghost-input'));
-								} else {
-									$('.index-actions').attr('hidden', 'true');
-									if($('.navbar-collapse').is(':visible')) {
-										$('.navbar-collapse').collapse('hide');
-									}
-								}
-								if (checked > 0) {
-									if ($(window).width() < 992) {
-										if ($(this).hasClass('toggled') && $('.navbar-collapse').is(':hidden')) {
-											$.when($('.navbar-toggler').removeClass('animated shake')).then(function () {
-												$('.navbar-toggler').addClass('animated shake');
-											});
-										}
-									}
-								}
-							}
-						});
-					});
+					wbd();
 				}
 			});
 			$("#fieldtripModal").on("hidden.bs.modal", function () {
@@ -851,6 +591,24 @@
 				setLocation('Location');
 				$('#offsitereturn').val('');
 			});
+
+			function setIdle(cb, seconds) {
+				var timer;
+				var interval = seconds * 1000;
+				function refresh() {
+					clearInterval(timer);
+					timer = setTimeout(cb, interval);
+				};
+				$(document).on('keypress, click, mousemove', refresh);
+				refresh();
+			}
+			setIdle(function () {
+				$('.row').html('');
+				$('.facilitatordrop').html('');
+				$('.locationdrop').html('');
+				$('.index-actions').attr('hidden', 'true');
+				wbd();
+			}, 10);
 		</script>
 	</body>
 
