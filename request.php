@@ -68,18 +68,20 @@ if (!empty($_GET['f'])) {
     if ($_GET['f'] == 'changeStatus') {
         $dateReturnTime = new DateTime($_GET['return_time']);
         $dateReturnTime = $dateReturnTime->format("Y-m-d H:i:s");
-        $query = 'UPDATE current SET status_id = ' . $_GET['status_id'] . ', info = "' . $_GET['info'] . '", return_time = "' . $dateReturnTime . '" WHERE student_id = ' . $_GET['student_id'];
-        $db->query($query);
+        $info = $_GET['info'];
+        $status_id = $_GET['status_id'];
+        foreach (explode(',', $_GET['student_id']) as $id) {
+            $query = 'UPDATE current SET status_id = ' . $status_id . ', info = "' . $info . '", return_time = "' . $dateReturnTime . '" WHERE student_id = ' . $id;
+            $db->query($query);
 
-        // Update immediate prior record in history table with calculated duration
-        $minutes_used = mins_used($_GET['student_id']);
-        $id = $_GET['student_id'];
-        $query = "UPDATE history SET elapsed = '$minutes_used' WHERE student_id = '$id' ORDER BY event_id DESC LIMIT 1";
-        $db->query($query);
+            $minutes_used = mins_used($_GET['student_id']);
+            $query = "UPDATE history SET elapsed = '$minutes_used' WHERE student_id = '$id' ORDER BY event_id DESC LIMIT 1";
+            $db->query($query);
 
-        // Add new event to history table
-        $query_insert = 'INSERT INTO history (student_id, status_id, info, return_time) VALUES (' . $id . ', ' . $_GET['status_id'] . ', "' . $_GET['info'] . '", "' . $dateReturnTime . '")';
-        $db->query($query_insert);
+            // Add new event to history table
+            $query_insert = 'INSERT INTO history (student_id, status_id, info, return_time) VALUES (' . $id . ', ' . $status_id . ', "' . $info . '", "' . $dateReturnTime . '")';
+            $db->query($query_insert);
+        }
     }
 }
 ?>

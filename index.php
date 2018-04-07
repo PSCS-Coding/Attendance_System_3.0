@@ -287,11 +287,7 @@
 					} else {
 						$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">&nbsp&nbspPSCS Attendance System');
 					}
-					$('.cols').removeClass('col-sm-3');
-					$('.cols').removeClass('col-sm-4');
-					$('.cols').removeClass('col-sm-6');
-					$('.cols').removeClass('col-sm-8');
-					$('.cols').addClass('col-sm-' + cols);
+					$('.cols').removeClass('col-sm-3 col-sm-4 col-sm-6 col-sm-8').addClass('col-sm-' + cols);
 				});
 				$(".card").click(function (e) {
 					if (!e.target.className.includes('btn') && !e.target.className.includes('form')) {
@@ -455,28 +451,29 @@
 							}
 						}
 					}
-					for (var i = 0; i < ids.length; i++) {
-						var res = changeStatus(ids[i], 3, facil, returntime);
-						while (res != 1) {
-							return 0;
-						}
-						$(function () {
-							$('#fieldtripModal').modal('toggle');
-						});
-						$('.row').html('');
-						$('.facilitatordrop').html('');
-						$('.locationdrop').html('');
-						$('.index-actions').attr('hidden', 'true');
-						wbd();
+					var all = [];
+				for (var i = 0; i < ids.length; i++) {
+					all += ids[i] + ',';
+				}
+				var res = changeStatus(all, 3, facil, returntime);
+					while (res != 1) {
+						return 0;
 					}
-
+					$(function () {
+							$('#fieldtripModal').modal('toggle');
+					});
+					$('.row').html('');
+					$('.facilitatordrop').html('');
+					$('.locationdrop').html('');
+					$('.index-actions').attr('hidden', 'true');
+					wbd();
 				} else if ($('.fieldtog').text() == 'Facilitator' || $('#fieldtripreturn').val() == '') {
 					alert('Please choose a facilitator and return time!');
 				}
 			});
-
+			//TODO: make red popover for invalid submissions. Field trip & Offsite
 			$(".offsitesubmit").click(function () {
-				if ($('.customtog').text() != 'Locations' && $('#offsitereturn').val() != '') {
+				if ($('.customtog').text() != 'Location' && $('#offsitereturn').val() != '') {
 					if ($('.customtog').is('a')) {
 						var loc = $('.customtog').text();
 					} else {
@@ -489,7 +486,6 @@
 					for (var i = 0; i < current.length; i++) {
 						all_ids.push(current[i]['student_id']);
 					}
-					//student id - doesn't work, wierd!
 					var ids = [];
 					for (var k = 0; k < checked.length; k++) {
 						if (typeof checked[k] != 'undefined') {
@@ -502,23 +498,25 @@
 							}
 						}
 					}
-					for (var i = 0; i < ids.length; i++) {
-						var res = changeStatus(ids[i], 2, loc, returntime);
-						while (res != 1) {
-							return 0;
-						}
-						$(function () {
-							$('#offsiteModal').modal('toggle');
-						});
-						$('.row').html('');
-						$('.facilitatordrop').html('');
-						$('.locationdrop').html('');
-						$('.index-actions').attr('hidden', 'true');
-						wbd();
+					var all = [];
+				for (var i = 0; i < ids.length; i++) {
+					all += ids[i] + ',';
+				}
+				var res = changeStatus(all, 2, loc, returntime);
+					while (res != 1) {
+						return 0;
 					}
+					$(function () {
+							$('#offsiteModal').modal('toggle');
+					});
+					$('.row').html('');
+					$('.facilitatordrop').html('');
+					$('.locationdrop').html('');
+					$('.index-actions').attr('hidden', 'true');
+					wbd();
 
 				} else if ($('.customtog').text() == 'Location' || $('#offsitereturn').val() == '') {
-					alert('Please choose a location and return time!');
+					alert('Please choose a location & return time');
 				}
 			});
 
@@ -540,8 +538,11 @@
 						}
 					}
 				}
+				var all = [];
 				for (var i = 0; i < ids.length; i++) {
-					var res = changeStatus(ids[i], 1, '', '');
+					all += ids[i] + ',';
+				}
+				var res = changeStatus(all, 1, '', '');
 					while (res != 1) {
 						return 0;
 					}
@@ -550,7 +551,6 @@
 					$('.locationdrop').html('');
 					$('.index-actions').attr('hidden', 'true');
 					wbd();
-				}
 			});
 
 			$(".checkout").click(function () {
@@ -571,17 +571,19 @@
 						}
 					}
 				}
+				var all = [];
 				for (var i = 0; i < ids.length; i++) {
-					var res = changeStatus(ids[i], 4, '', '');
+					all += ids[i] + ',';
+				}
+				var res = changeStatus(all, 4, '', '');
 					while (res != 1) {
 						return 0;
 					}
-					$('.row').html('');
-					$('.facilitatordrop').html('');
-					$('.locationdrop').html('');
-					$('.index-actions').attr('hidden', 'true');
-					wbd();
-				}
+				$('.row').html('');
+				$('.facilitatordrop').html('');
+				$('.locationdrop').html('');
+				$('.index-actions').attr('hidden', 'true');
+				wbd();
 			});
 			$("#fieldtripModal").on("hidden.bs.modal", function () {
 				setFacil('Facilitator');

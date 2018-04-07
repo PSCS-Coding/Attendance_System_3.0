@@ -74,11 +74,11 @@ function studentNameToId(fname, lname) {
   });
   return JSON.parse(data);
 }
-function changeStatus(student_id, status_id, info, return_time) {
+function changeStatus(student_ids, status_id, info, return_time) {
   var url = "../request.php?f=changeStatus";
   url +=
     "&student_id=" +
-    student_id +
+    student_ids +
     "&status_id=" +
     status_id +
     "&info=" +
