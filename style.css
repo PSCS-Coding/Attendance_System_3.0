@@ -14,6 +14,9 @@ body {
   background-color: #25292d !important;
   color: white !important;
 }
+.border-red {
+  border-color: red !important;
+}
 .toggled-red {
   background-color: #25292d !important;
   color: white !important;

@@ -66,8 +66,12 @@ if (!empty($_GET['f'])) {
         echo json_encode($result, JSON_PRETTY_PRINT);
     }
     if ($_GET['f'] == 'changeStatus') {
-        $dateReturnTime = new DateTime($_GET['return_time']);
-        $dateReturnTime = $dateReturnTime->format("Y-m-d H:i:s");
+        if($_GET['return_time'] !== '') {
+            $dateReturnTime = new DateTime($_GET['return_time']);
+            $dateReturnTime = $dateReturnTime->format("Y-m-d H:i:s");
+        } else {
+            $dateReturnTime = '';
+        }
         $info = $_GET['info'];
         $status_id = $_GET['status_id'];
         foreach (explode(',', $_GET['student_id']) as $id) {

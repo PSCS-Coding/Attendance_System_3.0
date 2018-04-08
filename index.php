@@ -18,6 +18,7 @@
 		<link rel="stylesheet" href="animate.css">
 		<link rel="stylesheet" type="text/css" href="js/timepicker/jquery.timepicker.min.css">
 		<script src='js/timepicker/jquery.timepicker.min.js'></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
 	</head>
 
 	<body>
@@ -202,13 +203,33 @@
 						cols = 8;
 					}
 					//TODO: border color for not checked in after 9am and returning after return time
+					var red;
+					var today = new Date();
+					var dd = today.getDate();
+					var mm = today.getMonth() + 1;
+					var yyyy = today.getFullYear();
+
+					if (dd < 10) {
+						dd = '0' + dd
+					}
+
+					if (mm < 10) {
+						mm = '0' + mm
+					}
+
+					today = mm + '/' + dd + '/' + yyyy;
+					if (moment(today + ' ' + current[i]['return_time']).isBefore(moment()) && moment(today + ' ' + current[i]['return_time']) !== moment() && current[i]['return_time'] !== '00:00:00') {
+						red = 'red';
+					} else {
+						red = 'grey';
+					}
 					$('.row')
 						.append(
 							$('<div>')
 								.attr('class', 'cols col-sm-' + cols)
 								.append(
 									$('<div>')
-										.attr('class', 'card text-white bg-dark test')
+										.attr('class', 'card text-white bg-dark border-' + red)
 										.append(
 											$('<input>')
 												.attr('type', 'checkbox')
@@ -269,69 +290,69 @@
 			}
 			function wbd() {
 				$.when(build()).done(function (x) {
-				if ($(window).width() < 450) {
-					$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">&nbsp&nbspAttendance');
-				} else {
-					$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">&nbsp&nbspPSCS Attendance System');
-				}
-				$(window).resize(function () {
-					var cols = 3;
-					if ($(window).width() < 1200 && $(window).width() > 991) {
-						cols = 4;
-					} else if ($(window).width() < 992 && $(window).width() > 767) {
-						cols = 6;
-					} else if ($(window).width() < 768) {
-						cols = 8;
-					} if ($(window).width() < 450) {
+					if ($(window).width() < 450) {
 						$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">&nbsp&nbspAttendance');
 					} else {
 						$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">&nbsp&nbspPSCS Attendance System');
 					}
-					$('.cols').removeClass('col-sm-3 col-sm-4 col-sm-6 col-sm-8').addClass('col-sm-' + cols);
-				});
-				$(".card").click(function (e) {
-					if (!e.target.className.includes('btn') && !e.target.className.includes('form')) {
-						if (!$(this).find("input[type=checkbox]").is(':checked')) {
+					$(window).resize(function () {
+						var cols = 3;
+						if ($(window).width() < 1200 && $(window).width() > 991) {
+							cols = 4;
+						} else if ($(window).width() < 992 && $(window).width() > 767) {
+							cols = 6;
+						} else if ($(window).width() < 768) {
+							cols = 8;
+						} if ($(window).width() < 450) {
+							$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">&nbsp&nbspAttendance');
+						} else {
+							$('.navbar-brand').html('<img src="/media/mobius.svg" style="height:2rem;cursor:pointer;">&nbsp&nbspPSCS Attendance System');
+						}
+						$('.cols').removeClass('col-sm-3 col-sm-4 col-sm-6 col-sm-8').addClass('col-sm-' + cols);
+					});
+					$(".card").click(function (e) {
+						if (!e.target.className.includes('btn') && !e.target.className.includes('form')) {
+							if (!$(this).find("input[type=checkbox]").is(':checked')) {
 
-							$(this).find("input[type=checkbox]").prop('checked', true);
-						} else {
-							$(this).find("input[type=checkbox]").prop('checked', false);
-						}
-						if ($(this).hasClass('border-danger')) {
-							$(this).toggleClass("toggled-red");
-						} else {
-							$(this).toggleClass("toggled");
-						}
-						var checked = 0;
-						$(".students-cards :checked").each(function () {
-							checked += 1;
-						});
-						var checked = 0;
-						$(".students-cards :checked").each(function () {
-							checked += 1;
-						});
-						if (checked > 0) {
-							$('.index-actions').removeAttr('hidden');
-							$('.ghost-input').val('').focusWithoutScrolling();
-							filter($('.ghost-input'));
-						} else {
-							$('.index-actions').attr('hidden', 'true');
-							if ($('.navbar-collapse').is(':visible')) {
-								$('.navbar-collapse').collapse('hide');
+								$(this).find("input[type=checkbox]").prop('checked', true);
+							} else {
+								$(this).find("input[type=checkbox]").prop('checked', false);
 							}
-						}
-						if (checked > 0) {
-							if ($(window).width() < 992) {
-								if ($(this).hasClass('toggled') && $('.navbar-collapse').is(':hidden')) {
-									$.when($('.navbar-toggler').removeClass('animated shake')).then(function () {
-										$('.navbar-toggler').addClass('animated shake');
-									});
+							if ($(this).hasClass('border-danger')) {
+								$(this).toggleClass("toggled-red");
+							} else {
+								$(this).toggleClass("toggled");
+							}
+							var checked = 0;
+							$(".students-cards :checked").each(function () {
+								checked += 1;
+							});
+							var checked = 0;
+							$(".students-cards :checked").each(function () {
+								checked += 1;
+							});
+							if (checked > 0) {
+								$('.index-actions').removeAttr('hidden');
+								$('.ghost-input').val('').focusWithoutScrolling();
+								filter($('.ghost-input'));
+							} else {
+								$('.index-actions').attr('hidden', 'true');
+								if ($('.navbar-collapse').is(':visible')) {
+									$('.navbar-collapse').collapse('hide');
+								}
+							}
+							if (checked > 0) {
+								if ($(window).width() < 992) {
+									if ($(this).hasClass('toggled') && $('.navbar-collapse').is(':hidden')) {
+										$.when($('.navbar-toggler').removeClass('animated shake')).then(function () {
+											$('.navbar-toggler').addClass('animated shake');
+										});
+									}
 								}
 							}
 						}
-					}
+					});
 				});
-			});
 			}
 			wbd();
 
@@ -452,15 +473,15 @@
 						}
 					}
 					var all = [];
-				for (var i = 0; i < ids.length; i++) {
-					all += ids[i] + ',';
-				}
-				var res = changeStatus(all, 3, facil, returntime);
+					for (var i = 0; i < ids.length; i++) {
+						all += ids[i] + ',';
+					}
+					var res = changeStatus(all, 3, facil, returntime);
 					while (res != 1) {
 						return 0;
 					}
 					$(function () {
-							$('#fieldtripModal').modal('toggle');
+						$('#fieldtripModal').modal('toggle');
 					});
 					$('.row').html('');
 					$('.facilitatordrop').html('');
@@ -499,15 +520,15 @@
 						}
 					}
 					var all = [];
-				for (var i = 0; i < ids.length; i++) {
-					all += ids[i] + ',';
-				}
-				var res = changeStatus(all, 2, loc, returntime);
+					for (var i = 0; i < ids.length; i++) {
+						all += ids[i] + ',';
+					}
+					var res = changeStatus(all, 2, loc, returntime);
 					while (res != 1) {
 						return 0;
 					}
 					$(function () {
-							$('#offsiteModal').modal('toggle');
+						$('#offsiteModal').modal('toggle');
 					});
 					$('.row').html('');
 					$('.facilitatordrop').html('');
@@ -543,14 +564,14 @@
 					all += ids[i] + ',';
 				}
 				var res = changeStatus(all, 1, '', '');
-					while (res != 1) {
-						return 0;
-					}
-					$('.row').html('');
-					$('.facilitatordrop').html('');
-					$('.locationdrop').html('');
-					$('.index-actions').attr('hidden', 'true');
-					wbd();
+				while (res != 1) {
+					return 0;
+				}
+				$('.row').html('');
+				$('.facilitatordrop').html('');
+				$('.locationdrop').html('');
+				$('.index-actions').attr('hidden', 'true');
+				wbd();
 			});
 
 			$(".checkout").click(function () {
@@ -576,9 +597,9 @@
 					all += ids[i] + ',';
 				}
 				var res = changeStatus(all, 4, '', '');
-					while (res != 1) {
-						return 0;
-					}
+				while (res != 1) {
+					return 0;
+				}
 				$('.row').html('');
 				$('.facilitatordrop').html('');
 				$('.locationdrop').html('');
