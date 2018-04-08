@@ -4,6 +4,9 @@ body {
 
 .card {
   margin-top: 2em !important;
+  box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.1) !important;
+  -webkit-transition: box-shadow 0.4s;
+  transition: box-shadow 0.4s;
 }
 
 .card-title {
@@ -13,9 +16,6 @@ body {
 .toggled {
   background-color: #25292d !important;
   color: white !important;
-}
-.border-red {
-  border-color: red !important;
 }
 .toggled-red {
   background-color: #25292d !important;
@@ -134,4 +134,8 @@ td.admin {
   -ms-transition: all 0.1s ease-in-out;
   -o-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 1px 3px 15px rgba(0, 0, 0, 0.1) !important;
 }

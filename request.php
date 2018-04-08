@@ -65,6 +65,11 @@ if (!empty($_GET['f'])) {
         $result = $query->fetch_all();
         echo json_encode($result, JSON_PRETTY_PRINT);
     }
+    if ($_GET['f'] == 'globals') {
+        $query = $db->query('SELECT `start_time`, `end_time` FROM globals');
+        $result = $query->fetch_all();
+        echo json_encode($result, JSON_PRETTY_PRINT);
+    }
     if ($_GET['f'] == 'changeStatus') {
         if($_GET['return_time'] !== '') {
             $dateReturnTime = new DateTime($_GET['return_time']);

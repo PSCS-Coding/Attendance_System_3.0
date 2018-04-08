@@ -27,7 +27,6 @@
 				<?php require_once 'nav.html';?>
 			</nav>
 		</div>
-
 		<div class="modal fade" id="offsiteModal" tabindex="-1" role="dialog" aria-labelledby="offsiteModal" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -120,17 +119,29 @@
 				});
 			}
 			$(document).ready(function () {
+				var mintime = String(query('globals')[0]).split(',')[0];
+				var maxtime = String(query('globals')[0]).split(',')[1];
+				if (mintime.split(':')[0] >= 13) {
+						mintime = mintime.split(':')[0] - 12 + ':' + mintime.split(':')[1] + 'pm';
+					} else {
+						mintime = mintime.split(':')[0] + ':' + mintime.split(':')[1] + 'am';
+				}
+				if (maxtime.split(':')[0] >= 13) {
+						maxtime = maxtime.split(':')[0] - 12 + ':' + maxtime.split(':')[1] + 'pm';
+				} else {
+						maxtime = maxtime.split(':')[0] + ':' + maxtime.split(':')[1] + 'am';
+				}
 				$('#offsitereturn').timepicker({
 					'step': 10,
 					'scrollDefault': 'now',
-					'minTime': '9:00am',
-					'maxTime': '3:40pm'
+					'minTime': mintime,
+					'maxTime': maxtime
 				});
 				$('#fieldtripreturn').timepicker({
 					'step': 10,
 					'scrollDefault': 'now',
-					'minTime': '9:00am',
-					'maxTime': '3:40pm'
+					'minTime': mintime,
+					'maxTime': maxtime
 				});
 				$("body").tooltip({
 					selector: '[data-toggle=tooltip]'
@@ -202,7 +213,7 @@
 					} else if ($(window).width() < 768) {
 						cols = 8;
 					}
-					//TODO: border color for not checked in after 9am and returning after return time
+					//TODO: border color for not checked in after 9am
 					var red;
 					var today = new Date();
 					var dd = today.getDate();
@@ -219,7 +230,7 @@
 
 					today = mm + '/' + dd + '/' + yyyy;
 					if (moment(today + ' ' + current[i]['return_time']).isBefore(moment()) && moment(today + ' ' + current[i]['return_time']) !== moment() && current[i]['return_time'] !== '00:00:00') {
-						red = 'red';
+						red = 'danger';
 					} else {
 						red = 'grey';
 					}
@@ -337,6 +348,7 @@
 								filter($('.ghost-input'));
 							} else {
 								$('.index-actions').attr('hidden', 'true');
+								$('.ghost-input').focusWithoutScrolling();
 								if ($('.navbar-collapse').is(':visible')) {
 									$('.navbar-collapse').collapse('hide');
 								}
