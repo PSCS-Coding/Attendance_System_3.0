@@ -231,6 +231,8 @@
 					today = mm + '/' + dd + '/' + yyyy;
 					if (moment(today + ' ' + current[i]['return_time']).isBefore(moment()) && moment(today + ' ' + current[i]['return_time']) !== moment() && current[i]['return_time'] !== '00:00:00') {
 						red = 'danger';
+					} else if(current[i]['status_id'] == 0 && moment().isAfter(moment(today + ' ' + String(query('globals')[0]).split(',')[0]))) {
+						red = 'danger';
 					} else {
 						red = 'grey';
 					}
@@ -344,8 +346,8 @@
 							});
 							if (checked > 0) {
 								$('.index-actions').removeAttr('hidden');
-								$('.ghost-input').val('').focusWithoutScrolling();
 								filter($('.ghost-input'));
+								$('.ghost-input').val('').focusWithoutScrolling();
 							} else {
 								$('.index-actions').attr('hidden', 'true');
 								$('.ghost-input').focusWithoutScrolling();
@@ -471,7 +473,6 @@
 					for (var i = 0; i < current.length; i++) {
 						all_ids.push(current[i]['student_id']);
 					}
-					//student id - doesn't work, wierd!
 					var ids = [];
 					for (var k = 0; k < checked.length; k++) {
 						if (typeof checked[k] != 'undefined') {
@@ -634,15 +635,26 @@
 					clearInterval(timer);
 					timer = setTimeout(cb, interval);
 				};
-				$(document).on('keypress, click, mousemove', refresh);
+				$(document).click(function() {
+					refresh();
+				});
+				$(document).keypress(function() {
+					refresh();
+				});
+				$(document).mousemove( function() {
+					refresh();
+				});
 				refresh();
 			}
 			setIdle(function () {
+				var giv = $('.ghost-input').val();
 				$('.row').html('');
 				$('.facilitatordrop').html('');
 				$('.locationdrop').html('');
 				$('.index-actions').attr('hidden', 'true');
 				wbd();
+				$('.ghost-input').val(giv).focusWithoutScrolling();
+				filter($('.ghost-input'));
 			}, 10);
 		</script>
 	</body>
