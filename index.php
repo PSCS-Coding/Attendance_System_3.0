@@ -3,6 +3,45 @@ session_start();
 require_once("head.php");
 start_the_day();
 ?>
+<<<<<<< HEAD
+=======
+<!DOCTYPE html>
+
+<html>
+  <head>
+	<title>
+		Atendance�Sistim�100�Persent�Compleet�Perfict�No�Virus�Downlode�Free�Affective�end�Afficient�Profetional�Git�it�Now�Easy�Set�Up�Aply�Today�Has�Enyone�Really�Been�Far�Even�as�Descided�to�Use�Evin�Go�Wunt�to�do�Look�Mor�Like�Go�Further�You�Can�Realy�be�Far�It's�Just�Commin�Sense�Low�Price�Great�Deel�No�Charge�Limited�Time�Ofter
+  	</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="js/timepicker/jquery.timepicker.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="js/timepicker/jquery.timepicker.css" />
+  </head>
+	<body>
+		<?php
+		if ($_POST && !empty($_POST['change'])){
+			status_update($_POST['student'],$_POST['new'] , $_POST['current'] , $_POST['return_time']);
+		}
+		echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"><input type="hidden" name="student" value="DAILY_RESET"><input type="hidden" name="return_time" value=0> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" class="reset" name="change" value="Set all to \'Not checked in\'"></form>';
+		?>
+	<div class = "sidebar">
+		admin
+		<a class= "sidetext" href="admin.php?page=0">Allotted Hours</a>
+		<a class= "sidetext" href="admin.php?page=1">Current Events</a>
+		<a class= "sidetext" href="admin.php?page=2">Facilitator Edit View</a>
+		<a class= "sidetext" href="admin.php?page=3">Group Edit View</a>
+		<a class= "sidetext" href="admin.php?page=4">History</a>
+		<a class= "sidetext" href="admin.php?page=5">Holidays</a>
+		<a class= "sidetext" href="admin.php?page=6">Offsit Locations</a>
+		<a class= "sidetext" href="admin.php?page=7">Passwords</a>
+		<a class= "sidetext" href="admin.php?page=8">School Hours</a>
+		<a class= "sidetext" href="admin.php?page=9">Student Edit View</a>
+		front end
+		<a class= "sidetext" href="index.php">Front Page</a>
+		<a class= "sidetext" href="statusview.php">Status View</a>
+	</div>
+>>>>>>> angus_branch
     <div id="main-table">
       <table>
         <tr>
@@ -14,9 +53,10 @@ start_the_day();
           </th>
         </tr>
         <?php
-         	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
+         	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id WHERE student_data.active = 1 ORDER BY first_name DESC';
          	$current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
          	foreach ($current as &$row) {
+<<<<<<< HEAD
             	echo '<tr class="student-row" id="'.$row["student_id"].'">';
             	echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
             	echo '<td><span class="status">'.$row["status_name"];
@@ -38,6 +78,33 @@ start_the_day();
 				            	echo '<input type="submit" name="4" value="CO">';
 		  					}
 		  				}
+=======
+            	echo '<tr class="student-row" id="'.$row["student_id"].'"><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td><span class="status">'.$row["status_name"];
+				if($row["status_name"] == "Late"){
+					if((int)(($row["return_time"][0].$row["return_time"][1])) > 12){
+						$row["return_time"] = (string)((int)($row["return_time"][0].$row["return_time"][1]) - 12).$row["return_time"][2].$row["return_time"][3].$row["return_time"][4];
+					}elseif((int)(($row["return_time"][0].$row["return_time"][1])) < 10){
+						$row["return_time"] = substr($row["return_time"],1,4);
+					}
+					echo " arriving at ".substr($row["return_time"],0,5).'</span>';
+				}else{
+					echo '</span>';
+				}
+				if($row['status_id'] != 1 ){
+					echo '<input type="submit" name="1" value="P">';
+  					if($row['status_id'] == 0 || $row['status_id'] == 5){
+						echo '<input name="time" type="text" class="late" placeholder="Arrival time"><input type="submit" name="5" value="L">';
+  					}
+  					if($row['status_id'] != 7  && $row['status_id'] != 4){
+		            	echo '<input type="submit" name="7" value="A">';
+  					}
+  				}
+  				else{
+  					if($row['status_id'] != 4 ){
+		            	echo '<input type="submit" name="4" value="CO">';
+  					}
+  				}
+>>>>>>> angus_branch
             	echo '</td></tr>';
           	}
         ?>
