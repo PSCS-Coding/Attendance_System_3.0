@@ -59,7 +59,7 @@ require_once("connection.php");
 				$goodpage = True;
 		      $index = array('group_name','students');
 		      $database = 'groups';
-		      echo '<a class="glink" href="groups.html">Edit groups</a>';
+		      echo '<a class="glink" href="group.php">Edit groups</a>';
 			  $query = 'SELECT * FROM '.$database.';';
 			}
 			//History
