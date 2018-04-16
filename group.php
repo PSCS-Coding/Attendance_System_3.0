@@ -61,15 +61,17 @@
         <th id="t1">students</th>
         <?php
           for ($i=0; $i < $foo; $i++) {
-            $x = $i;
-            if($i == 1) {
-              $x++;
-            }
-              echo "<tr id='".$i."' draggable='true' ondragstart='drag(event)'><td id='".$x."'>".$values[$i]['first_name']."</td></tr>";
+              echo '<li class="ui-widget-content ui-corner-tr"><input type="hidden" value="'.$values[$i]['student_id'].'"><h5 class="ui-widget-header">'.$values[$i]['first_name'].' '.$values[$i]['last_name'][0].'.</h5></li>';
+
           }
          ?>
-     </tbody>
-    </table>
-  </div>
+
+	</ul>
+
+</div>
+
+	</div>
+
+
   </body>
 </html>
