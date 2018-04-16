@@ -43,9 +43,9 @@ function get_all_lates($student_id) {
 
     /* TODO:  add in the 'Actually Late' function below (it will only count one per day, and each one will mean that the student was
     (expectedly or no) late that day, arriving after 9:00am*/
-    // IDEA: for each late event check if the prior late event was on the same day
-    // IDEA: for each late event check if the next event is after the start of school
-    $result = $db->query("SELECT * FROM history WHERE status_id= 5 AND student_id =" . $student_id)
+    // IDEA: for each late event check if the very previous (right before) event was a late event
+    // IDEA: check if the student signs in before the start of school after signing in as late.
+    $result = $db->query("SELECT * FROM history WHERE status_id = 5 AND student_id =" . $student_id);
 
     $query2 = "SELECT";
     $NumLateEvents = 0;
