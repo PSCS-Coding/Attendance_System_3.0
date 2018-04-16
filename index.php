@@ -3,8 +3,6 @@ session_start();
 require_once("head.php");
 start_the_day();
 ?>
-<<<<<<< HEAD
-=======
 <!DOCTYPE html>
 
 <html>
@@ -41,7 +39,6 @@ start_the_day();
 		<a class= "sidetext" href="index.php">Front Page</a>
 		<a class= "sidetext" href="statusview.php">Status View</a>
 	</div>
->>>>>>> angus_branch
     <div id="main-table">
       <table>
         <tr>
@@ -56,7 +53,6 @@ start_the_day();
          	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id WHERE student_data.active = 1 ORDER BY first_name DESC';
          	$current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
          	foreach ($current as &$row) {
-<<<<<<< HEAD
             	echo '<tr class="student-row" id="'.$row["student_id"].'">';
             	echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
             	echo '<td><span class="status">'.$row["status_name"];
@@ -78,7 +74,6 @@ start_the_day();
 				            	echo '<input type="submit" name="4" value="CO">';
 		  					}
 		  				}
-=======
             	echo '<tr class="student-row" id="'.$row["student_id"].'"><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td><span class="status">'.$row["status_name"];
 				if($row["status_name"] == "Late"){
 					if((int)(($row["return_time"][0].$row["return_time"][1])) > 12){
@@ -104,7 +99,6 @@ start_the_day();
 		            	echo '<input type="submit" name="4" value="CO">';
   					}
   				}
->>>>>>> angus_branch
             	echo '</td></tr>';
           	}
         ?>
