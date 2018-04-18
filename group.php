@@ -11,7 +11,8 @@
       $values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
       $foo = count($values);
     ?>
-    <script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
     var group = [];
       function allowDrop(ev) {
           ev.preventDefault();
@@ -24,19 +25,23 @@
         ev.preventDefault();
         var data = ev.dataTransfer.getData("text");
         if (confirm("Add " + document.getElementById(data).textContent + " to group")) {
-          group.push(document.getElementId(data)[0].textContent);
+          group.push(document.getElementById(data).textContent);
           ev.target.appendChild(document.getElementById(data));
         }
       }
-      /*function sendgroupstuff() {
-        $.ajax([
-          type:"POST";
-          data:{group};
-          dataType:"array"
-          url:"groupUpdate.php";
-          success: alert("Group successfuly added");
-        ]);
-      }*/
+     function sendgroupstuff() {
+         if(group.length != 0) {
+          $.ajax({
+            type:"POST",
+            data:{group},
+            dataType:"array",
+            url:"groupUpdate.php",
+            success: alert("Group successfuly added")
+          });
+        }else {
+          alert("add people to group first");
+        }
+      }
   </script>
   <div class = "sidebar">
   admin
