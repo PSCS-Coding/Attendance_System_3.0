@@ -65,7 +65,7 @@
             if($i == 1) {
               $x++;
             }
-              echo "<tr id='".$i."' draggable='true' ondragstart='drag(event)'><td id='".$x."'>".$values[$i]['first_name']."</td></tr>";
+              echo "<tr id='".$i."' draggable='true' ondragstart='drag(event)'><td id='".$x."'>".$values[$i]['first_name']." ".$values[$i]['last_name'][0]."</td></tr>";
           }
          ?>
      </tbody>
