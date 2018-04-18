@@ -61,7 +61,7 @@ function enquote($text){
 		<a class= "sidetext" href="index.php">Front Page</a>
 		<a class= "sidetext" href="statusview.php">Status View</a>
 	</div>
-    <div id="main-table">
+    <div>
       <table>
         <tr>
           <th>

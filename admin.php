@@ -58,9 +58,8 @@ require_once("connection.php");
 			//Group Edit View
 			elseif((string)$_GET['page'] == "3"){
 				$goodpage = True;
-		      $index = array('group_name','students');
+		      $index = array('group_name', 'students');
 		      $database = 'groups';
-		      echo '<a class="glink" href="group.php">Edit groups</a>';
 			  $query = 'SELECT * FROM '.$database.';';
 			}
 			//History
@@ -173,29 +172,45 @@ require_once("connection.php");
 						}
 					}
 					$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+				}elseif(!empty($_POST['stus'])){
+					foreach($values as $group){
+						if($group['group_name'] == $_POST['group']){
+							print_r('UPDATE groups SET students = "'.$group['students'].','.implode($_POST['add'], ',').'" WHERE group_name = '.$_POST['group'].';');
+						}
+					}
 				}
 				if($_GET['page'] != '3'){
 					echo '<div class="del"><form method="POST"><table><tr><th class="admin">Del.</th></tr>';
 					foreach($values as &$o){
 						echo '<tr><td class="admin"><input name="'.$o[$index[0]].'" type="checkbox"></td></tr>';
 					}
-					echo '<tr><td class="admin"><input value="X" name="del" type="submit"></td></tr></table></form></div>';
+					echo '<tr><td class="admin"><input value="X" name="del" type="submit"></td></tr></table></form></div><table class="table"><tr>';
+					foreach($index as &$header){
+						echo '<th class="admin">'.str_replace('_', ' ',$header).'</th>';
+					}
+					echo '</tr>';
 				}
-				echo '<table class="table"><tr>';
-				foreach($index as &$header){
-					echo '<th class="admin">'.str_replace('_', ' ',$header).'</th>';
-				}
-				echo '</tr>';
 				foreach($values as $col => &$value){
 					if((string)$_GET['page'] == "3"){
-						foreach($index as $row => &$oi){
-			            	if ($draggeble == False) {
-								echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" value="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
-			  				}else {
-			              		echo '<td class="admin">'.$value[$oi].'</td>';
-			            	}
-		          		}
-						echo "</tr>";
+						if(!empty($_POST[$value['group_name']])){
+							$group = $db->query('SELECT students FROM groups WHERE group_name = "'.$value['group_name'].'"')->fetch_assoc()['students'];
+							foreach($_POST[$value['group_name']] as &$rem){
+								$group = str_replace($rem, "", $group);
+								$group = trim(str_replace(',,', ",", $group), ',');
+							}
+							$db->query('UPDATE groups SET students = "'.$group.'" WHERE group_name = "'.$value['group_name'].'"');
+							$value = $db->query('SELECT * FROM groups WHERE group_name = "'.$value['group_name'].'"')->fetch_assoc();
+						}
+						echo '<table class="table thin"><tr><th class="admin thin">del</th><th class="admin thin">'.$value['group_name'].'</th></tr><form method="POST">';
+						$grp = explode(",",$value[$index[1]]);
+						if($value[$index[1]] != Null){
+							foreach($grp as &$stu){
+								$student = $db->query('SELECT first_name,last_name FROM student_data WHERE `active` = 1 AND student_id = "'.$stu.'"')->fetch_assoc();
+								echo '<tr><td class="admin thin"><input type="checkbox" name="'.$value['group_name'].'[]" value="'.$stu.'"></td><td class="admin thin">'.$student['first_name'].' '.$student['last_name'][0].'.</td></tr>';
+							}
+							echo '<tr><td class="admin thin"><input value="X" name="lete" type="submit"></td><td class="admin thin"> </td></tr></form></table>';
+
+						}
 					}
 					else{
 						echo '<tr>';
@@ -210,7 +225,7 @@ require_once("connection.php");
 								}
 								echo '</select><input type="hidden" name="student" value="'.$_POST['student'].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
 							}elseif($oi == 'status_name'){
-								$statorstu = $db->query('SELECT * FROM status_data ORDER BY status_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
+								$statorstu = $db->query('SELECT * FROM status_data ORDER BY status_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
 								echo '<td class="admin"><form method="POST"><select name="new" class="newval"> <option value="'.$value[$oi].'">'.$value[$oi].'</option>';
 								foreach($statorstu as $v){
 									if($v[$oi] != $value[$oi]){
@@ -225,14 +240,30 @@ require_once("connection.php");
 						echo '</tr>';
 					}
 				}
-				echo '<form method="POST">';
-				foreach($index as $row => &$oi){
-					if($row > 0){
-						echo'</td>';
+				if($_GET['page'] != '3'){
+					echo '<form method="POST">';
+					foreach($index as $row => &$oi){
+						if($row > 0){
+							echo'</td>';
+						}
+						echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="student" value="'.$_POST['student'].'"><input type="hidden" name="col" value="'.$col.'">';
 					}
-					echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="student" value="'.$_POST['student'].'"><input type="hidden" name="col" value="'.$col.'">';
+					echo '<input type="submit" name="add" class="submit" value="+"></td></form></table>';
+
+				}else{
+					$student = $db->query('SELECT student_id,first_name,last_name FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
+					echo '<table class="block"><tr><th>add</th><th>student</th></tr><form method="POST">';
+					foreach($student as &$stu){
+						echo '<tr><td><input type="checkbox" name="stus[]" value="'.$stu['student_id'].'"></td><td>'.$stu['first_name'].' '.$stu['last_name'][0].'.</td></tr>';
+					}
+					$groups = $db->query('SELECT group_name FROM groups ORDER BY group_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
+					$grpDD = '<input name="grpnm" type="text" value="New Group"><select value="nwgrp"> <option value="newgrp">New Group</option>';
+					foreach($groups as &$gn){
+						$grpDD = $grpDD.'<option name="group" value="'.$gn['group_name'].'">'.$gn['group_name'].'</option>';
+					}
+					echo '</select><tr><td>'.$grpDD.'</td><td><input value="+" type="submit"></td></tr></form></table>';
+
 				}
-				echo '<input type="submit" name="add" class="submit" value="￭"></td></form></table>';
 			}
 		 ?>
 	</div>
