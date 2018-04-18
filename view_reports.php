@@ -23,7 +23,7 @@ view_reports_for_student(2);
 
 function get_all_lates($student_id) {
     global $db;
-
+    // gets all lates for student
     $query = "SELECT * FROM history WHERE status_id= 5 AND student_id = " . $student_id;
     $result = $db->query($query);
     //for ($i=0; $i < strlen($result->fetch_array()); $i++) {
@@ -48,7 +48,12 @@ function get_all_lates($student_id) {
     $result = $db->query("SELECT * FROM history WHERE status_id = 5 AND student_id =" . $student_id);
 
     $query2 = "SELECT";
-    $NumLateEvents = 0;
+    $NumLateEvents = ;
     return 0;
+
+}
+
+function actual_lates($student_id) {
+    global $db;
 
 }
