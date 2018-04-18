@@ -57,6 +57,8 @@ function actual_lates($student_id) {
     global $db;
     /*
     get list of all events
+    $db->query('SELECT * from history where student_id =' $student_id);
+
     separate list by date
     check time of the first event of the DAY
     IF time >=9:00 then #Lates +=1 and move to next day
