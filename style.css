@@ -20,7 +20,7 @@ form{
 }
 table{
 	background-color: white;
-	margin: 20px auto;
+	margin: 30px auto;
 	width:75%;
 	text-align: left;
 	border-radius: 5px;
@@ -62,13 +62,14 @@ input{
 	width:15%;
 }
 .reset{
-	position:fixed;
-	margin-top: -18px;
+	position:absolute;
+	margin: -25px -95px;
 }
 .sidebar{
+	transition: width 0.5s ease;
 	z-index: 1;
 	word-wrap: break-word;
-	margin: -20px 0;
+	margin: -30px 0;
 	width: 15px;
 	background-color: #555;
 	height:1000px;
@@ -143,7 +144,7 @@ td.admin{
 	color: black;
 }
 .del{
-	margin:-20px 0 0 7%;
+	margin:-30px 0 0 7%;
 	width:5px;
 	position: relative;
 	display:inline-block;
@@ -151,4 +152,7 @@ td.admin{
 }
 .table{
 	margin-left:15%;
+}
+select {
+	margin: 0 4px;
 }

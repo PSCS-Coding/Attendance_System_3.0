@@ -9,23 +9,11 @@
      require_once("connection.php");
       $query = "SELECT first_name, last_name FROM student_data WHERE active = 1";
       $values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+      $foo = count($values);
     ?>
-    <div class = "sidebar">
-  	admin
-  	<a class= "sidetext" href="/admin.php?page=0">Allotted Hours</a>
-  	<a class= "sidetext" href="/admin.php?page=1">Current Events</a>
-  	<a class= "sidetext" href="/admin.php?page=2">Facilitator Edit View</a>
-  	<a class= "sidetext" href="/admin.php?page=3">Group Edit View</a>
-  	<a class= "sidetext" href="/admin.php?page=4">History</a>
-  	<a class= "sidetext" href="/admin.php?page=5">Holidays</a>
-  	<a class= "sidetext" href="/admin.php?page=6">Offsite Locations</a>
-  	<a class= "sidetext" href="/admin.php?page=7">Passwords</a>
-  	<a class= "sidetext" href="/admin.php?page=8">School Hours</a>
-  	<a class= "sidetext" href="/admin.php?page=9">Student Edit View</a>
-  	front end
-  	<a class= "sidetext" href="/index.php">Front Page</a>
-  	</div>
-    <script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    var group = [];
       function allowDrop(ev) {
           ev.preventDefault();
       }
@@ -33,33 +21,59 @@
       function drag(ev) {
           ev.dataTransfer.setData("text", ev.target.id);
       }
-
       function drop(ev) {
-          ev.preventDefault();
-          var data = ev.dataTransfer.getData("text");
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        if (confirm("Add " + document.getElementById(data).textContent + " to group")) {
+          group.push(document.getElementById(data).textContent);
           ev.target.appendChild(document.getElementById(data));
+        }
       }
-      var students = <?php echo json_encode($values); ?>;
-      for (var i = 0; i < students.length; i++) {
-        var td = document.createElement("td");
-        var t = document.createTextNode(students[i]["first_name"] + " " + students[i]["last_name"][0] + ".");
-        var tr = document.createElement("tr");
-        var x = i;
+     function sendgroupstuff() {
+         if(group.length != 0) {
+          $.ajax({
+            type:"POST",
+            data:{group},
+            dataType:"array",
+            url:"groupUpdate.php",
+            success: alert("Group successfuly added")
+          });
+        }else {
+          alert("add people to group first");
+        }
       }
-      td.appendChild(t);
-      getElementById(x).appendChild(td);
   </script>
+  <div class = "sidebar">
+  admin
+  <a class= "sidetext" href="/admin.php?page=0">Allotted Hours</a>
+  <a class= "sidetext" href="/admin.php?page=1">Current Events</a>
+  <a class= "sidetext" href="/admin.php?page=2">Facilitator Edit View</a>
+  <a class= "sidetext" href="/admin.php?page=3">Group Edit View</a>
+  <a class= "sidetext" href="/admin.php?page=4">History</a>
+  <a class= "sidetext" href="/admin.php?page=5">Holidays</a>
+  <a class= "sidetext" href="/admin.php?page=6">Offsite Locations</a>
+  <a class= "sidetext" href="/admin.php?page=7">Passwords</a>
+  <a class= "sidetext" href="/admin.php?page=8">School Hours</a>
+  <a class= "sidetext" href="/admin.php?page=9">Student Edit View</a>
+  front end
+  <a class= "sidetext" href="/index.php">Front Page</a>
+  </div>
+  <button type="button" onClick="sendgroupstuff()">Finish creating group</button>
   <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"><p id="div1">test2</p></div>
   <div id="drag1">
     <table>
-      <th id="t1">
-        <td>students</td>
-      </th>
-      <?php
-        for ($i=0; $i <= count($values); $i++) {
-          echo "<tr id='".$i."' draggable='true' ondragstart='drag(event)'></tr>";
-        }
-       ?>
+      <tbody>
+        <th id="t1">students</th>
+        <?php
+          for ($i=0; $i < $foo; $i++) {
+            $x = $i;
+            if($i == 1) {
+              $x++;
+            }
+              echo "<tr id='".$i."' draggable='true' ondragstart='drag(event)'><td id='".$x."'>".$values[$i]['first_name']." ".$values[$i]['last_name'][0]."</td></tr>";
+          }
+         ?>
+     </tbody>
     </table>
   </div>
   </body>

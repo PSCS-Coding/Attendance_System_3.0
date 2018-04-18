@@ -1,4 +1,3 @@
-
 <?php
 require_once("connection.php");
 ?>
@@ -11,8 +10,7 @@ require_once("connection.php");
 	  Atendance�Sistim�100�Persent�Compleet�Perfict�No�Virus�Downlode�Free�Affective�end�Afficient�Profetional�Git�it�Now�Easy�Set�Up�Aply�Today�Has�Enyone�Really�Been�Far�Even�as�Descided�to�Use�Evin�Go�Wunt�to�do�Look�Mor�Like�Go�Further�You�Can�Realy�be�Far�It's�Just�Commin�Sense�Low�Price�Great�Deel�No�Charge�Limited�Time�Ofter
   	</title>
   	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-  	<link rel="stylesheet" type="text/css" href="style.css">
-	<script src="js/timepicker/jquery.timepicker.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body class="back">
@@ -45,9 +43,9 @@ require_once("connection.php");
 			//Current Events
 			elseif((string)$_GET['page'] == "1"){
 				$goodpage = True;
-				$index = array('status_id','info','return_time');
+				$index = array('first_name','status_name','info','return_time');
 				$database = 'current';
-				$query = 'SELECT * FROM '.$database.';';
+				$query = 'SELECT * FROM '.$database.' INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name ASC;';
 			}
 			//Facilitator Edit View
 			elseif((string)$_GET['page'] == "2"){
@@ -59,17 +57,26 @@ require_once("connection.php");
 			//Group Edit View
 			elseif((string)$_GET['page'] == "3"){
 				$goodpage = True;
-	      $index = array('group_name','students');
-	      $database = 'groups';
-	      echo '<a class="glink" href="group.php">Edit groups</a>';
-		  $query = 'SELECT * FROM '.$database.';';
+		      $index = array('group_name','students');
+		      $database = 'groups';
+		      echo '<a class="glink" href="group.php">Edit groups</a>';
+			  $query = 'SELECT * FROM '.$database.';';
 			}
 			//History
 			elseif((string)$_GET['page'] == "4"){
 				$goodpage = True;
 				$index = array('first_name','timestamp','status_name','info','return_time');
 				$database = 'history';
-				$query = 'SELECT * FROM '.$database.' INNER JOIN student_data ON history.student_id = student_data.student_id INNER JOIN status_data ON history.status_id = status_data.status_id ORDER BY event_id DESC;';
+				$students = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
+				echo '<form class="reset" method="POST"><select name="student" class="newval"> <option value="">All</option>';
+				foreach($students as &$stdnt){
+					echo '<option value="'.$stdnt['student_id'].'">'.$stdnt['first_name'].'</option>';
+				}
+				echo'<input type="submit" name="go" class="submit" value="￭"></select></form>';
+				$query = 'SELECT * FROM '.$database.' INNER JOIN student_data ON history.student_id = student_data.student_id INNER JOIN status_data ON history.status_id = status_data.status_id ';
+				if($_POST['student'] != Null){
+					$query = $query.'WHERE history.student_id = '.$_POST['student'];
+				}$query = $query.' ORDER BY event_id DESC';
 			}
 			//Holidays
 			elseif((string)$_GET['page'] == "5"){
@@ -102,7 +109,7 @@ require_once("connection.php");
 			//Student Edit View
 			elseif((string)$_GET['page'] == "9"){
 				$goodpage = True;
-				$index = array('first_name','last_name','grad_year','veteran_year','current_offsite_hours','current_is_hours','priv','user_id','active');
+				$index = array('student_id','first_name','last_name','grad_year','veteran_year','current_offsite_hours','current_is_hours','priv','user_id','active');
 				$database = 'student_data';
 				$query = 'SELECT * FROM '.$database.';';
 			}
@@ -110,27 +117,24 @@ require_once("connection.php");
 				echo "<h1>Bad URL!</h1>";
 			}
 			if($goodpage){
-				$query = 'SELECT * FROM '.$database.';';
 				$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 				if(!empty($_POST)){
 					if($_POST['go']){
-						if((string)$_GET['page'] == "4"){
-							if($_POST['row'] == "0"){
-								foreach($values as $crntndx){
-									if($crntndx['first_name'] == $_POST['new']){
-										$stdntid=$crntndx['student_id'];
-									}
-								}
-								$q = 'UPDATE '.$database.' SET student_id = "'.$stdntid.'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
-							}elseif($_POST['row'] == "2"){
-								foreach($values as $crntndx){
-									if($crntndx['status_name'] == $_POST['new']){
-										$sttsid=$crntndx['status_id'];
-									}
-								}
-								$q = 'UPDATE '.$database.' SET status_id = "'.$sttsid.'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
+						if((string)$_GET['page'] == "1"){
+							if($_POST['row'] == '0'){
+								$q = 'UPDATE '.$database.' SET student_id = "'.$_POST['new'].'" WHERE student_id = '.$values[$_POST['col']]['student_id'].';';
+							}elseif($_POST['row'] == '1'){
+								$q = 'UPDATE '.$database.' SET status_id = "'.$_POST['new'].'" WHERE student_id = '.$values[$_POST['col']]['student_id'].';';
 							}else{
-								$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]].';';
+								$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
+							}
+						}elseif((string)$_GET['page'] == "4"){
+							if($_POST['row'] == '0'){
+								$q = 'UPDATE '.$database.' SET student_id = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
+							}elseif($_POST['row'] == '2'){
+								$q = 'UPDATE '.$database.' SET status_id = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
+							}else{
+								$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
 							}
 						}else{
 							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]].';';
@@ -184,17 +188,38 @@ require_once("connection.php");
 				foreach($values as $col => &$value){
 					if((string)$_GET['page'] == "3"){
 						foreach($index as $row => &$oi){
+			            	if ($draggeble == False) {
 								echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" value="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
+			  				}else {
+			              		echo '<td class="admin">'.$value[$oi].'</td>';
+			            	}
 		          		}
 						echo "</tr>";
 					}
 					else{
-						foreach($index as $row => &$oi){
-			            	}
-		          		}
 						echo '<tr>';
 						foreach($index as $row => &$oi){
-							echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
+							if($oi == 'first_name'){
+								$statorstu = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
+								echo '<td class="admin"><form method="POST"><select name="new" class="newval"> <option value="'.$value[$oi].'">'.$value[$oi].'</option>';
+								foreach($statorstu as $v){
+									if($v[$oi] != $value[$oi]){
+										echo '<option value="'.$v['student_id'].'" class="newval">'.$v[$oi].'</option>';
+									}
+								}
+								echo '</select><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
+							}elseif($oi == 'status_name'){
+								$statorstu = $db->query('SELECT * FROM status_data ORDER BY status_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
+								echo '<td class="admin"><form method="POST"><select name="new" class="newval"> <option value="'.$value[$oi].'">'.$value[$oi].'</option>';
+								foreach($statorstu as $v){
+									if($v[$oi] != $value[$oi]){
+										echo '<option value="'.$v['status_id'].'" class="newval">'.$v[$oi].'</option>';
+									}
+								}
+								echo '</select><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
+							}else{
+								echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
+							}
 						}
 						echo '</tr>';
 					}
@@ -207,7 +232,7 @@ require_once("connection.php");
 					echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'">';
 				}
 				echo '<input type="submit" name="add" class="submit" value="￭"></td></form></table>';
-
+			}
 		 ?>
 	</div>
 </body>
