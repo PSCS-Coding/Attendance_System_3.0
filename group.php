@@ -28,7 +28,7 @@
           ev.target.appendChild(document.getElementById(data));
         }
       }
-      function sendgroupstuff() {
+      /*function sendgroupstuff() {
         $.ajax([
           type:"POST";
           data:{group};
@@ -36,7 +36,7 @@
           url:"groupUpdate.php";
           success: alert("Group successfuly added");
         ]);
-      }
+      }*/
   </script>
   <div class = "sidebar">
   admin
@@ -61,7 +61,14 @@
         <th id="t1">students</th>
         <?php
           for ($i=0; $i < $foo; $i++) {
-              echo '<li class="ui-widget-content ui-corner-tr"><input type="hidden" value="'.$values[$i]['student_id'].'"><h5 class="ui-widget-header">'.$values[$i]['first_name'].' '.$values[$i]['last_name'][0].'.</h5></li>';
+
+            $x = 0;
+
+           if($i == 1) {
+             $x++;
+           }
+
+           echo '<tr id="'.$i.'" draggeble="True" ondragstart="drag(event)"><td id="'.$x.'" draggeble="True" ondragstart="drag(event)">'.$values[$i]["first_name"].' '.$values[$i]["last_name"][0].'</td></tr>';
 
           }
          ?>
