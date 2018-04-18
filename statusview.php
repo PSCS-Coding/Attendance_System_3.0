@@ -53,85 +53,101 @@ Status View
 							$x = $x + 1;
             }
 	?>
-	<h2>
-		Not Checked In:
-	</h2>
-	<?php
-		$arrlength = count($not_checked_in);
-		for($x = 0; $x < $arrlength; $x++) {
-    	echo $not_checked_in[$x];
-    	echo "<br>";
-		}
-	?>
-	<h2>
-		Present:
-	</h2>
-	<?php
-		$arrlength = count($present);
-		for($x = 0; $x < $arrlength; $x++) {
-    	echo $present[$x];
-    	echo "<br>";
-		}
-	?>
-	<h2>
-		Offsite:
-	</h2>
-	<?php
-		$arrlength = count($offsite);
-		for($x = 0; $x < $arrlength; $x++) {
-    	echo $offsite[$x];
-    	echo "<br>";
-		}
-	?>
-	<h2>
-		Field Trip:
-	</h2>
-	<?php
-		$arrlength = count($field_trip);
-		for($x = 0; $x < $arrlength; $x++) {
-    	echo $field_trip[$x];
-    	echo "<br>";
-		}
-	?>
-	<h2>
-		Checked Out:
-	</h2>
-	<?php
-		$arrlength = count($checked_out);
-		for($x = 0; $x < $arrlength; $x++) {
-    	echo $checked_out[$x];
-    	echo "<br>";
-		}
-	?>
-	<h2>
-		Late:
-	</h2>
-	<?php
-		$arrlength = count($late);
-		for($x = 0; $x < $arrlength; $x++) {
-    	echo $late[$x];
-    	echo "<br>";
-		}
-	?>
-	<h2>
-		Independent Study:
-	</h2>
-	<?php
-		$arrlength = count($independent_study);
-		for($x = 0; $x < $arrlength; $x++) {
-    	echo $independent_study[$x];
-    	echo "<br>";
-		}
-	?>
-	<h2>
-		Absent:
-	</h2>
-	<?php
-		$arrlength = count($absent);
-		for($x = 0; $x < $arrlength; $x++) {
-    	echo $absent[$x];
-    	echo "<br>";
-		}
-	?>
+	<div>
+		<h3>
+			Not Checked In:
+		</h3>
+		<?php
+			$arrlength = count($not_checked_in);
+			for($x = 0; $x < $arrlength; $x++) {
+    		echo $not_checked_in[$x];
+    		echo "<br>";
+			}
+		?>
+	</div>
+	<div>
+		<h3>
+			Present:
+		</h3>
+		<?php
+			$arrlength = count($present);
+			for($x = 0; $x < $arrlength; $x++) {
+    		echo $present[$x];
+    		echo "<br>";
+			}
+		?>
+	</div>
+	<div>
+		<h3>
+			Offsite:
+		</h3>
+		<?php
+			$arrlength = count($offsite);
+			for($x = 0; $x < $arrlength; $x++) {
+    		echo $offsite[$x];
+    		echo "<br>";
+			}
+		?>
+	</div>
+	<div>
+		<h3>
+			Field Trip:
+		</h3>
+		<?php
+			$arrlength = count($field_trip);
+			for($x = 0; $x < $arrlength; $x++) {
+    		echo $field_trip[$x];
+    		echo "<br>";
+			}
+		?>
+	</div>
+	<div>
+		<h3>
+			Checked Out:
+		</h3>
+		<?php
+			$arrlength = count($checked_out);
+			for($x = 0; $x < $arrlength; $x++) {
+    		echo $checked_out[$x];
+    		echo "<br>";
+			}
+		?>
+	</div>
+	<div>
+		<h3>
+			Late:
+		</h3>
+		<?php
+			$arrlength = count($late);
+			for($x = 0; $x < $arrlength; $x++) {
+    		echo $late[$x];
+    		echo "<br>";
+			}
+		?>
+	</div>
+	<div>
+		<h3>
+			Independent Study:
+		</h3>
+		<?php
+			$arrlength = count($independent_study);
+			for($x = 0; $x < $arrlength; $x++) {
+    		echo $independent_study[$x];
+    		echo "<br>";
+			}
+		?>
+	</div>
+	<div>
+		<h3>
+			Absent:
+		</h3>
+		<?php
+			$arrlength = count($absent);
+			for($x = 0; $x < $arrlength; $x++) {
+    		echo $absent[$x];
+    		echo "<br>";
+			}
+		?>
+	</div>
 </body>
 </html>
