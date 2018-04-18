@@ -1,4 +1,6 @@
-
+.top{
+	padding-top:30px;
+}
 th{
 	background-color: black;
 	color:white;
@@ -20,7 +22,7 @@ form{
 }
 table{
 	background-color: white;
-	margin: 20px auto;
+	margin: 30px auto;
 	width:75%;
 	text-align: left;
 	border-radius: 5px;
@@ -62,12 +64,13 @@ input{
 	width:15%;
 }
 .reset{
-	position:fixed;
-	margin-top: -18px;
+	position:absolute;
+	margin: -25px -95px;
 }
 .sidebar{
+	z-index: 1;
 	word-wrap: break-word;
-	margin: -20px 0;
+	margin: -30px 0;
 	width: 15px;
 	background-color: #555;
 	height:1000px;
@@ -89,7 +92,7 @@ input{
 	width:250px;
 }
 .sidebar:hover a{
-	color:rgb(100,140,50);
+	color:rgb(120,180,90);
 	visibility:visible;
 }
 .BigBox{
@@ -98,18 +101,24 @@ input{
 	color: white;
 }
 .admin{
-	width:3%;
+	white-space:nowrap;
+	padding-right:2px;
+	width:inherit;
 }
 td.admin{
 	background-color:#aaa;
 	border: 1px solid white;
 	color:#555;
+	height:23px;
 	border-radius: 4px;
-	padding:3px;
+	padding:1px;
 	text-align: center;
 }
 .admin > form > input{
+	border-radius: 3px;
+	border:1px solid grey;
 	color:black;
+	width:35%;
 	text-align: center;
 }
 ::placeholder{
@@ -120,6 +129,7 @@ td.admin{
 
 }
 .newval{
+	text-align: center;
 	width:55%;
 }
 .submit{
@@ -129,6 +139,28 @@ td.admin{
 }
 .back > .sidebar{
 	padding-top:20px;
+}
+.glink {
+	background-color: #888;
+	color: black;
+}
+.del{
+	margin:-30px 0 0 7%;
+	width:5px;
+	position: relative;
+	display:inline-block;
+	float:left;
+}
+.table{
+	margin-left:15%;
+}
+select {
+	margin: 0 4px;
+}
+.droppable{
+	margin:5px 40%;
+	width:20%;
+	height:500px;
 }
 .present, .late, .absent, .checked-out, .status {
     display: inline;

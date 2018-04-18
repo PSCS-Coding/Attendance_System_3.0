@@ -1,20 +1,25 @@
 <?php
 session_start();
-require_once("connection.php");
-require_once("functions.php");
+require_once("head.php");
 start_the_day();
 ?>
-<!DOCTYPE html>
-<html>
-  <head>
-	<title>PSCS Attendance</title>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="js/timepicker/jquery.timepicker.min.js" type="text/javascript"></script>
-		<link rel="stylesheet" type="text/css" href="js/timepicker/jquery.timepicker.css" />
-  </head>
-	<body>
+
+	<div class = "sidebar">
+		admin
+		<a class= "sidetext" href="admin.php?page=0">Allotted Hours</a>
+		<a class= "sidetext" href="admin.php?page=1">Current Events</a>
+		<a class= "sidetext" href="admin.php?page=2">Facilitator Edit View</a>
+		<a class= "sidetext" href="admin.php?page=3">Group Edit View</a>
+		<a class= "sidetext" href="admin.php?page=4">History</a>
+		<a class= "sidetext" href="admin.php?page=5">Holidays</a>
+		<a class= "sidetext" href="admin.php?page=6">Offsit Locations</a>
+		<a class= "sidetext" href="admin.php?page=7">Passwords</a>
+		<a class= "sidetext" href="admin.php?page=8">School Hours</a>
+		<a class= "sidetext" href="admin.php?page=9">Student Edit View</a>
+		front end
+		<a class= "sidetext" href="index.php">Front Page</a>
+		<a class= "sidetext" href="statusview.php">Status View</a>
+	</div>
     <div id="main-table">
       <table>
         <tr>
@@ -26,7 +31,7 @@ start_the_day();
           </th>
         </tr>
         <?php
-         	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
+         	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id WHERE student_data.active = 1 ORDER BY first_name DESC';
          	$current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
          	foreach ($current as &$row) {
             	echo '<tr class="student-row" id="'.$row["student_id"].'">';
