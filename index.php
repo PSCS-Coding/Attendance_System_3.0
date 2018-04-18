@@ -59,7 +59,7 @@ function enquote($text){
 		<a class= "sidetext" href="admin.php?page=9">Student Edit View</a>
 		front end
 		<a class= "sidetext" href="index.php">Front Page</a>
-		<a class= "sidetext" href="statusview.php">Status View</a>
+		<a class= "sidetext" href="statusview.php">Status</a>
 	</div>
     <div id="main-table">
       <table>
@@ -79,10 +79,8 @@ function enquote($text){
 				if($row["status_name"] == "Late"){
 					if((int)(($row["return_time"][0].$row["return_time"][1])) > 12){
 						$row["return_time"] = (string)((int)($row["return_time"][0].$row["return_time"][1]) - 12).$row["return_time"][2].$row["return_time"][3].$row["return_time"][4];
-					}elseif((int)(($row["return_time"][0].$row["return_time"][1])) < 10){
-						$row["return_time"] = substr($row["return_time"],1,4);
 					}
-					echo " arriving at ".substr($row["return_time"],0,5).'</span>';
+					echo " arriving at ".str_replace(':00', '',$row["return_time"]).'</span>';
 				}else{
 					echo '</span>';
 				}

@@ -61,24 +61,15 @@
         <th id="t1">students</th>
         <?php
           for ($i=0; $i < $foo; $i++) {
-
-            $x = 0;
-
-           if($i == 1) {
-             $x++;
-           }
-
-           echo '<tr id="'.$i.'" draggeble="True" ondragstart="drag(event)"><td id="'.$x.'" draggeble="True" ondragstart="drag(event)">'.$values[$i]["first_name"].' '.$values[$i]["last_name"][0].'</td></tr>';
-
+            $x = $i;
+            if($i == 1) {
+              $x++;
+            }
+              echo "<tr id='".$i."' draggable='true' ondragstart='drag(event)'><td id='".$x."'>".$values[$i]['first_name']."</td></tr>";
           }
          ?>
-
-	</ul>
-
-</div>
-
-	</div>
-
-
+     </tbody>
+    </table>
+  </div>
   </body>
 </html>
