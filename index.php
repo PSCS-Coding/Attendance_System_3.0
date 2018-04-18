@@ -34,6 +34,7 @@ start_the_day();
          	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id WHERE student_data.active = 1 ORDER BY first_name DESC';
          	$current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
          	foreach ($current as &$row) {
+
             	echo '<tr class="student-row" id="'.$row["student_id"].'">';
             	echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
             	echo '<td><div class="status">'.$row["status_name"];
@@ -45,6 +46,7 @@ start_the_day();
 							echo '<div class="status-button late"><input name="time" type="text" class="late-time" placeholder="Arrival time"><input type="submit" name="5" value="L"></div>';
 					    echo '<div class="status-button absent"><input type="submit" name="7" value="A"></div>';
               echo '<div class="status-button checked-out"><input type="submit" name="4" value="CO"></div>';
+
             	echo '</td></tr>';
           	}
         ?>

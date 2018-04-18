@@ -1,4 +1,5 @@
 <?php
+
 	//$db = new mysqli('localhost', 'root', 'root', 'attendance_new');
     $db = new mysqli('pscscoding.com', 'rabu870', '12345', 'pscsorg_3', '3306');
 
