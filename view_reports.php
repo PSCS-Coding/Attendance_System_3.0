@@ -47,13 +47,34 @@ function get_all_lates($student_id) {
     // IDEA: check if the student signs in before the start of school after signing in as late.
     $result = $db->query("SELECT * FROM history WHERE status_id = 5 AND student_id =" . $student_id);
 
-    $query2 = "SELECT";
-    $NumLateEvents = ;
+    //$query2 = "SELECT";
+    //$NumLateEvents = ;
     return 0;
 
 }
 
 function actual_lates($student_id) {
     global $db;
+    /*
+    get list of all events
+    separate list by date
+    check time of the first event of the DAY
+    IF time >=9:00 then #Lates +=1 and move to next day
+    else {
+    if (event type(first event == event[x])=5(late)) {
+      proceed to check all later events...
+      while(eventtime(event[x+i]<9:00))
+      if (eventtime (subsequent events == event[x+i])=) {
 
+      } else {
+        # code...
+      }
+
+    } else {
+      # code...
+    }
+
+    }
+
+    */
 }
