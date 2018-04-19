@@ -1,10 +1,11 @@
 <?php
 session_start();
+$pagetitle = "Home";
 require_once("head.php");
 start_the_day();
 ?>
-
-	<div class = "sidebar">
+<body>
+		<div class = "sidebar">
 		admin
 		<a class= "sidetext" href="admin.php?page=0">Allotted Hours</a>
 		<a class= "sidetext" href="admin.php?page=1">Current Events</a>
