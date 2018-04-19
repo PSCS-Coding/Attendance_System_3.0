@@ -4,7 +4,6 @@ require_once("connection.php");
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="style.css">
 <title>
 Status View
 </title>
@@ -61,8 +60,9 @@ Status View
 		<?php
 			$arrlength = count($not_checked_in);
 			for($x = 0; $x < $arrlength; $x++) {
-    		echo $not_checked_in[$x];
-    		echo "<br>";
+				echo "<ul>";
+    			echo "<li>"."$not_checked_in[$x]"."</li>";
+				echo "</ul>";
 			}
 		?>
 	</div>
@@ -73,8 +73,9 @@ Status View
 		<?php
 			$arrlength = count($present);
 			for($x = 0; $x < $arrlength; $x++) {
-    		echo $present[$x];
-    		echo "<br>";
+				echo "<ul>";
+					echo "<li>"."$present[$x]"."</li>";
+				echo "</ul>";
 			}
 		?>
 	</div>
@@ -85,8 +86,9 @@ Status View
 		<?php
 			$arrlength = count($offsite);
 			for($x = 0; $x < $arrlength; $x++) {
-    		echo $offsite[$x];
-    		echo "<br>";
+				echo "<ul>";
+					echo "<li>"."$offsite[$x]"."</li>";
+				echo "</ul>";
 			}
 		?>
 	</div>
@@ -97,8 +99,9 @@ Status View
 		<?php
 			$arrlength = count($field_trip);
 			for($x = 0; $x < $arrlength; $x++) {
-    		echo $field_trip[$x];
-    		echo "<br>";
+				echo "<ul>";
+					echo "<li>"."$field_trip[$x]"."</li>";
+				echo "</ul>";
 			}
 		?>
 	</div>
@@ -109,8 +112,9 @@ Status View
 		<?php
 			$arrlength = count($checked_out);
 			for($x = 0; $x < $arrlength; $x++) {
-    		echo $checked_out[$x];
-    		echo "<br>";
+				echo "<ul>";
+					echo "<li>"."$checked_out[$x]"."</li>";
+				echo "</ul>";
 			}
 		?>
 	</div>
@@ -121,8 +125,9 @@ Status View
 		<?php
 			$arrlength = count($late);
 			for($x = 0; $x < $arrlength; $x++) {
-    		echo $late[$x];
-    		echo "<br>";
+				echo "<ul>";
+					echo "<li>"."$late[$x]"."</li>";
+				echo "</ul>";
 			}
 		?>
 	</div>
@@ -133,8 +138,9 @@ Status View
 		<?php
 			$arrlength = count($independent_study);
 			for($x = 0; $x < $arrlength; $x++) {
-    		echo $independent_study[$x];
-    		echo "<br>";
+				echo "<ul>";
+					echo "<li>"."$independent_study[$x]"."</li>";
+				echo "</ul>";
 			}
 		?>
 	</div>
@@ -145,8 +151,9 @@ Status View
 		<?php
 			$arrlength = count($absent);
 			for($x = 0; $x < $arrlength; $x++) {
-    		echo $absent[$x];
-    		echo "<br>";
+				echo "<ul>";
+					echo "<li>"."$absent[$x]"."</li>";
+				echo "</ul>";
 			}
 		?>
 	</div>
