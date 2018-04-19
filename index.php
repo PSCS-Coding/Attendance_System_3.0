@@ -4,7 +4,12 @@ require_once("head.php");
 start_the_day();
 ?>
 	<div id="topbar">
-		
+		<div>
+			testee
+		</div>
+		<div>
+			testee
+		</div>
 	</div>
 	<div class = "sidebar">
 		admin

@@ -127,8 +127,16 @@ td.admin{
 }
 #div1 {
 	border: 1px solid black;
-
 }
+
+#topbar {
+	background-color: rebeccapurple;
+}
+
+#topbar div {
+	display: inline;
+}
+
 .newval{
 	text-align: center;
 	width:55%;
