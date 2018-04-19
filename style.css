@@ -178,3 +178,8 @@ td.thin{
 	margin:0 auto;
 	display: table;
 }
+.groups{
+	display: block;
+	overflow: auto;
+	margin-bottom:20px;
+}
