@@ -1,14 +1,8 @@
 <?php
-require_once("connection.php");
+$pagetitle = "By Status";
+require_once("head.php");
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="style.css">
-<title>
-Status View
-</title>
-</head>
+
 <body class="top">
 	<div class = "sidebar">
 		admin
