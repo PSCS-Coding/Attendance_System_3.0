@@ -56,7 +56,7 @@ function get_all_lates($student_id) {
 function actual_lates($student_id) {
     global $db;
     /*
-    get list of all events
+    get list of all events where the student_id is the one in question (pulled by the function input)
     $db->query('SELECT * from history where student_id =' $student_id);
 
     separate list by date
