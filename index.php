@@ -3,26 +3,7 @@ session_start();
 require_once("head.php");
 start_the_day();
 ?>
-<!DOCTYPE html>
 
-<html>
-  <head>
-	<title>
-		Atendance�Sistim�100�Persent�Compleet�Perfict�No�Virus�Downlode�Free�Affective�end�Afficient�Profetional�Git�it�Now�Easy�Set�Up�Aply�Today�Has�Enyone�Really�Been�Far�Even�as�Descided�to�Use�Evin�Go�Wunt�to�do�Look�Mor�Like�Go�Further�You�Can�Realy�be�Far�It's�Just�Commin�Sense�Low�Price�Great�Deel�No�Charge�Limited�Time�Ofter
-  	</title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="js/timepicker/jquery.timepicker.min.js" type="text/javascript"></script>
-	<link rel="stylesheet" type="text/css" href="js/timepicker/jquery.timepicker.css" />
-  </head>
-	<body>
-		<?php
-		if ($_POST && !empty($_POST['change'])){
-			status_update($_POST['student'],$_POST['new'] , $_POST['current'] , $_POST['return_time']);
-		}
-		echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"><input type="hidden" name="student" value="DAILY_RESET"><input type="hidden" name="return_time" value=0> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" class="reset" name="change" value="Set all to \'Not checked in\'"></form>';
-		?>
 	<div class = "sidebar">
 		admin
 		<a class= "sidetext" href="admin.php?page=0">Allotted Hours</a>
@@ -53,31 +34,19 @@ start_the_day();
          	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id WHERE student_data.active = 1 ORDER BY first_name DESC';
          	$current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
          	foreach ($current as &$row) {
-            	echo '<tr class="student-row" id="'.$row["student_id"].'"><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td><span class="status">'.$row["status_name"];
-				if($row["status_name"] == "Late"){
-					if((int)(($row["return_time"][0].$row["return_time"][1])) > 12){
-						$row["return_time"] = (string)((int)($row["return_time"][0].$row["return_time"][1]) - 12).$row["return_time"][2].$row["return_time"][3].$row["return_time"][4];
-					}elseif((int)(($row["return_time"][0].$row["return_time"][1])) < 10){
-						$row["return_time"] = substr($row["return_time"],1,4);
-					}
-					echo " arriving at ".substr($row["return_time"],0,5).'</span>';
-				}else{
-					echo '</span>';
-				}
-				if($row['status_id'] != 1 ){
-					echo '<input type="submit" name="1" value="P">';
-  					if($row['status_id'] == 0 || $row['status_id'] == 5){
-						echo '<input name="time" type="text" class="late" placeholder="Arrival time"><input type="submit" name="5" value="L">';
-  					}
-  					if($row['status_id'] != 7  && $row['status_id'] != 4){
-		            	echo '<input type="submit" name="7" value="A">';
-  					}
-  				}
-  				else{
-  					if($row['status_id'] != 4 ){
-		            	echo '<input type="submit" name="4" value="CO">';
-  					}
-  				}
+
+            	echo '<tr class="student-row" id="'.$row["student_id"].'">';
+            	echo '<td>'.$row["first_name"].' '.$row["last_name"][0].'.</td>';
+            	echo '<td><div class="status">'.$row["status_name"];
+							if($row["status_name"] == "Late") {
+								echo " arriving at ".pretty_time($row["return_time"]);
+							}
+							echo '</div>';
+							echo '<div class="status-button present"><input type="submit" name="1" value="P"></div>';
+							echo '<div class="status-button late"><input name="time" type="text" class="late-time" placeholder="Arrival time"><input type="submit" name="5" value="L"></div>';
+					    echo '<div class="status-button absent"><input type="submit" name="7" value="A"></div>';
+              echo '<div class="status-button checked-out"><input type="submit" name="4" value="CO"></div>';
+
             	echo '</td></tr>';
           	}
         ?>
@@ -86,12 +55,15 @@ start_the_day();
 
     <script type="text/javascript" src="js/changeStatus.js"></script>
 		<script type="text/javascript">
-			$('.late').timepicker({
+			$('.late-time').timepicker({
 		    'minTime': '9:00am',
 		    'maxTime': '3:40pm',
 				'step' : 5,
 				'scrollDefault' : 'now'
 			});
+      $('#main-table tr.student-row').each(function() {
+        frontPageButtons($(this).attr("id"));
+      });
 		</script>
 	</body>
 </html>

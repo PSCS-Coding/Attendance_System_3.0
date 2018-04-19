@@ -163,3 +163,6 @@ select {
 	width:20%;
 	height:500px;
 }
+.present, .late, .absent, .checked-out, .status {
+    display: inline;
+}
