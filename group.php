@@ -14,34 +14,58 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript">
     var group = [];
-      function allowDrop(ev) {
-          ev.preventDefault();
-      }
 
-      function drag(ev) {
-          ev.dataTransfer.setData("text", ev.target.id);
-      }
-      function drop(ev) {
+    function submitform() {
+      document.getElementById("form").submit();
+    }
+
+    function checkIfThere(arr, val) {
+      return arr.some(function(arrVal) {
+        return val === arrVal;
+      });
+    }
+
+    function allowDrop(ev) {
         ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        if (confirm("Add " + document.getElementById(data).textContent + " to group")) {
+    }
+
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop(ev) {
+      ev.preventDefault();
+      var data = ev.dataTransfer.getData("text");
+      for (var i = 0; i < group.length; i++) {
+        var x = group[i];
+      }
+      if (true != checkIfThere(group, document.getElementById(data).textContent)) {
+        if (confirm("Add " + document.getElementById(data).textContent + " to this group")) {
           group.push(document.getElementById(data).textContent);
           ev.target.appendChild(document.getElementById(data));
         }
+      } else {
+        alert(document.getElementById(data).textContent + " is already in this group");
       }
-     function sendgroupstuff() {
-         if(group.length != 0) {
-          $.ajax({
-            type:"POST",
-            data:{group},
-            dataType:"array",
-            url:"groupUpdate.php",
-            success: alert("Group successfuly added")
-          });
-        }else {
-          alert("add people to group first");
-        }
+    }
+    function sendgroupstuff() {
+      var group_name = document.getElementById("form").value;
+       if(group.length != 0) {
+         if (group_name.length != 0) {
+           $.ajax({
+              type:"POST",
+              data:{group,name:group_name},
+              dataType:"text",
+              url:"groupUpdate.php",
+              success: alert("Group successfuly added")
+           });
+         }else {
+           alert("Name the group first");
+         }
+      }else {
+        alert("Add people to group first");
       }
+    }
   </script>
   <div class = "sidebar">
   admin
@@ -58,8 +82,12 @@
   front end
   <a class= "sidetext" href="/index.php">Front Page</a>
   </div>
+  <form type="POST">
+    <input id="form" type="text" name="gname" placeholder="Group name">
+  </form>
   <button type="button" onClick="sendgroupstuff()">Finish creating group</button>
-  <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"><p id="div1">test2</p></div>
+  <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"><span><p id="div1">drag students here to add to group. students added to group:</p><p id="a1"></p></span></div>
+  <div id="addedpeople"></div>
   <div id="drag1">
     <table>
       <tbody>
@@ -70,7 +98,7 @@
             if($i == 1) {
               $x++;
             }
-              echo "<tr id='".$i."' draggable='true' ondragstart='drag(event)'><td id='".$x."'>".$values[$i]['first_name']." ".$values[$i]['last_name'][0]."</td></tr>";
+              echo "<tr id='".$i."' draggable='true' ondragstart='drag(event)'><td id='".$i."'>".$values[$i]['first_name']." ".$values[$i]['last_name'][0]."</td></tr>";
           }
          ?>
      </tbody>

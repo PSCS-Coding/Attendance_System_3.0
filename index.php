@@ -45,11 +45,8 @@ function enquote($text){
 		}
 		echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"><input type="hidden" name="student" value="DAILY_RESET"><input type="hidden" name="return_time" value=0> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" class="reset" name="change" value="Set all to \'Not checked in\'"></form>';
 		?>
-<<<<<<< HEAD
 	<a href="statusview.php">Status</a>
 	<a href="achievements.php">Achievements</a>
-=======
->>>>>>> c4ba3916ba259a2ddd0d1efbb9e54bda63e2c4be
 	<div class = "sidebar">
 		admin
 		<a class= "sidetext" href="admin.php?page=0">Allotted Hours</a>
