@@ -171,7 +171,7 @@ require_once("connection.php");
 							}
 						}
 					}elseif(!empty($_POST['stus'])){
-						$_POST[$value['group']] = $_POST[str_replace(' ', "_", $value['group'])];
+						$_POST['group'] = str_replace(' ', "_", str_replace(".", '_', $_POST['group']));
 						if(!empty($db->query('SELECT students FROM groups WHERE group_name = "'.$_POST['group'].'" LIMIT 1')->fetch_assoc()['students'])){
 							foreach($values as &$group){
 								if($group['group_name'] == $_POST['group']){
@@ -219,7 +219,7 @@ require_once("connection.php");
 						}
 						$grp = explode(",",$value[$index[1]]);
 						if($value[$index[1]] != Null){
-							echo '<table class="table thin"><tr><form method="POST"><th class="admin thin"><input type="checkbox" name="'.$value['group_name'].'[]" value="'.$value[$index[1]].'"></th><th class="admin thin">'.$value['group_name'].'</th></tr>';
+							echo '<table class="table thin"><tr><form method="POST"><th class="admin thin"><input type="checkbox" name="'.$value['group_name'].'[]" value="'.$value[$index[1]].'"></th><th class="admin thin">'.str_replace('_', ' ', $value['group_name']).'</th></tr>';
 							foreach($grp as &$stu){
 								$student = $db->query('SELECT first_name,last_name FROM student_data WHERE `active` = 1 AND student_id = "'.$stu.'"')->fetch_assoc();
 								echo '<tr><td class="admin thin"><input type="checkbox" name="'.$value['group_name'].'[]" value="'.$stu.'"></td><td class="admin thin">'.$student['first_name'].' '.$student['last_name'][0].'.</td></tr>';
