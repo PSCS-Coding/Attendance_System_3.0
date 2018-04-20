@@ -171,11 +171,12 @@ require_once("connection.php");
 							}
 						}
 					}elseif(!empty($_POST['stus'])){
+						$_POST[$value['group']] = $_POST[str_replace(' ', "_", $value['group'])];
 						if(!empty($db->query('SELECT students FROM groups WHERE group_name = "'.$_POST['group'].'" LIMIT 1')->fetch_assoc()['students'])){
 							foreach($values as &$group){
 								if($group['group_name'] == $_POST['group']){
 									foreach($_POST['stus'] as &$news){
-										$group['students'] = str_replace(','.$news.',',',',$group['students']);
+										$group['students'] = trim(str_replace(',,', ",", str_replace($news, '',$group['students'])), ',');
 									}
 									$db->query('UPDATE groups SET students = "'.$group['students'].','.implode($_POST['stus'], ',').'" WHERE group_name = "'.$_POST['group'].'";');
 								}
@@ -202,6 +203,7 @@ require_once("connection.php");
 				}
 				foreach($values as $col => &$value){
 					if((string)$_GET['page'] == "3"){
+						$_POST[$value['group_name']] = $_POST[str_replace(' ', "_", $value['group_name'])];
 						if(!empty($_POST[$value['group_name']])){
 							$group = $db->query('SELECT students FROM groups WHERE group_name = "'.$value['group_name'].'"')->fetch_assoc()['students'];
 							foreach($_POST[$value['group_name']] as &$rem){
