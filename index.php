@@ -15,13 +15,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 		<link rel="stylesheet" type="text/css" href="style.css">
-		<link rel="stylesheet" href="animate.css">
 		<link rel="stylesheet" type="text/css" href="js/timepicker/jquery.timepicker.min.css">
 		<script src='js/timepicker/jquery.timepicker.min.js'></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
 	</head>
 
-	<body>
+	<body class='noselect'>
 		<div class='sticky-top'>
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar" style="box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.1);cursor:auto;">
 				<?php require_once 'nav.html';?>
@@ -122,14 +121,14 @@
 				var mintime = String(query('globals')[0]).split(',')[0];
 				var maxtime = String(query('globals')[0]).split(',')[1];
 				if (mintime.split(':')[0] >= 13) {
-						mintime = mintime.split(':')[0] - 12 + ':' + mintime.split(':')[1] + 'pm';
-					} else {
-						mintime = mintime.split(':')[0] + ':' + mintime.split(':')[1] + 'am';
+					mintime = mintime.split(':')[0] - 12 + ':' + mintime.split(':')[1] + 'pm';
+				} else {
+					mintime = mintime.split(':')[0] + ':' + mintime.split(':')[1] + 'am';
 				}
 				if (maxtime.split(':')[0] >= 13) {
-						maxtime = maxtime.split(':')[0] - 12 + ':' + maxtime.split(':')[1] + 'pm';
+					maxtime = maxtime.split(':')[0] - 12 + ':' + maxtime.split(':')[1] + 'pm';
 				} else {
-						maxtime = maxtime.split(':')[0] + ':' + maxtime.split(':')[1] + 'am';
+					maxtime = maxtime.split(':')[0] + ':' + maxtime.split(':')[1] + 'am';
 				}
 				$('#offsitereturn').timepicker({
 					'step': 10,
@@ -143,9 +142,9 @@
 					'minTime': mintime,
 					'maxTime': maxtime
 				});
-				$("body").tooltip({
-					selector: '[data-toggle=tooltip]'
-				});
+				$(function () {
+					$('[data-toggle="tooltip"]').tooltip()
+				})
 				$('.links').html(
 					'<li class="nav-item"><a href="#" class="nav-link">Groups</a></li><li class="nav-item"><a href="#" class="nav-link">Status view</a></li><li class="nav-item"><a href="view_reports.php" class="nav-link">View reports</a></li>' +
 					$('.links').html()
@@ -231,7 +230,7 @@
 					today = mm + '/' + dd + '/' + yyyy;
 					if (moment(today + ' ' + current[i]['return_time']).isBefore(moment()) && moment(today + ' ' + current[i]['return_time']) !== moment() && current[i]['return_time'] !== '00:00:00') {
 						red = 'danger';
-					} else if(current[i]['status_id'] == 0 && moment().isAfter(moment(today + ' ' + String(query('globals')[0]).split(',')[0]))) {
+					} else if (current[i]['status_id'] == 0 && moment().isAfter(moment(today + ' ' + String(query('globals')[0]).split(',')[0]))) {
 						red = 'danger';
 					} else {
 						red = 'grey';
@@ -635,13 +634,13 @@
 					clearInterval(timer);
 					timer = setTimeout(cb, interval);
 				};
-				$(document).click(function() {
+				$(document).click(function () {
 					refresh();
 				});
-				$(document).keypress(function() {
+				$(document).keypress(function () {
 					refresh();
 				});
-				$(document).mousemove( function() {
+				$(document).mousemove(function () {
 					refresh();
 				});
 				refresh();

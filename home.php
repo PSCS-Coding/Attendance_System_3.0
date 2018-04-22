@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
 
-  <body>
+  <body class='noselect'>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar" style="box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.1);">
       <?php require_once('nav.html');?>
 

@@ -26,16 +26,22 @@
             $devQuery->execute();
               foreach ($devQuery->get_result() as $row)
               {
-                $dev = "~" . $row['dev'];
+                $dev = "~!@#$%^&" . $row['dev'];
               }
               $coinQuery = $db->prepare("SELECT coins FROM student_data WHERE imgurl = '$imgurl' AND active = 1");
               $coinQuery->execute();
                 foreach ($coinQuery->get_result() as $row)
                 {
-                  $coin = "~" . $row['coins'];
+                  $coin = "~!@#$%^&" . $row['coins'];
+                }
+                $gradQuery = $db->prepare("SELECT grad_year FROM student_data WHERE imgurl = '$imgurl' AND active = 1");
+              $gradQuery->execute();
+                foreach ($gradQuery->get_result() as $row)
+                {
+                  $gradyear = "~!@#$%^&" . $row['grad_year'];
                 }
         if(isset($fName)) {
-        echo $fName . "~" . $lName . "~" . $email . "~" . $imgurl . $dev . $coin;
+        echo $fName . "~!@#$%^&" . $lName . "~!@#$%^&" . $email . "~!@#$%^&" . $imgurl . $dev . $coin . $gradyear;
       } else {
         $fnameQuery = $db->prepare("SELECT first_name FROM admins WHERE imgurl = '$imgurl'");
         $fnameQuery->execute();
@@ -55,7 +61,7 @@
               {
                 $email = $row['email'];
               }
-        echo $fName . "~" . $lName . "~" . $email . "~" . $imgurl . "~admin";
+        echo $fName . "~!@#$%^&" . $lName . "~!@#$%^&" . $email . "~!@#$%^&" . $imgurl . "~!@#$%^&admin";
     }
   }
 } elseif(!empty($_COOKIE['login'])) {
