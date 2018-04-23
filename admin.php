@@ -175,13 +175,19 @@ require_once("connection.php");
 						if(!empty($db->query('SELECT group_name FROM groups WHERE group_name = "'.$_POST['group'].'" LIMIT 1')->fetch_assoc()['group_name'])){
 							foreach($values as &$group){
 								if($group['group_name'] == $_POST['group']){
+									$gp = explode(',',$group['students']);
 									foreach($_POST['stus'] as &$news){
-										$group['students'] = trim(str_replace(',,', ",", str_replace($news, '',$group['students'])), ',');
+										foreach($gp as $id => &$old){
+											if($old == $news){
+												$gp[$id] = '';
+											}
+										}
 									}
-									if(!empty($group['students'])){
+									$group['students'] = trim(str_replace(',,',',',implode(',', $gp)), ',');
+									if(!empty($group['students']) && !empty($_POST['stus'])){
 										$group['students'] = $group['students'].',';
 									}
-									$db->query('UPDATE groups SET students = "'.$group['students'].implode($_POST['stus'], ',').'" WHERE group_name = "'.$_POST['group'].'";');
+									$db->query('UPDATE groups SET students = "'.$group['students'].implode(',', $_POST['stus']).'" WHERE group_name = "'.$_POST['group'].'";');
 									break;
 								}
 							}
