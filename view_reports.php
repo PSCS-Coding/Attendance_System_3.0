@@ -49,17 +49,28 @@ function get_all_lates($student_id) {
 
     //$query2 = "SELECT";
     //$NumLateEvents = ;
+    actual_lates($student_id);
     return 0;
 
 }
 
 function actual_lates($student_id) {
     global $db;
-    /*
-    get list of all events where the student_id is the one in question (pulled by the function input)
-    $db->query('SELECT * from history where student_id =' $student_id);
 
-    separate list by date
+    //get list of all events where the student_id is the one in question (pulled by the function input)
+
+    $result = $db->query("SELECT * FROM history WHERE student_id =" . $student_id);
+    $count = $db->query("SELECT COUNT(*) FROM history WHERE student_id =" . $student_id);
+    $number_events = $count->fetch_array()[0];
+    print_r($result->fetch_array());
+
+    //$all_events = $result->fetch_array();
+
+    for ($i=0; $i < $number_events; $i++) {
+      echo '1';
+    }
+
+    /*separate list by date
     check time of the first event of the DAY
     IF time >=9:00 then #Lates +=1 and move to next day
     else {
