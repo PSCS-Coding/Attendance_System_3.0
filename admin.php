@@ -171,14 +171,18 @@ require_once("connection.php");
 							}
 						}
 					}elseif(!empty($_POST['stus'])){
-						$_POST['group'] = str_replace(' ', "_", str_replace(".", '_', $_POST['group']));
-						if(!empty($db->query('SELECT students FROM groups WHERE group_name = "'.$_POST['group'].'" LIMIT 1')->fetch_assoc()['students'])){
+						$_POST['group'] = str_replace('0','Ø', str_replace(' ', "_", str_replace(".", '_', $_POST['group'])));
+						if(!empty($db->query('SELECT group_name FROM groups WHERE group_name = "'.$_POST['group'].'" LIMIT 1')->fetch_assoc()['group_name'])){
 							foreach($values as &$group){
 								if($group['group_name'] == $_POST['group']){
 									foreach($_POST['stus'] as &$news){
 										$group['students'] = trim(str_replace(',,', ",", str_replace($news, '',$group['students'])), ',');
 									}
-									$db->query('UPDATE groups SET students = "'.$group['students'].','.implode($_POST['stus'], ',').'" WHERE group_name = "'.$_POST['group'].'";');
+									if(!empty($group['students'])){
+										$group['students'] = $group['students'].',';
+									}
+									$db->query('UPDATE groups SET students = "'.$group['students'].implode($_POST['stus'], ',').'" WHERE group_name = "'.$_POST['group'].'";');
+									break;
 								}
 							}
 						}else{
@@ -273,7 +277,7 @@ require_once("connection.php");
 						echo '<tr><td><input type="checkbox" name="stus[]" value="'.$stu['student_id'].'"></td><td>'.$stu['first_name'].' '.$stu['last_name'][0].'.</td></tr>';
 					}
 					$groups = $db->query('SELECT group_name FROM groups ORDER BY group_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
-					$grpDD = '<input name="group" type="text" list="group" placeholder="New Group" class="newval"><datalist id="group" name="group" value="nwgrp">';
+					$grpDD = '<input name="group" type="text" list="group" placeholder="Group Name" class="newval"><datalist id="group" name="group" value="nwgrp">';
 					foreach($groups as &$gn){
 						$grpDD = $grpDD.'<option value="'.$gn['group_name'].'">'.$gn['group_name'].'</option>';
 					}
