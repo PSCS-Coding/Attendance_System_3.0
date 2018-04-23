@@ -136,11 +136,18 @@ require_once("connection.php");
 							}else{
 								$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
 							}
+						}elseif((string)$_GET['page'] == "5"){
+							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE holiday_id = '.$values[$_POST['col']]['holiday_id'].';';
+						}elseif($index[$_POST['row']] == 'login_password'){
+							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.crypt($_POST['new'], 'P9').'" WHERE `login_year` = "'.$values[$_POST['col']]['login_year'].'";';
 						}else{
 							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]].';';
 						}
 						$db->query($q);
 					}elseif($_POST['add']){
+						if($index[$_POST['row']] == 'login_password'){
+							$_POST['login_password'] = crypt($_POST['login_password'], 'P9');
+						}
 						$id = "";
 						$v = "";
 						foreach($index as $i => &$es){
@@ -166,8 +173,12 @@ require_once("connection.php");
 					}
 					elseif($_POST['del']){
 						foreach($values as &$column){
-							if($_POST[$column[$index[0]]] == true){
-								$db->query('DELETE FROM '.$database.' WHERE '.$index[0].' = "'.$column[$index[0]].'"');
+							if($_POST[$column[$index[0]]]){
+								if((string)$_GET['page'] == "5"){
+									$db->query('DELETE FROM holidays WHERE holiday_id = "'.$column['holiday_id'].'"');
+								}else{
+									$db->query('DELETE FROM '.$database.' WHERE '.$index[0].' = "'.$column[$index[0]].'"');
+								}
 							}
 						}
 					}elseif(!empty($_POST['stus'])){
@@ -180,6 +191,7 @@ require_once("connection.php");
 										foreach($gp as $id => &$old){
 											if($old == $news){
 												$gp[$id] = '';
+												break;
 											}
 										}
 									}
@@ -267,14 +279,14 @@ require_once("connection.php");
 					}
 				}
 				if($_GET['page'] != '3'){
-					echo '<form method="POST">';
+					echo '<form method="POST"><tr>';
 					foreach($index as $row => &$oi){
 						if($row > 0){
 							echo'</td>';
 						}
 						echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="student" value="'.$_POST['student'].'"><input type="hidden" name="col" value="'.$col.'">';
 					}
-					echo '<input type="submit" name="add" class="submit" value="+"></td></form></table>';
+					echo '<input type="submit" name="add" class="submit" value="+"></td></tr></form></table>';
 
 				}else{
 					$student = $db->query('SELECT student_id,first_name,last_name FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
