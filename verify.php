@@ -30,6 +30,8 @@
         if($_COOKIE['login'] != $loginResult[0]) {
           header('Location: login/?to=' . $_SERVER['REQUEST_URI']);
         }
+      } else {
+        //TODO somehow tell the page that this is an admin user, for the admin pages.
       }
     }
   } else {

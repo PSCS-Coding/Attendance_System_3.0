@@ -5,6 +5,14 @@ body {
     outline: none !important;
 }
 
+a {
+    outline: none;
+}
+
+.pointer:hover {
+    cursor: pointer;
+}
+
 .card {
     margin-top: 2em !important;
     box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.1) !important;
@@ -16,6 +24,10 @@ body {
     color: #9b9fa2 !important;
 }
 
+.hover-normal:hover {
+    color: rgb(0, 109, 255) !important;
+}
+
 .bigname {
     margin-top: 1rem;
 }
@@ -25,9 +37,51 @@ body {
 }
 
 .bigpic {
-    height: 11rem;
-    width: 11rem;
+    height: 15.3rem;
+    width: 15.3rem;
     border-radius: 4px;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:focus {
+    color: #0056b3;
+}
+
+.popover-header {
+    color: white !important;
+    background-color: rgb(51, 58, 65) !important;
+    padding-bottom: 0.5rem !important;
+    border-bottom: 0.5rem solid rgb(49, 56, 63);
+}
+
+.popover-body {
+    color: white !important;
+    padding-top: 0px !important;
+    border-top: 0.5rem solid rgb(49, 56, 63);
+    background-color: rgb(49, 56, 63) !important;
+    border-bottom-left-radius: calc(0.3rem - 1px) !important;
+    border-bottom-right-radius: calc(0.3rem - 1px) !important;
+}
+
+.popover {
+    color: white !important;
+    border: none !important;
+}
+
+.popover .arrow,
+.popover .arrow:after {
+    border-right-color: rgb(49, 56, 63);
+}
+
+.bs-popover-right .arrow:before {
+    content: none !important;
+}
+
+hr {
+    border-top: 1px solid #9b9fa2;
 }
 
 .admin-prof-info {
