@@ -62,12 +62,21 @@ function actual_lates($student_id) {
     $result = $db->query("SELECT * FROM history WHERE student_id =" . $student_id);
     $count = $db->query("SELECT COUNT(*) FROM history WHERE student_id =" . $student_id);
     $number_events = $count->fetch_array()[0];
-    print_r($result->fetch_array());
 
-    //$all_events = $result->fetch_array();
+    $all_events = $result->fetch_all();
 
+    //print_r($all_events);
+    echo "count " . $number_events;
+    //print_r($all_events);
+
+    //print out the timestamps of each event
     for ($i=0; $i < $number_events; $i++) {
-      echo '1';
+      echo "<br/>";
+      echo "Event " . ($i+1) . ' Timestamp: ';
+      print_r($all_events[$i][2]); //. $number_events[$i][$theNumberTwo];
+      echo " Type: ";
+      print_r($all_events[$i][3]);
+
     }
 
     /*separate list by date
