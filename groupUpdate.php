@@ -1,12 +1,16 @@
 <?php
   require_once("connection.php");
-  $_POST["group"];
-  $_POST["name"];
+  echo $_POST['name'];
+  //echo $_POST['group'];
   $arr = array();
+  $z = -1;
   foreach ($_POST["group"] as $x => $i) {
-    $leng = $_POST["group"][$i].length - 2;
-    $query = $db->query("SELECT student_id FROM student_data WHERE first_name = ".$_POST['group'][$i][$leng]." AND last_name = ".substr($_POST['group'][$i], $leng));
-    $arr.push($query);
+    $z++;
+    $leng = strlen($_POST["group"][$z]) - 2;
+    $query = $db->query("SELECT student_id FROM student_data WHERE first_name = ".$_POST['group'][$z][$leng]." AND last_name = ".substr($_POST['group'][$z], $leng));
+    array_push($arr, $query);
+    //print_r($arr);
+    //echo $query;
   }
-$insertQuery = $db->query("INSERT INTO groups (group_name, students) VALUES (".$_POST['name'].", ".implode(',', $arr).")");
+$insertQuery = $db->query("INSERT INTO groups (group_name, students) VALUES (".$_POST['name'].", '42')");
 ?>

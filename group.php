@@ -36,9 +36,6 @@
     function drop(ev) {
       ev.preventDefault();
       var data = ev.dataTransfer.getData("text");
-      for (var i = 0; i < group.length; i++) {
-        var x = group[i];
-      }
       if (true != checkIfThere(group, document.getElementById(data).textContent)) {
         if (confirm("Add " + document.getElementById(data).textContent + " to this group")) {
           group.push(document.getElementById(data).textContent);
@@ -54,10 +51,16 @@
          if (group_name.length != 0) {
            $.ajax({
               type:"POST",
-              data:{group,name:group_name},
+              data:{group:group,name:group_name},
               dataType:"text",
               url:"groupUpdate.php",
-              success: alert("Group successfuly added")
+              success: function(result){
+                alert(result);
+              }
+              /*add this code when working
+              getElementById("addback").appendChild(getElementsById(group));
+              group = [];
+              */
            });
          }else {
            alert("Name the group first");
@@ -92,15 +95,17 @@
     <table>
       <tbody>
         <th id="t1">students</th>
-        <?php
-          for ($i=0; $i < $foo; $i++) {
-            $x = $i;
-            if($i == 1) {
-              $x++;
+        <div id=addback>
+          <?php
+            for ($i=0; $i < $foo; $i++) {
+              $x = $i;
+              if($i == 1) {
+                $x++;
+              }
+                echo "<tr id='".$i."' draggable='true' ondragstart='drag(event)'><td id='".$i."'>".$values[$i]['first_name']." ".$values[$i]['last_name'][0]."</td></tr>";
             }
-              echo "<tr id='".$i."' draggable='true' ondragstart='drag(event)'><td id='".$i."'>".$values[$i]['first_name']." ".$values[$i]['last_name'][0]."</td></tr>";
-          }
-         ?>
+          ?>
+       </div>
      </tbody>
     </table>
   </div>
