@@ -24,7 +24,7 @@ form{
 table{
 	background-color: white;
 	margin: 3px auto;
-	width:75%;
+	width:87%;
 	text-align: left;
 	border-radius: 5px;
 }
@@ -121,7 +121,7 @@ td.admin{
 	border-radius: 3px;
 	border:1px solid grey;
 	color:black;
-	width:35%;
+	width:50%;
 	text-align: center;
 }
 ::placeholder{
@@ -148,14 +148,14 @@ td.admin{
 	color: black;
 }
 .del{
-	margin:-3px 0 0 7%;
-	width:5px;
+	padding:3px 1px;
+	border:1px solid white;
+	width:96%;
 	position: relative;
 	display:inline-block;
 	float:left;
 }
 .table{
-	margin-left:15%;
 }
 select {
 	margin: 0 4px;

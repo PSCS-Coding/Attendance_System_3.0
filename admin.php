@@ -39,6 +39,13 @@ require_once("connection.php");
 				$_POST['col'] = $_POST['go'][2];
 				$_POST['go'] = implode(',',$_POST['go']);
 			}
+			if(!empty($_POST['del'])){
+				$_POST['del'] = explode(',',$_POST['del']);
+				$_POST['student'] = $_POST['del'][0];
+				$_POST['row'] = $_POST['del'][1];
+				$_POST['col'] = $_POST['del'][2];
+				$_POST['del'] = implode(',',$_POST['del']);
+			}
     		$draggeble = false;
 			$goodpage = false;
 			//Allotted Hours
@@ -116,7 +123,7 @@ require_once("connection.php");
 			//Student Edit View
 			elseif((string)$_GET['page'] == "9"){
 				$goodpage = True;
-				$index = array('student_id','first_name','last_name','grad_year','veteran_year','current_offsite_hours','current_is_hours','priv','user_id','active');
+				$index = array('student_id','first_name','last_name','grad_year','veteran_year','current_offsite_hours','current_is_hours','priv','active');
 				$database = 'student_data';
 				$query = 'SELECT * FROM '.$database.';';
 			}
@@ -150,11 +157,9 @@ require_once("connection.php");
 						}else{
 							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]].';';
 						}
-						print_r($_POST[$_POST['go']]);
-						echo $q;
 						$db->query($q);
 					}elseif($_POST['add']){
-						if($index[$_POST['row']] == 'login_password'){
+						if($index[explode(',',$_POST['add'])[1]] == 'login_password'){
 							$_POST['login_password'] = crypt($_POST['login_password'], 'P9');
 						}
 						$id = "";
@@ -181,10 +186,17 @@ require_once("connection.php");
 						}
 					}
 					elseif($_POST['del']){
+						print_r($_POST[150]);
 						foreach($values as &$column){
-							if($_POST[$column[$index[0]]]){
+							if($_POST[str_replace(' ','_',$column[$index[0]])]){
 								if((string)$_GET['page'] == "5"){
 									$db->query('DELETE FROM holidays WHERE holiday_id = "'.$column['holiday_id'].'"');
+								}elseif((string)$_GET['page'] == "4"){
+									$db->query('DELETE FROM history WHERE event_id = "'.$column['event_id'].'"');
+								}elseif((string)$_GET['page'] == "1"){
+									$db->query('DELETE FROM current WHERE student_id = "'.$column['student_id'].'"');
+								}elseif((string)$_GET['page'] == "6"){
+									$db->query('DELETE FROM offsite_locations WHERE location_id = "'.$column['location_id'].'"');
 								}else{
 									$db->query('DELETE FROM '.$database.' WHERE '.$index[0].' = "'.$column[$index[0]].'"');
 								}
@@ -219,14 +231,23 @@ require_once("connection.php");
 					$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 				}
 				if($_GET['page'] != '3'){
-					echo '<div class="del"><form method="POST"><table><tr><th class="admin">Del.</th></tr>';
-					foreach($values as &$o){
-						echo '<tr><td class="admin"><input name="'.$o[$index[0]].'" type="checkbox"></td></tr>';
+					echo '<script type="text/javascript">
+						document.onkeypress = keyPress;
+						function keyPress(e){
+						  var x = e || window.event;
+						  var key = (x.keyCode || x.which);
+						  if(key == 13 || key == 3){
+						   //  myFunc1();
+						   document.activeElement.nextSibling.click();
+						  }
+						}</script><table class="table"><tr><th class="del">Del.</th>';
+					if($_GET['page'] == '9'){
+						array_shift($index);
 					}
-					echo '<tr><td class="admin"><input value="X" name="del" type="submit"></td></tr></table></form></div><table class="table"><tr>';
 					foreach($index as &$header){
 						echo '<th class="admin">'.str_replace('_', ' ',$header).'</th>';
-					}echo'<form method="POST">';
+					}
+					echo'<form method="POST">';
 				}else{
 					echo '</tr><div	class="groups">';
 				}
@@ -258,9 +279,9 @@ require_once("connection.php");
 						}
 					}
 					else{
-						echo '<tr>';
+						echo '<tr><td class="del admin"><input name="'.$value[$index[0]].'" type="checkbox"></td>';
 						foreach($index as $row => &$oi){
-							if($oi == 'first_name'){
+							if($_GET['page'] != 9 && $oi == 'first_name'){
 								$statorstu = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
 								echo '<td class="admin"><select name="'.$_POST['student'].','.$row.','.$col.'" class="newval"> <option value="'.$value[$oi].'">'.$value[$oi].'</option>';
 								foreach($statorstu as $v){
@@ -286,14 +307,14 @@ require_once("connection.php");
 					}
 				}
 				if($_GET['page'] != '3'){
-					echo '<tr>';
+					echo '<tr><td class="del admin"><input value="X" name="del" type="submit"></td>';
 					foreach($index as $row => &$oi){
 						if($row > 0){
 							echo'</td>';
 						}
-						echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="student" value="'.$_POST['student'].'"><input type="hidden" name="col" value="'.$col.'">';
+						echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" placeholder="'.$value[$oi].'">';
 					}
-					echo '<input type="submit" name="add" class="submit" value="+"></td></tr></form></table>';
+					echo '<button name="add" class="submit" type="submit" value="'.$_POST['student'].','.$row.','.$col.'">+</button></td></tr></form></table>';
 
 				}else{
 					$student = $db->query('SELECT student_id,first_name,last_name FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
