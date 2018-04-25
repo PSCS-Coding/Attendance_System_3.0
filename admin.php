@@ -34,14 +34,18 @@ require_once("connection.php");
 		<?php
 			if(!empty($_POST['go'])){
 				$_POST['go'] = explode(',',$_POST['go']);
-				$_POST['student'] = $_POST['go'][0];
+				if(empty($_POST['student'])){
+					$_POST['student'] = $_POST['go'][0];
+				}
 				$_POST['row'] = $_POST['go'][1];
 				$_POST['col'] = $_POST['go'][2];
 				$_POST['go'] = implode(',',$_POST['go']);
 			}
 			if(!empty($_POST['del'])){
 				$_POST['del'] = explode(',',$_POST['del']);
-				$_POST['student'] = $_POST['del'][0];
+				if(empty($_POST['student'])){
+					$_POST['student'] = $_POST['del'][0];
+				}
 				$_POST['row'] = $_POST['del'][1];
 				$_POST['col'] = $_POST['del'][2];
 				$_POST['del'] = implode(',',$_POST['del']);
@@ -245,7 +249,7 @@ require_once("connection.php");
 						array_shift($index);
 					}
 					foreach($index as &$header){
-						echo '<th class="admin">'.str_replace('_', ' ',$header).'</th>';
+						echo '<th class="admin">'.ucwords(str_replace('_', ' ',$header)).'</th>';
 					}
 					echo'<form method="POST">';
 				}else{
@@ -318,7 +322,7 @@ require_once("connection.php");
 
 				}else{
 					$student = $db->query('SELECT student_id,first_name,last_name FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
-					echo '</div><form method="POST"><table class="block"><tr><th>add</th><th>student</th></tr>';
+					echo '</div><form method="POST"><table class="block"><tr><th>Add</th><th>Student</th></tr>';
 					foreach($student as &$stu){
 						echo '<tr><td><input type="checkbox" name="stus[]" value="'.$stu['student_id'].'"></td><td>'.$stu['first_name'].' '.$stu['last_name'][0].'.</td></tr>';
 					}
