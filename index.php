@@ -4,6 +4,7 @@ require_once("head.php");
 start_the_day();
 ?>
 <a href="http://localhost/attendance_system_3.0/statusview.php">Status View</a>
+<a href="http://localhost/attendance_system_3.0/achievements.php">Achievements</a>
 	<div class = "sidebar">
 		admin
 		<a class= "sidetext" href="admin.php?page=0">Allotted Hours</a>
