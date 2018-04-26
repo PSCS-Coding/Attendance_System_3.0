@@ -34,21 +34,22 @@ require_once("connection.php");
 		<?php
 			if(!empty($_POST['go'])){
 				$_POST['go'] = explode(',',$_POST['go']);
-				if(empty($_POST['student'])){
-					$_POST['student'] = $_POST['go'][0];
+				if(empty($_POST['student']) && !empty($_POST['go'][0])){
+					$_POST['student'] = (int)$_POST['go'][0];
 				}
 				$_POST['row'] = $_POST['go'][1];
 				$_POST['col'] = $_POST['go'][2];
 				$_POST['go'] = implode(',',$_POST['go']);
-			}
-			if(!empty($_POST['del'])){
+			}elseif(!empty($_POST['del'])){
 				$_POST['del'] = explode(',',$_POST['del']);
-				if(empty($_POST['student'])){
-					$_POST['student'] = $_POST['del'][0];
+				if(empty($_POST['student']) && !empty($_POST['del'][0])){
+					$_POST['student'] = (int)$_POST['del'][0];
 				}
 				$_POST['row'] = $_POST['del'][1];
 				$_POST['col'] = $_POST['del'][2];
 				$_POST['del'] = implode(',',$_POST['del']);
+			}if(!empty($_POST['student'])){
+				$_POST['student'] = str_replace('O','0',$_POST['student']);
 			}
     		$draggeble = false;
 			$goodpage = false;
@@ -88,7 +89,7 @@ require_once("connection.php");
 				$students = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
 				echo '<form class="reset" method="POST"><select name="student" class="newval"> <option value="">All</option>';
 				foreach($students as &$stdnt){
-					echo '<option value="'.$stdnt['student_id'].'">'.$stdnt['first_name'].'</option>';
+					echo '<option value="'.str_replace('0','O',$stdnt['student_id']).'">'.$stdnt['first_name'].'</option>';
 				}
 				echo'<input type="submit" name="go" class="submit" value="￭"></select></form>';
 				$query = 'SELECT * FROM '.$database.' INNER JOIN student_data ON history.student_id = student_data.student_id INNER JOIN status_data ON history.status_id = status_data.status_id ';
@@ -154,6 +155,8 @@ require_once("connection.php");
 							}else{
 								$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
 							}
+						}elseif((string)$_GET['page'] == "8"){
+							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'"';
 						}elseif((string)$_GET['page'] == "5"){
 							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE holiday_id = '.$values[$_POST['col']]['holiday_id'].';';
 						}elseif($index[$_POST['row']] == 'login_password'){
@@ -244,7 +247,10 @@ require_once("connection.php");
 						   //  myFunc1();
 						   document.activeElement.nextSibling.click();
 						  }
-						}</script><table class="table"><tr><th class="del">Del.</th>';
+					  	}</script><table class="table"><tr>';
+					if($_GET['page'] != '8'){
+						echo'<th class="del">Del.</th>';
+					}
 					if($_GET['page'] == '9'){
 						array_shift($index);
 					}
@@ -283,8 +289,10 @@ require_once("connection.php");
 						}
 					}
 					else{
-						echo '<tr><td class="del admin"><input name="'.$value[$index[0]].'" type="checkbox"></td>';
-						foreach($index as $row => &$oi){
+						echo '<tr>';
+						if($_GET['page'] != '8'){
+							echo'<td class="del admin"><input name="'.$value[$index[0]].'" type="checkbox"></td>';
+						}foreach($index as $row => &$oi){
 							if($_GET['page'] != 9 && $oi == 'first_name'){
 								$statorstu = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
 								echo '<td class="admin"><select name="'.$_POST['student'].','.$row.','.$col.'" class="newval"> <option value="'.$value[$oi].'">'.$value[$oi].'</option>';
@@ -311,15 +319,16 @@ require_once("connection.php");
 					}
 				}
 				if($_GET['page'] != '3'){
-					echo '<tr><td class="del admin"><input value="X" name="del" type="submit"></td>';
-					foreach($index as $row => &$oi){
-						if($row > 0){
-							echo'</td>';
+					if($_GET['page'] != '8'){
+						echo '<tr><td class="del admin"><input value="X" name="del" type="submit"></td>';
+						foreach($index as $row => &$oi){
+							if($row > 0){
+								echo'</td>';
+							}
+							echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" placeholder="'.$value[$oi].'">';
 						}
-						echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" placeholder="'.$value[$oi].'">';
+						echo '<button name="add" class="submit" type="submit" value="'.$_POST['student'].','.$row.','.$col.'">+</button></td></tr></form></table>';
 					}
-					echo '<button name="add" class="submit" type="submit" value="'.$_POST['student'].','.$row.','.$col.'">+</button></td></tr></form></table>';
-
 				}else{
 					$student = $db->query('SELECT student_id,first_name,last_name FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
 					echo '</div><form method="POST"><table class="block"><tr><th>Add</th><th>Student</th></tr>';
