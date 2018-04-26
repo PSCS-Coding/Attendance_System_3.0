@@ -67,6 +67,32 @@ function total_offsite_used($student){
 		return $sum;
 }
 
+function calculateDaysRemaining() { // returns integer number of days left in school year, not counting today
+	global $db;
+
+	$holidays = array();
+	$query = 'SELECT holiday_date FROM holidays';
+	$holidays_query = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+	foreach ($holidays_query[0] as $holiday) {
+		array_push($holidays, $holiday);
+	}
+
+	$query = 'SELECT start_date, end_date FROM globals';
+	$globals_query = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+	$start_date = new DateTime($globals_query[0]['start_date']);
+	$end_date = new DateTime($globals_query[0]['end_date']);
+	$next_date = new DateTime('tomorrow');
+	$all_dates = array();
+
+	while ($next_date < $end_date) {
+		if ($next_date->format("w") != 0 && $next_date->format("w") != 6) {
+				array_push($all_dates, $next_date->format("Y-m-d"));
+		}
+		date_add($next_date, date_interval_create_from_date_string('1 day'));
+	}
+	return count(array_diff($all_dates, $holidays));
+}
+
 function enquote($text) {
 	return '"'.$text.'"';
 }
