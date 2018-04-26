@@ -76,8 +76,25 @@ function actual_lates($student_id) {
       print_r($all_events[$i][2]); //. $number_events[$i][$theNumberTwo];
       echo " Type: ";
       print_r($all_events[$i][3]);
-
     }
+    $studentlates = array();
+    $totlates = 0;
+#sloppily count up all the late events and put into their own array that can reference the 'all events' array. The reason I call this sloppy is that it'd likely be more efficient if merged with some of the processes that come afterwards. But what the heck, it's a step forward.
+    for ($i=0; $i < $number_events; $i++) {
+      if($all_events[$i][3] == 5){
+        array_push($all_events[$i]);
+        array_unshift($all_events[$i], $i);
+        $totlates++;
+      }
+    }
+    for ($i=0; $i < $totlates; $i++) {
+      echo "<br/>";
+      echo "LATE " . ($i+1) . ' Timestamp: ';
+      print_r($all_events[$i][3]); //. $number_events[$i][$theNumberTwo];
+      echo " Type: ";
+      print_r($all_events[$i][4]);
+    }
+
 
     /*separate list by date
     check time of the first event of the DAY
