@@ -19,8 +19,38 @@ require_once("connection.php");
       echo "<br>";
     }
     if ($value['current_offsite_hours'] == 1000) {
-      if ($month -> format('n') >= 01){
+      if ($month -> format('n') == 01){
         echo "Offsite Keeper";
+        echo "<br>";
+      }
+    }
+    if ($value['current_offsite_hours'] == 1000) {
+      if ($month -> format('n') == 02){
+        echo "Expierenced Offsite Keeper";
+        echo "<br>";
+      }
+    }
+    if ($value['current_offsite_hours'] == 1000) {
+      if ($month -> format('n') == 03){
+        echo "Professional Offsite Keeper";
+        echo "<br>";
+      }
+    }
+    if ($value['current_offsite_hours'] == 1000) {
+      if ($month -> format('n') == 04){
+        echo "Awed Offsite Keeper";
+        echo "<br>";
+      }
+    }
+    if ($value['current_offsite_hours'] == 1000) {
+      if ($month -> format('n') == 05){
+        echo "Viral Offsite Keeper";
+        echo "<br>";
+      }
+    }
+    if ($value['current_offsite_hours'] == 1000) {
+      if ($month -> format('n') == 06){
+        echo "Legendary Offsite Keeper";
       }
     }
   }
