@@ -9,13 +9,22 @@ a {
     outline: none;
 }
 
+.tabbed {
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+.pointer,
 .pointer:hover {
     cursor: pointer;
 }
 
+.options {
+    font-size: 3rem !important;
+}
+
 .card {
     margin-top: 2em !important;
-    box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.1) !important;
     -webkit-transition: box-shadow 0.2s;
     transition: box-shadow 0.2s;
 }
@@ -84,12 +93,17 @@ hr {
     border-top: 1px solid #9b9fa2;
 }
 
+.underline {
+    text-decoration: underline;
+}
+
 .admin-prof-info {
     margin: 0 auto;
     width: 13rem;
 }
 
-.prof-content {
+.prof-content,
+.settings-content {
     margin-top: 2rem;
     margin-left: 5rem;
     margin-bottom: 3.5rem;
@@ -317,11 +331,24 @@ td.admin {
     height: 34px;
 }
 
-.switch input {
+.switch input,
+.small-switch input {
     display: none;
 }
 
-.slider {
+.small-switch {
+    position: relative;
+    display: inline-block;
+    width: calc(60px * 0.75);
+    height: calc(34px * 0.75);
+}
+
+.students-table {
+    margin-top: 2em;
+}
+
+.slider,
+.small-slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -345,7 +372,23 @@ td.admin {
     transition: 0.3s;
 }
 
+.small-slider:before {
+    position: absolute;
+    content: "";
+    height: calc(26px * 0.75);
+    width: calc(26px * 0.75);
+    left: calc(4px * 0.75);
+    bottom: calc(4px * 0.75);
+    background-color: white;
+    -webkit-transition: calc(0.3s * 0.75);
+    transition: calc(0.3s * 0.75);
+}
+
 input:checked + .slider {
+    background-color: rgb(67, 189, 121);
+}
+
+input:checked + .small-slider {
     background-color: rgb(67, 189, 121);
 }
 
@@ -355,14 +398,25 @@ input:checked + .slider:before {
     transform: translateX(26px);
 }
 
+input:checked + .small-slider:before {
+    -webkit-transform: translateX(calc(26px * 0.75));
+    -ms-transform: translateX(calc(26px * 0.75));
+    transform: translateX(calc(26px * 0.75));
+}
+
 /* Rounded sliders */
 
 .slider.round {
     border-radius: 34px;
 }
 
-.slider.round:before {
+.slider.round:before,
+.small-slider.round:before {
     border-radius: 50%;
+}
+
+.small-slider.round {
+    border-radius: calc(34px * 0.75);
 }
 
 .v-middle {

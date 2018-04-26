@@ -14,10 +14,11 @@
   </head>
 
   <body class='noselect'>
+  <div class='sticky-top'>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar" style="box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.1);">
       <?php require_once('nav.html');?>
-
     </nav>
+</div>
     <script src='/js/nav.js'></script>
     <script type='text/javascript'>
       $(document).ready(function () {

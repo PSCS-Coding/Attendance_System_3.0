@@ -32,7 +32,7 @@
                     <a class='muted hover-normal email'></a>
                 </p>
             </div>
-            <div class='col-sm-9' style='width: 500px'>
+            <div class='col-sm-9'>
                 <div class='container prof-options'>
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -42,8 +42,8 @@
                                 aria-selected="false">Achievements</a>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane show active" id="nav-coin" role="tabpanel" aria-labelledby="nav-coin-tab"></div>
-                        <div class="tab-pane" id="nav-achievements" role="tabpanel" aria-labelledby="nav-achievements-tab"></div>
+                        <div class="tab-pane fade show active" id="nav-coin" role="tabpanel" aria-labelledby="nav-coin-tab">To be built: Integrity coin purchasing system</div>
+                        <div class="tab-pane fade" id="nav-achievements" role="tabpanel" aria-labelledby="nav-achievements-tab">To be built: Achievments chart</div>
                     </div>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                         $('.bigname').text(userdata[0] + ' ' + userdata[1]);
                         $('.email').text(userdata[2]);
                         $('.email').attr('href', 'mailto:' + userdata[2]);
-                        $('.coins').html('Your current <a tabindex="0" class="pointer" data-toggle="popover" data-trigger="focus" data-placement="right" title="Integrity coin" data-content="Integrity coins are a currency you can get by having a good offsite record. They are used to customize your profile and the display of the attendance system. They may be disabled in settings.">integrity coin</a> balance is \u00A2' + userdata[5] + '.');
+                        $('.coins').html('Your current <a tabindex="0" data-trigger="focus" class="pointer" data-toggle="popover" data-placement="right" data-content="Integrity coins are a currency you can get by having a good offsite record. They are used to customize your profile and the display of the attendance system. They may be disabled in settings.">integrity coin</a> balance is \u00A2' + userdata[5] + '.');
                         $(".editable").click(function () {
                             edit(this);
                         });
