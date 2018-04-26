@@ -14,6 +14,10 @@ require_once("connection.php");
   foreach ($current as $key => $value) {
     echo "<h2>".$value['first_name'].":"."</h2>";
     echo "<br>";
+    if ($value['first_name'] == "Samuel" or $value['first_name'] == "Jack" or $value['first_name'] == "Eli" or $value['first_name'] == "Anthony" or $value['first_name'] == "Angus"){
+      echo "Attendence System Builder";
+      echo "<br>";
+    }
     if ($value['current_offsite_hours'] == 1000) {
       if ($month -> format('n') >= 01){
         echo "Offsite Keeper";
