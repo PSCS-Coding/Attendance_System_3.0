@@ -14,12 +14,13 @@ function query(fn, id) {
         async: false,
         dataType: "text",
         url: url,
-        success: function(result) {
+        success: function (result) {
             data = result;
         }
     });
     return JSON.parse(data);
 }
+
 function facilitatorNameToId(name) {
     var url = "../request.php?f=facilitatorNameToId";
     url += "&facilitator=" + name;
@@ -32,12 +33,13 @@ function facilitatorNameToId(name) {
         async: false,
         dataType: "text",
         url: url,
-        success: function(result) {
+        success: function (result) {
             data = result;
         }
     });
     return JSON.parse(data);
 }
+
 function locationNameToId(name) {
     var url = "../request.php?f=locationNameToId";
     url += "&location=" + name;
@@ -50,12 +52,13 @@ function locationNameToId(name) {
         async: false,
         dataType: "text",
         url: url,
-        success: function(result) {
+        success: function (result) {
             data = result;
         }
     });
     return JSON.parse(data);
 }
+
 function studentNameToId(fname, lname) {
     var url = "../request.php?f=studentNameToId";
     url += "&fname=" + fname + "&lname=" + lname;
@@ -68,12 +71,13 @@ function studentNameToId(fname, lname) {
         async: false,
         dataType: "text",
         url: url,
-        success: function(result) {
+        success: function (result) {
             data = result;
         }
     });
     return JSON.parse(data);
 }
+
 function changeStatus(student_ids, status_id, info, return_time) {
     var url = "../request.php?f=changeStatus";
     url +=
@@ -94,32 +98,46 @@ function changeStatus(student_ids, status_id, info, return_time) {
         async: false,
         dataType: "text",
         url: url,
-        success: function(result) {
+        success: function (result) {
             data = result;
         }
     });
     return 1;
 }
 
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-    var expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(";");
+function isCheckedById(id) {
+    alert(id);
+    var checked = $("input[@id=" + id + "]:checked").length;
+    alert(checked);
+
+    if (checked == 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
     for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0) == " ") {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
     }
-    return "";
+    return null;
+}
+
+function eraseCookie(name) {
+    document.cookie = name + '=; Max-Age=-99999999;';
 }

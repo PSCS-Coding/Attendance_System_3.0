@@ -91,9 +91,9 @@ require_once 'header.php';
         </div>
         <h6 class='text-white'>
             Table view
-            <label class="switch align-middle">
+            <label class="switch-no-animation align-middle">
                 <input type="checkbox" id='view-checkbox'>
-                <span class="slider round"></span>
+                <span class="slider-no-animation round"></span>
             </label>
             Grid view
         </h6>
@@ -169,6 +169,10 @@ require_once 'header.php';
                     );
             }
             $(document).ready(function () {
+                if (getCookie('view') == 'grid') {
+                    $('#view-checkbox').prop('checked', 'true');
+                    $('#view-checkbox').parent().addClass('switch').removeClass('switch-no-animation').find('.slider-no-animation').addClass('slider').removeClass('.slider-no-animation');
+                }
                 var mintime = String(query('globals')[0]).split(',')[0];
                 var maxtime = String(query('globals')[0]).split(',')[1];
                 if (mintime.split(':')[0] >= 13) {
@@ -201,6 +205,7 @@ require_once 'header.php';
                     $('.links').html()
                 );
                 createNav();
+                wbd();
             });
 
             function build() {
@@ -518,7 +523,6 @@ require_once 'header.php';
                     });
                 });
             }
-            wbd();
 
             $(".offsitebutton").click(function () {
                 var names = "";
@@ -928,6 +932,11 @@ require_once 'header.php';
                 wbd();
                 $('.ghost-input').val(giv).focusWithoutScrolling();
                 filter($('.ghost-input'));
+                if ($('#view-checkbox').prop('checked') == false) {
+                    setCookie('view', 'table', 1000);
+                } else if ($('#view-checkbox').prop('checked') == true) {
+                    setCookie('view', 'grid', 1000);
+                }
             })
         </script>
     </body>
