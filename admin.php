@@ -55,13 +55,15 @@ require_once("connection.php");
 			$goodpage = false;
 			//Allotted Hours
 			if((string)$_GET['page'] == "0"){
+				$ident = array('veteran_year');
 				$goodpage = True;
 				$index = array('veteran_year','default_offsite','default_is');
 				$database = 'allotted_hours';
-				$query = 'SELECT * FROM '.$database.';';
+				$query = 'SELECT * FROM '.$database.' ORDER BY '.$index[0].' ASC;';
 			}
 			//Current Events
 			elseif((string)$_GET['page'] == "1"){
+				$ident = array('first_name','student_id');
 				$goodpage = True;
 				$index = array('first_name','status_name','info','return_time');
 				$database = 'current';
@@ -69,6 +71,7 @@ require_once("connection.php");
 			}
 			//Facilitator Edit View
 			elseif((string)$_GET['page'] == "2"){
+				$ident = array('facilitator_name');
 				$goodpage = True;
 				$index = array('facilitator_name');
 				$database = 'facilitators';
@@ -77,12 +80,13 @@ require_once("connection.php");
 			//Group Edit View
 			elseif((string)$_GET['page'] == "3"){
 				$goodpage = True;
-		      $index = array('group_name', 'students');
-		      $database = 'groups';
-			  $query = 'SELECT * FROM '.$database.';';
+		      	$index = array('group_name', 'students');
+		      	$database = 'groups';
+			  	$query = 'SELECT * FROM '.$database.';';
 			}
 			//History
 			elseif((string)$_GET['page'] == "4"){
+				$ident = array('student_id');
 				$goodpage = True;
 				$index = array('first_name','timestamp','status_name','info','return_time');
 				$database = 'history';
@@ -99,6 +103,7 @@ require_once("connection.php");
 			}
 			//Holidays
 			elseif((string)$_GET['page'] == "5"){
+				$ident = array('holiday_name');
 				$goodpage = True;
 				$index = array('holiday_name','holiday_date');
 				$database = 'holidays';
@@ -106,6 +111,7 @@ require_once("connection.php");
 			}
 			//Offsite Locations
 			elseif((string)$_GET['page'] == "6"){
+				$ident = array('location_name');
 				$goodpage = True;
 				$index = array('location_name');
 				$database = 'offsite_locations';
@@ -113,6 +119,7 @@ require_once("connection.php");
 			}
 			//Passwords
 			elseif((string)$_GET['page'] == "7"){
+				$ident = array('login_year');
 				$goodpage = True;
 				$index = array('login_year','login_password');
 				$database = 'login';
@@ -120,6 +127,7 @@ require_once("connection.php");
 			}
 			//School Hours
 			elseif((string)$_GET['page'] == "8"){
+				$ident = array('start_time');
 				$goodpage = True;
 				$index = array('start_time','end_time');
 				$database = 'globals';
@@ -127,6 +135,7 @@ require_once("connection.php");
 			}
 			//Student Edit View
 			elseif((string)$_GET['page'] == "9"){
+				$ident = array('first_name');
 				$goodpage = True;
 				$index = array('student_id','first_name','last_name','grad_year','veteran_year','current_offsite_hours','current_is_hours','priv','active');
 				$database = 'student_data';
@@ -159,13 +168,15 @@ require_once("connection.php");
 							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'"';
 						}elseif((string)$_GET['page'] == "5"){
 							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE holiday_id = '.$values[$_POST['col']]['holiday_id'].';';
+						}elseif((string)$_GET['page'] == "6"){
+							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE location_id = '.$values[$_POST['col']]['location_id'].';';
 						}elseif($index[$_POST['row']] == 'login_password'){
 							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.crypt($_POST[$_POST['go']], 'P9').'" WHERE `login_year` = "'.$values[$_POST['col']]['login_year'].'";';
 						}else{
 							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]].';';
 						}
 						$db->query($q);
-					}elseif($_POST['add'] && !empty($_POST[$index[0]])){
+					}elseif($_POST['add'] && !empty($_POST[$ident[0]])){
 						if($index[explode(',',$_POST['add'])[1]] == 'login_password'){
 							$_POST['login_password'] = crypt($_POST['login_password'], 'P9');
 						}
@@ -183,8 +194,11 @@ require_once("connection.php");
 									$v = '"'.$_POST[$es].'"';
 								}
 							}
+						}if((string)$_GET['page'] != "9"){
+							$id = str_replace('first_name','student_id',str_replace('status_name','status_id',$id));
 						}
 						$q = 'INSERT INTO '.$database.' ('.$id.') VALUES ('.$v.')';
+						echo $q;
 						$db->query($q);
 						$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 						if((string)$_GET['page'] == "9"){
@@ -205,8 +219,8 @@ require_once("connection.php");
 								}elseif((string)$_GET['page'] == "6"){
 									$db->query('DELETE FROM offsite_locations WHERE location_id = "'.$column['location_id'].'"');
 								}else{
-									$db->query('DELETE FROM '.$database.' WHERE '.$index[0].' = "'.$column[$index[0]].'"');
-								}
+									$db->query('DELETE FROM '.$database.' WHERE '.$ident.' = "'.$column[$ident].'"');
+								}$_POST[str_replace(' ','_',$column[$index[0]])] = Null;
 							}
 						}
 					}elseif(!empty($_POST['stus'])){
@@ -241,14 +255,19 @@ require_once("connection.php");
 					echo '<script type="text/javascript">
 						document.onkeypress = keyPress;
 						function keyPress(e){
-						  var x = e || window.event;
-						  var key = (x.keyCode || x.which);
-						  if(key == 13 || key == 3){
-						   //  myFunc1();
-						   document.activeElement.nextSibling.click();
-						  }
-					  	}</script><table class="table"><tr>';
-					if($_GET['page'] != '8'){
+						  	var x = e || window.event;
+						  	var key = (x.keyCode || x.which);
+						  	if(key == 13 || key == 3){
+						   		//  myFunc1();
+						   		document.activeElement.nextSibling.click();
+							}
+						}
+						document.onclick = select;
+						function select(){
+						   	document.activeElement.select();
+						}
+						  </script><table class="table"><tr>';
+					if($_GET['page'] != '8' && $_GET['page'] != '1'){
 						echo'<th class="del">Del.</th>';
 					}
 					if($_GET['page'] == '9'){
@@ -290,7 +309,7 @@ require_once("connection.php");
 					}
 					else{
 						echo '<tr>';
-						if($_GET['page'] != '8'){
+						if($_GET['page'] != '8' && $_GET['page'] != '1'){
 							echo'<td class="del admin"><input name="'.$value[$index[0]].'" type="checkbox"></td>';
 						}foreach($index as $row => &$oi){
 							if($_GET['page'] != 9 && $oi == 'first_name'){
@@ -312,20 +331,41 @@ require_once("connection.php");
 								}
 								echo '</select><button name="go" class="submit" type="submit" value="'.$_POST['student'].','.$row.','.$col.'">￭</button></td>';
 							}else{
-								echo '<td class="admin"><input type="text" name="'.$_POST['student'].','.$row.','.$col.'" class="newval" placeholder="'.$value[$oi].'"><button name="go" class="submit" type="submit" value="'.$_POST['student'].','.$row.','.$col.'">￭</button></td>';
+								echo '<td class="admin"><input type="text" name="'.$_POST['student'].','.$row.','.$col.'" class="newval" value="'.$value[$oi].'"><button name="go" class="submit" type="submit" value="'.$_POST['student'].','.$row.','.$col.'">￭</button></td>';
 							}
 						}
 						echo '</tr>';
 					}
 				}
 				if($_GET['page'] != '3'){
-					if($_GET['page'] != '8'){
+					if($_GET['page'] != '8' && $_GET['page'] != '1'){
 						echo '<tr><td class="del admin"><input value="X" name="del" type="submit"></td>';
 						foreach($index as $row => &$oi){
 							if($row > 0){
 								echo'</td>';
 							}
-							echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" placeholder="'.$value[$oi].'">';
+
+							if($_GET['page'] != 9 && $oi == 'first_name'){
+								$statorstu = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
+								echo '<td class="admin"><select name="'.$oi.'" class="newval"> <option value="'.$value[$oi].'">'.$value[$oi].'</option>';
+								foreach($statorstu as $v){
+									if($v[$oi] != $value[$oi]){
+										echo '<option value="'.$v['student_id'].'" class="newval">'.$v[$oi].'</option>';
+									}
+								}
+							}elseif($oi == 'status_name'){
+								$statorstu = $db->query('SELECT * FROM status_data ORDER BY status_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
+								echo '<td class="admin"><select name="'.$oi.'" class="newval"> <option value="'.$value['status_id'].'">'.$value[$oi].'</option>';
+								foreach($statorstu as $v){
+									if($v[$oi] != $value[$oi]){
+										echo '<option value="'.$v['status_id'].'" class="newval">'.$v[$oi].'</option>';
+									}
+								}
+							}
+							
+							else{
+								echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" value="'.$value[$oi].'">';
+							}
 						}
 						echo '<button name="add" class="submit" type="submit" value="'.$_POST['student'].','.$row.','.$col.'">+</button></td></tr></form></table>';
 					}
