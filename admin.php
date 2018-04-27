@@ -172,6 +172,8 @@ require_once("connection.php");
 							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE location_id = '.$values[$_POST['col']]['location_id'].';';
 						}elseif($index[$_POST['row']] == 'login_password'){
 							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.crypt($_POST[$_POST['go']], 'P9').'" WHERE `login_year` = "'.$values[$_POST['col']]['login_year'].'";';
+						}elseif((string)$_GET['page'] == "9"){
+							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row'] + 1].' = "'.$_POST[$_POST['go']].'" WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]].';';
 						}else{
 							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]].';';
 						}
