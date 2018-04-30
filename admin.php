@@ -12,6 +12,24 @@ require_once("connection.php");
   	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="style.css">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<?php if($_GET['page'] != '3'){
+		echo '<script type="text/javascript">
+			document.onkeypress = keyPress;
+			function keyPress(e){
+				var x = e || window.event;
+				var key = (x.keyCode || x.which);
+				if(key == 13 || key == 3){
+					//  myFunc1();
+					document.activeElement.nextSibling.click();
+				}
+			}
+			document.onclick = select;
+			function select(){
+				document.activeElement.select();
+			}
+		</script>';
+		}
+	?>
 </head>
 <body class="back">
 	<div class = "sidebar">
@@ -175,7 +193,7 @@ require_once("connection.php");
 						}elseif((string)$_GET['page'] == "9"){
 							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row'] + 1].' = "'.$_POST[$_POST['go']].'" WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]].';';
 						}else{
-							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]].';';
+							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE '.$index[0].' = "'.$values[$_POST['col']][$index[0]].'";';
 						}
 						$db->query($q);
 					}elseif($_POST['add'] && !empty($_POST[$ident[0]])){
@@ -200,7 +218,6 @@ require_once("connection.php");
 							$id = str_replace('first_name','student_id',str_replace('status_name','status_id',$id));
 						}
 						$q = 'INSERT INTO '.$database.' ('.$id.') VALUES ('.$v.')';
-						echo $q;
 						$db->query($q);
 						$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 						if((string)$_GET['page'] == "9"){
@@ -209,7 +226,6 @@ require_once("connection.php");
 						}
 					}
 					elseif($_POST['del']){
-						print_r($_POST);
 						foreach($values as &$column){
 							if(!empty($_POST[str_replace(' ','_',$column[$index[0]])])){
 								if((string)$_GET['page'] == "5"){
@@ -256,21 +272,7 @@ require_once("connection.php");
 					$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 				}
 				if($_GET['page'] != '3'){
-					echo '<script type="text/javascript">
-						document.onkeypress = keyPress;
-						function keyPress(e){
-						  	var x = e || window.event;
-						  	var key = (x.keyCode || x.which);
-						  	if(key == 13 || key == 3){
-						   		//  myFunc1();
-						   		document.activeElement.nextSibling.click();
-							}
-						}
-						document.onclick = select;
-						function select(){
-						   	document.activeElement.select();
-						}
-						  </script><table class="table"><tr>';
+					echo '<table class="table"><tr>';
 					if($_GET['page'] != '8' && $_GET['page'] != '1'){
 						echo'<th class="del">Del.</th>';
 					}
