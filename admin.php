@@ -35,21 +35,19 @@ require_once("connection.php");
 
 		//TODO Fix first_name issues!!!
 			if(!empty($_POST['go'])){
-				$_POST['go'] = explode(',',$_POST['go']);
-				if(empty($_POST['student']) && !empty($_POST['go'][0])){
-					$_POST['student'] = (int)$_POST['go'][0];
+				$go = explode(',',$_POST['go']);
+				if(empty($_POST['student']) && !empty($go[0])){
+					$_POST['student'] = (int)$go[0];
 				}
-				$_POST['row'] = $_POST['go'][1];
-				$_POST['col'] = $_POST['go'][2];
-				$_POST['go'] = implode(',',$_POST['go']);
+				$_POST['row'] = $go[1];
+				$_POST['col'] = $go[2];
 			}elseif(!empty($_POST['del'])){
-				$_POST['del'] = explode(',',$_POST['del']);
-				if(empty($_POST['student']) && !empty($_POST['del'][0])){
-					$_POST['student'] = (int)$_POST['del'][0];
+				$del = explode(',',$_POST['del']);
+				if(empty($_POST['student']) && !empty($del[0])){
+					$_POST['student'] = (int)$del[0];
 				}
-				$_POST['row'] = $_POST['del'][1];
-				$_POST['col'] = $_POST['del'][2];
-				$_POST['del'] = implode(',',$_POST['del']);
+				$_POST['row'] = $del[1];
+				$_POST['col'] = $del[2];
 			}if(!empty($_POST['student'])){
 				$_POST['student'] = str_replace('O','0',$_POST['student']);
 			}
@@ -211,13 +209,15 @@ require_once("connection.php");
 						}
 					}
 					elseif($_POST['del']){
-						print_r($_POST[150]);
+						print_r($_POST);
 						foreach($values as &$column){
-							if($_POST[str_replace(' ','_',$column[$index[0]])]){
+							if(!empty($_POST[str_replace(' ','_',$column[$index[0]])])){
 								if((string)$_GET['page'] == "5"){
 									$db->query('DELETE FROM holidays WHERE holiday_id = "'.$column['holiday_id'].'"');
 								}elseif((string)$_GET['page'] == "4"){
 									$db->query('DELETE FROM history WHERE event_id = "'.$column['event_id'].'"');
+								}elseif((string)$_GET['page'] == "2"){
+									$db->query('DELETE FROM facilitators WHERE facilitator_id = "'.$column['facilitator_id'].'"');
 								}elseif((string)$_GET['page'] == "1"){
 									$db->query('DELETE FROM current WHERE student_id = "'.$column['student_id'].'"');
 								}elseif((string)$_GET['page'] == "6"){
