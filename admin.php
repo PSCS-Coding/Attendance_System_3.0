@@ -32,6 +32,8 @@ require_once("connection.php");
 	</div>
 	<div>
 		<?php
+
+		//TODO Fix first_name issues!!!
 			if(!empty($_POST['go'])){
 				$_POST['go'] = explode(',',$_POST['go']);
 				if(empty($_POST['student']) && !empty($_POST['go'][0])){
