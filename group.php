@@ -7,13 +7,21 @@
   <body>
     <?php
      require_once("connection.php");
-      $query = "SELECT first_name, last_name FROM student_data WHERE active = 1";
+      $query = "SELECT first_name, last_name, student_id FROM student_data WHERE active = 1";
       $values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
       $foo = count($values);
     ?>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript">
     var group = [];
+
+    function max( array ) {
+      return Math.max.apply( Math, array );
+    }
+
+    function min( array ) {
+      return Math.min.apply( Math, array );
+    }
 
     function submitform() {
       document.getElementById("form").submit();
@@ -33,12 +41,27 @@
         ev.dataTransfer.setData("text", ev.target.id);
     }
 
+    function otherDrop(ev) {
+      ev.preventDefault();
+      var data = ev.dataTransfer.getData("text");
+      document.getElementById("addback").appendChild(document.getElementById(data));
+      //alert(data);
+      if(confirm("Remove " + document.getElementById(data).textContent + "from this group")) {
+        for (var i=max(group); i>=0; i--) {
+          if (group[i] == data) {
+              group.splice(i, 1);
+            // break;       //<-- Uncomment  if only the first term has to be removed
+        }
+      }
+    }
+    }
+
     function drop(ev) {
       ev.preventDefault();
       var data = ev.dataTransfer.getData("text");
-      if (true != checkIfThere(group, document.getElementById(data).textContent)) {
+      if (true != checkIfThere(group, document.getElementById(data))) {
         if (confirm("Add " + document.getElementById(data).textContent + " to this group")) {
-          group.push(document.getElementById(data).textContent);
+          group.push(data);
           ev.target.appendChild(document.getElementById(data));
         }
       } else {
@@ -85,7 +108,7 @@
   front end
   <a class= "sidetext" href="/index.php">Front Page</a>
   </div>
-  <form type="POST">
+  <form method="POST">
     <input id="form" type="text" name="gname" placeholder="Group name">
   </form>
   <button type="button" onClick="sendgroupstuff()">Finish creating group</button>
@@ -93,19 +116,13 @@
   <div id="addedpeople"></div>
   <div id="drag1">
     <table>
-      <tbody>
-        <th id="t1">students</th>
-        <div id=addback>
+      <th id="t1" ondrop="otherDrop(event)" ondragover="allowDrop(event)">students</th>
+      <tbody id="addback" ondrop="otherDrop(event)" ondragover="allowDrop(event)">
           <?php
             for ($i=0; $i < $foo; $i++) {
-              $x = $i;
-              if($i == 1) {
-                $x++;
-              }
-                echo "<tr id='".$i."' draggable='true' ondragstart='drag(event)'><td id='".$i."'>".$values[$i]['first_name']." ".$values[$i]['last_name'][0]."</td></tr>";
+                echo "<tr id='".$values[$i]['student_id']."' draggable='true' ondragstart='drag(event)'><td>".$values[$i]['first_name']." ".$values[$i]['last_name'][0]."</td></tr>";
             }
           ?>
-       </div>
      </tbody>
     </table>
   </div>
