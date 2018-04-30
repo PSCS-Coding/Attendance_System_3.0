@@ -202,7 +202,7 @@ require_once("connection.php");
 						}
 						$id = "";
 						$v = "";
-						foreach($index as $i => $es){
+						foreach($index as $i => &$es){
 							if($id != ""){
 								if(!empty($_POST[$es])){
 									$id = $id.', '.$es;
@@ -253,7 +253,7 @@ require_once("connection.php");
 								if($group['group_name'] == $_POST['group']){
 									$gp = explode(',',$group['students']);
 									foreach($_POST['stus'] as &$news){
-										foreach($gp as $id => $old){
+										foreach($gp as $id => &$old){
 											if($old == $news){
 												$gp[$id] = '';
 												break;
@@ -289,7 +289,7 @@ require_once("connection.php");
 				}else{
 					echo '</tr><div	class="groups">';
 				}
-				foreach($values as $col => $value){
+				foreach($values as $col => &$value){
 					if((string)$_GET['page'] == "3"){
 						$_POST[$value['group_name']] = $_POST[str_replace(' ', "_", $value['group_name'])];
 						if(!empty($_POST[$value['group_name']])){
@@ -320,11 +320,11 @@ require_once("connection.php");
 						echo '<tr>';
 						if($_GET['page'] != '8' && $_GET['page'] != '1'){
 							echo'<td class="del admin"><input name="'.$value[$index[0]].'" type="checkbox"></td>';
-						}foreach($index as $row => $oi){
+						}foreach($index as $row => &$oi){
 							if($_GET['page'] != 9 && $oi == 'first_name'){
 								$statorstu = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
 								echo '<td class="admin"><select name="'.$_POST['student'].','.$row.','.$col.'" class="newval"> <option value="'.$value[$oi].'">'.$value[$oi].'</option>';
-								foreach($statorstu as &$v){
+								foreach($statorstu as $v){
 									if($v[$oi] != $value[$oi]){
 										echo '<option value="'.$v['student_id'].'" class="newval">'.$v[$oi].'</option>';
 									}
@@ -333,7 +333,7 @@ require_once("connection.php");
 							}elseif($oi == 'status_name'){
 								$statorstu = $db->query('SELECT * FROM status_data ORDER BY status_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
 								echo '<td class="admin"><select name="'.$_POST['student'].','.$row.','.$col.'" class="newval"> <option value="'.$value[$oi].'">'.$value[$oi].'</option>';
-								foreach($statorstu as &$v){
+								foreach($statorstu as $v){
 									if($v[$oi] != $value[$oi]){
 										echo '<option value="'.$v['status_id'].'" class="newval">'.$v[$oi].'</option>';
 									}
@@ -349,7 +349,7 @@ require_once("connection.php");
 				if($_GET['page'] != '3'){
 					if($_GET['page'] != '8' && $_GET['page'] != '1'){
 						echo '<tr><td class="del admin"><input value="X" name="del" type="submit"></td>';
-						foreach($index as $row => $oi){
+						foreach($index as $row => &$oi){
 							if($row > 0){
 								echo'</td>';
 							}
@@ -357,7 +357,7 @@ require_once("connection.php");
 							if($_GET['page'] != 9 && $oi == 'first_name'){
 								$statorstu = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
 								echo '<td class="admin"><select name="'.$oi.'" class="newval"> <option value="'.$value[$oi].'">'.$value[$oi].'</option>';
-								foreach($statorstu as &$v){
+								foreach($statorstu as $v){
 									if($v[$oi] != $value[$oi]){
 										echo '<option value="'.$v['student_id'].'" class="newval">'.$v[$oi].'</option>';
 									}
@@ -365,13 +365,13 @@ require_once("connection.php");
 							}elseif($oi == 'status_name'){
 								$statorstu = $db->query('SELECT * FROM status_data ORDER BY status_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
 								echo '<td class="admin"><select name="'.$oi.'" class="newval"> <option value="'.$value['status_id'].'">'.$value[$oi].'</option>';
-								foreach($statorstu as &$v){
+								foreach($statorstu as $v){
 									if($v[$oi] != $value[$oi]){
 										echo '<option value="'.$v['status_id'].'" class="newval">'.$v[$oi].'</option>';
 									}
 								}
 							}
-
+							
 							else{
 								echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" value="'.$value[$oi].'">';
 							}
