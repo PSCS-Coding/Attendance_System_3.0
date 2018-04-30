@@ -229,18 +229,21 @@ require_once("connection.php");
 						foreach($values as &$column){
 							if(!empty($_POST[str_replace(' ','_',$column[$index[0]])])){
 								if((string)$_GET['page'] == "5"){
-									$db->query('DELETE FROM holidays WHERE holiday_id = "'.$column['holiday_id'].'"');
+									$rem = 'DELETE FROM holidays WHERE holiday_id = "'.$column['holiday_id'].'"';
 								}elseif((string)$_GET['page'] == "4"){
-									$db->query('DELETE FROM history WHERE event_id = "'.$column['event_id'].'"');
+									$rem = 'DELETE FROM history WHERE event_id = "'.$column['event_id'].'"';
 								}elseif((string)$_GET['page'] == "2"){
-									$db->query('DELETE FROM facilitators WHERE facilitator_id = "'.$column['facilitator_id'].'"');
+									$rem = 'DELETE FROM facilitators WHERE facilitator_id = "'.$column['facilitator_id'].'"';
 								}elseif((string)$_GET['page'] == "1"){
-									$db->query('DELETE FROM current WHERE student_id = "'.$column['student_id'].'"');
+									$rem = 'DELETE FROM current WHERE student_id = "'.$column['student_id'].'"';
 								}elseif((string)$_GET['page'] == "6"){
-									$db->query('DELETE FROM offsite_locations WHERE location_id = "'.$column['location_id'].'"');
+									$rem = 'DELETE FROM offsite_locations WHERE location_id = "'.$column['location_id'].'"';
 								}else{
-									$db->query('DELETE FROM '.$database.' WHERE '.$ident.' = "'.$column[$ident].'"');
-								}$_POST[str_replace(' ','_',$column[$index[0]])] = Null;
+									$rem = 'DELETE FROM '.$database.' WHERE '.$ident[0].' = "'.$column[$ident[0]].'"';
+								}
+								echo $rem;
+								$db->query($rem);
+								$_POST[str_replace(' ','_',$column[$index[0]])] = Null;
 							}
 						}
 					}elseif(!empty($_POST['stus'])){
