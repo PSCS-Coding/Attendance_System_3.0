@@ -15,7 +15,7 @@ function view_reports_for_student($student_id){
     $OffsiteLeft = $total_offsite - $OffsiteTimeUsed;
     echo "<br/>Offsite Left: ", floor(($OffsiteLeft)/60), " Hours and ", $OffsiteLeft%60, " Minutes<br/>";
     $PercentOffsiteUsed = round(($OffsiteTimeUsed/$total_offsite)*100, 2) . '%';
-    echo "<br/>Percent Offsite Used: ",$PercentOffsiteUsed;
+    echo "<br/>Percent Offsite Used: ",$PercentOffsiteUsed . '<br/><br/>';
     get_all_lates($student_id);
 }
 
@@ -31,7 +31,7 @@ function get_all_lates($student_id) {
     //}
     /*  Milo gave us this little gem. The code below was totally copied shamelessly from him, but it gets the result of the above query
     structured line by line and printed somewhat neatly below.  */
-    $statusData = array();
+    /*$statusData = array();
     while ($stat_row = $result->fetch_assoc()) {
       array_push ($statusData, $stat_row);
     }
@@ -45,7 +45,7 @@ function get_all_lates($student_id) {
     (expectedly or no) late that day, arriving after 9:00am*/
     // IDEA: for each late event check if the very previous (right before) event was a late event
     // IDEA: check if the student signs in before the start of school after signing in as late.
-    $result = $db->query("SELECT * FROM history WHERE status_id = 5 AND student_id =" . $student_id);
+    //$result = $db->query("SELECT * FROM history WHERE status_id = 5 AND student_id =" . $student_id);
 
     //$query2 = "SELECT";
     //$NumLateEvents = ;
@@ -64,38 +64,35 @@ function actual_lates($student_id) {
     $number_events = $count->fetch_array()[0];
 
     $all_events = $result->fetch_all();
+    print_r($all_events[0]);
 
     //print_r($all_events);
-    echo "count " . $number_events;
-    //print_r($all_events);
+    echo "count " . $number_events . '<br/>';
 
     //print out the timestamps of each event
+    $lates = 0;
+    $array_of_lates = array();
+    #sloppily count up all the late events and put into their own array that can reference the 'all events' array. The reason I call this sloppy is that it'd likely be more efficient if merged with some of the processes that come afterwards. But what the heck, it's a step forward.
     for ($i=0; $i < $number_events; $i++) {
+      if ($all_events[$i][3] == 5) {
+        $array_of_lates[$lates] = $all_events[$i];
+        array_unshift($array_of_lates, $all_events[$i], $i);
+        $lates++;
+      }
+      $REALates = 0;
+      for ($i=0; $i < $number_events; $i++) {
+        if ($all_events[$i][3] == 5) {
+          $REALates++;
+        }
+
       echo "<br/>";
       echo "Event " . ($i+1) . ' Timestamp: ';
-      print_r($all_events[$i][2]); //. $number_events[$i][$theNumberTwo];
-      echo " Type: ";
-      print_r($all_events[$i][3]);
-    }
-    $studentlates = array();
-    $totlates = 0;
-#sloppily count up all the late events and put into their own array that can reference the 'all events' array. The reason I call this sloppy is that it'd likely be more efficient if merged with some of the processes that come afterwards. But what the heck, it's a step forward.
-    for ($i=0; $i < $number_events; $i++) {
-      if($all_events[$i][3] == 5){
-        array_push($all_events[$i]);
-        array_unshift($all_events[$i], $i);
-        $totlates++;
-      }
-    }
-    for ($i=0; $i < $totlates; $i++) {
-      echo "<br/>";
-      echo "LATE " . ($i+1) . ' Timestamp: ';
-      print_r($all_events[$i][3]); //. $number_events[$i][$theNumberTwo];
-      echo " Type: ";
-      print_r($all_events[$i][4]);
-    }
+      print_r($all_events[$i][2]);
 
 
+    }
+  }
+}
     /*separate list by date
     check time of the first event of the DAY
     IF time >=9:00 then #Lates +=1 and move to next day
@@ -115,5 +112,21 @@ function actual_lates($student_id) {
 
     }
 
-    */
-}
+    *//*
+    $unexpectedlates = 0;
+    $date1 = new DateTime ($all_events[0][2]);
+    $date2 = new DateTime ($all_events[0][2]);
+    $place_time = new DateTime;
+    for ($i = 1; $i < $number_events; $i++) {
+      $date2 = $all_events[$i][2];
+      $date1 -> setTime(9:00:00);
+      $date2 -> setTime(9:00:00);
+      if($date1 < $date2){
+        $date1 = $all_events[$i][2];
+        if($date1 > $date2 && $date1 -> format("w") != 0 && $date1 -> format("w") != 6){
+
+        }
+      }
+    }
+*/
+?>
