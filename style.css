@@ -155,3 +155,6 @@ td.admin{
 select {
 	margin: 0 4px;
 }
+.buttons {
+	color: black;
+}

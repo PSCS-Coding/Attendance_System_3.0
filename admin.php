@@ -286,7 +286,7 @@ $foo = count($valuess);
 				echo '</tr>';
 				foreach($values as $col => $value){
 					if((string)$_GET['page'] == "3"){
-						foreach($index as $row => &$oi){
+						foreach($index as $row => $oi){
 								echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" value="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
 		          		}
 						echo "</tr>";
