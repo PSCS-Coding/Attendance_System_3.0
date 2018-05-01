@@ -73,7 +73,7 @@ require_once("connection.php");
 			$goodpage = false;
 			//Allotted Hours
 			if((string)$_GET['page'] == "0"){
-				$ident = array('veteran_year');
+				$ident = array('veteran_year','veteran_year');
 				$goodpage = True;
 				$index = array('veteran_year','default_offsite','default_is');
 				$database = 'allotted_hours';
@@ -81,7 +81,7 @@ require_once("connection.php");
 			}
 			//Current Events
 			elseif((string)$_GET['page'] == "1"){
-				$ident = array('first_name','student_id');
+				$ident = array('student_id','first_name');
 				$goodpage = True;
 				$index = array('first_name','status_name','info','return_time');
 				$database = 'current';
@@ -89,7 +89,7 @@ require_once("connection.php");
 			}
 			//Facilitator Edit View
 			elseif((string)$_GET['page'] == "2"){
-				$ident = array('facilitator_name');
+				$ident = array('facilitator_name','facilitator_name');
 				$goodpage = True;
 				$index = array('facilitator_name');
 				$database = 'facilitators';
@@ -104,7 +104,7 @@ require_once("connection.php");
 			}
 			//History
 			elseif((string)$_GET['page'] == "4"){
-				$ident = array('student_id');
+				$ident = array('student_id','student_id');
 				$goodpage = True;
 				$index = array('first_name','timestamp','status_name','info','return_time');
 				$database = 'history';
@@ -121,7 +121,7 @@ require_once("connection.php");
 			}
 			//Holidays
 			elseif((string)$_GET['page'] == "5"){
-				$ident = array('holiday_name');
+				$ident = array('holiday_name','holiday_name');
 				$goodpage = True;
 				$index = array('holiday_name','holiday_date');
 				$database = 'holidays';
@@ -129,7 +129,7 @@ require_once("connection.php");
 			}
 			//Offsite Locations
 			elseif((string)$_GET['page'] == "6"){
-				$ident = array('location_name');
+				$ident = array('location_name','location_name');
 				$goodpage = True;
 				$index = array('location_name');
 				$database = 'offsite_locations';
@@ -137,7 +137,7 @@ require_once("connection.php");
 			}
 			//Passwords
 			elseif((string)$_GET['page'] == "7"){
-				$ident = array('login_year');
+				$ident = array('login_year','login_year');
 				$goodpage = True;
 				$index = array('login_year','login_password');
 				$database = 'login';
@@ -145,7 +145,7 @@ require_once("connection.php");
 			}
 			//School Hours
 			elseif((string)$_GET['page'] == "8"){
-				$ident = array('start_time');
+				$ident = array('start_time','start_time');
 				$goodpage = True;
 				$index = array('start_time','end_time');
 				$database = 'globals';
@@ -153,7 +153,7 @@ require_once("connection.php");
 			}
 			//Student Edit View
 			elseif((string)$_GET['page'] == "9"){
-				$ident = array('first_name');
+				$ident = array('student_id','first_name');
 				$goodpage = True;
 				$index = array('student_id','first_name','last_name','grad_year','veteran_year','current_offsite_hours','current_is_hours','priv','active');
 				$database = 'student_data';
@@ -196,7 +196,7 @@ require_once("connection.php");
 							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE '.$index[0].' = "'.$values[$_POST['col']][$index[0]].'";';
 						}
 						$db->query($q);
-					}elseif($_POST['add'] && !empty($_POST[$ident[0]])){
+					}elseif($_POST['add'] && !empty($_POST[$ident[1]])){
 						if($index[explode(',',$_POST['add'])[1]] == 'login_password'){
 							$_POST['login_password'] = crypt($_POST['login_password'], 'P9');
 						}
@@ -227,7 +227,7 @@ require_once("connection.php");
 					}
 					elseif($_POST['del']){
 						foreach($values as &$column){
-							if(!empty($_POST[str_replace(' ','_',$column[$index[0]])])){
+							if(!empty($_POST[str_replace(' ','_',$column[$ident[0]])])){
 								if((string)$_GET['page'] == "5"){
 									$rem = 'DELETE FROM holidays WHERE holiday_id = "'.$column['holiday_id'].'"';
 								}elseif((string)$_GET['page'] == "4"){
@@ -241,9 +241,8 @@ require_once("connection.php");
 								}else{
 									$rem = 'DELETE FROM '.$database.' WHERE '.$ident[0].' = "'.$column[$ident[0]].'"';
 								}
-								echo $rem;
 								$db->query($rem);
-								$_POST[str_replace(' ','_',$column[$index[0]])] = Null;
+								$_POST[str_replace(' ','_',$column[$ident[0]])] = Null;
 							}
 						}
 					}elseif(!empty($_POST['stus'])){
@@ -319,7 +318,7 @@ require_once("connection.php");
 					else{
 						echo '<tr>';
 						if($_GET['page'] != '8' && $_GET['page'] != '1'){
-							echo'<td class="del admin"><input name="'.$value[$index[0]].'" type="checkbox"></td>';
+							echo'<td class="del admin"><input name="'.$value[$ident[0]].'" type="checkbox"></td>';
 						}foreach($index as $row => &$oi){
 							if($_GET['page'] != 9 && $oi == 'first_name'){
 								$statorstu = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
