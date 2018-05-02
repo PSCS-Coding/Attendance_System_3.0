@@ -75,23 +75,47 @@ function actual_lates($student_id) {
     #sloppily count up all the late events and put into their own array that can reference the 'all events' array. The reason I call this sloppy is that it'd likely be more efficient if merged with some of the processes that come afterwards. But what the heck, it's a step forward.
     for ($i=0; $i < $number_events; $i++) {
       if ($all_events[$i][3] == 5) {
-        $array_of_lates[$lates] = $all_events[$i];
-        array_unshift($array_of_lates, $all_events[$i], $i);
+        //$array_of_lates[$lates] = $all_events[$i];
+        array_push($array_of_lates, $all_events[$i]);
+        //array_unshift($array_of_lates, $all_events[$i], $i);
         $lates++;
       }
+
       $REALates = 0;
-      for ($i=0; $i < $number_events; $i++) {
-        if ($all_events[$i][3] == 5) {
+      for ($j=0; $j < $number_events; $j++) {
+        if ($all_events[$j][3] == 5) {
           $REALates++;
         }
+      }
+      // still not sure where to put this whole section need to check with simon {
+      $unexpectedlates = 0;
+      $date1 = new DateTime ($all_events[0][2]);
+      $date2 = new DateTime ($all_events[0][2]);
+      $place_time = new DateTime;
 
+      for ($k = 1; $k < $number_events; $k++) {
+        $date2 = $all_events[$k][2];
+        //echo $date2;
+        //$date1 -> setTime(9, 0);
+        //$date2 -> setTime(9, 0);
+
+        if($date1 < $date2) {
+          $date1 = $all_events[$k][2];
+
+          if($date1 > $date2 && $date1 -> format("w") != 0 && $date1 -> format("w") != 6) {
+              $randomvar = 0;
+          }
+        }
+      }
+      // } end simons block of code
       echo "<br/>";
       echo "Event " . ($i+1) . ' Timestamp: ';
       print_r($all_events[$i][2]);
-
-
     }
-  }
+
+    print_r($array_of_lates);
+    echo $lates . '<br/>';
+    echo $REALates;
 }
     /*separate list by date
     check time of the first event of the DAY
