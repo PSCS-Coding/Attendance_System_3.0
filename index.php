@@ -26,11 +26,29 @@ require_once 'header.php';
                 <?php require_once 'nav.html';?>
             </nav>
         </div>
+        <div class="modal fade" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="groupModalTitle">Groups</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <a href='#'>Climbing</a>
+                        <br>
+                        <a href='#'>Seniors</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="modal fade" id="offsiteModal" tabindex="-1" role="dialog" aria-labelledby="offsiteModal" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="offsiteModalLabel"></h5>
+                        <h5 class="
+                        modal-title" id="offsiteModalLabel"></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -171,7 +189,8 @@ require_once 'header.php';
             $(document).ready(function () {
                 if (getCookie('view') == 'grid') {
                     $('#view-checkbox').prop('checked', 'true');
-                    $('#view-checkbox').parent().addClass('switch').removeClass('switch-no-animation').find('.slider-no-animation').addClass('slider').removeClass('.slider-no-animation');
+                    $('#view-checkbox').parent().addClass('switch').removeClass('switch-no-animation').find(
+                        '.slider-no-animation').addClass('slider').removeClass('.slider-no-animation');
                 }
                 var mintime = String(query('globals')[0]).split(',')[0];
                 var maxtime = String(query('globals')[0]).split(',')[1];
@@ -201,7 +220,7 @@ require_once 'header.php';
                     $('[data-toggle="tooltip"]').tooltip()
                 })
                 $('.links').html(
-                    '<li class="nav-item"><a href="#" class="nav-link">Groups</a></li><li class="nav-item"><a href="#" class="nav-link">Status view</a></li><li class="nav-item"><a href="view_reports.php" class="nav-link">View reports</a></li>' +
+                    '<li class="nav-item"><a href="#" class="nav-link" data-toggle="modal" data-target="#groupModal">Groups</a></li><li class="nav-item"><a href="#" class="nav-link">Status view</a></li><li class="nav-item"><a href="view_reports.php" class="nav-link">View reports</a></li>' +
                     $('.links').html()
                 );
                 createNav();
@@ -611,6 +630,7 @@ require_once 'header.php';
             function toggleCustomLocation() {
                 if ($('.customtog').hasClass('btn')) {
                     $('.customtog').replaceWith('<input class="customtog">');
+                    $('.customtog').attr('maxlength', '10');
                     $('.customtog').attr('type', 'text');
                     $('.customtog').attr('data-toggle', 'dropdown');
                     $('.customtog').attr('aria-haspopup', 'true');

@@ -1,40 +1,41 @@
 <?php
   require_once('connection.php');
+  require_once('verify.php');
   if(!empty($_COOKIE['user'])) {
     $imgurl = $_COOKIE['imgurl'];
     $user = $_COOKIE['user'];
-    if(crypt($imgurl, 'P9') == $user) {
-      $fnameQuery = $db->prepare("SELECT first_name FROM student_data WHERE imgurl = '$imgurl' AND active = 1");
+    if($_COOKIE['user']) {
+      $fnameQuery = $db->prepare("SELECT first_name FROM student_data WHERE id_token = '$user' AND active = 1");
       $fnameQuery->execute();
         foreach ($fnameQuery->get_result() as $row)
         {
           $fName = $row['first_name'];
         }
-        $lnameQuery = $db->prepare("SELECT last_name FROM student_data WHERE imgurl = '$imgurl' AND active = 1");
+        $lnameQuery = $db->prepare("SELECT last_name FROM student_data WHERE id_token = '$user' AND active = 1");
         $lnameQuery->execute();
           foreach ($lnameQuery->get_result() as $row)
           {
             $lName = $row['last_name'];
           }
-          $emailQuery = $db->prepare("SELECT email FROM student_data WHERE imgurl = '$imgurl' AND active = 1");
+          $emailQuery = $db->prepare("SELECT email FROM student_data WHERE id_token = '$user' AND active = 1");
           $emailQuery->execute();
             foreach ($emailQuery->get_result() as $row)
             {
               $email = $row['email'];
             }
-            $devQuery = $db->prepare("SELECT dev FROM student_data WHERE imgurl = '$imgurl' AND active = 1");
+            $devQuery = $db->prepare("SELECT dev FROM student_data WHERE id_token = '$user' AND active = 1");
             $devQuery->execute();
               foreach ($devQuery->get_result() as $row)
               {
                 $dev = "~!@#$%^&" . $row['dev'];
               }
-              $coinQuery = $db->prepare("SELECT coins FROM student_data WHERE imgurl = '$imgurl' AND active = 1");
+              $coinQuery = $db->prepare("SELECT coins FROM student_data WHERE id_token = '$user' AND active = 1");
               $coinQuery->execute();
                 foreach ($coinQuery->get_result() as $row)
                 {
                   $coin = "~!@#$%^&" . $row['coins'];
                 }
-                $gradQuery = $db->prepare("SELECT grad_year FROM student_data WHERE imgurl = '$imgurl' AND active = 1");
+                $gradQuery = $db->prepare("SELECT grad_year FROM student_data WHERE id_token = '$user' AND active = 1");
               $gradQuery->execute();
                 foreach ($gradQuery->get_result() as $row)
                 {
@@ -43,19 +44,19 @@
         if(isset($fName)) {
         echo $fName . "~!@#$%^&" . $lName . "~!@#$%^&" . $email . "~!@#$%^&" . $imgurl . $dev . $coin . $gradyear;
       } else {
-        $fnameQuery = $db->prepare("SELECT first_name FROM admins WHERE imgurl = '$imgurl'");
+        $fnameQuery = $db->prepare("SELECT first_name FROM admins WHERE id_token = '$user'");
         $fnameQuery->execute();
           foreach ($fnameQuery->get_result() as $row)
           {
             $fName = $row['first_name'];
           }
-          $lnameQuery = $db->prepare("SELECT last_name FROM admins WHERE imgurl = '$imgurl'");
+          $lnameQuery = $db->prepare("SELECT last_name FROM admins WHERE id_token = '$user'");
           $lnameQuery->execute();
             foreach ($lnameQuery->get_result() as $row)
             {
               $lName = $row['last_name'];
             }
-            $emailQuery = $db->prepare("SELECT email FROM admins WHERE imgurl = '$imgurl'");
+            $emailQuery = $db->prepare("SELECT email FROM admins WHERE id_token = '$user'");
             $emailQuery->execute();
               foreach ($emailQuery->get_result() as $row)
               {
