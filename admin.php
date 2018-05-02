@@ -33,7 +33,7 @@ $foo = count($valuess);
 
 	    function checkIfThere(arr, val) {
 	      return arr.some(function(arrVal) {
-	        return val === arrVal;
+	        return val = arrVal;
 	      });
 	    }
 
@@ -47,22 +47,26 @@ $foo = count($valuess);
 
 	    function otherDrop(ev) {
 	      ev.preventDefault();
+				var contains = ["false", ""];
+				for (var i=max(group); i>=min(group); i--) {
+					if (group[i] == data) {
+						contains = ["true", i];
+					}
+				}
 	      var data = ev.dataTransfer.getData("text");
-	      document.getElementById("addback").appendChild(document.getElementById(data));
-	      //alert(data);
-	      if(confirm("Remove " + document.getElementById(data).textContent + " from this group")) {
-	        for (var i=max(group); i>=0; i--) {
-	          if (group[i] == data) {
-	              group.splice(i, 1);
-	            // break;       //<-- Uncomment  if only the first term has to be removed
-	        }
-	      }
-	    }
-	    }
+				alert(contains[0]);
+				if(contains[0] == "true") {
+		      if(confirm("Remove " + document.getElementById(data).textContent + " from this group")) {
+						document.getElementById("addback").appendChild(document.getElementById(data));
+		        group.splice(contains[1], 1);
+		    	}
+		    }
+			}
 
 	    function drop(ev) {
 	      ev.preventDefault();
 	      var data = ev.dataTransfer.getData("text");
+				alert(checkIfThere(group, document.getElementById(data)));
 	      if (true != checkIfThere(group, document.getElementById(data))) {
 	        if (confirm("Add " + document.getElementById(data).textContent + " to this group")) {
 	          group.push(data);
@@ -83,11 +87,7 @@ $foo = count($valuess);
 	              url:"groupUpdate.php",
 	              success: function(result){
 	                alert(result);
-	              }
-	              /*add this code when working
-	              getElementById("addback").appendChild(getElementsById(group));
-	              group = [];
-	              */
+	              }	        
 	           });
 	         }else {
 	           alert("Name the group first");
@@ -96,23 +96,13 @@ $foo = count($valuess);
 	        alert("Add people to group first");
 	      }
 	    }
+			$(function(){
+        $("#includedContent").load("sidebar.html");
+      });
 	  </script>
 </head>
 <body class="back">
-	<div class = "sidebar">
-		admin
-		<a class= "sidetext" href="admin.php?page=0">Allotted Hours</a>
-		<a class= "sidetext" href="admin.php?page=1">Current Events</a>
-		<a class= "sidetext" href="admin.php?page=2">Facilitator Edit View</a>
-		<a class= "sidetext" href="admin.php?page=3">Group Edit View</a>
-		<a class= "sidetext" href="admin.php?page=4">History</a>
-		<a class= "sidetext" href="admin.php?page=5">Holidays</a>
-		<a class= "sidetext" href="admin.php?page=6">Offsite Locations</a>
-		<a class= "sidetext" href="admin.php?page=7">Passwords</a>
-		<a class= "sidetext" href="admin.php?page=8">School Hours</a>
-		<a class= "sidetext" href="admin.php?page=9">Student Edit View</a>
-		front end
-		<a class= "sidetext" href="index.php">Front Page</a>
+	<div class = "sidebar" id="includedContent">
 	</div>
 	<div>
 		<?php
@@ -217,116 +207,118 @@ $foo = count($valuess);
 			}
 			if($goodpage){
 				$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-				if(!empty($_POST)){
-					if($_POST['go']){
-						if((string)$_GET['page'] == "1"){
-							if($_POST['row'] == '0'){
-								$q = 'UPDATE '.$database.' SET student_id = "'.$_POST['new'].'" WHERE student_id = '.$values[$_POST['col']]['student_id'].';';
-							}elseif($_POST['row'] == '1'){
-								$q = 'UPDATE '.$database.' SET status_id = "'.$_POST['new'].'" WHERE student_id = '.$values[$_POST['col']]['student_id'].';';
-							}else{
-								$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
-							}
-						}elseif((string)$_GET['page'] == "4"){
-							if($_POST['row'] == '0'){
-								$q = 'UPDATE '.$database.' SET student_id = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
-							}elseif($_POST['row'] == '2'){
-								$q = 'UPDATE '.$database.' SET status_id = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
-							}else{
-								$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
-							}
-						}else{
-							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]].';';
-						}
-						$db->query($q);
-					}elseif($_POST['add']){
-						$id = "";
-						$v = "";
-						foreach($index as $i => &$es){
-							if($id != ""){
-								if(!empty($_POST[$es])){
-									$id = $id.', '.$es;
-									$v = $v.', "'.$_POST[$es].'"';
+				if(!empty($values)){
+					if(!empty($_POST)){
+						if($_POST['go']){
+							if((string)$_GET['page'] == "1"){
+								if($_POST['row'] == '0'){
+									$q = 'UPDATE '.$database.' SET student_id = "'.$_POST['new'].'" WHERE student_id = '.$values[$_POST['col']]['student_id'].';';
+								}elseif($_POST['row'] == '1'){
+									$q = 'UPDATE '.$database.' SET status_id = "'.$_POST['new'].'" WHERE student_id = '.$values[$_POST['col']]['student_id'].';';
+								}else{
+									$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
+								}
+							}elseif((string)$_GET['page'] == "4"){
+								if($_POST['row'] == '0'){
+									$q = 'UPDATE '.$database.' SET student_id = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
+								}elseif($_POST['row'] == '2'){
+									$q = 'UPDATE '.$database.' SET status_id = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
+								}else{
+									$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
 								}
 							}else{
-								if(!empty($_POST[$es])){
-									$id = $es;
-									$v = '"'.$_POST[$es].'"';
-								}
+								$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]].';';
 							}
-						}
-						$q = 'INSERT INTO '.$database.' ('.$id.') VALUES ('.$v.')';
-						$db->query($q);
-						$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-						if((string)$_GET['page'] == "9"){
-							$q = 'INSERT INTO current (student_id,status_id) VALUES ("'.$values[count($values)-1][$index[0]].'", 0)';
 							$db->query($q);
-						}
-					}
-					elseif($_POST['del']){
-						foreach($values as &$column){
-							if($_POST[$column[$index[0]]] == true){
-								$db->query('DELETE FROM '.$database.' WHERE '.$index[0].' = "'.$column[$index[0]].'"');
-							}
-						}
-					}
-					$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-				}
-				if($_GET['page'] != '3'){
-					echo '<div class="del"><form method="POST"><table><tr><th class="admin">Del.</th></tr>';
-					foreach($values as &$o){
-						echo '<tr><td class="admin"><input name="'.$o[$index[0]].'" type="checkbox"></td></tr>';
-					}
-					echo '<tr><td class="admin"><input value="X" name="del" type="submit"></td></tr></table></form></div>';
-				}
-				echo '<table class="table"><tr>';
-				foreach($index as &$header){
-					echo '<th class="admin">'.str_replace('_', ' ',$header).'</th>';
-				}
-				echo '</tr>';
-				foreach($values as $col => $value){
-					if((string)$_GET['page'] == "3"){
-						foreach($index as $row => $oi){
-								echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" value="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
-		          		}
-						echo "</tr>";
-					}
-					else{
-						echo '<tr>';
-						foreach($index as $row => $oi){
-							if($oi == 'first_name'){
-								$statorstu = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
-								echo '<td class="admin"><form method="POST"><select name="new" class="newval"> <option value="'.$value[$oi].'">'.$value[$oi].'</option>';
-								foreach($statorstu as $v){
-									if($v[$oi] != $value[$oi]){
-										echo '<option value="'.$v['student_id'].'" class="newval">'.$v[$oi].'</option>';
+						}elseif($_POST['add']){
+							$id = "";
+							$v = "";
+							foreach($index as $i => &$es){
+								if($id != ""){
+									if(!empty($_POST[$es])){
+										$id = $id.', '.$es;
+										$v = $v.', "'.$_POST[$es].'"';
+									}
+								}else{
+									if(!empty($_POST[$es])){
+										$id = $es;
+										$v = '"'.$_POST[$es].'"';
 									}
 								}
-								echo '</select><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
-							}elseif($oi == 'status_name'){
-								$statorstu = $db->query('SELECT * FROM status_data ORDER BY status_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
-								echo '<td class="admin"><form method="POST"><select name="new" class="newval"> <option value="'.$value[$oi].'">'.$value[$oi].'</option>';
-								foreach($statorstu as $v){
-									if($v[$oi] != $value[$oi]){
-										echo '<option value="'.$v['status_id'].'" class="newval">'.$v[$oi].'</option>';
-									}
-								}
-								echo '</select><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
-							}else{
-								echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
+							}
+							$q = 'INSERT INTO '.$database.' ('.$id.') VALUES ('.$v.')';
+							$db->query($q);
+							$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+							if((string)$_GET['page'] == "9"){
+								$q = 'INSERT INTO current (student_id,status_id) VALUES ("'.$values[count($values)-1][$index[0]].'", 0)';
+								$db->query($q);
 							}
 						}
-						echo '</tr>';
+						elseif($_POST['del']){
+							foreach($values as &$column){
+								if($_POST[$column[$index[0]]] == true){
+									$db->query('DELETE FROM '.$database.' WHERE '.$index[0].' = "'.$column[$index[0]].'"');
+								}
+							}
+						}
+						$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 					}
-				}
-				echo '<form method="POST">';
-				foreach($index as $row => $oi){
-					if($row > 0){
-						echo'</td>';
+					if($_GET['page'] != '3'){
+						echo '<div class="del"><form method="POST"><table><tr><th class="admin">Del.</th></tr>';
+						foreach($values as &$o){
+							echo '<tr><td class="admin"><input name="'.$o[$index[0]].'" type="checkbox"></td></tr>';
+						}
+						echo '<tr><td class="admin"><input value="X" name="del" type="submit"></td></tr></table></form></div>';
 					}
-					echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'">';
+					echo '<table class="table"><tr>';
+					foreach($index as &$header){
+						echo '<th class="admin">'.str_replace('_', ' ',$header).'</th>';
+					}
+					echo '</tr>';
+					foreach($values as $col => $value){
+						if((string)$_GET['page'] == "3"){
+							foreach($index as $row => $oi){
+									echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" value="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
+			          		}
+							echo "</tr>";
+						}
+						else{
+							echo '<tr>';
+							foreach($index as $row => $oi){
+								if($oi == 'first_name'){
+									$statorstu = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
+									echo '<td class="admin"><form method="POST"><select name="new" class="newval"> <option value="'.$value[$oi].'">'.$value[$oi].'</option>';
+									foreach($statorstu as $v){
+										if($v[$oi] != $value[$oi]){
+											echo '<option value="'.$v['student_id'].'" class="newval">'.$v[$oi].'</option>';
+										}
+									}
+									echo '</select><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
+								}elseif($oi == 'status_name'){
+									$statorstu = $db->query('SELECT * FROM status_data ORDER BY status_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
+									echo '<td class="admin"><form method="POST"><select name="new" class="newval"> <option value="'.$value[$oi].'">'.$value[$oi].'</option>';
+									foreach($statorstu as $v){
+										if($v[$oi] != $value[$oi]){
+											echo '<option value="'.$v['status_id'].'" class="newval">'.$v[$oi].'</option>';
+										}
+									}
+									echo '</select><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
+								}else{
+									echo '<td class="admin"><form method="POST"><input type="text" name="new" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'"><input type="submit" name="go" class="submit" value="￭"></form></td>';
+								}
+							}
+							echo '</tr>';
+						}
+					}
+					echo '<form method="POST">';
+					foreach($index as $row => $oi){
+						if($row > 0){
+							echo'</td>';
+						}
+						echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" placeholder="'.$value[$oi].'"><input type="hidden" name="row" value="'.$row.'"><input type="hidden" name="col" value="'.$col.'">';
+					}
+					echo '<input type="submit" name="add" class="submit" value="￭"></td></form></table>';
 				}
-				echo '<input type="submit" name="add" class="submit" value="￭"></td></form></table>';
 			}
 		 ?>
 	</div>
