@@ -321,17 +321,22 @@ require_once("connection.php");
 							echo'<td class="del admin"><input name="'.$value[$ident[0]].'" type="checkbox"></td>';
 						}foreach($index as $row => &$oi){
 							if($_GET['page'] != 9 && $oi == 'first_name'){
-								$statorstu = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
-								echo '<td class="admin"><select name="'.$_POST['student'].','.$row.','.$col.'" class="newval"> <option value="'.$value[$oi].'">'.$value[$oi].'</option>';
-								foreach($statorstu as $v){
-									if($v[$oi] != $value[$oi]){
-										echo '<option value="'.$v['student_id'].'" class="newval">'.$v[$oi].'</option>';
+								if($_GET['page'] != "1"){
+									$statorstu = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
+									echo '<td class="admin"><select name="'.$_POST['student'].','.$row.','.$col.'" class="newval"> <option value="'.$value['student_id'].'">'.$value[$oi].'</option>';
+									foreach($statorstu as $v){
+										if($v[$oi] != $value[$oi]){
+											echo '<option value="'.$v['student_id'].'" class="newval">'.$v[$oi].'</option>';
+										}
 									}
+									echo '</select><button name="go" class="submit" type="submit" value="'.$_POST['student'].','.$row.','.$col.'">￭</button></td>';
+	
+								}else{
+									echo '<td class="admin">'.$value[$oi].'</td>';
 								}
-								echo '</select><button name="go" class="submit" type="submit" value="'.$_POST['student'].','.$row.','.$col.'">￭</button></td>';
 							}elseif($oi == 'status_name'){
 								$statorstu = $db->query('SELECT * FROM status_data ORDER BY status_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
-								echo '<td class="admin"><select name="'.$_POST['student'].','.$row.','.$col.'" class="newval"> <option value="'.$value[$oi].'">'.$value[$oi].'</option>';
+								echo '<td class="admin"><select name="'.$_POST['student'].','.$row.','.$col.'" class="newval"> <option value="'.$value['status_id'].'">'.$value[$oi].'</option>';
 								foreach($statorstu as $v){
 									if($v[$oi] != $value[$oi]){
 										echo '<option value="'.$v['status_id'].'" class="newval">'.$v[$oi].'</option>';

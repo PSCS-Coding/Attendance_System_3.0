@@ -72,7 +72,7 @@ function enquote($text){
           </th>
         </tr>
         <?php
-         	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id WHERE student_data.active = 1 ORDER BY first_name DESC';
+         	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id WHERE student_data.active = 1 ORDER BY first_name ASC';
          	$current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
          	foreach ($current as &$row) {
             	echo '<tr class="student-row" id="'.$row["student_id"].'"><td>'.$row["first_name"].' '.$row["last_name"][0].'.</td><td><span class="status">'.$row["status_name"];
