@@ -87,36 +87,40 @@ function actual_lates($student_id) {
           $REALates++;
         }
       }
-      // still not sure where to put this whole section need to check with simon {
-      $unexpectedlates = 0;
-      $date1 = new DateTime ($all_events[0][2]);
-      $date2 = new DateTime ($all_events[0][2]);
-      $place_time = new DateTime;
-
-      for ($k = 1; $k < $number_events; $k++) {
-        $date2 = $all_events[$k][2];
-        //echo $date2;
-        //$date1 -> setTime(9, 0);
-        //$date2 -> setTime(9, 0);
-
-        if($date1 < $date2) {
-          $date1 = $all_events[$k][2];
-
-          if($date1 > $date2 && $date1 -> format("w") != 0 && $date1 -> format("w") != 6) {
-              $randomvar = 0;
-          }
-        }
-      }
-      // } end simons block of code
       echo "<br/>";
       echo "Event " . ($i+1) . ' Timestamp: ';
       print_r($all_events[$i][2]);
     }
 
+
+
+
     print_r($array_of_lates);
     echo $lates . '<br/>';
     echo $REALates;
-}
+
+
+    $unexpectedlates = 0;
+    $date1 = new DateTime ($all_events[0][2]);
+    $date2 = new DateTime ($all_events[0][2]);
+    $place_time = new DateTime;
+
+    for ($k = 1; $k < $number_events; $k++) {
+      $date22 = new DateTime($all_events[$k][2]);
+      //echo $date2;
+      $newdate1 = new DateTime($date1->format('Y-m-d' . '9:00:00'));
+      $newdate2 = new DateTime($date22->format('Y-m-d' . '9:00:00'));
+
+      if($date1 < $date2) {
+        $date1 = $all_events[$k][2];
+
+        if($date1 > $date2 && $date1 -> format("w") != 0 && $date1 -> format("w") != 6) {
+            $randomvar = 0;
+        }
+      }
+    }
+  }
+
     /*separate list by date
     check time of the first event of the DAY
     IF time >=9:00 then #Lates +=1 and move to next day
