@@ -111,7 +111,7 @@ require_once("connection.php");
 				$students = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
 				echo '<form class="reset" method="POST"><select name="student" class="newval"> <option value="">All</option>';
 				foreach($students as &$stdnt){
-					echo '<option value="'.str_replace('0','O',$stdnt['student_id']).'">'.$stdnt['first_name'].'</option>';
+					echo '<option value="'.str_replace('0','O',$stdnt['student_id']).'">'.$stdnt['first_name'].' '.$stdnt['last_name'].'</option>';
 				}
 				echo'<input type="submit" name="go" class="submit" value="￭"></select></form>';
 				$query = 'SELECT * FROM '.$database.' INNER JOIN student_data ON history.student_id = student_data.student_id INNER JOIN status_data ON history.status_id = status_data.status_id ';
@@ -309,7 +309,7 @@ require_once("connection.php");
 							echo '<table class="table thin"><tr><form method="POST"><th class="admin thin"><input type="checkbox" name="'.$value['group_name'].'[]" value="'.$value[$index[1]].'"></th><th class="admin thin">'.str_replace('_', ' ', $value['group_name']).'</th></tr>';
 							foreach($grp as &$stu){
 								$student = $db->query('SELECT first_name,last_name FROM student_data WHERE `active` = 1 AND student_id = "'.$stu.'"')->fetch_assoc();
-								echo '<tr><td class="admin thin"><input type="checkbox" name="'.$value['group_name'].'[]" value="'.$stu.'"></td><td class="admin thin">'.$student['first_name'].' '.$student['last_name'][0].'.</td></tr>';
+								echo '<tr><td class="admin thin"><input type="checkbox" name="'.$value['group_name'].'[]" value="'.$stu.'"></td><td class="admin thin">'.$student['first_name'].' '.$student['last_name'].'</td></tr>';
 							}
 							echo '<tr><td class="admin thin"><input value="X" name="lete" type="submit"></td><td class="admin thin"> </td></tr></form></table>';
 
@@ -320,19 +320,19 @@ require_once("connection.php");
 						if($_GET['page'] != '8' && $_GET['page'] != '1'){
 							echo'<td class="del admin"><input name="'.$value[$ident[0]].'" type="checkbox"></td>';
 						}foreach($index as $row => &$oi){
-							if($_GET['page'] != 9 && $oi == 'first_name'){
+							if($oi == 'first_name' && $_GET['page'] != '9'){
 								if($_GET['page'] != "1"){
 									$statorstu = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
-									echo '<td class="admin"><select name="'.$_POST['student'].','.$row.','.$col.'" class="newval"> <option value="'.$value['student_id'].'">'.$value[$oi].'</option>';
+									echo '<td class="admin"><select name="'.$_POST['student'].','.$row.','.$col.'" class="newval"> <option value="'.$value['student_id'].'">'.$value[$oi].' '.$value['last_name'].'</option>';
 									foreach($statorstu as $v){
 										if($v[$oi] != $value[$oi]){
-											echo '<option value="'.$v['student_id'].'" class="newval">'.$v[$oi].'</option>';
+											echo '<option value="'.$v['student_id'].'" class="newval">'.$v[$oi].' '.$v['last_name'].'</option>';
 										}
 									}
 									echo '</select><button name="go" class="submit" type="submit" value="'.$_POST['student'].','.$row.','.$col.'">￭</button></td>';
 	
-								}else{
-									echo '<td class="admin">'.$value[$oi].'</td>';
+								}elseif($_GET['page'] == 1){
+									echo '<td class="admin">'.$value[$oi].' '.$value['last_name'].'</td>';
 								}
 							}elseif($oi == 'status_name'){
 								$statorstu = $db->query('SELECT * FROM status_data ORDER BY status_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
@@ -386,7 +386,7 @@ require_once("connection.php");
 					$student = $db->query('SELECT student_id,first_name,last_name FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
 					echo '</div><form method="POST"><table class="block"><tr><th>Add</th><th>Student</th></tr>';
 					foreach($student as &$stu){
-						echo '<tr><td><input type="checkbox" name="stus[]" value="'.$stu['student_id'].'"></td><td>'.$stu['first_name'].' '.$stu['last_name'][0].'.</td></tr>';
+						echo '<tr><td><input type="checkbox" name="stus[]" value="'.$stu['student_id'].'"></td><td>'.$stu['first_name'].' '.$stu['last_name'].'</td></tr>';
 					}
 					$groups = $db->query('SELECT group_name FROM groups ORDER BY group_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
 					$grpDD = '<input name="group" type="text" list="group" placeholder="Group Name" class="newval"><datalist id="group" name="group" value="nwgrp">';
