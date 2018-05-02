@@ -1,6 +1,6 @@
 <?php
 
-require_once('connection.php');
+require_once '../connection.php';
 
 function mins_used($student_id) {
 		global $db;
@@ -35,7 +35,7 @@ function mins_used($student_id) {
 		return $time_elapsed;
 }
 
-function status_update($student, $status, $info = '', $return_time = '') {
+function status_update($student, $status, $info, $return_time) {
 
 	global $db;
   // Update current table with new event
