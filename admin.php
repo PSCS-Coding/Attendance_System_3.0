@@ -241,7 +241,7 @@ require_once("connection.php");
 								}else{
 									$rem = 'DELETE FROM '.$database.' WHERE '.$ident[0].' = "'.$column[$ident[0]].'"';
 								}
-								$db->query($rem);
+								$db->query($rem.' LIMIT 1');
 								$_POST[str_replace(' ','_',$column[$ident[0]])] = Null;
 							}
 						}
