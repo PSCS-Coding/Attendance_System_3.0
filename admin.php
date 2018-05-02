@@ -268,7 +268,7 @@ require_once("connection.php");
 								}
 							}
 						}elseif(!empty($_POST['group'])){
-							$db->query('INSERT INTO groups (`group_name`, `students`) VALUES( "'.$_POST['group'].'", "'.implode($_POST['stus'], ',').'");');
+							$db->query('INSERT INTO groups (`group_name`, `students`) VALUES( "'.mb_substr($_POST['group'], 0, 75).'", "'.implode($_POST['stus'], ',').'");');
 						}
 					}
 					$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
@@ -384,7 +384,7 @@ require_once("connection.php");
 						echo '<tr><td><input type="checkbox" name="stus[]" value="'.$stu['student_id'].'"></td><td>'.$stu['first_name'].' '.$stu['last_name'].'</td></tr>';
 					}
 					$groups = $db->query('SELECT group_name FROM groups ORDER BY group_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
-					$grpDD = '<input name="group" type="text" list="group" placeholder="Group Name" class="newval"><datalist id="group" name="group" value="nwgrp">';
+					$grpDD = '<input name="group" type="text" list="group" maxlength="75" placeholder="Group Name" class="newval"><datalist id="group" name="group" value="nwgrp">';
 					foreach($groups as &$gn){
 						$grpDD = $grpDD.'<option value="'.$gn['group_name'].'">'.$gn['group_name'].'</option>';
 					}
