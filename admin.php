@@ -54,11 +54,11 @@ $foo = count($valuess);
 					}
 				}
 	      var data = ev.dataTransfer.getData("text");
-				alert(contains[0]);
 				if(contains[0] == "true") {
 		      if(confirm("Remove " + document.getElementById(data).textContent + " from this group")) {
 						document.getElementById("addback").appendChild(document.getElementById(data));
 		        group.splice(contains[1], 1);
+						sortTable()
 		    	}
 		    }
 			}
@@ -66,7 +66,6 @@ $foo = count($valuess);
 	    function drop(ev) {
 	      ev.preventDefault();
 	      var data = ev.dataTransfer.getData("text");
-				alert(checkIfThere(group, document.getElementById(data)));
 	      if (true != checkIfThere(group, document.getElementById(data))) {
 	        if (confirm("Add " + document.getElementById(data).textContent + " to this group")) {
 	          group.push(data);
@@ -87,7 +86,7 @@ $foo = count($valuess);
 	              url:"groupUpdate.php",
 	              success: function(result){
 	                alert(result);
-	              }	        
+	              }
 	           });
 	         }else {
 	           alert("Name the group first");
@@ -99,6 +98,41 @@ $foo = count($valuess);
 			$(function(){
         $("#includedContent").load("sidebar.html");
       });
+
+			function sortTable() {
+			  var table, rows, switching, i, x, y, shouldSwitch;
+			  table = document.getElementById("myTable");
+			  switching = true;
+			  /* Make a loop that will continue until
+			  no switching has been done: */
+			  while (switching) {
+			    // Start by saying: no switching is done:
+			    switching = false;
+			    rows = table.getElementsByTagName("TR");
+			    /* Loop through all table rows (except the
+			    first, which contains table headers): */
+			    for (i = 1; i < (rows.length - 1); i++) {
+			      // Start by saying there should be no switching:
+			      shouldSwitch = false;
+			      /* Get the two elements you want to compare,
+			      one from current row and one from the next: */
+			      x = rows[i].getElementsByTagName("TD")[0];
+			      y = rows[i + 1].getElementsByTagName("TD")[0];
+			      // Check if the two rows should switch place:
+			      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+			        // I so, mark as a switch and break the loop:
+			        shouldSwitch= true;
+			        break;
+			      }
+			    }
+			    if (shouldSwitch) {
+			      /* If a switch has been marked, make the switch
+			      and mark that a switch has been done: */
+			      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+			      switching = true;
+			    }
+			  }
+			}
 	  </script>
 </head>
 <body class="back">
@@ -141,7 +175,7 @@ $foo = count($valuess);
 			  <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"><span><p id="div1">drag students here to add to group. students added to group:</p><p id="a1"></p></span></div>
 			  <div id="addedpeople"></div>
 			  <div id="drag1">
-			    <table>
+			    <table id="myTable">
 			      <th id="t1" ondrop="otherDrop(event)" ondragover="allowDrop(event)">students</th>
 			      <tbody id="addback" ondrop="otherDrop(event)" ondragover="allowDrop(event)">';
 			            for ($i=0; $i < $foo; $i++) {
