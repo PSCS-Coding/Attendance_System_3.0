@@ -104,7 +104,7 @@ require_once("connection.php");
 			}
 			//History
 			elseif((string)$_GET['page'] == "4"){
-				$ident = array('student_id','student_id');
+				$ident = array('student_id','first_name');
 				$goodpage = True;
 				$index = array('first_name','timestamp','status_name','info','return_time');
 				$database = 'history';
@@ -157,7 +157,7 @@ require_once("connection.php");
 				$goodpage = True;
 				$index = array('student_id','first_name','last_name','grad_year','veteran_year','current_offsite_hours','current_is_hours','priv','active');
 				$database = 'student_data';
-				$query = 'SELECT * FROM '.$database.';';
+				$query = 'SELECT * FROM '.$database.' ORDER BY first_name ASC;';
 			}
 			else{
 				echo "<h1>Bad URL!</h1>";
@@ -386,7 +386,7 @@ require_once("connection.php");
 					$groups = $db->query('SELECT group_name FROM groups ORDER BY group_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
 					$grpDD = '<input name="group" type="text" list="group" maxlength="75" placeholder="Group Name" class="newval"><datalist id="group" name="group" value="nwgrp">';
 					foreach($groups as &$gn){
-						$grpDD = $grpDD.'<option value="'.$gn['group_name'].'">'.$gn['group_name'].'</option>';
+						$grpDD = $grpDD.'<option value="'.$gn['group_name'].'">'.str_replace('_',' ', $gn['group_name']).'</option>';
 					}
 					echo '<tr><td>'.$grpDD.'</datalist><input value="+" type="submit"></td><td></td></tr></form></table>';
 
