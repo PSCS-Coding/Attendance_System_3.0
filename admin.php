@@ -285,6 +285,31 @@ require_once("connection.php");
 						echo '<th class="admin">'.ucwords(str_replace('_', ' ',$header)).'</th>';
 					}
 					echo'<form method="POST">';
+					if($_GET['page'] != '8' && $_GET['page'] != '1'){
+						echo '<tr><td class="del admin color"><input value="X" name="del" type="submit"></td>';
+						foreach($index as $row => &$oi){
+							if($row > 0){
+								echo'</td>';
+							}
+							if($_GET['page'] != 9 && $oi == 'first_name'){
+								$statorstu = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
+								echo '<td class="admin color"><select name="'.$oi.'" class="newval">';
+								foreach($statorstu as $v){
+									echo '<option value="'.$v['student_id'].'" class="newval">'.$v[$oi].' '.$v['last_name'].'</option>';
+								}
+							}elseif($oi == 'status_name'){
+								$statorstu = $db->query('SELECT * FROM status_data ORDER BY status_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
+								echo '<td class="admin color"><select name="'.$oi.'" class="newval">';
+								foreach($statorstu as $v){
+									echo '<option value="'.$v['status_id'].'" class="newval">'.$v[$oi].'</option>';
+								}
+							}else{
+								echo '<td class="admin color"><input type="text" name="'.$oi.'" class="newval" value="'.$values[0][$oi].'">';
+							}
+						}
+						echo '<button name="add" class="submit" type="submit" value="'.$_POST['student'].','.$row.','.$col.'">+</button></td></tr>';
+					}
+				
 				}else{
 					echo '</tr><div	class="groups">';
 				}
@@ -349,40 +374,10 @@ require_once("connection.php");
 						}
 						echo '</tr>';
 					}
+				}if($_GET['page'] != 3){
+					echo '</form></table>';
 				}
-				if($_GET['page'] != '3'){
-					if($_GET['page'] != '8' && $_GET['page'] != '1'){
-						echo '<tr><td class="del admin"><input value="X" name="del" type="submit"></td>';
-						foreach($index as $row => &$oi){
-							if($row > 0){
-								echo'</td>';
-							}
-
-							if($_GET['page'] != 9 && $oi == 'first_name'){
-								$statorstu = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
-								echo '<td class="admin"><select name="'.$oi.'" class="newval"> <option value="'.$value[$oi].'">'.$value[$oi].'</option>';
-								foreach($statorstu as $v){
-									if($v[$oi] != $value[$oi]){
-										echo '<option value="'.$v['student_id'].'" class="newval">'.$v[$oi].'</option>';
-									}
-								}
-							}elseif($oi == 'status_name'){
-								$statorstu = $db->query('SELECT * FROM status_data ORDER BY status_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
-								echo '<td class="admin"><select name="'.$oi.'" class="newval"> <option value="'.$value['status_id'].'">'.$value[$oi].'</option>';
-								foreach($statorstu as $v){
-									if($v[$oi] != $value[$oi]){
-										echo '<option value="'.$v['status_id'].'" class="newval">'.$v[$oi].'</option>';
-									}
-								}
-							}
-							
-							else{
-								echo '<td class="admin"><input type="text" name="'.$oi.'" class="newval" value="'.$value[$oi].'">';
-							}
-						}
-						echo '<button name="add" class="submit" type="submit" value="'.$_POST['student'].','.$row.','.$col.'">+</button></td></tr></form></table>';
-					}
-				}else{
+				else{
 					$student = $db->query('SELECT student_id,first_name,last_name FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
 					echo '</div><form method="POST"><table class="block"><tr><th>Add</th><th>Student</th></tr>';
 					foreach($student as &$stu){
