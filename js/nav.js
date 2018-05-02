@@ -1,7 +1,7 @@
 //navbar creator
-var getUserData = function() {
+var getUserData = function () {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", "/userinfo.php", false);
+    xmlHttp.open("GET", "../backend/userinfo.php", false);
     xmlHttp.send(null);
     return xmlHttp.responseText;
 };

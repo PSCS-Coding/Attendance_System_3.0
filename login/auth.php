@@ -1,10 +1,9 @@
 <?php
-    require_once 'google-api-php-client/vendor/autoload.php';
+    require_once '../external/google-api-php-client/vendor/autoload.php';
     require_once '../connection.php';
 
     // Get $id_token via HTTPS POST.
     $id_token = $_GET['id_token'];
-    $crypt = crypt($_GET['id_token'], 'P9');
 
     $client = new Google_Client(['client_id' => '1049698629280-prai66q0v2fba7d4vp701jo6d4mb9kct.apps.googleusercontent.com']);  // Specify the CLIENT_ID of the app that accesses the backend
     $payload = $client->verifyIdToken($id_token);
@@ -38,20 +37,20 @@
             if(in_array($email, $result)) {
               $imgurl = $_GET['imgurl'];
               $updateImage = $db->query("UPDATE student_data SET imgurl = '$imgurl' WHERE first_name = '$first' AND last_name = '$last'");
-              $updateTokenId = $db->query("UPDATE student_data SET token_id = '$crypt' WHERE first_name = '$first' AND last_name = '$last'");
+              $updateIdToken = $db->query("UPDATE student_data SET id_token = '$id_token' WHERE first_name = '$first' AND last_name = '$last'");
 
               $studentPriv = $db->query("SELECT priv FROM student_data WHERE first_name = '$first' AND last_name = '$last'");
-              setcookie("user", $crypt, time() + (86400 * 5), "/");
+              setcookie("user", $id_token, time() + (86400 * 5), "/");
               setcookie("imgurl", $imgurl, time() + (86400 * 5), "/");
               echo $studentPriv->fetch_array()[0];
 
             } elseif(in_array($email, $adminResult)) {
               $imgurl = $_GET['imgurl'];
               $updateImage = $db->query("UPDATE admins SET imgurl = '$imgurl' WHERE first_name = '$first' AND last_name = '$last'");
-              $updateTokenId = $db->query("UPDATE admins SET token_id = '$crypt' WHERE first_name = '$first' AND last_name = '$last'");
+              $updateIdToken = $db->query("UPDATE admins SET id_token = '$id_token' WHERE first_name = '$first' AND last_name = '$last'");
 
               $adminPriv = $db->query("SELECT priv FROM admins WHERE first_name = '$first' AND last_name = '$last'");
-              setcookie("user", $crypt, time() + (86400 * 5), "/");
+              setcookie("user", $id_token, time() + (86400 * 5), "/");
               setcookie("imgurl", $imgurl, time() + (86400 * 5), "/");
               echo '3';
             } else {

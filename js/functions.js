@@ -1,5 +1,5 @@
 function query(fn, id) {
-    var url = "../request.php?f=";
+    var url = "../backend/request.php?f=";
     if (id) {
         url += fn + "&id=" + id;
     } else {
@@ -22,7 +22,7 @@ function query(fn, id) {
 }
 
 function facilitatorNameToId(name) {
-    var url = "../request.php?f=facilitatorNameToId";
+    var url = "../backend/request.php?f=facilitatorNameToId";
     url += "&facilitator=" + name;
 
     var data = "";
@@ -41,7 +41,7 @@ function facilitatorNameToId(name) {
 }
 
 function locationNameToId(name) {
-    var url = "../request.php?f=locationNameToId";
+    var url = "../backend/request.php?f=locationNameToId";
     url += "&location=" + name;
 
     var data = "";
@@ -60,7 +60,7 @@ function locationNameToId(name) {
 }
 
 function studentNameToId(fname, lname) {
-    var url = "../request.php?f=studentNameToId";
+    var url = "../backend/equest.php?f=studentNameToId";
     url += "&fname=" + fname + "&lname=" + lname;
 
     var data = "";
@@ -79,7 +79,7 @@ function studentNameToId(fname, lname) {
 }
 
 function changeStatus(student_ids, status_id, info, return_time) {
-    var url = "../request.php?f=changeStatus";
+    var url = "../backend/request.php?f=changeStatus";
     url +=
         "&student_id=" +
         student_ids +
