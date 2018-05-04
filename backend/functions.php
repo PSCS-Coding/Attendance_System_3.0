@@ -1,6 +1,6 @@
 <?php
 
-require_once '../connection.php';
+require_once 'connection.php';
 
 function mins_used($student_id) {
 		global $db;

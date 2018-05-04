@@ -1,5 +1,5 @@
 <?php
-  require_once('../connection.php');
+  require_once('../backend/connection.php');
   //verify password login and set login cookie
   if(isset($_POST['pass'])) {
     if(isset($_COOKIE['user'])) {
@@ -14,7 +14,11 @@
     if($loginResult[0] == crypt($_POST['pass'], 'P9')) {
       $cook = crypt($_POST['pass'], 'P9');
       setcookie("login", $cook, time() + (86400 * 5), "/");
-      header('Location: ../');
+      if(!empty($_GET['redirect_uri'])) {
+        header('Location: ' . $_GET['redirect_uri']);
+      } else {
+        header('Location: ../');
+      }
     } else {
       header('Location: ../login/?wrong=true');
     }

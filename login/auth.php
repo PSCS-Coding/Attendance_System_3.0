@@ -1,11 +1,19 @@
 <?php
     require_once '../external/google-api-php-client/vendor/autoload.php';
-    require_once '../connection.php';
+    require_once '../backend/connection.php';
+
+    if(!empty($_GET['out']) && $_GET['out'] == 'true') {
+        setcookie("user", 'test', time() - 3600, "/");
+        setcookie("login", 'test', time() - 3600, "/");
+        die();
+    }
 
     // Get $id_token via HTTPS POST.
     $id_token = $_GET['id_token'];
 
-    $client = new Google_Client(['client_id' => '1049698629280-prai66q0v2fba7d4vp701jo6d4mb9kct.apps.googleusercontent.com']);  // Specify the CLIENT_ID of the app that accesses the backend
+    $client = new Google_Client(['client_id' => '1049698629280-prai66q0v2fba7d4vp701jo6d4mb9kct.apps.googleusercontent.com']);
+    $guzzleClient = new \GuzzleHttp\Client(array( 'curl' => array( CURLOPT_SSL_VERIFYPEER => false, ), ));
+$client->setHttpClient($guzzleClient);
     $payload = $client->verifyIdToken($id_token);
     if ($payload) {
       $userid = $payload['sub'];
@@ -58,8 +66,8 @@
             }
         }
       } else {
-        setcookie("user", $_GET['imgurl'], time() - 3600, "/");
-        setcookie("login", $_GET['imgurl'], time() - 3600, "/");
+        setcookie("user", 'test', time() - 3600, "/");
+        setcookie("login", 'test', time() - 3600, "/");
         echo 'bad verification';
       }
     } else {

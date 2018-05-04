@@ -1,6 +1,6 @@
 <?php
 require_once 'verify.php';
-require_once 'connection.php';
+require_once 'backend/connection.php';
 require_once 'header.php';
 ?>
 
@@ -13,7 +13,7 @@ require_once 'header.php';
             Attendence System
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="media/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" type="text/css" href="style.css">
         <link rel="stylesheet" type="text/css" href="js/timepicker/jquery.timepicker.min.css">
         <script src='js/timepicker/jquery.timepicker.min.js'></script>

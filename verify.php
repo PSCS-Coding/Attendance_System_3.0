@@ -1,5 +1,5 @@
 <?php
-    require_once 'connection.php';
+    require_once 'backend/connection.php';
     //pages that require admin access should require verify.php AFTER setting the variable $using_admin to true:
     //example:
     //$using_admin = true;
@@ -15,7 +15,11 @@
                 if($using_admin !== true) {
                     $row_cnt++;
                 } else {
-                    die('<h1>You do not have permission to access this page.</h1>'); // let me know what you think we should put here...
+                    if(isset($_SERVER['HTTP_REFERER'])) {
+                        die('<h1>You do not have permission to access this page. Click <a href="' . $_SERVER['HTTP_REFERER'] .'">here</a> to go back.</h1>');
+                    } else {
+                        die('<h1>You do not have permission to access this page. Click <a href="./">here</a> to go to the main page.</h1>');
+                    }
                 }
             }
         }
@@ -31,7 +35,7 @@
         if($row_cnt < 1) {
             setcookie("user", $_GET['imgurl'], time() - 3600, "/");
             setcookie("login", $_GET['imgurl'], time() - 3600, "/");
-            header('Location: login/?to=' . $_SERVER['REQUEST_URI']);
+            header('Location: login/?redirect_uri=' . $_SERVER['REQUEST_URI']);
         }
       } elseif(!empty($_COOKIE['login'])) {
         //login verification
@@ -45,10 +49,10 @@
         if($_COOKIE['login'] != $loginResult[0]) {
             setcookie("user", $_GET['imgurl'], time() - 3600, "/");
             setcookie("login", $_GET['imgurl'], time() - 3600, "/");
-            header('Location: login/?to=' . $_SERVER['REQUEST_URI']);
+            header('Location: login/?redirect_uri=' . $_SERVER['REQUEST_URI']);
         }
       } else {
-        header('Location: login/?to=' . $_SERVER['REQUEST_URI']);
+        header('Location: login/?redirect_uri=' . $_SERVER['REQUEST_URI']);
       }
 
 ?>

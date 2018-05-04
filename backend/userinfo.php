@@ -1,5 +1,5 @@
 <?php
-  require_once('../connection.php');
+  require_once('connection.php');
   require_once('../verify.php');
   if(!empty($_COOKIE['user'])) {
     $imgurl = $_COOKIE['imgurl'];
