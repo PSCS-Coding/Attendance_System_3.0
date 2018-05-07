@@ -1,24 +1,8 @@
 <?php
 require_once 'verify.php';
 require_once 'backend/connection.php';
-require_once 'header.php';
+require_once 'head.php';
 ?>
-
-    <!DOCTYPE html>
-
-    <html>
-
-    <head>
-        <title>
-            Attendence System
-        </title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="shortcut icon" href="media/favicon.ico" type="image/x-icon" />
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <link rel="stylesheet" type="text/css" href="js/timepicker/jquery.timepicker.min.css">
-        <script src='js/timepicker/jquery.timepicker.min.js'></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
-    </head>
 
     <body class='noselect'>
         <div class='sticky-top'>
