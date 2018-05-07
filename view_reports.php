@@ -105,18 +105,23 @@ function actual_lates($student_id) {
     $date2 = new DateTime ($all_events[0][2]);
     $place_time = new DateTime;
 
+#the bug we had with the following loop for a SUPER long time was because we were forgetting that the date1 was constantly being reassigned right below
     for ($k = 1; $k < $number_events; $k++) {
-      $date22 = new DateTime($all_events[$k][2]);
+
       //echo $date2;
-      $newdate1 = new DateTime($date1->format('Y-m-d' . '9:00:00'));
-      $newdate2 = new DateTime($date22->format('Y-m-d' . '9:00:00'));
+      $date1_9 = new DateTime($date1->format('Y-m-d' . '9:00:00'));
+      $date2 = new DateTime($all_events[$k][2]);
+      $date2_9 = new DateTime($date2->format('Y-m-d' . '9:00:00'));
 
       if($date1 < $date2) {
-        $date1 = $all_events[$k][2];
-
-        if($date1 > $date2 && $date1 -> format("w") != 0 && $date1 -> format("w") != 6) {
-            $randomvar = 0;
+        $date1 = new DateTime($all_events[$k][2]);
+        $randomvar = 0;
+        if($date1 > $date2 && $date1->format("w") != 0 && $date1->format("w") != 6) {
+            $randomvar = 1;
         }
+        echo '<br/>';
+        echo $randomvar;
+        echo '';
       }
     }
   }
