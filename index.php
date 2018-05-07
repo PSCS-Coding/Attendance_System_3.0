@@ -46,22 +46,7 @@ function enquote($text){
 		echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST"><input type="hidden" name="student" value="DAILY_RESET"><input type="hidden" name="return_time" value=0> <input type=hidden name=current value="0"><input type="hidden" name="new" value=0> <input type="submit" class="reset" name="change" value="Set all to \'Not checked in\'"></form>';
 		?>
 	<a class="buttons" href="statusview.php">Status</a>
-	<a class="buttons" href="achievements.php">Achievements</a>
-	<div class = "sidebar">
-		admin
-		<a class= "sidetext" href="admin.php?page=0">Allotted Hours</a>
-		<a class= "sidetext" href="admin.php?page=1">Current Events</a>
-		<a class= "sidetext" href="admin.php?page=2">Facilitator Edit View</a>
-		<a class= "sidetext" href="admin.php?page=3">Group Edit View</a>
-		<a class= "sidetext" href="admin.php?page=4">History</a>
-		<a class= "sidetext" href="admin.php?page=5">Holidays</a>
-		<a class= "sidetext" href="admin.php?page=6">Offsit Locations</a>
-		<a class= "sidetext" href="admin.php?page=7">Passwords</a>
-		<a class= "sidetext" href="admin.php?page=8">School Hours</a>
-		<a class= "sidetext" href="admin.php?page=9">Student Edit View</a>
-		front end
-		<a class= "sidetext" href="index.php">Front Page</a>
-		<a class= "sidetext" href="statusview.php">Status</a>
+	<div class = "sidebar" id="includedContent">
 	</div>
     <div id="main-table">
       <table>
@@ -110,6 +95,9 @@ function enquote($text){
 	    </div>
     <script type="text/javascript" src="js/changeStatus.js"></script>
 		<script type="text/javascript">
+		$(function(){
+			$("#includedContent").load("sidebar.html");
+		});
 			$('.late').timepicker({
 		    'minTime': '9:00am',
 		    'maxTime': '3:40pm',

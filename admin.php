@@ -33,7 +33,11 @@ $foo = count($valuess);
 
 	    function checkIfThere(arr, val) {
 	      return arr.some(function(arrVal) {
-	        return val = arrVal;
+					if(val == arrVal) {
+	        	return val = true;
+					}else {
+						return val = false;
+					}
 	      });
 	    }
 
@@ -58,7 +62,6 @@ $foo = count($valuess);
 		      if(confirm("Remove " + document.getElementById(data).textContent + " from this group")) {
 						document.getElementById("addback").appendChild(document.getElementById(data));
 		        group.splice(contains[1], 1);
-						sortTable()
 		    	}
 		    }
 			}
@@ -69,7 +72,7 @@ $foo = count($valuess);
 	      if (true != checkIfThere(group, document.getElementById(data))) {
 	        if (confirm("Add " + document.getElementById(data).textContent + " to this group")) {
 	          group.push(data);
-	          ev.target.appendChild(document.getElementById(data));
+	          document.getElementById("div1").appendChild(document.getElementById(data));
 	        }
 	      } else {
 	        alert(document.getElementById(data).textContent + " is already in this group");
@@ -98,49 +101,14 @@ $foo = count($valuess);
 			$(function(){
         $("#includedContent").load("sidebar.html");
       });
-
-			function sortTable() {
-			  var table, rows, switching, i, x, y, shouldSwitch;
-			  table = document.getElementById("myTable");
-			  switching = true;
-			  /* Make a loop that will continue until
-			  no switching has been done: */
-			  while (switching) {
-			    // Start by saying: no switching is done:
-			    switching = false;
-			    rows = table.getElementsByTagName("TR");
-			    /* Loop through all table rows (except the
-			    first, which contains table headers): */
-			    for (i = 1; i < (rows.length - 1); i++) {
-			      // Start by saying there should be no switching:
-			      shouldSwitch = false;
-			      /* Get the two elements you want to compare,
-			      one from current row and one from the next: */
-			      x = rows[i].getElementsByTagName("TD")[0];
-			      y = rows[i + 1].getElementsByTagName("TD")[0];
-			      // Check if the two rows should switch place:
-			      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-			        // I so, mark as a switch and break the loop:
-			        shouldSwitch= true;
-			        break;
-			      }
-			    }
-			    if (shouldSwitch) {
-			      /* If a switch has been marked, make the switch
-			      and mark that a switch has been done: */
-			      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-			      switching = true;
-			    }
-			  }
-			}
 	  </script>
 </head>
 <body class="back">
 	<div class = "sidebar" id="includedContent">
 	</div>
 	<div>
-		<?php
-			$goodpage = false;
+	  <?php
+ 			$goodpage = false;
 			//Allotted Hours
 			if((string)$_GET['page'] == "0"){
 				$goodpage = True;
@@ -197,7 +165,7 @@ $foo = count($valuess);
 				}
 				echo'<input type="submit" name="go" class="submit" value="￭"></select></form>';
 				$query = 'SELECT * FROM '.$database.' INNER JOIN student_data ON history.student_id = student_data.student_id INNER JOIN status_data ON history.status_id = status_data.status_id ';
-				if($_POST['student'] != Null){
+				if(!empty($_POST['student'])	){
 					$query = $query.'WHERE history.student_id = '.$_POST['student'];
 				}$query = $query.' ORDER BY event_id DESC';
 			}
@@ -243,25 +211,27 @@ $foo = count($valuess);
 				$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 				if(!empty($values)){
 					if(!empty($_POST)){
-						if($_POST['go']){
-							if((string)$_GET['page'] == "1"){
-								if($_POST['row'] == '0'){
-									$q = 'UPDATE '.$database.' SET student_id = "'.$_POST['new'].'" WHERE student_id = '.$values[$_POST['col']]['student_id'].';';
-								}elseif($_POST['row'] == '1'){
-									$q = 'UPDATE '.$database.' SET status_id = "'.$_POST['new'].'" WHERE student_id = '.$values[$_POST['col']]['student_id'].';';
+						if(!empty($_POST['go'])) {
+							if($_POST['go']){
+								if((string)$_GET['page'] == "1"){
+									if($_POST['row'] == '0'){
+										$q = 'UPDATE '.$database.' SET student_id = "'.$_POST['new'].'" WHERE student_id = '.$values[$_POST['col']]['student_id'].';';
+									}elseif($_POST['row'] == '1'){
+										$q = 'UPDATE '.$database.' SET status_id = "'.$_POST['new'].'" WHERE student_id = '.$values[$_POST['col']]['student_id'].';';
+									}else{
+										$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
+									}
+								}elseif((string)$_GET['page'] == "4"){
+									if($_POST['row'] == '0'){
+										$q = 'UPDATE '.$database.' SET student_id = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
+									}elseif($_POST['row'] == '2'){
+										$q = 'UPDATE '.$database.' SET status_id = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
+									}else{
+										$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
+									}
 								}else{
-									$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
+									$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]].';';
 								}
-							}elseif((string)$_GET['page'] == "4"){
-								if($_POST['row'] == '0'){
-									$q = 'UPDATE '.$database.' SET student_id = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
-								}elseif($_POST['row'] == '2'){
-									$q = 'UPDATE '.$database.' SET status_id = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
-								}else{
-									$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
-								}
-							}else{
-								$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST['new'].'" WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]].';';
 							}
 							$db->query($q);
 						}elseif($_POST['add']){

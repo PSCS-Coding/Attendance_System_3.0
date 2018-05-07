@@ -22,7 +22,7 @@ Status View
 						$late = array();
 						$independent_study = array();
 						$absent = array();
-						$x = 1;
+						$x = 0;
 						$status_id = 0;
 						foreach ($current as $key => $value) {
 						$status_id = ($value['status_id']);
@@ -50,7 +50,7 @@ Status View
 							if ($status_id == 7) {
 								$absent[] = $value['first_name'];
 							}
-							$x = $x + 1;
+							$x++;
             }
 	?>
 	<div>
@@ -61,7 +61,7 @@ Status View
 			$arrlength = count($not_checked_in);
 			for($x = 0; $x < $arrlength; $x++) {
 				echo "<ul>";
-    			echo "<li>"."$not_checked_in[$x]"."</li>";
+    			echo "<li>".$not_checked_in[$x]."</li>";
 				echo "</ul>";
 			}
 		?>
