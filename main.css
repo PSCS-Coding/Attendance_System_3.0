@@ -1,0 +1,143 @@
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #444444;
+  font-family: "Nunito", sans-serif;
+  line-height: 1.6;
+  background-color: #222222;
+}
+
+body {
+  margin: 1rem 0;
+}
+
+a {
+  color: #7983ff;
+  text-decoration: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.container {
+  /*max-width: 850px;*/
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+@media screen and (min-width: 800px) {
+  .flex-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
+.card {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 50%;
+  flex: 1 1 50%;
+  /*border: 1px solid #efefef;*/
+  margin: 15px 0;
+  -webkit-box-shadow: 2px 6px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 6px 25px rgba(0, 0, 0, 0.1);
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  background-color: #2d2d2d;
+}
+
+.card:hover {
+  -webkit-box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  line-height: 1.2;
+  color: #cccccc;
+}
+
+.card p {
+  margin: 0 0 10px;
+  color: #cccccc;
+  font-size: 0.9rem;
+}
+
+.card .subtitle {
+  margin: -3px 0px -3px 0px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #dec577;
+}
+
+.card .card-content {
+  padding: 10px 30px 0px;
+}
+
+.card .options a {
+  color: #666666;
+}
+
+.card .options a:hover {
+  color: #222222;
+}
+
+.card .options .fa {
+  margin-right: 0.25rem;
+}
+
+@media screen and (min-width: 800px) {
+  .card {
+    margin: 0.5rem;
+  }
+}
+
+.button {
+  display: inline-flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  background: #4c56d6;
+  border: 1px solid #4c56d6;
+  padding: 10px 15px;
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  text-align: center;
+}
+
+.button:hover,
+.button:focus {
+  background: #333dc5;
+  border: 1px solid #333dc5;
+}
+
+.hover-underline-animation {
+  display: inline-block;
+  position: relative;
+  color: #4c56d6;
+}
+
+.hover-underline-animation::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #4c56d6;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
