@@ -77,7 +77,7 @@
 					type:"POST",
 					data:{student:student_id,group:group_name},
 					dataType: "text",
-					url:"addtogroup.php"
+					url:"backend/addtogroup.php"
 			    });
 		});
 
