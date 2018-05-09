@@ -106,25 +106,37 @@ function actual_lates($student_id) {
     $place_time = new DateTime;
 
 #the bug we had with the following loop for a SUPER long time was because we were forgetting that the date1 was constantly being reassigned right below
+    $randomvar = 0;
+    print_r($date1);
     for ($k = 1; $k < $number_events; $k++) {
 
+      $date1 = new DateTime($all_events[$k][2]);
+      //print_r($test1);
+      $test = new DateTime($all_events[$k-1][2]);
+      if ($date1->format('Y-m-d') == $test->format('Y-m-d')) {
+        continue;
+      }
       //echo $date2;
       $date1_9 = new DateTime($date1->format('Y-m-d' . '9:00:00'));
-      $date2 = new DateTime($all_events[$k][2]);
-      $date2_9 = new DateTime($date2->format('Y-m-d' . '9:00:00'));
+      //$date2 = new DateTime($all_events[$k][2]);
+      $date2 = new DateTime($date1->format('Y-m-d' . '9:00:00'));
 
-      if($date1 < $date2) {
+      if($date1 > $date2) {
         $date1 = new DateTime($all_events[$k][2]);
-        $randomvar = 0;
-        if($date1 > $date2 && $date1->format("w") != 0 && $date1->format("w") != 6) {
-            $randomvar = 1;
+        $unexpectedlates++;
+
+        /*if($date1 > $date2 && $date1->format("w") != 0 && $date1->format("w") != 6) {
+            $randomvar++;
         }
-        echo '<br/>';
-        echo $randomvar;
-        echo '';
+        else {
+          $randomvar--;
+
+        }*/
       }
     }
-  }
+    echo '<br/>';
+    echo $unexpectedlates;
+}
 
     /*separate list by date
     check time of the first event of the DAY
@@ -145,7 +157,6 @@ function actual_lates($student_id) {
 
     }
 
-    *//*
     $unexpectedlates = 0;
     $date1 = new DateTime ($all_events[0][2]);
     $date2 = new DateTime ($all_events[0][2]);
