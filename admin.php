@@ -84,7 +84,7 @@ require_once("connection.php");
 				$goodpage = True;
 				$index = array('first_name','status_name','info','return_time');
 				$database = 'current';
-				$query = 'SELECT * FROM '.$database.' INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name ASC;';
+				$query = 'SELECT * FROM '.$database.' INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id WHERE student_data.active = "1" ORDER BY first_name ASC;';
 			}
 			//Facilitator Edit View
 			elseif((string)$_GET['page'] == "2"){
@@ -215,12 +215,13 @@ require_once("connection.php");
 						}
 						$q = 'INSERT INTO '.$database.' ('.$id.') VALUES ('.$v.')';
 						$db->query($q);
-						$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 						if((string)$_GET['page'] == "9"){
-							$q = 'INSERT INTO current (student_id,status_id) VALUES ("'.$values[count($values)-1][$index[0]].'", "0")';
+							$values = $db->query('SELECT * FROM '.$database.';')->fetch_all($resulttype = MYSQLI_ASSOC);
+							$q = 'INSERT INTO current (student_id,status_id) VALUES ("'.$values[count($values)-1]['student_id'].'", "0")';
 							echo $q;
 							$db->query($q);
 						}
+						$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 					}
 					elseif($_POST['del']){
 						foreach($values as &$column){
@@ -375,7 +376,7 @@ require_once("connection.php");
 					echo '</form></table>';
 				}
 				else{
-					$student = $db->query('SELECT student_id,first_name,last_name FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
+					$student = $db->query('SELECT student_id,first_name,last_name FROM student_data WHERE active = "1" ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
 					echo '</div><form method="POST"><table class="block"><tr><th>Add</th><th>Student</th></tr>';
 					foreach($student as &$stu){
 						echo '<tr><td><input type="checkbox" name="stus[]" value="'.$stu['student_id'].'"></td><td>'.$stu['first_name'].' '.$stu['last_name'].'</td></tr>';
