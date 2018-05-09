@@ -216,8 +216,8 @@ require_once("connection.php");
 						$q = 'INSERT INTO '.$database.' ('.$id.') VALUES ('.$v.')';
 						$db->query($q);
 						$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-						if((string)$_GET['page'] == "9"){ // THIS IS BROKE RN
-							$q = 'INSERT INTO current (student_id,status_id) VALUES ("'.$values[count($values)-1][$index[0]].'", 0)';
+						if((string)$_GET['page'] == "9"){
+							$q = 'INSERT INTO current (student_id,status_id) VALUES ("'.$values[count($values)-1][$index[0]].'", "0")';
 							echo $q;
 							$db->query($q);
 						}
@@ -282,7 +282,7 @@ require_once("connection.php");
 						echo '<th class="admin">'.ucwords(str_replace('_', ' ',$header)).'</th>';
 					}
 					echo'<form method="POST">';
-					if($_GET['page'] != '8' && $_GET['page'] != '1' && $_GET['page'] != 7){
+					if($_GET['page'] != '8' && $_GET['page'] != '1' && $_GET['page'] != '7'){
 						echo '<tr><td class="del admin color"><input value="X" name="del" type="submit"></td>';
 						foreach($index as $row => &$oi){
 							if($row > 0){
