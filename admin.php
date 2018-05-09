@@ -109,100 +109,102 @@ $foo = count($valuess);
 	<div>
 	  <?php
  			$goodpage = false;
-			//Allotted Hours
-			if((string)$_GET['page'] == "0"){
-				$goodpage = True;
-				$index = array('veteran_year','default_offsite','default_is');
-				$database = 'allotted_hours';
-				$query = 'SELECT * FROM '.$database.';';
-			}
-			//Current Events
-			elseif((string)$_GET['page'] == "1"){
-				$goodpage = True;
-				$index = array('first_name','status_name','info','return_time');
-				$database = 'current';
-				$query = 'SELECT * FROM '.$database.' INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name ASC;';
-			}
-			//Facilitator Edit View
-			elseif((string)$_GET['page'] == "2"){
-				$goodpage = True;
-				$index = array('facilitator_name');
-				$database = 'facilitators';
-				$query = 'SELECT * FROM '.$database.';';
-			}
-			//Group Edit View
-			elseif((string)$_GET['page'] == "3"){
-				$goodpage = True;
-		      $index = array('group_name','students');
-		      $database = 'groups';
-			  $query = 'SELECT * FROM '.$database.';';
-				echo '<form method="POST">
-			    <input id="form" type="text" name="gname" placeholder="Group name">
-			  </form>
-			  <button type="button" onClick="sendgroupstuff()">Finish creating group</button>
-			  <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"><span><p id="div1">drag students here to add to group. students added to group:</p><p id="a1"></p></span></div>
-			  <div id="addedpeople"></div>
-			  <div id="drag1">
-			    <table id="myTable">
-			      <th id="t1" ondrop="otherDrop(event)" ondragover="allowDrop(event)">students</th>
-			      <tbody id="addback" ondrop="otherDrop(event)" ondragover="allowDrop(event)">';
-			            for ($i=0; $i < $foo; $i++) {
-			                echo "<tr id='".$valuess[$i]['student_id']."' draggable='true' ondragstart='drag(event)'><td>".$valuess[$i]['first_name']." ".$valuess[$i]['last_name'][0]."</td></tr>";
-			            }
-			     echo "</tbody>
-			    </table>
-			  </div>";
-			}
-			//History
-			elseif((string)$_GET['page'] == "4"){
-				$goodpage = True;
-				$index = array('first_name','timestamp','status_name','info','return_time');
-				$database = 'history';
-				$students = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
-				echo '<form class="reset" method="POST"><select name="student" class="newval"> <option value="">All</option>';
-				foreach($students as &$stdnt){
-					echo '<option value="'.$stdnt['student_id'].'">'.$stdnt['first_name'].'</option>';
+			if(!empty($_GET['page'])) {
+				//Allotted Hours
+				if((string)$_GET['page'] == "0"){
+					$goodpage = True;
+					$index = array('veteran_year','default_offsite','default_is');
+					$database = 'allotted_hours';
+					$query = 'SELECT * FROM '.$database.';';
 				}
-				echo'<input type="submit" name="go" class="submit" value="￭"></select></form>';
-				$query = 'SELECT * FROM '.$database.' INNER JOIN student_data ON history.student_id = student_data.student_id INNER JOIN status_data ON history.status_id = status_data.status_id ';
-				if(!empty($_POST['student'])	){
-					$query = $query.'WHERE history.student_id = '.$_POST['student'];
-				}$query = $query.' ORDER BY event_id DESC';
-			}
-			//Holidays
-			elseif((string)$_GET['page'] == "5"){
-				$goodpage = True;
-				$index = array('holiday_name','holiday_date');
-				$database = 'holidays';
-				$query = 'SELECT * FROM '.$database.';';
-			}
-			//Offsite Locations
-			elseif((string)$_GET['page'] == "6"){
-				$goodpage = True;
-				$index = array('location_name');
-				$database = 'offsite_locations';
-				$query = 'SELECT * FROM '.$database.';';
-			}
-			//Passwords
-			elseif((string)$_GET['page'] == "7"){
-				$goodpage = True;
-				$index = array('login_year','login_password');
-				$database = 'login';
-				$query = 'SELECT * FROM '.$database.';';
-			}
-			//School Hours
-			elseif((string)$_GET['page'] == "8"){
-				$goodpage = True;
-				$index = array('start_time','end_time');
-				$database = 'globals';
-				$query = 'SELECT * FROM '.$database.';';
-			}
-			//Student Edit View
-			elseif((string)$_GET['page'] == "9"){
-				$goodpage = True;
-				$index = array('student_id','first_name','last_name','grad_year','veteran_year','current_offsite_hours','current_is_hours','priv','user_id','active');
-				$database = 'student_data';
-				$query = 'SELECT * FROM '.$database.';';
+				//Current Events
+				elseif((string)$_GET['page'] == "1"){
+					$goodpage = True;
+					$index = array('first_name','status_name','info','return_time');
+					$database = 'current';
+					$query = 'SELECT * FROM '.$database.' INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name ASC;';
+				}
+				//Facilitator Edit View
+				elseif((string)$_GET['page'] == "2"){
+					$goodpage = True;
+					$index = array('facilitator_name');
+					$database = 'facilitators';
+					$query = 'SELECT * FROM '.$database.';';
+				}
+				//Group Edit View
+				elseif((string)$_GET['page'] == "3"){
+					$goodpage = True;
+			      $index = array('group_name','students');
+			      $database = 'groups';
+				  $query = 'SELECT * FROM '.$database.';';
+					echo '<form method="POST">
+				    <input id="form" type="text" name="gname" placeholder="Group name">
+				  </form>
+				  <button type="button" onClick="sendgroupstuff()">Finish creating group</button>
+				  <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"><span><p id="div1">drag students here to add to group. students added to group:</p><p id="a1"></p></span></div>
+				  <div id="addedpeople"></div>
+				  <div id="drag1">
+				    <table id="myTable">
+				      <th id="t1" ondrop="otherDrop(event)" ondragover="allowDrop(event)">students</th>
+				      <tbody id="addback" ondrop="otherDrop(event)" ondragover="allowDrop(event)">';
+				            for ($i=0; $i < $foo; $i++) {
+				                echo "<tr id='".$valuess[$i]['student_id']."' draggable='true' ondragstart='drag(event)'><td>".$valuess[$i]['first_name']." ".$valuess[$i]['last_name'][0]."</td></tr>";
+				            }
+				     echo "</tbody>
+				    </table>
+				  </div>";
+				}
+				//History
+				elseif((string)$_GET['page'] == "4"){
+					$goodpage = True;
+					$index = array('first_name','timestamp','status_name','info','return_time');
+					$database = 'history';
+					$students = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
+					echo '<form class="reset" method="POST"><select name="student" class="newval"> <option value="">All</option>';
+					foreach($students as &$stdnt){
+						echo '<option value="'.$stdnt['student_id'].'">'.$stdnt['first_name'].'</option>';
+					}
+					echo'<input type="submit" name="go" class="submit" value="￭"></select></form>';
+					$query = 'SELECT * FROM '.$database.' INNER JOIN student_data ON history.student_id = student_data.student_id INNER JOIN status_data ON history.status_id = status_data.status_id ';
+					if(!empty($_POST['student'])	){
+						$query = $query.'WHERE history.student_id = '.$_POST['student'];
+					}$query = $query.' ORDER BY event_id DESC';
+				}
+				//Holidays
+				elseif((string)$_GET['page'] == "5"){
+					$goodpage = True;
+					$index = array('holiday_name','holiday_date');
+					$database = 'holidays';
+					$query = 'SELECT * FROM '.$database.';';
+				}
+				//Offsite Locations
+				elseif((string)$_GET['page'] == "6"){
+					$goodpage = True;
+					$index = array('location_name');
+					$database = 'offsite_locations';
+					$query = 'SELECT * FROM '.$database.';';
+				}
+				//Passwords
+				elseif((string)$_GET['page'] == "7"){
+					$goodpage = True;
+					$index = array('login_year','login_password');
+					$database = 'login';
+					$query = 'SELECT * FROM '.$database.';';
+				}
+				//School Hours
+				elseif((string)$_GET['page'] == "8"){
+					$goodpage = True;
+					$index = array('start_time','end_time');
+					$database = 'globals';
+					$query = 'SELECT * FROM '.$database.';';
+				}
+				//Student Edit View
+				elseif((string)$_GET['page'] == "9"){
+					$goodpage = True;
+					$index = array('student_id','first_name','last_name','grad_year','veteran_year','current_offsite_hours','current_is_hours','priv','user_id','active');
+					$database = 'student_data';
+					$query = 'SELECT * FROM '.$database.';';
+				}
 			}
 			else{
 				echo "<h1>Bad URL!</h1>";

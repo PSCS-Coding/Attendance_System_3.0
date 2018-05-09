@@ -6,12 +6,14 @@ function hrs_used($student_id) {
 		global $db;
 
 		$lastEventTimeQuery = $db->query("SELECT timestamp FROM history WHERE student_id = '$student_id' ORDER BY event_id DESC LIMIT 1");
-		$time1 = new DateTime($lastEventTimeQuery->fetch_array()[0]); // last event in the history table
+		$timeinput = $lastEventTimeQuery->fetch_array();
+		$time1 = new DateTime($timeinput[0]); // last event in the history table
 		if (isWeekend($time1->format('Y-m-d'))) {
 			return 0;
 		}
 		$holQuery = $db->query("SELECT COUNT(*) FROM holidays WHERE holiday_date =" . $time1->format('Y-m-d'));
-		if ($holQuery->fetch_array()[0] != 0) {
+		$HolQuery = $holQuery->fetch_array();
+		if ($HolQuery[0] != 0) {
 			return 0;
 		}
 
