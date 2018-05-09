@@ -9,7 +9,7 @@ require_once("connection.php");
   	<title>
 	    Atendance�Sistim�100�Persent�Compleet�Perfict�No�Virus�Downlode�Free�Affective�end�Afficient�Profetional�Git�it�Now�Easy�Set�Up�Aply�Today�Has�Enyone�Really�Been�Far�Even�as�Descided�to�Use�Evin�Go�Wunt�to�do�Look�Mor�Like�Go�Further�You�Can�Realy�be�Far�It's�Just�Commin�Sense�Low�Price�Great�Deel�No�Charge�Limited�Time�Ofter
   	</title>
-  	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="style.css">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<?php if($_GET['page'] != '3'){
@@ -41,7 +41,7 @@ require_once("connection.php");
 		<a class= "sidetext" href="admin.php?page=4">History</a>
 		<a class= "sidetext" href="admin.php?page=5">Holidays</a>
 		<a class= "sidetext" href="admin.php?page=6">Offsite Locations</a>
-    		<a class= "sidetext" href="admin.php?page=7">Passwords</a>
+    	<a class= "sidetext" href="admin.php?page=7">Password</a>
 		<a class= "sidetext" href="admin.php?page=8">School Hours</a>
 		<a class= "sidetext" href="admin.php?page=9">Student Edit View</a>
 		front end
@@ -51,7 +51,6 @@ require_once("connection.php");
 	<div>
 		<?php
 
-		//TODO Fix first_name issues!!!
 			if(!empty($_POST['go'])){
 				$go = explode(',',$_POST['go']);
 				if(empty($_POST['student']) && !empty($go[0])){
@@ -137,9 +136,9 @@ require_once("connection.php");
 			}
 			//Passwords
 			elseif((string)$_GET['page'] == "7"){
-				$ident = array('login_year','login_year');
+				$ident = array('login_password','login_password');
 				$goodpage = True;
-				$index = array('login_year','login_password');
+				$index = array('login_password');
 				$database = 'login';
 				$query = 'SELECT * FROM '.$database.';';
 			}
@@ -189,7 +188,7 @@ require_once("connection.php");
 						}elseif((string)$_GET['page'] == "6"){
 							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE location_id = '.$values[$_POST['col']]['location_id'].';';
 						}elseif($index[$_POST['row']] == 'login_password'){
-							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.crypt($_POST[$_POST['go']], 'P9').'" WHERE `login_year` = "'.$values[$_POST['col']]['login_year'].'";';
+							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.crypt($_POST[$_POST['go']], 'P9').'" WHERE `login_password` = "'.$values[$_POST['col']]['login_password'].'";';
 						}elseif((string)$_GET['page'] == "9"){
 							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row'] + 1].' = "'.$_POST[$_POST['go']].'" WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]].';';
 						}else{
@@ -197,9 +196,6 @@ require_once("connection.php");
 						}
 						$db->query($q);
 					}elseif($_POST['add'] && !empty($_POST[$ident[1]])){
-						if($index[explode(',',$_POST['add'])[1]] == 'login_password'){
-							$_POST['login_password'] = crypt($_POST['login_password'], 'P9');
-						}
 						$id = "";
 						$v = "";
 						foreach($index as $i => &$es){
@@ -220,8 +216,9 @@ require_once("connection.php");
 						$q = 'INSERT INTO '.$database.' ('.$id.') VALUES ('.$v.')';
 						$db->query($q);
 						$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-						if((string)$_GET['page'] == "9"){
+						if((string)$_GET['page'] == "9"){ // THIS IS BROKE RN
 							$q = 'INSERT INTO current (student_id,status_id) VALUES ("'.$values[count($values)-1][$index[0]].'", 0)';
+							echo $q;
 							$db->query($q);
 						}
 					}
@@ -275,7 +272,7 @@ require_once("connection.php");
 				}
 				if($_GET['page'] != '3'){
 					echo '<table class="table"><tr>';
-					if($_GET['page'] != '8' && $_GET['page'] != '1'){
+					if($_GET['page'] != '8' && $_GET['page'] != '1' && $_GET['page'] != '7'){
 						echo'<th class="del">Del.</th>';
 					}
 					if($_GET['page'] == '9'){
@@ -285,7 +282,7 @@ require_once("connection.php");
 						echo '<th class="admin">'.ucwords(str_replace('_', ' ',$header)).'</th>';
 					}
 					echo'<form method="POST">';
-					if($_GET['page'] != '8' && $_GET['page'] != '1'){
+					if($_GET['page'] != '8' && $_GET['page'] != '1' && $_GET['page'] != 7){
 						echo '<tr><td class="del admin color"><input value="X" name="del" type="submit"></td>';
 						foreach($index as $row => &$oi){
 							if($row > 0){
@@ -342,7 +339,7 @@ require_once("connection.php");
 					}
 					else{
 						echo '<tr>';
-						if($_GET['page'] != '8' && $_GET['page'] != '1'){
+						if($_GET['page'] != '8' && $_GET['page'] != '1' && $_GET['page'] != '7'){
 							echo'<td class="del admin"><input name="'.$value[$ident[0]].'" type="checkbox"></td>';
 						}foreach($index as $row => &$oi){
 							if($oi == 'first_name' && $_GET['page'] != '9'){
