@@ -9,6 +9,7 @@
         <title>PSCS Attendance
             <?php if (isset($pagetitle)) { echo ": " . $pagetitle;} ?>
         </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="media/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" type="text/css" href="style.css">
         <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
@@ -19,5 +20,6 @@
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="bootstrap-notify.min.js" type="text/javascript"></script>
         <script src="js/timepicker/jquery.timepicker.min.js" type="text/javascript"></script>
-        <link rel="stylesheet" type="text/css" href="js/timepicker/jquery.timepicker.css" />
+        <link rel="stylesheet" type="text/css" href="js/timepicker/jquery.timepicker.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     </head>
