@@ -7,15 +7,15 @@ require_once("connection.php");
 <title>
 Status View
 </title>
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+	<a href="index.php">back</a>
 	<?php
-
-	          $query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
-
-	          $current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-						$not_checked_in = array();
-						$present = array();
+     $query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
+     $current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
+ 		 $not_checked_in = array();
+ 			$present = array();
 						$offsite = array();
 						$field_trip = array();
 						$checked_out = array();
@@ -54,108 +54,125 @@ Status View
             }
 	?>
 	<div>
-		<h3>
+		<table>
+		<tr>
+			<th>
 			Not Checked In:
-		</h3>
+			</th>
+		</tr>
 		<?php
 			$arrlength = count($not_checked_in);
 			for($x = 0; $x < $arrlength; $x++) {
-				echo "<ul>";
-    			echo "<li>".$not_checked_in[$x]."</li>";
-				echo "</ul>";
+    			echo "<tr><td>".$not_checked_in[$x]."</td></tr>";
 			}
+
 		?>
+		</table>
 	</div>
 	<div>
-		<h3>
+		<table>
+		<tr>
+			<th>
 			Present:
-		</h3>
+		</th>
+		</tr>
 		<?php
 			$arrlength = count($present);
 			for($x = 0; $x < $arrlength; $x++) {
-				echo "<ul>";
-					echo "<li>"."$present[$x]"."</li>";
-				echo "</ul>";
+					echo "<tr><td>"."$present[$x]"."</td></tr>";
 			}
 		?>
+		</table>
 	</div>
 	<div>
-		<h3>
+		<table>
+		<tr>
+			<th>
 			Offsite:
-		</h3>
+		</th>
+		</tr>
 		<?php
 			$arrlength = count($offsite);
 			for($x = 0; $x < $arrlength; $x++) {
-				echo "<ul>";
-					echo "<li>"."$offsite[$x]"."</li>";
-				echo "</ul>";
+					echo "<tr><td>"."$offsite[$x]"."</td></tr>";
 			}
 		?>
+		</table>
 	</div>
 	<div>
-		<h3>
+		<table>
+		<tr>
+			<th>
 			Field Trip:
-		</h3>
+		</th>
+		</tr>
 		<?php
 			$arrlength = count($field_trip);
 			for($x = 0; $x < $arrlength; $x++) {
-				echo "<ul>";
-					echo "<li>"."$field_trip[$x]"."</li>";
-				echo "</ul>";
+					echo "<tr><td>"."$field_trip[$x]"."</td></tr>";
 			}
 		?>
+		</table>
 	</div>
 	<div>
-		<h3>
+		<table>
+		<tr>
+			<th>
 			Checked Out:
-		</h3>
+		</th>
+		</tr>
 		<?php
 			$arrlength = count($checked_out);
 			for($x = 0; $x < $arrlength; $x++) {
-				echo "<ul>";
-					echo "<li>"."$checked_out[$x]"."</li>";
-				echo "</ul>";
+					echo "<tr><td>"."$checked_out[$x]"."</td></tr>";
 			}
 		?>
+		</table>
 	</div>
 	<div>
-		<h3>
+		<table>
+		<tr>
+			<th>
 			Late:
-		</h3>
+		</th>
+		</tr>
 		<?php
 			$arrlength = count($late);
 			for($x = 0; $x < $arrlength; $x++) {
-				echo "<ul>";
-					echo "<li>"."$late[$x]"."</li>";
-				echo "</ul>";
+					echo "<tr><td>"."$late[$x]"."</td></tr>";
 			}
 		?>
+		</table>
 	</div>
 	<div>
-		<h3>
+		<table>
+		<tr>
+			<th>
 			Independent Study:
-		</h3>
+		</th>
+		</tr>
 		<?php
 			$arrlength = count($independent_study);
 			for($x = 0; $x < $arrlength; $x++) {
-				echo "<ul>";
-					echo "<li>"."$independent_study[$x]"."</li>";
-				echo "</ul>";
+					echo "<tr><td>"."$independent_study[$x]"."</td></tr>";
 			}
 		?>
+		</table>
 	</div>
 	<div>
-		<h3>
+		<table>
+		<tr>
+			<th>
 			Absent:
-		</h3>
+		</th>
+		</tr>
 		<?php
 			$arrlength = count($absent);
 			for($x = 0; $x < $arrlength; $x++) {
-				echo "<ul>";
-					echo "<li>"."$absent[$x]"."</li>";
-				echo "</ul>";
+					echo "<tr><td>"."$absent[$x]"."</td></tr>";
 			}
 		?>
+		</table>
 	</div>
 </body>
 </html>
