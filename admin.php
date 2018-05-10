@@ -52,16 +52,18 @@ $foo = count($valuess);
 	    function otherDrop(ev) {
 	      ev.preventDefault();
 				var contains = ["false", ""];
+				var x = 0;
 				for (var i=max(group); i>=min(group); i--) {
 					if (group[i] == data) {
-						contains = ["true", i];
+						contains = ["true", x];
 					}
+					x++;
 				}
 	      var data = ev.dataTransfer.getData("text");
 				if(contains[0] == "true") {
 		      if(confirm("Remove " + document.getElementById(data).textContent + " from this group")) {
 						document.getElementById("addback").appendChild(document.getElementById(data));
-		        group.splice(contains[1], 1);
+		        group.splice(contains[1], 1);						
 		    	}
 		    }
 			}
@@ -109,7 +111,7 @@ $foo = count($valuess);
 	<div>
 	  <?php
  			$goodpage = false;
-			if(!empty($_GET['page'])) {
+			if(!empty($_GET['page']) || (string)$_GET['page'] == "0") {
 				//Allotted Hours
 				if((string)$_GET['page'] == "0"){
 					$goodpage = True;
@@ -141,7 +143,7 @@ $foo = count($valuess);
 				    <input id="form" type="text" name="gname" placeholder="Group name">
 				  </form>
 				  <button type="button" onClick="sendgroupstuff()">Finish creating group</button>
-				  <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"><span><p id="div1">drag students here to add to group. students added to group:</p><p id="a1"></p></span></div>
+				  <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"><span><p id="div1">Drag students here to add them to this group. students added to this group:</p><p id="a1"></p></span></div>
 				  <div id="addedpeople"></div>
 				  <div id="drag1">
 				    <table id="myTable">
