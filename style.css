@@ -133,6 +133,134 @@ hr {
 
 .card-title {
     font-size: 1.6rem !important;
+.top{
+	padding-top:30px;
+}
+th{
+	background-color: black;
+	color:white;
+	border-radius: 4px;
+	padding:3px;
+	text-align: center;
+}
+td{
+	background-color:#aaa;
+	border: 1px solid white;
+	color:#555;
+	height:20px;
+	width:50%;
+	border-radius: 4px;
+	padding:3px;
+	padding-left: 10%;
+}
+form{
+	display: inline;
+}
+table{
+	background-color: white;
+	margin: 3px auto;
+	width:87%;
+	text-align: left;
+	border-radius: 5px;
+}
+body{
+	padding:30px 0 0 50px;
+	margin:0 auto;
+	text-align: center;
+	background-color: #888;
+}
+a{
+	font-family: 'Courier';
+	text-decoration: none;
+	background-color: white;
+	border-radius: 3px;
+	color:#888;
+	padding:2px;
+}
+p{
+	display:inline;
+}
+input{
+	margin: 0 5px;
+	display:inline;
+}
+.name{
+	width:25%;
+	text-align: left;
+	padding-left: 12%;
+}
+.status{
+	text-align: left;
+	padding-left: 10%;
+}
+.late{
+	padding:0 2px;
+	border:2px #888 solid;
+	border-radius: 3px;
+	text-align: center;
+	width:15%;
+}
+.reset{
+	position:absolute;
+	margin: -25px -95px;
+}
+.sidebar{
+	transition: width 0.5s ease;
+	z-index: 1;
+	word-wrap: break-word;
+	margin: -30px 0 0 -50px;
+	width: 15px;
+	background-color: #555;
+	height:1000px;
+	position:fixed;
+	font-family: monospace;
+	padding:3px;
+	color:rgb(100,140,50);
+	font-size: 15px;
+}
+.sidetext{
+	font-family: "Comic Sans MS";
+	visibility: hidden;
+	display: block;
+	width:90%;
+	margin: 5px 5%;
+	color: #555;
+}
+.sidebar:hover{
+	width:250px;
+}
+.sidebar:hover a{
+	color:rgb(120,180,90);
+	visibility:visible;
+}
+.BigBox{
+	width:75%;
+	background-color: black;
+	color: white;
+}
+.admin{
+	white-space:nowrap;
+	padding-right:2px;
+	width:inherit;
+}
+td.admin{
+	background-color:#aaa;
+	border: 1px solid white;
+	color:#555;
+	height:23px;
+	border-radius: 4px;
+	padding:1px;
+	text-align: center;
+}
+.admin > form > input{
+	border-radius: 3px;
+	border:1px solid grey;
+	color:black;
+	width:50%;
+	text-align: center;
+}
+::placeholder{
+	opacity:1;
 }
 
 .toggled {
@@ -310,6 +438,15 @@ td.admin {
         -webkit-transform: translate3d(10px, 0, 0);
         transform: translate3d(10px, 0, 0);
     }
+.del{
+	padding:3px 1px;
+	border:1px solid white;
+	width:96%;
+	position: relative;
+	display:inline-block;
+	float:left;
+}
+.table{
 }
 
 @keyframes shake {
@@ -479,3 +616,29 @@ input:checked+.small-slider:before {
     margin-top: -1rem;
 }
 
+table.thin{
+	margin:0 5px;
+	width:auto;
+	display: inline-block;
+	float: left;
+}
+td.thin{
+	width:auto;
+}
+.block{
+	margin:0 auto;
+	display: table;
+}
+.groups{
+	display: block;
+	overflow: auto;
+	margin-bottom:20px;
+}
+td.color, td.color > input, td.color > select, td.color > button{
+	color: rgb(200,0,0);
+	background-color: rgb(46, 46, 46);
+	border: 1px solid rgb(200,0,0);
+	appearance: none;
+	-webkit-appearance: none; 
+	-moz-appearance: none;
+}
