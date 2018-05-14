@@ -6,12 +6,14 @@ function mins_used($student_id) {
 		global $db;
 
 		$lastEventTimeQuery = $db->query("SELECT timestamp FROM history WHERE student_id = '$student_id' ORDER BY event_id DESC LIMIT 1");
-		$time1 = new DateTime($lastEventTimeQuery->fetch_array()[0]); // last event in the history table
+		$newLastEventTimeQuery = $lastEventTimeQuery->fetch_array();
+		$time1 = new DateTime($newLastEventTimeQuery[0]); // last event in the history table
 		if (isWeekend($time1->format('Y-m-d'))) {
 			return 0;
 		}
 		$holQuery = $db->query("SELECT COUNT(*) FROM holidays WHERE holiday_date =" . $time1->format('Y-m-d'));
-		if ($holQuery->fetch_array()[0] != 0) {
+		$newHolQuery =$holQuery->fetch_array();
+		if ($newHolQuery[0] != 0) {
 			return 0;
 		}
 
@@ -60,7 +62,8 @@ function total_offsite_used($student){
 
 		$query = "SELECT SUM(elapsed) FROM history WHERE student_id = ".$student." AND (status_id = 0 OR status_id = 2 OR status_id = 4 OR status_id = 5 OR status_id = 7) LIMIT 500";
 	  $result = $db->query($query);
-	  $sum = round($result->fetch_array()[0], 2);
+		$newResult = $result->fetch_array();
+	  $sum = round($newResult[0], 2);
 
 		return $sum;
 }
