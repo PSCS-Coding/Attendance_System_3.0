@@ -194,7 +194,6 @@ require_once("connection.php");
 						}else{
 							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE '.$index[0].' = "'.$values[$_POST['col']][$index[0]].'";';
 						}
-						echo $q;
 						$db->query($q);
 					}elseif($_POST['add'] && !empty($_POST[$ident[1]])){
 						$id = "";
