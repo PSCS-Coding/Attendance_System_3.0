@@ -310,7 +310,7 @@ require_once("connection.php");
 								echo '<td class="admin color"><input type="text" name="'.$oi.'" class="newval" value="'.$values[0][$oi].'">';
 							}
 						}
-						echo '<button name="add" class="submit" type="submit" value="'.$sub_student.','.$row.','.$col.'">+</button></td></tr>';
+						echo '<button name="add" class="submit" type="submit" value="'.$sub_student.','.$row.',0">+</button></td></tr>';
 					}
 				
 				}else{
