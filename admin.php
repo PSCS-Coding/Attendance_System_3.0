@@ -1,9 +1,7 @@
 <?php
-$pagetitle = "Admin";
-require_once("head.php");
-$using_admin = true;
-require_once 'verify.php';
+require_once("connection.php");
 ?>
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -394,7 +392,6 @@ require_once 'verify.php';
 				}
 			}
 		 ?>
-        </div>
-    </body>
-
-    </html>
+	</div>
+</body>
+</html>
