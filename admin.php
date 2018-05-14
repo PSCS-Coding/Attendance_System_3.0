@@ -167,11 +167,11 @@ require_once("connection.php");
 					if($_POST['go']){
 						if((string)$_GET['page'] == "1"){
 							if($_POST['row'] == '0'){
-								$q = 'UPDATE '.$database.' SET student_id = "'.$_POST[$_POST['go']].'" WHERE student_id = '.$values[$_POST['col']]['student_id'].';';
+								$q = 'UPDATE '.$database.' SET student_id = "'.$_POST[$_POST['go']].'" WHERE student_id = "'.$values[$_POST['col']]['student_id'].'";';
 							}elseif($_POST['row'] == '1'){
-								$q = 'UPDATE '.$database.' SET status_id = "'.$_POST[$_POST['go']].'" WHERE student_id = '.$values[$_POST['col']]['student_id'].';';
+								$q = 'UPDATE '.$database.' SET status_id = "'.$_POST[$_POST['go']].'" WHERE student_id = "'.$values[$_POST['col']]['student_id'].'";';
 							}else{
-								$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
+								$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE student_id = "'.$values[$_POST['col']]['student_id'].'";';
 							}
 						}elseif((string)$_GET['page'] == "4"){
 							if($_POST['row'] == '0'){
@@ -194,6 +194,7 @@ require_once("connection.php");
 						}else{
 							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE '.$index[0].' = "'.$values[$_POST['col']][$index[0]].'";';
 						}
+						echo $q;
 						$db->query($q);
 					}elseif($_POST['add'] && !empty($_POST[$ident[1]])){
 						$id = "";
