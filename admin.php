@@ -318,7 +318,9 @@ require_once("connection.php");
 				}
 				foreach($values as $col => &$value){
 					if((string)$_GET['page'] == "3"){
-						$_POST[$value['group_name']] = $_POST[str_replace(' ', "_", $value['group_name'])];
+						if(!empty($_POST[$value['group_name']])){
+							$_POST[$value['group_name']] = $_POST[str_replace(' ', "_", $value['group_name'])];
+						}
 						if(!empty($_POST[$value['group_name']])){
 							$group = $db->query('SELECT students FROM groups WHERE group_name = "'.$value['group_name'].'"')->fetch_assoc()['students'];
 							foreach($_POST[$value['group_name']] as &$rem){
