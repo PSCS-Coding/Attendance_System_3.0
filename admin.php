@@ -60,13 +60,6 @@ require_once("connection.php");
 					$sub_row = $go[1];
 					$sub_col = $go[2];
 				}
-			}elseif(!empty($_POST['del'])){
-				$del = explode(',',$_POST['del']);
-				if(empty($_POST['student']) && !empty($del[0])){
-					$sub_student = (int)$del[0];
-				}
-				$sub_row = $del[1];
-				$sub_col = $del[2];
 			}if(!empty($_POST['student'])){
 				$sub_student = str_replace('O','0',$_POST['student']);
 			}else{
@@ -168,7 +161,7 @@ require_once("connection.php");
 			if($goodpage){
 				$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 				if(!empty($_POST)){
-					if($_POST['go'] && $_POST['go'] != '￭'){
+					if(!empty($_POST['go']) && $_POST['go'] != '￭'){
 						if((string)$_GET['page'] == "1"){
 							if($sub_row == '0'){
 								$q = 'UPDATE '.$database.' SET student_id = "'.$_POST[$_POST['go']].'" WHERE student_id = "'.$values[$sub_col]['student_id'].'";';
@@ -198,9 +191,8 @@ require_once("connection.php");
 						}else{
 							$q = 'UPDATE '.$database.' SET '.$index[$sub_row].' = "'.$_POST[$_POST['go']].'" WHERE '.$index[0].' = "'.$values[$sub_col][$index[0]].'";';
 						}
-						echo $q;
 						$db->query($q);
-					}elseif($_POST['add'] && !empty($_POST[$ident[1]])){
+					}elseif(!empty($_POST['add']) && !empty($_POST[$ident[1]])){
 						$id = "";
 						$v = "";
 						foreach($index as $i => &$es){
@@ -217,18 +209,19 @@ require_once("connection.php");
 							}
 						}if((string)$_GET['page'] != "9"){
 							$id = str_replace('first_name','student_id',str_replace('status_name','status_id',$id));
+						}if($_GET['page'] == '7'){
+							$v = '"'.crypt($v, 'P9').'"';
 						}
 						$q = 'INSERT INTO '.$database.' ('.$id.') VALUES ('.$v.')';
 						$db->query($q);
 						if((string)$_GET['page'] == "9"){
 							$values = $db->query('SELECT * FROM '.$database.';')->fetch_all($resulttype = MYSQLI_ASSOC);
 							$q = 'INSERT INTO current (student_id,status_id) VALUES ("'.$values[count($values)-1]['student_id'].'", "0")';
-							echo $q;
 							$db->query($q);
 						}
 						$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 					}
-					elseif($_POST['del']){
+					elseif(!empty($_POST['del'])){
 						foreach($values as &$column){
 							if(!empty($_POST[str_replace(' ','_',$column[$ident[0]])])){
 								if((string)$_GET['page'] == "5"){
@@ -306,13 +299,28 @@ require_once("connection.php");
 								foreach($statorstu as $v){
 									echo '<option value="'.$v['status_id'].'" class="newval">'.$v[$oi].'</option>';
 								}
+							}elseif(!empty($values[0])){
+								if($_GET['page'] == '0' || $_GET['page'] == '9'){
+									echo '<td class="admin color"><input type="text" name="'.$oi.'" class="newval" value="'.$values[count($values)-1][$oi].'">';
+								}else{
+									echo '<td class="admin color"><input type="text" name="'.$oi.'" class="newval" value="'.$values[0][$oi].'">';
+								}
 							}else{
-								echo '<td class="admin color"><input type="text" name="'.$oi.'" class="newval" value="'.$values[0][$oi].'">';
+								echo '<td class="admin color"><input type="text" name="'.$oi.'" class="newval" value="'.str_replace('_',' ',$oi).'">';
 							}
 						}
 						echo '<button name="add" class="submit" type="submit" value="'.$sub_student.','.$row.',0">+</button></td></tr>';
+					}elseif($_GET['page'] != '1' && count($values) == 0){
+						echo '</tr>';
+						foreach($index as $row => &$oi){
+							if($row > 0){
+								echo'</td>';
+							}
+								echo '<td class="admin color"><input type="text" name="'.$oi.'" class="newval" value="'.str_replace('_',' ',$oi).'">';
+						}
+						echo '<button name="add" class="submit" type="submit" value="'.$sub_student.','.$row.',0">+</button></td></tr>';
+
 					}
-				
 				}else{
 					echo '</tr><div	class="groups">';
 				}
