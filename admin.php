@@ -40,19 +40,16 @@ require_once("head.php");
 			if(!empty($_POST['go'])){
 				$go = explode(',',$_POST['go']);
 				if(empty($_POST['student']) && !empty($go[0])){
-					$_POST['student'] = (int)$go[0];
+					$sub_student = (int)$go[0];
 				}
-				$_POST['row'] = $go[1];
-				$_POST['col'] = $go[2];
-			}elseif(!empty($_POST['del'])){
-				$del = explode(',',$_POST['del']);
-				if(empty($_POST['student']) && !empty($del[0])){
-					$_POST['student'] = (int)$del[0];
+				if($_POST['go'] != '￭'){
+					$sub_row = $go[1];
+					$sub_col = $go[2];
 				}
-				$_POST['row'] = $del[1];
-				$_POST['col'] = $del[2];
 			}if(!empty($_POST['student'])){
-				$_POST['student'] = str_replace('O','0',$_POST['student']);
+				$sub_student = str_replace('O','0',$_POST['student']);
+			}else{
+				$sub_student = 0;
 			}
     		$draggeble = false;
 			$goodpage = false;
@@ -100,8 +97,8 @@ require_once("head.php");
 				}
 				echo'<input type="submit" name="go" class="submit" value="￭"></select></form>';
 				$query = 'SELECT * FROM '.$database.' INNER JOIN student_data ON history.student_id = student_data.student_id INNER JOIN status_data ON history.status_id = status_data.status_id ';
-				if($_POST['student'] != Null){
-					$query = $query.'WHERE history.student_id = '.$_POST['student'];
+				if($sub_student != Null){
+					$query = $query.'WHERE history.student_id = '.$sub_student;
 				}$query = $query.' ORDER BY event_id DESC';
 			}
 			//Holidays
@@ -150,38 +147,38 @@ require_once("head.php");
 			if($goodpage){
 				$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 				if(!empty($_POST)){
-					if($_POST['go']){
+					if(!empty($_POST['go']) && $_POST['go'] != '￭'){
 						if((string)$_GET['page'] == "1"){
-							if($_POST['row'] == '0'){
-								$q = 'UPDATE '.$database.' SET student_id = "'.$_POST[$_POST['go']].'" WHERE student_id = "'.$values[$_POST['col']]['student_id'].'";';
-							}elseif($_POST['row'] == '1'){
-								$q = 'UPDATE '.$database.' SET status_id = "'.$_POST[$_POST['go']].'" WHERE student_id = "'.$values[$_POST['col']]['student_id'].'";';
+							if($sub_row == '0'){
+								$q = 'UPDATE '.$database.' SET student_id = "'.$_POST[$_POST['go']].'" WHERE student_id = "'.$values[$sub_col]['student_id'].'";';
+							}elseif($sub_row == '1'){
+								$q = 'UPDATE '.$database.' SET status_id = "'.$_POST[$_POST['go']].'" WHERE student_id = "'.$values[$sub_col]['student_id'].'";';
 							}else{
-								$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE student_id = "'.$values[$_POST['col']]['student_id'].'";';
+								$q = 'UPDATE '.$database.' SET '.$index[$sub_row].' = "'.$_POST[$_POST['go']].'" WHERE student_id = "'.$values[$sub_col]['student_id'].'";';
 							}
 						}elseif((string)$_GET['page'] == "4"){
-							if($_POST['row'] == '0'){
-								$q = 'UPDATE '.$database.' SET student_id = "'.$_POST[$_POST['go']].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
-							}elseif($_POST['row'] == '2'){
-								$q = 'UPDATE '.$database.' SET status_id = "'.$_POST[$_POST['go']].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
+							if($sub_row == '0'){
+								$q = 'UPDATE '.$database.' SET student_id = "'.$_POST[$_POST['go']].'" WHERE event_id = '.$values[$sub_col]['event_id'].';';
+							}elseif($sub_row == '2'){
+								$q = 'UPDATE '.$database.' SET status_id = "'.$_POST[$_POST['go']].'" WHERE event_id = '.$values[$sub_col]['event_id'].';';
 							}else{
-								$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE event_id = '.$values[$_POST['col']]['event_id'].';';
+								$q = 'UPDATE '.$database.' SET '.$index[$sub_row].' = "'.$_POST[$_POST['go']].'" WHERE event_id = '.$values[$sub_col]['event_id'].';';
 							}
 						}elseif((string)$_GET['page'] == "8"){
-							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'"';
+							$q = 'UPDATE '.$database.' SET '.$index[$sub_row].' = "'.$_POST[$_POST['go']].'"';
 						}elseif((string)$_GET['page'] == "5"){
-							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE holiday_id = '.$values[$_POST['col']]['holiday_id'].';';
+							$q = 'UPDATE '.$database.' SET '.$index[$sub_row].' = "'.$_POST[$_POST['go']].'" WHERE holiday_id = '.$values[$sub_col]['holiday_id'].';';
 						}elseif((string)$_GET['page'] == "6"){
-							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE location_id = '.$values[$_POST['col']]['location_id'].';';
-						}elseif($index[$_POST['row']] == 'login_password'){
-							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.crypt($_POST[$_POST['go']], 'P9').'" WHERE `login_password` = "'.$values[$_POST['col']]['login_password'].'";';
+							$q = 'UPDATE '.$database.' SET '.$index[$sub_row].' = "'.$_POST[$_POST['go']].'" WHERE location_id = '.$values[$sub_col]['location_id'].';';
+						}elseif($index[$sub_row] == 'login_password'){
+							$q = 'UPDATE '.$database.' SET '.$index[$sub_row].' = "'.crypt($_POST[$_POST['go']], 'P9').'" WHERE `login_password` = "'.$values[$sub_col]['login_password'].'";';
 						}elseif((string)$_GET['page'] == "9"){
-							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row'] + 1].' = "'.$_POST[$_POST['go']].'" WHERE '.$index[0].' = '.$values[$_POST['col']][$index[0]].';';
+							$q = 'UPDATE '.$database.' SET '.$index[$sub_row + 1].' = "'.$_POST[$_POST['go']].'" WHERE '.$index[0].' = '.$values[$sub_col][$index[0]].';';
 						}else{
-							$q = 'UPDATE '.$database.' SET '.$index[$_POST['row']].' = "'.$_POST[$_POST['go']].'" WHERE '.$index[0].' = "'.$values[$_POST['col']][$index[0]].'";';
+							$q = 'UPDATE '.$database.' SET '.$index[$sub_row].' = "'.$_POST[$_POST['go']].'" WHERE '.$index[0].' = "'.$values[$sub_col][$index[0]].'";';
 						}
 						$db->query($q);
-					}elseif($_POST['add'] && !empty($_POST[$ident[1]])){
+					}elseif(!empty($_POST['add']) && !empty($_POST[$ident[1]])){
 						$id = "";
 						$v = "";
 						foreach($index as $i => &$es){
@@ -198,18 +195,19 @@ require_once("head.php");
 							}
 						}if((string)$_GET['page'] != "9"){
 							$id = str_replace('first_name','student_id',str_replace('status_name','status_id',$id));
+						}if($_GET['page'] == '7'){
+							$v = '"'.crypt($v, 'P9').'"';
 						}
 						$q = 'INSERT INTO '.$database.' ('.$id.') VALUES ('.$v.')';
 						$db->query($q);
 						if((string)$_GET['page'] == "9"){
 							$values = $db->query('SELECT * FROM '.$database.';')->fetch_all($resulttype = MYSQLI_ASSOC);
 							$q = 'INSERT INTO current (student_id,status_id) VALUES ("'.$values[count($values)-1]['student_id'].'", "0")';
-							echo $q;
 							$db->query($q);
 						}
 						$values = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 					}
-					elseif($_POST['del']){
+					elseif(!empty($_POST['del'])){
 						foreach($values as &$column){
 							if(!empty($_POST[str_replace(' ','_',$column[$ident[0]])])){
 								if((string)$_GET['page'] == "5"){
@@ -288,19 +286,40 @@ require_once("head.php");
 								foreach($statorstu as $v){
 									echo '<option value="'.$v['status_id'].'" class="newval">'.$v[$oi].'</option>';
 								}
+							}elseif(!empty($values[0])){
+								if($_GET['page'] == '0' || $_GET['page'] == '9'){
+									echo '<td class="admin color"><input type="text" name="'.$oi.'" class="newval" value="'.$values[count($values)-1][$oi].'">';
+								}else{
+									echo '<td class="admin color"><input type="text" name="'.$oi.'" class="newval" value="'.$values[0][$oi].'">';
+								}
 							}else{
-								echo '<td class="admin color"><input type="text" name="'.$oi.'" class="newval" value="'.$values[0][$oi].'">';
+								echo '<td class="admin color"><input type="text" name="'.$oi.'" class="newval" value="'.str_replace('_',' ',$oi).'">';
 							}
 						}
-						echo '<button name="add" class="submit" type="submit" value="'.$_POST['student'].','.$row.','.$col.'">+</button></td></tr>';
-					}
+						echo '<button name="add" class="submit" type="submit" value="'.$sub_student.','.$row.',0">+</button></td></tr>';
+					}elseif($_GET['page'] != '1' && count($values) == 0){
+						echo '</tr>';
+						foreach($index as $row => &$oi){
+							if($row > 0){
+								echo'</td>';
+							}
+								echo '<td class="admin color"><input type="text" name="'.$oi.'" class="newval" value="'.str_replace('_',' ',$oi).'">';
+						}
+						echo '<button name="add" class="submit" type="submit" value="'.$sub_student.','.$row.',0">+</button></td></tr>';
 
+					}
+<<<<<<< HEAD
+
+=======
+>>>>>>> simpler_group_edit_angus
 				}else{
 					echo '</tr><div	class="groups">';
 				}
 				foreach($values as $col => &$value){
 					if((string)$_GET['page'] == "3"){
-						$_POST[$value['group_name']] = $_POST[str_replace(' ', "_", $value['group_name'])];
+						if(!empty($_POST[$value['group_name']])){
+							$_POST[$value['group_name']] = $_POST[str_replace(' ', "_", $value['group_name'])];
+						}
 						if(!empty($_POST[$value['group_name']])){
 							$Group = $db->query('SELECT students FROM groups WHERE group_name = "'.$value['group_name'].'"')->fetch_assoc();
 							$group = $Group['students'];
@@ -334,28 +353,33 @@ require_once("head.php");
 							if($oi == 'first_name' && $_GET['page'] != '9'){
 								if($_GET['page'] != "1"){
 									$statorstu = $db->query('SELECT * FROM student_data ORDER BY first_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);;
-									echo '<td class="admin"><select name="'.$_POST['student'].','.$row.','.$col.'" class="newval"> <option value="'.$value['student_id'].'">'.$value[$oi].' '.$value['last_name'].'</option>';
+									echo '<td class="admin"><select name="'.$sub_student.','.$row.','.$col.'" class="newval"> <option value="'.$value['student_id'].'">'.$value[$oi].' '.$value['last_name'].'</option>';
 									foreach($statorstu as $v){
 										if($v[$oi] != $value[$oi]){
 											echo '<option value="'.$v['student_id'].'" class="newval">'.$v[$oi].' '.$v['last_name'].'</option>';
 										}
 									}
+<<<<<<< HEAD
 									echo '</select><button name="go" class="submit" type="submit" value="'.$_POST['student'].','.$row.','.$col.'">￭</button></td>';
 
+=======
+									echo '</select><button name="go" class="submit" type="submit" value="'.$sub_student.','.$row.','.$col.'">￭</button></td>';
+	
+>>>>>>> simpler_group_edit_angus
 								}elseif($_GET['page'] == 1){
 									echo '<td class="admin">'.$value[$oi].' '.$value['last_name'].'</td>';
 								}
 							}elseif($oi == 'status_name'){
 								$statorstu = $db->query('SELECT * FROM status_data ORDER BY status_name ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
-								echo '<td class="admin"><select name="'.$_POST['student'].','.$row.','.$col.'" class="newval"> <option value="'.$value['status_id'].'">'.$value[$oi].'</option>';
+								echo '<td class="admin"><select name="'.$sub_student.','.$row.','.$col.'" class="newval"> <option value="'.$value['status_id'].'">'.$value[$oi].'</option>';
 								foreach($statorstu as $v){
 									if($v[$oi] != $value[$oi]){
 										echo '<option value="'.$v['status_id'].'" class="newval">'.$v[$oi].'</option>';
 									}
 								}
-								echo '</select><button name="go" class="submit" type="submit" value="'.$_POST['student'].','.$row.','.$col.'">￭</button></td>';
+								echo '</select><button name="go" class="submit" type="submit" value="'.$sub_student.','.$row.','.$col.'">￭</button></td>';
 							}else{
-								echo '<td class="admin"><input type="text" name="'.$_POST['student'].','.$row.','.$col.'" class="newval" value="'.$value[$oi].'"><button name="go" class="submit" type="submit" value="'.$_POST['student'].','.$row.','.$col.'">￭</button></td>';
+								echo '<td class="admin"><input type="text" name="'.$sub_student.','.$row.','.$col.'" class="newval" value="'.$value[$oi].'"><button name="go" class="submit" type="submit" value="'.$sub_student.','.$row.','.$col.'">￭</button></td>';
 							}
 						}
 						echo '</tr>';
