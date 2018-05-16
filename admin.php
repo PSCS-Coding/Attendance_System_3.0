@@ -32,21 +32,7 @@ require_once("head.php");
 	?>
 </head>
 <body class="back">
-	<div class = "sidebar">
-		admin
-		<a class= "sidetext" href="admin.php?page=0">Allotted Hours</a>
-		<a class= "sidetext" href="admin.php?page=1">Current Events</a>
-		<a class= "sidetext" href="admin.php?page=2">Facilitator Edit View</a>
-		<a class= "sidetext" href="admin.php?page=3">Group Edit View</a>
-		<a class= "sidetext" href="admin.php?page=4">History</a>
-		<a class= "sidetext" href="admin.php?page=5">Holidays</a>
-		<a class= "sidetext" href="admin.php?page=6">Offsite Locations</a>
-    	<a class= "sidetext" href="admin.php?page=7">Password</a>
-		<a class= "sidetext" href="admin.php?page=8">School Hours</a>
-		<a class= "sidetext" href="admin.php?page=9">Student Edit View</a>
-		front end
-		<a class= "sidetext" href="index.php">Front Page</a>
-		<a class= "sidetext" href="statusview.php">Status View</a>
+	<div class = "sidebar" id="includedContent">
 	</div>
 	<div>
 		<?php
