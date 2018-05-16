@@ -22,4 +22,9 @@
         <script src="js/timepicker/jquery.timepicker.min.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="js/timepicker/jquery.timepicker.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+        <script>
+        $(function(){
+          $("#includedContent").load("sidebar.html");
+        });
+        </script>
     </head>
