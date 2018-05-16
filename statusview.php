@@ -7,7 +7,6 @@ require_once("head.php");
 	<div class = "sidebar" id="includedContent">
 	</div>
 	<?php
-<<<<<<< HEAD
 
 	$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id INNER JOIN status_data ON current.status_id = status_data.status_id ORDER BY first_name DESC';
 	$current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
@@ -171,23 +170,5 @@ require_once("head.php");
 ?>
 </table>
 </div>
-=======
-		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id ORDER BY first_name ASC';
-		$current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
-		$stati = $db->query('SELECT * FROM status_data;')->fetch_all($resulttype = MYSQLI_ASSOC);
-		$x = 0;
-		$status_id = 0;
-		foreach ($stati as &$status) {
-			foreach($current as &$value){
-				if($value['status_id'] == $status['status_id']){
-					if($x == 0){
-						echo '<h1>'.ucwords(str_replace('_',' ',$status['status_name'])).'</h1></br>';
-						$x++;
-					}echo $value['first_name'].' '.$value['last_name'].'</br>';
-				}
-			}$x = 0;
-		}
-	?>
->>>>>>> simpler_group_edit_angus
 </body>
 </html>
