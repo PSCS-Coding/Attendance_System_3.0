@@ -40,7 +40,6 @@ var vm = new Vue({
                     const decodedCurrent = decodeURIComponent((response.data.split('/')[1] + '').replace(/\+/g, '%20'));
                     let studentList = [];
                     //statuses
-                    alert(decodedCurrent);
                     self.$root.statusData = JSON.parse(decodedStatus);
                     //students array
                     JSON.parse(decodedCurrent).forEach(student => {
