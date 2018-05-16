@@ -5,7 +5,7 @@ Vue.component('student', {
         lastName: String,
         returnTime: String,
         info: String,
-        status: Number
+        status: String
     },
     template: `
         <div class='student'>
@@ -40,6 +40,7 @@ var vm = new Vue({
                     const decodedCurrent = decodeURIComponent((response.data.split('/')[1] + '').replace(/\+/g, '%20'));
                     let studentList = [];
                     //statuses
+                    alert(decodedCurrent);
                     self.$root.statusData = JSON.parse(decodedStatus);
                     //students array
                     JSON.parse(decodedCurrent).forEach(student => {
@@ -47,7 +48,7 @@ var vm = new Vue({
                             firstName: student.first_name,
                             lastName: student.last_name,
                             studentId: parseInt(student.student_id),
-                            status: parseInt(student.status_id),
+                            status: student.status_id,
                             returnTime: student.return_time,
                             info: student.info
                         }));
