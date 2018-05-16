@@ -1,5 +1,5 @@
 <?php
-  require_once("backend/connection.php");
+  require_once("connection.php");
   require_once("backend/functions.php");
 ?>
     <!DOCTYPE html>
