@@ -24,7 +24,7 @@ view_reports_for_student(2);
 function get_all_lates($student_id) {
     global $db;
     // gets all lates for student
-    $query = "SELECT * FROM history WHERE status_id= 5 AND student_id = " . $studen  t_id;
+    $query = "SELECT * FROM history WHERE status_id= 5 AND student_id = " . $student_id;
     $result = $db->query($query);
     //for ($i=0; $i < strlen($result->fetch_array()); $i++) {
     //   # code...
@@ -106,13 +106,14 @@ function actual_lates($student_id) {
     $place_time = new DateTime;
 
 #the bug we had with the following loop for a SUPER long time was because we were forgetting that the date1 was constantly being reassigned right below
-    $randomvar = 0;
-    print_r($date1);
+    $other_lates = 0;
+    //print_r($date1);
     for ($k = 1; $k < $number_events; $k++) {
 
       $date1 = new DateTime($all_events[$k][2]);
       //print_r($test1);
       $test = new DateTime($all_events[$k-1][2]);
+      // limiting the for loop to only run only one iteration per day
       if ($date1->format('Y-m-d') == $test->format('Y-m-d')) {
         continue;
       }
@@ -122,19 +123,14 @@ function actual_lates($student_id) {
       $date2 = new DateTime($date1->format('Y-m-d' . '9:00:00'));
 
       if($date1 > $date2 && $date1->format("w") != 0 && $date1->format("w") != 6) {
-        $date1 = new DateTime($all_events[$k][2]);
         $unexpectedlates++;
       }
-      if($date1 > $date2 && $date1->format("w") != 0 && $date1->format("w") != 6) {
-            $randomvar++;
-      }
-      else {
-          $randomvar--;
-
+      // Simon I know you wont like this else-if condition but I had to start somewhere
+      elseif($all_events[$k][3] = 5 && $k < count($all_events) && ($all_events[$k+1][2] >= $date2 || $all_events[$k+1][3] = 5)) {
+          $other_lates++;
       }
     }
-    echo '<br/>';
-    echo $unexpectedlates;
+    echo '<br/>' . $unexpectedlates . '<br/>' . ': ' . $other_lates;
 }
 
     /*separate list by date
@@ -165,8 +161,7 @@ function actual_lates($student_id) {
       $date1_9 -> setTime(9:00:00);
       $date2_9 -> setTime(9:00:00);
       if($date1_9 < $date2_9){
-        $date1 = $all_events[$i][2];
-        if($date1 > $date2 && $date1 -> format("w") != 0 && $date1 -> format("w") != 6){
+        $date1 = $all_events[$i][2];        if($date1 > $date2 && $date1 -> format("w") != 0 && $date1 -> format("w") != 6){
 
         }
       }
