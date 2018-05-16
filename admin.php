@@ -245,7 +245,8 @@ require_once("connection.php");
 						}
 					}elseif(!empty($_POST['stus'])){
 						$_POST['group'] = str_replace('0','Ø', str_replace(' ', "_", str_replace(".", '_', $_POST['group'])));
-						if(!empty($db->query('SELECT group_name FROM groups WHERE group_name = "'.$_POST['group'].'" LIMIT 1')->fetch_assoc()['group_name'])){
+						$Q = $db->query('SELECT group_name FROM groups WHERE group_name = "'.$_POST['group'].'" LIMIT 1')->fetch_assoc();
+						if(!empty($Q['group_name'])){
 							foreach($values as &$group){
 								if($group['group_name'] == $_POST['group']){
 									$gp = explode(',',$group['students']);
@@ -307,7 +308,7 @@ require_once("connection.php");
 						}
 						echo '<button name="add" class="submit" type="submit" value="'.$_POST['student'].','.$row.','.$col.'">+</button></td></tr>';
 					}
-				
+
 				}else{
 					echo '</tr><div	class="groups">';
 				}
@@ -315,7 +316,8 @@ require_once("connection.php");
 					if((string)$_GET['page'] == "3"){
 						$_POST[$value['group_name']] = $_POST[str_replace(' ', "_", $value['group_name'])];
 						if(!empty($_POST[$value['group_name']])){
-							$group = $db->query('SELECT students FROM groups WHERE group_name = "'.$value['group_name'].'"')->fetch_assoc()['students'];
+							$Group = $db->query('SELECT students FROM groups WHERE group_name = "'.$value['group_name'].'"')->fetch_assoc();
+							$group = $Group['students'];
 							foreach($_POST[$value['group_name']] as &$rem){
 								$group = str_replace($rem, "", $group);
 								$group = trim(str_replace(',,', ",", $group), ',');
@@ -353,7 +355,7 @@ require_once("connection.php");
 										}
 									}
 									echo '</select><button name="go" class="submit" type="submit" value="'.$_POST['student'].','.$row.','.$col.'">￭</button></td>';
-	
+
 								}elseif($_GET['page'] == 1){
 									echo '<td class="admin">'.$value[$oi].' '.$value['last_name'].'</td>';
 								}
