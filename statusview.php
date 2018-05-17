@@ -27,7 +27,7 @@ Status View
 		<a class= "sidetext" href="statusview.php">Status View</a>
 	</div>
 	<?php
-		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id ORDER BY first_name ASC';
+		$query = 'SELECT * FROM current INNER JOIN student_data ON current.student_id = student_data.student_id WHERE student_data.active = "1" ORDER BY first_name ASC';
 		$current = $db->query($query)->fetch_all($resulttype = MYSQLI_ASSOC);
 		$stati = $db->query('SELECT * FROM status_data;')->fetch_all($resulttype = MYSQLI_ASSOC);
 		$x = 0;
@@ -36,11 +36,14 @@ Status View
 			foreach($current as &$value){
 				if($value['status_id'] == $status['status_id']){
 					if($x == 0){
-						echo '<h1>'.ucwords(str_replace('_',' ',$status['status_name'])).'</h1></br>';
+						echo '<div class="thin"><h1>'.ucwords(str_replace('_',' ',$status['status_name'])).'</h1>';
 						$x++;
 					}echo $value['first_name'].' '.$value['last_name'].'</br>';
 				}
-			}$x = 0;
+			}if($x != 0){
+				echo '</div>';
+			}
+			$x = 0;
 		}
 	?>
 </body>

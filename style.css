@@ -171,6 +171,13 @@ table.thin{
 	display: inline-block;
 	float:left;
 }
+div.thin{
+	color: white;
+	margin: 5px 15px;
+	width:auto;
+	display: inline-block;
+	float:left;
+}
 td.thin{
 	width:auto;
 }
