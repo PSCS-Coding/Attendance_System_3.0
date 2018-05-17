@@ -171,6 +171,13 @@ table.thin{
 	display: inline-block;
 	float:left;
 }
+div.thin{
+	color: white;
+	margin: 5px 15px;
+	width:auto;
+	display: inline-block;
+	float:left;
+}
 td.thin{
 	width:auto;
 }
@@ -182,4 +189,12 @@ td.thin{
 	display: block;
 	overflow: auto;
 	margin-bottom:20px;
+}
+td.color, td.color > input, td.color > select, td.color > button{
+	color: rgb(200,0,0);
+	background-color: rgb(46, 46, 46);
+	border: 1px solid rgb(200,0,0);
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
 }
