@@ -5,22 +5,97 @@
     <title>PSCS Attendance</title>
 
     <link rel="shortcut icon" href="media/favicon.ico" type="image/x-icon" />
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css' />
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js'></script>
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
     <script src="js/moment.min.js"></script>
     <script src="js/jquery.tagsinput.min.js"></script>
+
+    <style>
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box */
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 60%;
+            /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button */
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
-    <nav></nav>
-    <main>
-        <div id='attendance'>
+    <div id='attendance'>
+        <main-navbar></main-navbar>
+        <main>
             <student-list></student-list>
+        </main>
+    </div>
+
+    <!--Modals-->
+    <div id="offsite-modal" class="modal">
+        <div class="modal-content">
+            <i class='close' data-feather="x"></i>
+            <p>Some text in the Modal..</p>
         </div>
-    </main>
+    </div>
+
+    <div id="late-modal" class="modal">
+        <div class="modal-content">
+            <i class='close' data-feather="x"></i>
+            <p>Some text in the Modal..</p>
+        </div>
+    </div>
+
+    <div id="field-trip-modal" class="modal">
+        <div class="modal-content">
+            <i class='close' data-feather="x"></i>
+            <p>Some text in the Modal..</p>
+        </div>
+    </div>
 </body>
 
 <script src='js/app.js'></script>

@@ -19,6 +19,14 @@ if (!empty($_GET['f'])) {
             fetch_all($resulttype = MYSQLI_ASSOC);
 
         echo urlencode(json_encode($current_events, JSON_PRETTY_PRINT));
+    } elseif($_GET['f'] == 'changestatus') {
+        $student_ids = explode(',', $_GET['students']);
+        $status_id = $_GET['status'];
+        $returntime = $_GET['returntime'];
+        $info = $_GET['info'];
+        //angus code here
+        //change status function that checks if returntime & info is set, parses the list of students, and changes the statuses in the database.
+        //echoes 'success' or header("HTTP/1.0 404 Not Found"); for failure, so that the ajax request gets rejected
     }
 }
 
