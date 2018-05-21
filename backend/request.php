@@ -1,7 +1,6 @@
 <?php
 
 require_once 'connection.php';
-require_once 'functions.php';
 if (!empty($_GET['f'])) {
     if ($_GET['f'] == 'current') {
         $status_query = $db->query("SELECT * FROM status_data")->fetch_all($resulttype = MYSQLI_ASSOC);
@@ -22,11 +21,16 @@ if (!empty($_GET['f'])) {
     } elseif($_GET['f'] == 'changestatus') {
         $student_ids = explode(',', $_GET['students']);
         $status_id = $_GET['status'];
-        $returntime = $_GET['returntime'];
+        $return_time = $_GET['returntime'];
         $info = $_GET['info'];
         //angus code here
         //change status function that checks if returntime & info is set, parses the list of students, and changes the statuses in the database.
         //echoes 'success' or header("HTTP/1.0 404 Not Found"); for failure, so that the ajax request gets rejected
+        echo $student_ids;
+        echo $status_id;
+        echo $return_time;
+        echo $info;
+
     }
 }
 

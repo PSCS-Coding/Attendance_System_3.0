@@ -11,7 +11,7 @@ Vue.component('student', {
         <div class='student'>
             <input type='checkbox' :value='studentId' :id='studentId' v-model='$root.selected'>
             <label :for='studentId'>
-                {{ firstName }} {{ [...lastName][0] }} | {{ $root.statusData[status] }}
+                {{ firstName }} {{ [...lastName][0] }}. | {{ $root.statusData[status] }}
                 <span v-if='info'> | {{ info }} | {{ returnTime }}</span>
             </label>
         </div>`
@@ -24,37 +24,87 @@ Vue.component('student-list', {
         </div>`
 });
 
+Vue.component('offsite-modal', {
+    template: `
+        <div id="offsite-modal" class="modal">
+            <div class="modal-content">
+                <i class='close' data-feather="x"></i>
+               <input type='text' id='offsite-location' placeholder='Location (future - jquery autocomplete)'>
+               <input type='text' class='timepicker' id='offsite-return-time' placeholder='Return time'>
+               <input type='submit' value='Offsite' @click='offsite()'>
+            </div>
+        </div>`,
+    methods: {
+        offsite: function () {
+            const location = $('#offsite-modal #offsite-location').val();
+            const returnTime = $('#offsite-modal #offsite-return-time').val();
+            if (location.length > 0 && returnTime.length > 0) {
+                this.$root.changeStatus('2', returnTime, location);
+            } else {
+                this.$root.errorMessage('You must provide a location and return time');
+            }
+        }
+    }
+});
+
+Vue.component('field-trip-modal', {
+    template: `
+        <div id="field-trip-modal" class="modal">
+            <div class="modal-content">
+                <i class='close' data-feather="x"></i>
+               <input type='text' id='field-trip-facilitator' placeholder='Facilitator (future - dropdown)'>
+               <input type='text' class='timepicker' id='field-trip-return-time' placeholder='Return time'>
+               <input type='submit' value='Field trip' @click='fieldTrip()'>
+            </div>
+        </div>`,
+    methods: {
+        fieldTrip: function () {
+            const facilitator = $('#field-trip-modal #field-trip-facilitator').val();
+            const returnTime = $('#field-trip-modal #field-trip-return-time').val();
+            if (facilitator.length > 0 && returnTime.length > 0) {
+                this.$root.changeStatus('3', returnTime, facilitator);
+            } else {
+                this.$root.errorMessage('You must provide a facilitator and return time');
+            }
+        }
+    }
+});
+
+Vue.component('late-modal', {
+    template: `
+        <div id="late-modal" class="modal">
+            <div class="modal-content">
+                <i class='close' data-feather="x"></i>
+               <input type='text' class='timepicker' id='late-return-time' placeholder='Return time'>
+               <input type='submit' value='Late' @click='late()'>
+            </div>
+        </div>`,
+    methods: {
+        late: function () {
+            const returnTime = $('#late-modal #late-return-time').val();
+            if (returnTime.length > 0) {
+                this.$root.changeStatus('5', returnTime);
+            } else {
+                this.$root.errorMessage('You must provide a return time');
+            }
+        }
+    }
+});
+
 Vue.component('main-navbar', {
     template: `
-        <nav>
+        <nav class='main-navbar'>
             <ul>
-                <li><a href='#' @click='changeStatus("1")'>Present</a></li>
-                <li><a href='#' @click='modal("#offsite-modal")'>Offsite</a></li>
-                <li><a href='#' @click='modal("#late-modal")'>Late</a></li>
-                <li><a href='#' @click='modal("#field-trip-modal")'>Field trip</a></li>
+            <li><a href='view_reports.php'>test</a></li>
+                <span v-show='$root.selected.length > 0'>
+                    <li><button @click='present()'>Present</button></li>
+                    <li><button @click='modal("#offsite-modal")'>Offsite</button></li>
+                    <li><button @click='modal("#late-modal")'>Late</button></li>
+                    <li><button @click='modal("#field-trip-modal")'>Field trip</button></li>
+                </span>
             </ul>
         </nav>`,
     methods: {
-        changeStatus: function (status, returnTime, info) {
-            selected = this.$root.selected;
-            self = this;
-            if (selected.length > 0) {
-                let q = './backend/request.php?f=changestatus&status=' + status + '&students=' + selected.join();
-                if (returnTime) q += '&returntime=' + returnTime;
-                if (info) q += '&info=' + info;
-                axios.get(q)
-                    .then(function (response) {
-                        //eventually make it so it doesn't need to reload the whole table - just the statuses that changed
-                        alert(response.data);
-                        self.$root.load();
-                    })
-                    .catch(function (error) {
-                        self.$root.errorMessage('Could not perform the action. Try again, or speak to a developer.');
-                    });
-            } else {
-                this.$root.errorMessage('You must select at least one student!');
-            }
-        },
         modal: function (modalId) {
             if ($(modalId).length > 0) {
 
@@ -62,16 +112,21 @@ Vue.component('main-navbar', {
 
                 $(modalId + ' .close').click(function () {
                     $(modalId).css('display', 'none');
+                    $('.modal input[type="text"]').val('');
                 });
 
                 $(window).click(function (event) {
                     if ($(modalId).is(event.target)) {
                         $(modalId).css('display', 'none');
+                        $('.modal input[type="text"]').val('');
                     }
                 });
             } else {
                 console.error('A valid id must be provided as the first parameter of modal()');
             }
+        },
+        present: function () {
+            this.$root.changeStatus('1');
         }
     }
 });
@@ -81,6 +136,10 @@ var vm = new Vue({
     data: {
         students: [],
         statusData: [],
+        groups: [],
+        locations: [],
+        facilitators: [],
+        globals: [],
         selected: []
     },
     methods: {
@@ -108,22 +167,73 @@ var vm = new Vue({
                         return (a.firstName > b.firstName) ? 1 : ((b.firstName > a.firstName) ? -1 : 0);
                     });
                     self.$root.students = studentList;
+                    self.$root.locations = ['Uwaji'];
+                    self.$root.globals = ['9am', '3:40pm'];
+                    self.$root.facilitators = [{
+                        id: 1,
+                        name: 'Nic'
+                    }, {
+                        id: 2,
+                        name: 'Liana'
+                    }];
+                    self.$root.groups = [{
+                        name: 'Climbing',
+                        students: [1, 2, 3]
+                    }, {
+                        name: 'Volleyball',
+                        students: [1, 3, 4]
+                    }];
+
+                    $('.timepicker').timepicker({
+                        'scrollDefault': 'now',
+                        'step': 10,
+                        'minTime': self.$root.globals[0],
+                        'maxTime': self.$root.globals[1]
+                    });
+                    $('#offsite-modal #offsite-location').autocomplete({
+                        source: self.$root.locations,
+                        minLength: 0
+                    }).focus(function () {
+                        $(this).data("uiAutocomplete").search($(this).val());
+                    });
                 })
                 .catch(function (error) {
-                    console.log('Request failed: [' + error + ']');
-                    alert('Fetching data failed. Please try again, or speak to a developer.');
+                    console.error('Request failed: [' + error + ']');
+                    self.$root.errorMessage('Fetching data failed. Please try again, or speak to a developer.');
                 });
         },
         errorMessage: function (message) {
             //make this a message at the top of the page instead of an alert
             alert(message);
+        },
+        changeStatus: function (status, returnTime, info) {
+            selected = this.$root.selected;
+            self = this;
+            if (selected.length > 0) {
+                let q = './backend/request.php?f=changestatus&status=' + status + '&students=' + selected.join();
+                if (returnTime) q += '&returntime=' + returnTime;
+                if (info) q += '&info=' + info;
+                axios.get(q)
+                    .then(function (response) {
+                        //eventually make it so it doesn't need to reload the whole table - just the statuses that changed
+                        alert(response.data);
+                        self.$root.selected = [];
+                        $('.modal').css('display', 'none');
+                        $('.modal input[type="text"]').val('');
+                        self.$root.load();
+                    })
+                    .catch(function (error) {
+                        self.$root.errorMessage('Could not perform the action. Try again, or speak to a developer.');
+                    });
+            } else {
+                this.$root.errorMessage('You must select at least one student!');
+            }
         }
     },
     beforeMount() {
         this.load();
-        feather.replace();
     },
     mounted() {
-        //put a function here that listens for status changes, etc. Basically any listeners
+        feather.replace();
     }
 });

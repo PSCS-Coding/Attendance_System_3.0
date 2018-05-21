@@ -5,7 +5,8 @@
     <title>PSCS Attendance</title>
 
     <link rel="shortcut icon" href="media/favicon.ico" type="image/x-icon" />
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css' />
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css' type='text/css' />
+    <link rel='stylesheet' type='text/css' href='js/timepicker/jquery.timepicker.min.css'>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
@@ -13,10 +14,15 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js'></script>
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
+    <script src='js/timepicker/jquery.timepicker.min.js'></script>
     <script src="js/moment.min.js"></script>
     <script src="js/jquery.tagsinput.min.js"></script>
 
     <style>
+        nav li {
+            display: inline;
+        }
+
         .modal {
             display: none;
             /* Hidden by default */
@@ -73,28 +79,9 @@
         <main>
             <student-list></student-list>
         </main>
-    </div>
-
-    <!--Modals-->
-    <div id="offsite-modal" class="modal">
-        <div class="modal-content">
-            <i class='close' data-feather="x"></i>
-            <p>Some text in the Modal..</p>
-        </div>
-    </div>
-
-    <div id="late-modal" class="modal">
-        <div class="modal-content">
-            <i class='close' data-feather="x"></i>
-            <p>Some text in the Modal..</p>
-        </div>
-    </div>
-
-    <div id="field-trip-modal" class="modal">
-        <div class="modal-content">
-            <i class='close' data-feather="x"></i>
-            <p>Some text in the Modal..</p>
-        </div>
+        <offsite-modal></offsite-modal>
+        <field-trip-modal></field-trip-modal>
+        <late-modal></late-modal>
     </div>
 </body>
 
