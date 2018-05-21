@@ -126,8 +126,22 @@ function actual_lates($student_id) {
         $unexpectedlates++;
       }
       // Simon I know you wont like this else-if condition but I had to start somewhere
+      #the while loop I wrote will make sure that if someone's first and second events of the day are late (as jack's conditional is supposed to verify) that ALL of their events up until 9:00 are late to make sure that they don't have duplicate lates before 9:00 giving them a false positive.
       elseif($all_events[$k][3] = 5 && $k < count($all_events) && ($all_events[$k+1][2] >= $date2 || $all_events[$k+1][3] = 5)) {
-          $other_lates++;
+          $eventtime = new DateTime($all_events[k+1][2]);
+          $proceed = 'no';
+          $n = 1;
+          do while ($eventtime < $date2) {
+            $n++;
+            $eventtime = $all_events[$k+$n][2];
+            if ($all_events[$k+$n][3]==5 && $eventtime < $date2){
+              $proceed = 'yes';
+            }
+          }
+          if ($proceed == 'yes' || $n<=2){
+            $other_lates++;
+          }
+
       }
     }
     echo '<br/>' . $unexpectedlates . '<br/>' . ': ' . $other_lates;
