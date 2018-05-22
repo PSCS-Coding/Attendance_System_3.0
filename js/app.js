@@ -17,6 +17,52 @@ Vue.component('student', {
         </div>`
 });
 
+Vue.component('group', {
+    props: {
+        groupName: String,
+        students: Array
+    },
+    template: `
+        <div class='group'>
+            <input type='checkbox' :value='groupName' :id='groupId' @change='group()' v-model='$root.selectedGroups'>
+            <label :for='groupId'>
+                {{groupName}}
+            </label>
+        </div>`,
+    computed: {
+        groupId: function () {
+            return 'group-' + this.groupName;
+        }
+    },
+    methods: {
+        group: function () {
+            if ($('.group #' + this.groupId).prop('checked')) {
+                let test1 = this.students;
+                test1 = test1.concat(this.$root.selected);
+                this.$root.selected = _.uniq(test1);
+            } else {
+                let test2 = this.students;
+                this.$root.selected = _.differenceWith(this.$root.selected, test2, _.isEqual);
+                //make this a loop for all selected groups and all selected field trip groups - should be easy!
+                let test3;
+                for (let i = 0; i < this.$root.selectedGroups.length; i++) {
+                    test3 = this.$root.groups.find(x => x.name == this.$root.selectedGroups[i]).students;
+                    test3 = test3.concat(this.$root.selected);
+                    this.$root.selected = _.uniq(test3);
+                }
+            }
+        }
+    }
+});
+
+Vue.component('groups-select', {
+    template: `
+        <div class='groups-select'>
+        <p>groups</p>
+            <group v-for='group of $root.groups' :key='group.name' :group-name='group.name' :students='group.students'></group>
+        </div>`
+});
+
 Vue.component('student-list', {
     template: `
         <div class='student-list'>
@@ -29,7 +75,7 @@ Vue.component('offsite-modal', {
         <div id="offsite-modal" class="modal">
             <div class="modal-content">
                 <i class='close' data-feather="x"></i>
-               <input type='text' id='offsite-location' placeholder='Location (future - jquery autocomplete)'>
+               <input type='text' id='offsite-location' placeholder='Location'>
                <input type='text' class='timepicker' id='offsite-return-time' placeholder='Return time'>
                <input type='submit' value='Offsite' @click='offsite()'>
             </div>
@@ -52,7 +98,7 @@ Vue.component('field-trip-modal', {
         <div id="field-trip-modal" class="modal">
             <div class="modal-content">
                 <i class='close' data-feather="x"></i>
-               <input type='text' id='field-trip-facilitator' placeholder='Facilitator (future - dropdown)'>
+               <input type='text' id='field-trip-facilitator' placeholder='Facilitator'>
                <input type='text' class='timepicker' id='field-trip-return-time' placeholder='Return time'>
                <input type='submit' value='Field trip' @click='fieldTrip()'>
             </div>
@@ -95,7 +141,7 @@ Vue.component('main-navbar', {
     template: `
         <nav class='main-navbar'>
             <ul>
-            <li><a href='view_reports.php'>test</a></li>
+            <li><button>test</button></li>
                 <span v-show='$root.selected.length > 0'>
                     <li><button @click='present()'>Present</button></li>
                     <li><button @click='modal("#offsite-modal")'>Offsite</button></li>
@@ -140,7 +186,8 @@ var vm = new Vue({
         locations: [],
         facilitators: [],
         globals: [],
-        selected: []
+        selected: [],
+        selectedGroups: []
     },
     methods: {
         load: function () {
@@ -149,6 +196,10 @@ var vm = new Vue({
                 .then(function (response) {
                     const decodedStatus = decodeURIComponent((response.data.split('/')[0] + '').replace(/\+/g, '%20'));
                     const decodedCurrent = decodeURIComponent((response.data.split('/')[1] + '').replace(/\+/g, '%20'));
+                    const decodedLocations = decodeURIComponent((response.data.split('/')[2] + '').replace(/\+/g, '%20'));
+                    const decodedFacilitators = decodeURIComponent((response.data.split('/')[3] + '').replace(/\+/g, '%20'));
+                    const decodedGlobals = decodeURIComponent((response.data.split('/')[4] + '').replace(/\+/g, '%20'));
+                    const decodedGroups = decodeURIComponent((response.data.split('/')[5] + '').replace(/\+/g, '%20'));
                     let studentList = [];
                     //statuses
                     self.$root.statusData = JSON.parse(decodedStatus);
@@ -167,31 +218,40 @@ var vm = new Vue({
                         return (a.firstName > b.firstName) ? 1 : ((b.firstName > a.firstName) ? -1 : 0);
                     });
                     self.$root.students = studentList;
-                    self.$root.locations = ['Uwaji'];
-                    self.$root.globals = ['9am', '3:40pm'];
-                    self.$root.facilitators = [{
-                        id: 1,
-                        name: 'Nic'
-                    }, {
-                        id: 2,
-                        name: 'Liana'
-                    }];
-                    self.$root.groups = [{
-                        name: 'Climbing',
-                        students: [1, 2, 3]
-                    }, {
-                        name: 'Volleyball',
-                        students: [1, 3, 4]
-                    }];
+                    self.$root.locations = Object.values(JSON.parse(decodedLocations));
+                    self.$root.facilitators = Object.values(JSON.parse(decodedFacilitators));
+                    globalsArray = Object.values(JSON.parse(decodedGlobals));
+                    self.$root.globals = {
+                        startTime: moment(globalsArray[0], 'HH:mm:ss'),
+                        endTime: moment(globalsArray[1], 'HH:mm:ss')
+                    }
+
+                    groups = [];
+
+                    JSON.parse(decodedGroups).forEach(group => {
+                        groups.push({
+                            name: group.group_name,
+                            students: Object.values(group.students)
+                        });
+                    });
+
+                    self.$root.groups = groups;
 
                     $('.timepicker').timepicker({
                         'scrollDefault': 'now',
                         'step': 10,
-                        'minTime': self.$root.globals[0],
-                        'maxTime': self.$root.globals[1]
+                        'minTime': self.$root.globals.startTime.toDate(),
+                        'maxTime': self.$root.globals.endTime.toDate()
                     });
                     $('#offsite-modal #offsite-location').autocomplete({
                         source: self.$root.locations,
+                        minLength: 0
+                    }).focus(function () {
+                        $(this).data("uiAutocomplete").search($(this).val());
+                    });
+
+                    $('#field-trip-modal #field-trip-facilitator').autocomplete({
+                        source: self.$root.facilitators,
                         minLength: 0
                     }).focus(function () {
                         $(this).data("uiAutocomplete").search($(this).val());
