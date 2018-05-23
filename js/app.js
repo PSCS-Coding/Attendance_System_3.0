@@ -3,18 +3,33 @@ Vue.component('student', {
         studentId: Number,
         firstName: String,
         lastName: String,
-        returnTime: String,
+        returnTime: Object,
         info: String,
         status: String
     },
     template: `
         <div class='student'>
             <input type='checkbox' :value='studentId' :id='studentId' v-model='$root.selected'>
-            <label :for='studentId'>
+            <label :for='studentId' :class='{ "text-red": textRed }'>
                 {{ firstName }} {{ [...lastName][0] }}. | {{ $root.statusData[status] }}
-                <span v-if='info'> | {{ info }} | {{ returnTime }}</span>
+                <span v-if='info'> | {{ info }} | {{ fmtReturnTime }}</span>
             </label>
-        </div>`
+        </div>`,
+    computed: {
+        fmtReturnTime: function () {
+            return this.returnTime.format('h:mma').toString();
+        },
+        textRed: function () {
+            if (this.returnTime.isAfter(this.$root.startTime) && this.status == '0') {
+                alert(1);
+                return true;
+            } else if (this.returnTime && this.returnTime.isBefore(moment())) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
 });
 
 Vue.component('group', {
@@ -65,7 +80,7 @@ Vue.component('groups-select', {
 Vue.component('student-list', {
     template: `
         <div class='student-list'>
-            <student v-for='student of $root.students' :key='student.studentId' :student-id='student.studentId' :first-name='student.firstName' :last-name='student.lastName' :status='student.status' :return-time='student.returnTime' :info='student.info'></student>
+            <student v-for='student of $root.students' :key='student.studentId' :student-id='student.studentId' :first-name='student.firstName' :last-name='student.lastName' :status='student.status' :return-time='student.returnTime' :info='student.info' :startTime='$root.globals.startTime'></student>
         </div>`
 });
 
@@ -181,6 +196,7 @@ var vm = new Vue({
     data: {
         students: [],
         statusData: [],
+        onsiteData: [],
         groups: [],
         locations: [],
         facilitators: [],
@@ -222,7 +238,7 @@ var vm = new Vue({
                             lastName: student.last_name,
                             studentId: parseInt(student.student_id),
                             status: student.status_id,
-                            returnTime: student.return_time,
+                            returnTime: moment(student.return_time, 'HH:mm:ss'),
                             info: student.info
                         }));
                     });
@@ -250,6 +266,8 @@ var vm = new Vue({
                     });
 
                     self.$root.groups = groups;
+
+                    self.$root.onsiteData = decodeAndParse(response.data.split('/')[6] + '');
 
                     $('.timepicker').timepicker({
                         'scrollDefault': 'now',

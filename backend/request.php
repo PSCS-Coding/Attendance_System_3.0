@@ -8,7 +8,7 @@ function encodeAndEcho($val) {
 require_once 'connection.php';
 if (!empty($_GET['f'])) {
     if ($_GET['f'] == 'current') {
-        $status_query = $db->query("SELECT * FROM status_data")->fetch_all($resulttype = MYSQLI_ASSOC);
+        $status_query = $db->query("SELECT status_name FROM status_data")->fetch_all($resulttype = MYSQLI_ASSOC);
         $status_array = array();
         foreach ($status_query as $status) {
             array_push($status_array, $status['status_name']);
@@ -45,7 +45,14 @@ if (!empty($_GET['f'])) {
             array_push($groups_array, $group);
         }
 
-        echo urlencode(json_encode($groups_array, JSON_PRETTY_PRINT));
+        encodeAndEcho($groups_array);
+
+        $onsite_q = $db->query("SELECT onsite FROM status_data")->fetch_all($resulttype = MYSQLI_ASSOC);
+        $onsite_a = array();
+        foreach ($onsite_q as $s) {
+            array_push($onsite_a, $s['onsite']);
+        }
+        encodeAndEcho($onsite_a);
 
     } elseif($_GET['f'] == 'changestatus') {
         $student_ids = explode(',', $_GET['students']);
