@@ -37,18 +37,18 @@ Vue.component('group', {
     methods: {
         group: function () {
             if ($('.group #' + this.groupId).prop('checked')) {
-                let test1 = this.students;
-                test1 = test1.concat(this.$root.selected);
-                this.$root.selected = _.uniq(test1);
+                let add = this.students;
+                add = add.concat(this.$root.selected);
+                this.$root.selected = _.uniq(add);
             } else {
-                let test2 = this.students;
-                this.$root.selected = _.differenceWith(this.$root.selected, test2, _.isEqual);
+                let remove = this.students;
+                this.$root.selected = _.differenceWith(this.$root.selected, remove, _.isEqual);
                 //make this a loop for all selected groups and all selected field trip groups - should be easy!
-                let test3;
+                let allAdd;
                 for (let i = 0; i < this.$root.selectedGroups.length; i++) {
-                    test3 = this.$root.groups.find(x => x.name == this.$root.selectedGroups[i]).students;
-                    test3 = test3.concat(this.$root.selected);
-                    this.$root.selected = _.uniq(test3);
+                    allAdd = this.$root.groups.find(x => x.name == this.$root.selectedGroups[i]).students;
+                    allAdd = allAdd.concat(this.$root.selected);
+                    this.$root.selected = _.uniq(allAdd);
                 }
             }
         }
@@ -189,22 +189,25 @@ var vm = new Vue({
         selected: [],
         selectedGroups: []
     },
+    watch: {
+        selected: function (val) {
+            if (val.length === 0) {
+                this.$root.selectedGroups = [];
+            }
+        }
+    },
     methods: {
         load: function () {
             let self = this;
             axios.get('./backend/request.php?f=current')
                 .then(function (response) {
-                    const decodedStatus = decodeURIComponent((response.data.split('/')[0] + '').replace(/\+/g, '%20'));
-                    const decodedCurrent = decodeURIComponent((response.data.split('/')[1] + '').replace(/\+/g, '%20'));
-                    const decodedLocations = decodeURIComponent((response.data.split('/')[2] + '').replace(/\+/g, '%20'));
-                    const decodedFacilitators = decodeURIComponent((response.data.split('/')[3] + '').replace(/\+/g, '%20'));
                     const decodedGlobals = decodeURIComponent((response.data.split('/')[4] + '').replace(/\+/g, '%20'));
                     const decodedGroups = decodeURIComponent((response.data.split('/')[5] + '').replace(/\+/g, '%20'));
                     let studentList = [];
                     //statuses
-                    self.$root.statusData = JSON.parse(decodedStatus);
+                    self.$root.statusData = decodeAndParse(response.data.split('/')[0] + '');
                     //students array
-                    JSON.parse(decodedCurrent).forEach(student => {
+                    decodeAndParse(response.data.split('/')[1] + '').forEach(student => {
                         studentList.push(_.pickBy({
                             firstName: student.first_name,
                             lastName: student.last_name,
@@ -218,9 +221,9 @@ var vm = new Vue({
                         return (a.firstName > b.firstName) ? 1 : ((b.firstName > a.firstName) ? -1 : 0);
                     });
                     self.$root.students = studentList;
-                    self.$root.locations = Object.values(JSON.parse(decodedLocations));
-                    self.$root.facilitators = Object.values(JSON.parse(decodedFacilitators));
-                    globalsArray = Object.values(JSON.parse(decodedGlobals));
+                    self.$root.locations = Object.values(decodeAndParse(response.data.split('/')[2] + ''));
+                    self.$root.facilitators = Object.values(decodeAndParse(response.data.split('/')[3] + ''));
+                    globalsArray = Object.values(decodeAndParse(response.data.split('/')[4] + ''));
                     self.$root.globals = {
                         startTime: moment(globalsArray[0], 'HH:mm:ss'),
                         endTime: moment(globalsArray[1], 'HH:mm:ss')
@@ -228,7 +231,7 @@ var vm = new Vue({
 
                     groups = [];
 
-                    JSON.parse(decodedGroups).forEach(group => {
+                    decodeAndParse(response.data.split('/')[5] + '').forEach(group => {
                         groups.push({
                             name: group.group_name,
                             students: Object.values(group.students)
