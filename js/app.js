@@ -43,7 +43,6 @@ Vue.component('group', {
             } else {
                 let remove = this.students;
                 this.$root.selected = _.differenceWith(this.$root.selected, remove, _.isEqual);
-                //make this a loop for all selected groups and all selected field trip groups - should be easy!
                 let allAdd;
                 for (let i = 0; i < this.$root.selectedGroups.length; i++) {
                     allAdd = this.$root.groups.find(x => x.name == this.$root.selectedGroups[i]).students;
@@ -191,9 +190,19 @@ var vm = new Vue({
     },
     watch: {
         selected: function (val) {
-            if (val.length === 0) {
-                this.$root.selectedGroups = [];
-            }
+            let self = this;
+            let studentsInGroup;
+            let selectedStudents;
+            this.$root.selectedGroups.forEach(name => {
+                studentsInGroup = self.$root.groups.find(x => x.name == name).students;
+                selectedStudents = self.$root.selected;
+                //if the difference between the selected students in the group and the students in the group IS the selected students in the group
+                //eg. if no students in a group are selected
+                if (_.isEqual(_.difference(studentsInGroup, selectedStudents).sort(), studentsInGroup.sort())) {
+                    //deselect that group
+                    self.$root.selectedGroups.splice(_.indexOf(self.$root.selectedGroups, name), 1);;
+                }
+            });
         }
     },
     methods: {
@@ -234,7 +243,9 @@ var vm = new Vue({
                     decodeAndParse(response.data.split('/')[5] + '').forEach(group => {
                         groups.push({
                             name: group.group_name,
-                            students: Object.values(group.students)
+                            students: Object.values(group.students.map(function (x) {
+                                return parseInt(x, 10);
+                            }))
                         });
                     });
 
