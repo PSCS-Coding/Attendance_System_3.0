@@ -290,7 +290,6 @@ var vm = new Vue({
                 axios.get(q)
                     .then(function (response) {
                         //eventually make it so it doesn't need to reload the whole table - just the statuses that changed
-                        alert(response.data);
                         self.$root.selected = [];
                         $('.modal').css('display', 'none');
                         $('.modal input[type="text"]').val('');

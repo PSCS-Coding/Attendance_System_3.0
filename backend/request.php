@@ -50,9 +50,9 @@ if (!empty($_GET['f'])) {
     } elseif($_GET['f'] == 'changestatus') {
         $student_ids = explode(',', $_GET['students']);
         $status_id = $_GET['status'];
-        $return_time = $_GET['returntime'];
         $info = $_GET['info'];
-        
+        $return_time = new DateTime($_GET['return_time']);
+        $return_time = $return_time->format("Y-m-d H:i:s");
 
 
         //angus code here
