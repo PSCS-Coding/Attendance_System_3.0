@@ -2,15 +2,14 @@
 :root {
   --defFont: "Nunito", sans-serif;
   --bgColor: #222222;
-  --selectedColor: #656ccc;
   --dangerRed: #b71b1b;
   --studentBorder: 1.2px solid;
   --cardBackground: #2d2d2d;
   --defaultTextColor: #e4e4e4;
-  --locationColor: #dec577;
-  --darkBoxShadow: rgba(0, 0, 0, 0.2);
-  --darkBoxShadowHover: rgba(0, 0, 0, 0.6);
-  --btnHoverBackground: #161616;
+  --accentColor: #dec577;
+  --BoxShadow: 0 2px 6px hsla(0, 0%, 0%, 0.2);
+  --BoxShadowHover: 2px 6px 30px rgba(0, 0, 0, 0.4);
+  --navbarColor: #2d2d2d;
 }
 
 *::before,
@@ -50,17 +49,18 @@ body {
   -ms-flex: 1 1 50%;
   flex: 1 1 50%;
   margin: 15px 0;
-  -webkit-box-shadow: 2px 6px 25px var(--darkBoxShadow);
-  box-shadow: 2px 6px 25px var(--darkBoxShadow);
+  -webkit-box-shadow: var(--BoxShadow);
+  box-shadow: var(--BoxShadow);
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
   position: relative;
   background-color: var(--cardBackground);
+  border-radius: 0.6rem;
 }
 
 .card:hover {
-  -webkit-box-shadow: 2px 6px 30px var(--darkBoxShadowHover);
-  box-shadow: 2px 6px 30px var(--darkBoxShadowHover);
+  -webkit-box-shadow: var(--BoxShadowHover);
+  box-shadow: var(--BoxShadowHover);
 }
 
 /* STUDENT NAME */
@@ -78,7 +78,7 @@ body {
   margin: -3px 0px -3px 0px;
   font-size: 0.9rem;
   font-weight: 700;
-  color: #dec577;
+  color: var(--accentColor);
 }
 
 /* RETURN TIME */
@@ -104,7 +104,7 @@ body {
 /* WHEN A USER SELECTS A STUDENT */
 
 .selected {
-  border: var(--studentBorder) var(--selectedColor);
+  border: var(--studentBorder) var(--accentColor);
 }
 
 /* WHEN A STUDENT IS LATE */
@@ -116,7 +116,7 @@ body {
 .hoverAnimation {
   display: inline-block;
   position: relative;
-  color: var(--selectedColor);
+  color: var(--accentColor);
 }
 
 .hoverAnimation::after {
@@ -127,7 +127,7 @@ body {
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: var(--selectedColor);
+  background-color: var(--accentColor);
   transform-origin: bottom right;
   transition: transform 0.25s ease-out;
 }
@@ -142,8 +142,8 @@ body {
   margin-top: -16px;
   padding: 0;
   overflow: hidden;
-  background-color: var(--cardBackground);
-  border-bottom: 1px solid dimgrey;
+  background-color: var(--navbarColor);
+  border-bottom: 1px solid var(--accentColor);
 }
 
 .navbar li {
@@ -156,8 +156,4 @@ body {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-}
-
-.navbar a:hover {
-  background-color: var(--btnHoverBackground);
 }
