@@ -22,13 +22,7 @@ Vue.component('student', {
             }
         },
         textRed: function () {
-            if (this.returnTime && this.returnTime.isBefore(moment())) {
-                return true;
-            } else if (moment().isAfter(this.$root.globals.startTime) && this.status == '0') {
-                return true;
-            } else {
-                return false;
-            }
+            return (this.returnTime && this.returnTime.isBefore(moment())) || (moment().isAfter(this.$root.globals.startTime) && this.status == '0') ? true : false;
         }
     }
 });
