@@ -286,7 +286,14 @@ var vm = new Vue({
                     }).focus(function () {
                         $(this).data("uiAutocomplete").search(null);
                     });
-                    $("#attendance").fadeIn();
+                    var font = new FontFaceObserver('Nunito');
+                    font.load().then(function () {
+                        $("#attendance").fadeIn();
+                    }, function () {
+                        let html = document.getElementsByTagName('html')[0];
+                        html.style.setProperty("--defFont", 'sans-serif');
+                        $("#attendance").fadeIn();
+                    });
                 })
                 .catch(function (error) {
                     console.error('Request failed: [' + error + ']');
