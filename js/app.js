@@ -13,7 +13,7 @@ Vue.component('student', {
             <div class='card-content'>
                 <a href='#' class='name hoverAnimation'>{{ firstName }} {{ [...lastName][0] }}.</a>
                 <div class='location'>{{ $root.statusData[status] }} </div>
-                <p class='info' v-if='returnTime'> <span v-if='info'>{{ info }} </span> returning at {{ fmtReturnTime }}</p>
+                <p class='info' v-if='returnTime'> <span v-if='info'>{{ info }} &bullet; </span>returning at {{ fmtReturnTime }}</p>
             </div>
         </label>`,
     computed: {
@@ -157,12 +157,12 @@ Vue.component('main-navbar', {
         <nav class='main-navbar'>
             <ul class='navbar'>
                 <span v-show='$root.selected.length > 0'>
-                    <li><a href='#' @click='present()'>Present</a></li>
-                    <li><a href='#' @click='modal("#offsite-modal")'>Offsite</a></li>
-                    <li><a href='#' @click='modal("#late-modal")'>Late</a></li>
-                    <li><a href='#' @click='modal("#field-trip-modal")'>Field trip</a></li>
+                    <li><a href='#' class='hoverAnimation' @click='present()'>Present</a></li>
+                    <li><a href='#' class='hoverAnimation' @click='modal("#offsite-modal")'>Offsite</a></li>
+                    <li><a href='#' class='hoverAnimation' @click='modal("#late-modal")'>Late</a></li>
+                    <li><a href='#' class='hoverAnimation' @click='modal("#field-trip-modal")'>Field trip</a></li>
                 </span>
-                <li class='pull-right'><a class='button' href='user.html'>User Page</a></li>
+                <li class='pull-right'><a class='button hoverAnimation' href='user.html'>User Page</a></li>
             </ul>
         </nav>`,
     methods: {
