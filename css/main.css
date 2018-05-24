@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+:root {
+    --defFont: "Nunito", sans-serif;
+    --bgColor: #222222;
+    --selectedColor: #656ccc;
+    --dangerRed: #b71b1b;
+    --studentBorder: 1.2px solid;
+    --cardBackground: #2d2d2d;
+    --defaultTextColor: #e4e4e4;
+    --locationColor: #dec577;
+    --darkBoxShadow: rgba(0, 0, 0, 0.2);
+    --darkBoxShadowHover: rgba(0, 0, 0, 0.6);
+    --btnHoverBackground: #161616;
+}
+
+*::before,
+*::after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: var(--defFont);
+    line-height: 1.6;
+    background-color: var(--bgColor);
+}
+
+body {
+    margin: 16px 0;
+}
+
+.container {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+@media screen and (min-width: 1020px) {
+    .flex-container {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+}
+
+.card {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 50%;
+    flex: 1 1 50%;
+    margin: 15px 0;
+    -webkit-box-shadow: 2px 6px 25px var(--darkBoxShadow);
+    box-shadow: 2px 6px 25px var(--darkBoxShadow);
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    position: relative;
+    background-color: var(--cardBackground);
+    border: var(--studentBorder) var(--cardBackground);
+}
+
+.card:hover {
+    -webkit-box-shadow: 2px 6px 30px var(--darkBoxShadowHover);
+    box-shadow: 2px 6px 30px var(--darkBoxShadowHover);
+}
+
+/* STUDENT NAME */
+
+.card .name {
+    margin: 0;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    color: var(--defaultTextColor);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.card .location {
+    margin: -3px 0px -3px 0px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #dec577;
+}
+
+/* RETURN TIME */
+
+.card .info {
+    margin: 0 0 10px;
+    color: var(--defaultTextColor);
+    font-size: 0.9rem;
+}
+
+@media screen and (min-width: 800px) {
+    .card {
+        margin: 0.5rem;
+    }
+}
+
+/* INDENT NAME/LOCATION/RETURN */
+
+.card .card-content {
+    padding: 10px 30px 0px;
+}
+
+/* WHEN A USER SELECTS A STUDENT */
+
+.selected {
+    border: var(--studentBorder) var(--selectedColor) !important;
+}
+
+/* WHEN A STUDENT IS LATE OR PAST HIS OR HER RETURN TIME */
+
+.late-shading {
+    border: var(--studentBorder) var(--dangerRed);
+}
+
+.hoverAnimation {
+    display: inline-block;
+    position: relative;
+    color: var(--selectedColor);
+}
+
+.hoverAnimation::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--selectedColor);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.hoverAnimation:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.navbar {
+    list-style-type: none;
+    margin-top: -16px;
+    padding: 0;
+    overflow: hidden;
+    background-color: var(--cardBackground);
+    border-bottom: 1px solid dimgrey;
+}
+
+.navbar li {
+    float: left;
+}
+
+.navbar li a {
+    display: block;
+    color: var(--defaultTextColor);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background-color: var(--btnHoverBackground);
+}
+
+.pull-right {
+    float: right !important;
+}

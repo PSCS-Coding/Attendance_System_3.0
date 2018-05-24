@@ -8,13 +8,14 @@ Vue.component('student', {
         status: String
     },
     template: `
-        <div class='student'>
-            <input type='checkbox' :value='studentId' :id='studentId' v-model='$root.selected'>
-            <label :for='studentId' :class='{ "text-red": textRed }'>
-                {{ firstName }} {{ [...lastName][0] }}. | {{ $root.statusData[status] }}
-                <span v-if='returnTime'> <span v-if='info'>| {{ info }} </span>| {{ fmtReturnTime }}</span>
-            </label>
-        </div>`,
+        <label :for='studentId' :class='{ "late-shading": textRed, "selected": isSelected, "card": true}' @toggle-selected='selected()'>
+            <input type='checkbox' :value='studentId' :id='studentId' v-model='$root.selected' hidden>
+            <div class='card-content'>
+                <a href='#' class='name hoverAnimation'>{{ firstName }} {{ [...lastName][0] }}.</a>
+                <div class='location'>{{ $root.statusData[status] }} </div>
+                <p class='info' v-if='returnTime'> <span v-if='info'>{{ info }} </span> returning at {{ fmtReturnTime }}</p>
+            </div>
+        </label>`,
     computed: {
         fmtReturnTime: function () {
             if (this.returnTime) {
@@ -23,6 +24,9 @@ Vue.component('student', {
         },
         textRed: function () {
             return (this.returnTime && this.returnTime.isBefore(moment())) || (moment().isAfter(this.$root.globals.startTime) && this.status == '0') ? true : false;
+        },
+        isSelected: function () {
+            return this.$root.selected.find(x => x == this.studentId) == this.studentId ? true : false;
         }
     }
 });
@@ -74,8 +78,10 @@ Vue.component('groups-select', {
 
 Vue.component('student-list', {
     template: `
-        <div class='student-list'>
-            <student v-for='student of $root.students' :key='student.studentId' :student-id='student.studentId' :first-name='student.firstName' :last-name='student.lastName' :status='student.status' :return-time='student.returnTime' :info='student.info' :startTime='$root.globals.startTime'></student>
+        <div class='container'>
+            <div class='student-list flex-container'>
+                <student @tog-selected='test()' v-for='student of $root.students' :key='student.studentId' :student-id='student.studentId' :first-name='student.firstName' :last-name='student.lastName' :status='student.status' :return-time='student.returnTime' :info='student.info'></student>
+            </div>
         </div>`
 });
 
@@ -149,13 +155,14 @@ Vue.component('late-modal', {
 Vue.component('main-navbar', {
     template: `
         <nav class='main-navbar'>
-            <ul>
+            <ul class='navbar'>
                 <span v-show='$root.selected.length > 0'>
-                    <li><button @click='present()'>Present</button></li>
-                    <li><button @click='modal("#offsite-modal")'>Offsite</button></li>
-                    <li><button @click='modal("#late-modal")'>Late</button></li>
-                    <li><button @click='modal("#field-trip-modal")'>Field trip</button></li>
+                    <li><a href='#' @click='present()'>Present</a></li>
+                    <li><a href='#' @click='modal("#offsite-modal")'>Offsite</a></li>
+                    <li><a href='#' @click='modal("#late-modal")'>Late</a></li>
+                    <li><a href='#' @click='modal("#field-trip-modal")'>Field trip</a></li>
                 </span>
+                <li class='pull-right'><a class='button' href='user.html'>User Page</a></li>
             </ul>
         </nav>`,
     methods: {
