@@ -47,13 +47,6 @@ if (!empty($_GET['f'])) {
 
         encodeAndEcho($groups_array);
 
-        $onsite_q = $db->query("SELECT onsite FROM status_data")->fetch_all($resulttype = MYSQLI_ASSOC);
-        $onsite_a = array();
-        foreach ($onsite_q as $s) {
-            array_push($onsite_a, $s['onsite']);
-        }
-        encodeAndEcho($onsite_a);
-
     } elseif($_GET['f'] == 'changestatus') {
         $student_ids = explode(',', $_GET['students']);
         $status_id = $_GET['status'];
@@ -61,15 +54,15 @@ if (!empty($_GET['f'])) {
         $return_time = new DateTime($_GET['returntime']);
         $return_time = $return_time->format("Y-m-d H:i:s");
 
-
-        //angus code here
-        foreach($student_ids as $student){
-            if($return_time) {
+        if(!empty($_GET['returntime'])) {
+            foreach($student_ids as $student){
                 $db->query('INSERT INTO history(`student_id`,`status_id`,`info`,`return_time`) VALUES("'.$student.'","'.$status_id.'","'.$info.'","'.$return_time.'");');
                 $db->query('UPDATE current SET `status_id` = "'.$status_id.'",`info` = "'.$info.'",`return_time` = "'.$return_time.'" WHERE `student_id` = "'.$student.'";');
-            } else {
-                $db->query('INSERT INTO history(`student_id`,`status_id`,`info`) VALUES("'.$student.'","'.$status_id.'","'.$info.'");');
-                $db->query('UPDATE current SET `status_id` = "'.$status_id.'",`info` = "'.$info.'" WHERE `student_id` = "'.$student.'";');
+            }
+        } else {
+            foreach($student_ids as $student){
+                $db->query('INSERT INTO history(`student_id`,`status_id`,`info`) VALUES("'.$student.'","'.$status_id.'","'.$info.'","00:00:00");');
+                $db->query('UPDATE current SET `status_id` = "'.$status_id.'",`info` = "'.$info.'",`return_time` = "00:00:00" WHERE `student_id` = "'.$student.'";');
             }
         }
     }

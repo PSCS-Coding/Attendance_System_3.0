@@ -150,7 +150,6 @@ Vue.component('main-navbar', {
     template: `
         <nav class='main-navbar'>
             <ul>
-            <li><button>test</button></li>
                 <span v-show='$root.selected.length > 0'>
                     <li><button @click='present()'>Present</button></li>
                     <li><button @click='modal("#offsite-modal")'>Offsite</button></li>
@@ -191,7 +190,6 @@ var vm = new Vue({
     data: {
         students: [],
         statusData: [],
-        onsiteData: [],
         groups: [],
         locations: [],
         facilitators: [],
@@ -262,8 +260,6 @@ var vm = new Vue({
 
                     self.$root.groups = groups;
 
-                    self.$root.onsiteData = decodeAndParse(response.data.split('/')[6] + '');
-
                     $('.timepicker').timepicker({
                         'scrollDefault': 'now',
                         'step': 10,
@@ -274,15 +270,16 @@ var vm = new Vue({
                         source: self.$root.locations,
                         minLength: 0
                     }).focus(function () {
-                        $(this).data("uiAutocomplete").search($(this).val());
+                        $(this).data("uiAutocomplete").search(null);
                     });
 
                     $('#field-trip-modal #field-trip-facilitator').autocomplete({
                         source: self.$root.facilitators,
                         minLength: 0
                     }).focus(function () {
-                        $(this).data("uiAutocomplete").search($(this).val());
+                        $(this).data("uiAutocomplete").search(null);
                     });
+                    $("#attendance").fadeIn();
                 })
                 .catch(function (error) {
                     console.error('Request failed: [' + error + ']');
@@ -298,28 +295,57 @@ var vm = new Vue({
             self = this;
             if (selected.length > 0) {
                 let q = './backend/request.php?f=changestatus&status=' + status + '&students=' + selected.join();
-                if (returnTime) q += '&returntime=' + returnTime;
+                let usingReturn = false;
+                if (returnTime) {
+                    usingReturn = true;
+                    q += '&returntime=' + returnTime;
+                }
                 if (info) q += '&info=' + info;
-                axios.get(q)
-                    .then(function (response) {
-                        //eventually make it so it doesn't need to reload the whole table - just the statuses that changed
-                        self.$root.selected = [];
-                        $('.modal').css('display', 'none');
-                        $('.modal input[type="text"]').val('');
-                        self.$root.load();
-                    })
-                    .catch(function (error) {
-                        self.$root.errorMessage('Could not perform the action. Try again, or speak to a developer.');
-                    });
+
+                if (!usingReturn || moment(returnTime, 'h:mma', true).isValid()) {
+                    axios.get(q)
+                        .then(function (response) {
+                            //eventually make it so it doesn't need to reload the whole table - just the statuses that changed
+                            self.$root.selected = [];
+                            $('.modal').css('display', 'none');
+                            $('.modal input[type="text"]').val('');
+                            self.$root.load();
+                        })
+                        .catch(function (error) {
+                            self.$root.errorMessage('Could not perform the action. Try again, or speak to a developer.');
+                        });
+                } else {
+                    this.$root.errorMessage('You must enter a valid return time!');
+                    $('.timepicker').val('');
+                }
             } else {
                 this.$root.errorMessage('You must select at least one student!');
             }
-        }
+        },
+        setIdle: function () {
+
+            let self = this;
+            let timer;
+
+            function refresh() {
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    self.$root.load();
+                    refresh();
+                }, 10000);
+            };
+
+            refresh();
+
+            $(document).on('keypress, click, mousemove', refresh);
+
+        },
     },
     beforeMount() {
         this.load();
     },
     mounted() {
+        this.setIdle();
         feather.replace();
     }
 });
