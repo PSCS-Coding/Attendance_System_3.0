@@ -12,18 +12,19 @@ Vue.component('student', {
             <input type='checkbox' :value='studentId' :id='studentId' v-model='$root.selected'>
             <label :for='studentId' :class='{ "text-red": textRed }'>
                 {{ firstName }} {{ [...lastName][0] }}. | {{ $root.statusData[status] }}
-                <span v-if='info'> | {{ info }} | {{ fmtReturnTime }}</span>
+                <span v-if='returnTime'> <span v-if='info'>| {{ info }} </span>| {{ fmtReturnTime }}</span>
             </label>
         </div>`,
     computed: {
         fmtReturnTime: function () {
-            return this.returnTime.format('h:mma').toString();
+            if (this.returnTime) {
+                return this.returnTime.format('h:mma').toString();
+            }
         },
         textRed: function () {
-            if (this.returnTime.isAfter(this.$root.startTime) && this.status == '0') {
-                alert(1);
+            if (this.returnTime && this.returnTime.isBefore(moment())) {
                 return true;
-            } else if (this.returnTime && this.returnTime.isBefore(moment())) {
+            } else if (moment().isAfter(this.$root.globals.startTime) && this.status == '0') {
                 return true;
             } else {
                 return false;
@@ -238,7 +239,7 @@ var vm = new Vue({
                             lastName: student.last_name,
                             studentId: parseInt(student.student_id),
                             status: student.status_id,
-                            returnTime: moment(student.return_time, 'HH:mm:ss'),
+                            returnTime: student.return_time == '00:00:00' ? null : moment(student.return_time, 'HH:mm:ss'),
                             info: student.info
                         }));
                     });

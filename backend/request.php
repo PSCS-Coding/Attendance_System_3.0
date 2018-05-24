@@ -58,14 +58,19 @@ if (!empty($_GET['f'])) {
         $student_ids = explode(',', $_GET['students']);
         $status_id = $_GET['status'];
         $info = $_GET['info'];
-        $return_time = new DateTime($_GET['return_time']);
+        $return_time = new DateTime($_GET['returntime']);
         $return_time = $return_time->format("Y-m-d H:i:s");
 
 
         //angus code here
         foreach($student_ids as $student){
-            $db->query('INSERT INTO history(`student_id`,`status_id`,`info`,`return_time`) VALUES("'.$student.'","'.$status_id.'","'.$info.'","'.$return_time.'");');
-            $db->query('UPDATE current SET `status_id` = "'.$status_id.'",`info` = "'.$info.'",`return_time` = "'.$return_time.'" WHERE `student_id` = "'.$student.'";');
+            if($return_time) {
+                $db->query('INSERT INTO history(`student_id`,`status_id`,`info`,`return_time`) VALUES("'.$student.'","'.$status_id.'","'.$info.'","'.$return_time.'");');
+                $db->query('UPDATE current SET `status_id` = "'.$status_id.'",`info` = "'.$info.'",`return_time` = "'.$return_time.'" WHERE `student_id` = "'.$student.'";');
+            } else {
+                $db->query('INSERT INTO history(`student_id`,`status_id`,`info`) VALUES("'.$student.'","'.$status_id.'","'.$info.'");');
+                $db->query('UPDATE current SET `status_id` = "'.$status_id.'",`info` = "'.$info.'" WHERE `student_id` = "'.$student.'";');
+            }
         }
     }
 }
