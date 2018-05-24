@@ -6,7 +6,7 @@
   --dangerRed: #b71b1b;
   --studentBorder: 1.2px solid;
   --cardBackground: #2d2d2d;
-  --defaultColor: #e4e4e4;
+  --defaultTextColor: #e4e4e4;
   --locationColor: #dec577;
   --darkBoxShadow: rgba(0, 0, 0, 0.2);
   --darkBoxShadowHover: rgba(0, 0, 0, 0.6);
@@ -69,7 +69,7 @@ body {
   margin: 0;
   font-size: 1.4rem;
   line-height: 1.2;
-  color: var(--defaultColor);
+  color: var(--defaultTextColor);
   text-decoration: none;
   font-weight: bold;
 }
@@ -85,7 +85,7 @@ body {
 
 .card .info {
   margin: 0 0 10px;
-  color: var(--defaultColor);
+  color: var(--defaultTextColor);
   font-size: 0.9rem;
 }
 
@@ -143,6 +143,7 @@ body {
   padding: 0;
   overflow: hidden;
   background-color: var(--cardBackground);
+  border-bottom: 1px solid dimgrey;
 }
 
 .navbar li {
@@ -151,7 +152,7 @@ body {
 
 .navbar li a {
   display: block;
-  color: var(--defaultColor);
+  color: var(--defaultTextColor);
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
