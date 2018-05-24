@@ -32,21 +32,7 @@ require_once("head.php");
 	?>
 </head>
 <body class="back">
-	<div class = "sidebar">
-		admin
-		<a class= "sidetext" href="admin.php?page=0">Allotted Hours</a>
-		<a class= "sidetext" href="admin.php?page=1">Current Events</a>
-		<a class= "sidetext" href="admin.php?page=2">Facilitator Edit View</a>
-		<a class= "sidetext" href="admin.php?page=3">Group Edit View</a>
-		<a class= "sidetext" href="admin.php?page=4">History</a>
-		<a class= "sidetext" href="admin.php?page=5">Holidays</a>
-		<a class= "sidetext" href="admin.php?page=6">Offsite Locations</a>
-    	<a class= "sidetext" href="admin.php?page=7">Password</a>
-		<a class= "sidetext" href="admin.php?page=8">School Hours</a>
-		<a class= "sidetext" href="admin.php?page=9">Student Edit View</a>
-		front end
-		<a class= "sidetext" href="index.php">Front Page</a>
-		<a class= "sidetext" href="statusview.php">Status View</a>
+	<div class = "sidebar" id="admin">
 	</div>
 	<div>
 		<?php
@@ -243,7 +229,8 @@ require_once("head.php");
 						}
 					}elseif(!empty($_POST['stus'])){
 						$_POST['group'] = str_replace('0','Ø', str_replace(' ', "_", str_replace(".", '_', $_POST['group'])));
-						if(!empty($db->query('SELECT group_name FROM groups WHERE group_name = "'.$_POST['group'].'" LIMIT 1')->fetch_assoc()['group_name'])){
+						$empty = $db->query('SELECT group_name FROM groups WHERE group_name = "'.$_POST['group'].'" LIMIT 1')->fetch_assoc();
+						if(!empty($empty['group_name'])){
 							foreach($values as &$group){
 								if($group['group_name'] == $_POST['group']){
 									$gp = explode(',',$group['students']);
@@ -330,7 +317,8 @@ require_once("head.php");
 							$_POST[$value['group_name']] = $_POST[str_replace(' ', "_", $value['group_name'])];
 						}
 						if(!empty($_POST[$value['group_name']])){
-							$group = $db->query('SELECT students FROM groups WHERE group_name = "'.$value['group_name'].'"')->fetch_assoc()['students'];
+							$group = $db->query('SELECT students FROM groups WHERE group_name = "'.$value['group_name'].'"')->fetch_assoc();
+							$group = $group['students'];
 							foreach($_POST[$value['group_name']] as &$rem){
 								$group = str_replace($rem, "", $group);
 								$group = trim(str_replace(',,', ",", $group), ',');
@@ -368,7 +356,7 @@ require_once("head.php");
 										}
 									}
 									echo '</select><button name="go" class="submit" type="submit" value="'.$sub_student.','.$row.','.$col.'">￭</button></td>';
-	
+
 								}elseif($_GET['page'] == 1){
 									echo '<td class="admin">'.$value[$oi].' '.$value['last_name'].'</td>';
 								}

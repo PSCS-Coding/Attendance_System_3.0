@@ -24,7 +24,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
         <script>
         $(function(){
-          $("#includedContent").load("sidebar.html");
+          $("#admin").load("sidebar.html");
         });
         </script>
     </head>
