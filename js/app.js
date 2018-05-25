@@ -11,9 +11,9 @@ Vue.component('student', {
         <label :for='studentId' :class='{ "late-shading": textRed, "selected": isSelected, "card": true}' @toggle-selected='selected()'>
             <input type='checkbox' :value='studentId' :id='studentId' v-model='$root.selected' hidden>
             <div class='card-content'>
-                <a href='#' class='name hoverAnimation'>{{ firstName }} {{ [...lastName][0] }}.</a>
+                <a :href='userLink' class='name hoverAnimation'>{{ firstName }} {{ [...lastName][0] }}.</a>
                 <div class='location'>{{ $root.statusData[status] }} </div>
-                <p class='info' v-if='returnTime'> <span v-if='info'>{{ info }} &bullet; </span>returning at {{ fmtReturnTime }}</p>
+                <p class='info' v-if='infoText'>{{ infoText }}</p>
             </div>
         </label>`,
     computed: {
@@ -27,6 +27,12 @@ Vue.component('student', {
         },
         isSelected: function () {
             return this.$root.selected.find(x => x == this.studentId) == this.studentId ? true : false;
+        },
+        userLink: function () {
+            return './user.html?student=' + this.studentId;
+        },
+        infoText: function () {
+            return this.info ? this.info + ' | returning at ' + this.fmtReturnTime : (this.returnTime ? 'returning at ' + this.fmtReturnTime : null);
         }
     }
 });
@@ -78,10 +84,8 @@ Vue.component('groups-select', {
 
 Vue.component('student-list', {
     template: `
-        <div class='container'>
-            <div class='student-list flex-container'>
-                <student @tog-selected='test()' v-for='student of $root.students' :key='student.studentId' :student-id='student.studentId' :first-name='student.firstName' :last-name='student.lastName' :status='student.status' :return-time='student.returnTime' :info='student.info'></student>
-            </div>
+        <div class='flex-container'>
+            <student @tog-selected='test()' v-for='student of $root.students' :key='student.studentId' :student-id='student.studentId' :first-name='student.firstName' :last-name='student.lastName' :status='student.status' :return-time='student.returnTime' :info='student.info'></student>
         </div>`
 });
 
