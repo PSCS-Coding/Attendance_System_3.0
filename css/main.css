@@ -42,8 +42,8 @@ body {
     margin: 10px;
     -webkit-box-shadow: var(--BoxShadow);
     box-shadow: var(--BoxShadow);
-    -webkit-transition: all 0.3s ease;
-    transition: all 0.3s ease;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
     background-color: var(--cardBackground);
     border-radius: 0.6rem;
     width: 260px;
