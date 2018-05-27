@@ -5,16 +5,16 @@
     <title>PSCS Attendance</title>
 
     <link rel="shortcut icon" href="media/favicon.ico" type="image/x-icon" />
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css' type='text/css' />
+    <link rel='stylesheet' href='css/jquery-ui.min.css' type='text/css' />
     <link rel='stylesheet' type='text/css' href='js/timepicker/jquery.timepicker.min.css'>
     <link rel='stylesheet' type='text/css' href='css/main.css'>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js'></script>
+    <script src='js/lodash.min.js'></script>
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
+    <script src='js/jquery-ui.min.js'></script>
     <script src='js/timepicker/jquery.timepicker.min.js'></script>
     <script src="js/moment.min.js"></script>
     <script src="js/jquery.tagsinput.min.js"></script>
@@ -22,6 +22,11 @@
 </head>
 
 <body>
+    <div id='loading' class="bouncing-loader centerFlex">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
     <div id='attendance'>
         <main-navbar></main-navbar>
         <main>

@@ -213,14 +213,14 @@ var vm = new Vue({
             let self = this;
             let studentsInGroup;
             let selectedStudents;
-            this.$root.selectedGroups.forEach(name => {
-                studentsInGroup = self.$root.groups.find(x => x.name == name).students;
-                selectedStudents = self.$root.selected;
+            this.selectedGroups.forEach(name => {
+                studentsInGroup = self.groups.find(x => x.name == name).students;
+                selectedStudents = self.selected;
                 //if the difference between the selected students in the group and the students in the group IS the selected students in the group
                 //eg. if no students in a group are selected
                 if (_.isEqual(_.difference(studentsInGroup, selectedStudents).sort(), studentsInGroup.sort())) {
                     //deselect that group
-                    self.$root.selectedGroups.splice(_.indexOf(self.$root.selectedGroups, name), 1);;
+                    self.selectedGroups.splice(_.indexOf(self.selectedGroups, name), 1);;
                 }
             });
         }
@@ -234,7 +234,7 @@ var vm = new Vue({
                     const decodedGroups = decodeURIComponent((response.data.split('/')[5] + '').replace(/\+/g, '%20'));
                     let studentList = [];
                     //statuses
-                    self.$root.statusData = decodeAndParse(response.data.split('/')[0] + '');
+                    self.statusData = decodeAndParse(response.data.split('/')[0] + '');
                     //students array
                     decodeAndParse(response.data.split('/')[1] + '').forEach(student => {
                         studentList.push(_.pickBy({
@@ -249,11 +249,11 @@ var vm = new Vue({
                     studentList.sort(function (a, b) {
                         return (a.firstName > b.firstName) ? 1 : ((b.firstName > a.firstName) ? -1 : 0);
                     });
-                    self.$root.students = studentList;
-                    self.$root.locations = Object.values(decodeAndParse(response.data.split('/')[2] + ''));
-                    self.$root.facilitators = Object.values(decodeAndParse(response.data.split('/')[3] + ''));
+                    self.students = studentList;
+                    self.locations = Object.values(decodeAndParse(response.data.split('/')[2] + ''));
+                    self.facilitators = Object.values(decodeAndParse(response.data.split('/')[3] + ''));
                     globalsArray = Object.values(decodeAndParse(response.data.split('/')[4] + ''));
-                    self.$root.globals = {
+                    self.globals = {
                         startTime: moment(globalsArray[0], 'HH:mm:ss'),
                         endTime: moment(globalsArray[1], 'HH:mm:ss')
                     }
@@ -269,7 +269,7 @@ var vm = new Vue({
                         });
                     });
 
-                    self.$root.groups = groups;
+                    self.groups = groups;
 
                     $('.timepicker').timepicker({
                         'scrollDefault': 'now',
@@ -278,30 +278,32 @@ var vm = new Vue({
                         'maxTime': self.$root.globals.endTime.toDate()
                     });
                     $('#offsite-modal #offsite-location').autocomplete({
-                        source: self.$root.locations,
+                        source: self.locations,
                         minLength: 0
                     }).focus(function () {
                         $(this).data("uiAutocomplete").search(null);
                     });
 
                     $('#field-trip-modal #field-trip-facilitator').autocomplete({
-                        source: self.$root.facilitators,
+                        source: self.facilitators,
                         minLength: 0
                     }).focus(function () {
                         $(this).data("uiAutocomplete").search(null);
                     });
                     var font = new FontFaceObserver('Nunito');
                     font.load().then(function () {
+                        $('#loading').css('display', 'none');
                         $("#attendance").fadeIn();
                     }, function () {
                         let html = document.getElementsByTagName('html')[0];
                         html.style.setProperty("--defFont", 'sans-serif');
+                        $('#loading').css('display', 'none');
                         $("#attendance").fadeIn();
                     });
                 })
                 .catch(function (error) {
                     console.error('Request failed: [' + error + ']');
-                    self.$root.errorMessage('Fetching data failed. Please try again, or speak to a developer.');
+                    self.errorMessage('Fetching data failed. Please try again, or speak to a developer.');
                 });
         },
         errorMessage: function (message) {
@@ -309,7 +311,7 @@ var vm = new Vue({
             alert(message);
         },
         changeStatus: function (status, returnTime, info) {
-            selected = this.$root.selected;
+            selected = this.selected;
             self = this;
             if (selected.length > 0) {
                 let q = './backend/request.php?f=changestatus&status=' + status + '&students=' + selected.join();
@@ -324,20 +326,20 @@ var vm = new Vue({
                     axios.get(q)
                         .then(function (response) {
                             //eventually make it so it doesn't need to reload the whole table - just the statuses that changed
-                            self.$root.selected = [];
+                            self.selected = [];
                             $('.modal').css('display', 'none');
                             $('.modal input[type="text"]').val('');
-                            self.$root.load();
+                            self.load();
                         })
                         .catch(function (error) {
-                            self.$root.errorMessage('Could not perform the action. Try again, or speak to a developer.');
+                            self.errorMessage('Could not perform the action. Try again, or speak to a developer.');
                         });
                 } else {
-                    this.$root.errorMessage('You must enter a valid return time!');
+                    this.errorMessage('You must enter a valid return time!');
                     $('.timepicker').val('');
                 }
             } else {
-                this.$root.errorMessage('You must select at least one student!');
+                this.errorMessage('You must select at least one student!');
             }
         },
         setIdle: function () {
@@ -348,7 +350,7 @@ var vm = new Vue({
             function refresh() {
                 clearTimeout(timer);
                 timer = setTimeout(function () {
-                    self.$root.load();
+                    self.load();
                     refresh();
                 }, 10000);
             };
