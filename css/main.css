@@ -6,7 +6,7 @@
   --studentBorder: 1.5px solid;
   --cardBackground: #f8f8f8;
   --defaultTextColor: #000;
-  --accentColor: #5e42f5;
+  --accentColor: rgb(255, 160, 122);
   --BoxShadow: 0 2px 6px hsla(0, 0%, 0%, 0.2);
   --BoxShadowHover: 2px 6px 30px rgba(0, 0, 0, 0.4);
   --navbarColor: #ffffff;
@@ -45,7 +45,7 @@ body {
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
   background-color: var(--cardBackground);
-  border-radius: 0.6rem;
+  border-radius: 0.3rem;
   width: 285px;
   border: var(--studentBorder) var(--cardBackground);
   min-height: 75px;
