@@ -103,20 +103,22 @@ function actual_lates($student_id) {
     $unexpectedlates = 0;
     $date1 = new DateTime ($all_events[0][2]);
     $date2 = new DateTime ($all_events[0][2]);
-    $place_time = new DateTime;
 
 #the bug we had with the following loop for a SUPER long time was because we were forgetting that the date1 was constantly being reassigned right below
     $other_lates = 0;
     //print_r($date1);
-    for ($k = 1; $k < $number_events; $k++) {
+    for ($k = 0; $k < $number_events; $k++) {
 
       $date1 = new DateTime($all_events[$k][2]);
       //print_r($test1);
-      $test = new DateTime($all_events[$k-1][2]);
-      // limiting the for loop to only run only one iteration per day
-      if ($date1->format('Y-m-d') == $test->format('Y-m-d')) {
-        continue;
+      if ($k != 0) {
+        $test = new DateTime($all_events[$k-1][2]);
+        // limiting the for loop to only run only one iteration per day
+        if ($date1->format('Y-m-d') == $test->format('Y-m-d')) {
+          continue;
+        }
       }
+
       //echo $date2;
       $date1_9 = new DateTime($date1->format('Y-m-d' . '9:00:00'));
       //$date2 = new DateTime($all_events[$k][2]);
@@ -127,20 +129,20 @@ function actual_lates($student_id) {
       }
       // Simon I know you wont like this else-if condition but I had to start somewhere
       #the while loop I wrote will make sure that if someone's first and second events of the day are late (as jack's conditional is supposed to verify) that ALL of their events up until 9:00 are late to make sure that they don't have duplicate lates before 9:00 giving them a false positive.
-      elseif($all_events[$k][3] = 5 && $k < count($all_events) && ($all_events[$k+1][2] >= $date2 || $all_events[$k+1][3] = 5)) {
+      elseif($all_events[$k][3] == 5 && $k < count($all_events) && ($all_events[$k+1][2] >= $date2 || $all_events[$k+1][3] = 5)) {
           $eventtime = new DateTime($all_events[$k+1][2]);
           echo ' lates: '.$other_lates;
-          $proceed = 0;
+          $proceed = 1;
           $n = 0;
           do {
             $n++;
             $eventtime = new DateTime($all_events[$k+$n][2]);
 
-            if ($all_events[$k+$n][3]==5 && $eventtime < $date2){
-              $proceed = 1; // the last event before 9 is late
+            if ($all_events[$k+$n][3] == 5 && $eventtime < $date2){
+              $proceed = 0; // the last event before 9 is late
             }
             else {
-              $proceed = 0;
+              $proceed = 1;
             }
           } while ($eventtime < $date2);
 
