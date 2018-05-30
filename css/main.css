@@ -1,254 +1,254 @@
 @import url("https://fonts.googleapis.com/css?family=Nunito");
 :root {
-  --defFont: "Nunito", sans-serif;
-  --bgColor: #e7ecf3;
-  --dangerRed: #ff6f6f;
-  --studentBorder: 1.5px solid;
-  --cardBackground: #f8f8f8;
-  --defaultTextColor: #000;
-  --accentColor: rgb(255, 160, 122);
-  --BoxShadow: 0 2px 6px hsla(0, 0%, 0%, 0.2);
-  --BoxShadowHover: 2px 6px 30px rgba(0, 0, 0, 0.4);
-  --navbarColor: #ffffff;
+    --defFont: "Nunito", sans-serif;
+    --bgColor: #e7ecf3;
+    --dangerRed: #ff6f6f;
+    --studentBorder: 1.5px solid;
+    --cardBackground: #f8f8f8;
+    --defaultTextColor: #000;
+    --accentColor: rgb(255, 160, 122);
+    --BoxShadow: 0 2px 6px hsla(0, 0%, 0%, 0.2);
+    --BoxShadowHover: 2px 6px 30px rgba(0, 0, 0, 0.4);
+    --navbarColor: #ffffff;
 }
 
 * {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-family: var(--defFont);
-  line-height: 1.6;
-  background-color: var(--bgColor);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: var(--defFont);
+    line-height: 1.6;
+    background-color: var(--bgColor);
 }
 
 body {
-  margin: 16px 0;
+    margin: 16px 0;
 }
 
 .flex-container {
-  width: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .card {
-  margin: 10px;
-  -webkit-box-shadow: var(--BoxShadow);
-  box-shadow: var(--BoxShadow);
-  -webkit-transition: all 0.2s ease;
-  transition: all 0.2s ease;
-  background-color: var(--cardBackground);
-  border-radius: 0.3rem;
-  width: 285px;
-  border: var(--studentBorder) var(--cardBackground);
-  min-height: 75px;
+    margin: 10px;
+    -webkit-box-shadow: var(--BoxShadow);
+    box-shadow: var(--BoxShadow);
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    background-color: var(--cardBackground);
+    border-radius: 0.3rem;
+    width: 285px;
+    border: var(--studentBorder) var(--cardBackground);
+    min-height: 75px;
 }
 
 .card:hover {
-  -webkit-box-shadow: var(--BoxShadowHover);
-  box-shadow: var(--BoxShadowHover);
+    -webkit-box-shadow: var(--BoxShadowHover);
+    box-shadow: var(--BoxShadowHover);
 }
 
 /* STUDENT NAME */
 
 .card .name {
-  margin: 0;
-  font-size: 1.4rem;
-  line-height: 1.2;
-  color: var(--defaultTextColor);
-  text-decoration: none;
-  font-weight: bold;
+    margin: 0;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    color: var(--defaultTextColor);
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .card .location {
-  margin: -3px 0px -3px 0px;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--accentColor);
+    margin: -3px 0px -3px 0px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accentColor);
 }
 
 /* RETURN TIME */
 
 .card .info {
-  margin: 0 0 10px;
-  color: var(--defaultTextColor);
-  font-size: 0.9rem;
+    margin: 0 0 10px;
+    color: var(--defaultTextColor);
+    font-size: 0.9rem;
 }
 
 /* INDENT NAME/LOCATION/RETURN */
 
 .card .card-content {
-  padding: 10px 30px 0px;
+    padding: 10px 30px 0px;
 }
 
 /* WHEN A USER SELECTS A STUDENT */
 
 .selected {
-  border: var(--studentBorder) var(--accentColor) !important;
+    border: var(--studentBorder) var(--accentColor) !important;
 }
 
 /* WHEN A STUDENT IS LATE */
 
 .late-shading {
-  border: var(--studentBorder) var(--dangerRed);
+    border: var(--studentBorder) var(--dangerRed);
 }
 
-.hoverAnimation {
-  display: inline-block;
-  position: relative;
-  color: var(--accentColor);
+.hover-animation {
+    display: inline-block;
+    position: relative;
+    color: var(--accentColor);
 }
 
-.hoverAnimation::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  transform: scaleX(0);
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: var(--accentColor);
-  transform-origin: bottom right;
-  transition: transform 0.25s ease-out;
+.hover-animation::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accentColor);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
 }
 
-.hoverAnimation:hover::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
+.hover-animation:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
 }
 
 .navbar {
-  list-style-type: none;
-  margin-top: -16px;
-  padding: 0;
-  overflow: hidden;
-  background-color: var(--navbarColor);
-  border-bottom: 1px solid var(--accentColor);
+    list-style-type: none;
+    margin-top: -16px;
+    padding: 0;
+    overflow: hidden;
+    background-color: var(--navbarColor);
+    border-bottom: 1px solid var(--accentColor);
 }
 
 .navbar li {
-  float: left;
+    float: left;
 }
 
 .navbar li a {
-  display: block;
-  color: var(--defaultTextColor);
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
+    display: block;
+    color: var(--defaultTextColor);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
 }
 
 .pull-right {
-  float: right !important;
+    float: right !important;
 }
 
 nav li {
-  display: inline;
+    display: inline;
 }
 
 .modal {
-  display: none;
-  /* Hidden by default */
-  position: fixed;
-  /* Stay in place */
-  z-index: 1;
-  /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%;
-  /* Full width */
-  height: 100%;
-  /* Full height */
-  overflow: auto;
-  /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0);
-  /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4);
-  /* Black w/ opacity */
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
 }
 
 /* Modal Content/Box */
 
 .modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 60%;
-  /* Could be more or less, depending on screen size */
+    background-color: #fefefe;
+    margin: 15% auto;
+    /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+    /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button */
 
 .close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
+    color: #aaa;
+    float: right;
+    font-size: 28px;
 }
 
 .close:hover,
 .close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .text-red {
-  color: red;
+    color: red;
 }
 
-#attendance {
-  display: none;
+#content {
+    display: none;
 }
 
 @keyframes bouncing-loader {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0.1;
-    transform: translateY(-1rem);
-  }
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0.1;
+        transform: translateY(-1rem);
+    }
 }
 
 .bouncing-loader {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
-.bouncing-loader > div {
-  width: 1rem;
-  height: 1rem;
-  margin: 3rem 0.2rem;
-  background: #8385aa;
-  border-radius: 50%;
-  animation: bouncing-loader 0.6s infinite alternate;
+.bouncing-loader>div {
+    width: 1rem;
+    height: 1rem;
+    margin: 3rem 0.2rem;
+    background: #8385aa;
+    border-radius: 50%;
+    animation: bouncing-loader 0.6s infinite alternate;
 }
 
-.bouncing-loader > div:nth-child(2) {
-  animation-delay: 0.2s;
+.bouncing-loader>div:nth-child(2) {
+    animation-delay: 0.2s;
 }
 
-.bouncing-loader > div:nth-child(3) {
-  animation-delay: 0.4s;
+.bouncing-loader>div:nth-child(3) {
+    animation-delay: 0.4s;
 }
 
-.centerFlex {
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+.centered {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
 }

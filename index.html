@@ -22,17 +22,20 @@
 </head>
 
 <body>
-    <div id='loading' class="bouncing-loader centerFlex">
+    <div id='loading' class="bouncing-loader centered">
         <div></div>
         <div></div>
         <div></div>
     </div>
     <div id='attendance'>
-        <main-navbar></main-navbar>
-        <main>
-            <student-list></student-list>
-            <groups-select></groups-select>
-        </main>
+        <error-message></error-message>
+        <div id='content'>
+            <main-navbar></main-navbar>
+            <main>
+                <student-list></student-list>
+                <groups-select></groups-select>
+            </main>
+        </div>
         <offsite-modal></offsite-modal>
         <field-trip-modal></field-trip-modal>
         <late-modal></late-modal>

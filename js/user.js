@@ -1,3 +1,16 @@
+Vue.component('error-message', {
+    template: `
+    <div id='error-container' style='display: none'>
+        <span id='error-message'></span>
+        <button @click='close'><i data-feather='x'></i></button>
+    </div>`,
+    methods: {
+        close: function () {
+            $('#error-container').css('display', 'none');
+        }
+    }
+});
+
 Vue.component('tabs', {
     template: `
         <div>
@@ -83,11 +96,12 @@ var vm = new Vue({
                 .then(function (response) {
                     var font = new FontFaceObserver('Nunito');
                     font.load().then(function () {
-                        $("#user-page").fadeIn();
+                        $('#loading').fadeOut();
+                        $("#content").fadeIn();
                     }, function () {
-                        let html = document.getElementsByTagName('html')[0];
-                        html.style.setProperty("--defFont", 'sans-serif');
-                        $("#user-page").fadeIn();
+                        $('html').get(0).style.setProperty("--defFont", 'sans-serif');
+                        $('#loading').fadeOut();
+                        $("#content").fadeIn();
                     });
                 })
                 .catch(function (error) {
@@ -96,8 +110,8 @@ var vm = new Vue({
                 });
         },
         errorMessage: function (message) {
-            //make this a message at the top of the page instead of an alert
-            alert(message);
+            $('#error-container #error-message').text(message);
+            $('#error-container').css('display', 'inline');
         },
         changeStatus: function (status, returnTime, info) {
             self = this;
@@ -124,7 +138,7 @@ var vm = new Vue({
         }
     },
     beforeMount() {
-        //this.load();
+        this.load();
     },
     mounted() {
         feather.replace();

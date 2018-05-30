@@ -65,6 +65,8 @@ if (!empty($_GET['f'])) {
                 $db->query('UPDATE current SET `status_id` = "'.$status_id.'",`info` = "'.$info.'",`return_time` = "00:00:00" WHERE `student_id` = "'.$student.'";');
             }
         }
+    } elseif($_GET['f'] == 'user') {
+        $student = $_GET['id'];
     }
 }
 

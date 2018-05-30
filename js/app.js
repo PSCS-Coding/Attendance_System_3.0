@@ -11,7 +11,7 @@ Vue.component('student', {
         <label :for='studentId' :class='{ "late-shading": textRed, "selected": isSelected, "card": true}' @toggle-selected='selected()'>
             <input type='checkbox' :value='studentId' :id='studentId' v-model='$root.selected' hidden>
             <div class='card-content'>
-                <a :href='userLink' class='name hoverAnimation'>{{ firstName }} {{ [...lastName][0] }}.</a>
+                <a :href='userLink' class='name hover-animation'>{{ firstName }} {{ [...lastName][0] }}.</a>
                 <div class='location'>{{ $root.statusData[status] }} </div>
                 <p class='info' v-if='infoText'>{{ infoText }}</p>
             </div>
@@ -33,6 +33,19 @@ Vue.component('student', {
         },
         infoText: function () {
             return this.info ? this.info + ' | returning at ' + this.fmtReturnTime : (this.returnTime ? 'returning at ' + this.fmtReturnTime : null);
+        }
+    }
+});
+
+Vue.component('error-message', {
+    template: `
+    <div id='error-container' style='display: none'>
+        <span id='error-message'></span>
+        <button @click='close'><i data-feather='x'></i></button>
+    </div>`,
+    methods: {
+        close: function () {
+            $('#error-container').css('display', 'none');
         }
     }
 });
@@ -161,12 +174,12 @@ Vue.component('main-navbar', {
         <nav class='main-navbar'>
             <ul class='navbar'>
                 <span v-show='$root.selected.length > 0'>
-                    <li><a href='#' class='hoverAnimation' @click='present()'>Present</a></li>
-                    <li><a href='#' class='hoverAnimation' @click='modal("#offsite-modal")'>Offsite</a></li>
-                    <li><a href='#' class='hoverAnimation' @click='modal("#late-modal")'>Late</a></li>
-                    <li><a href='#' class='hoverAnimation' @click='modal("#field-trip-modal")'>Field trip</a></li>
+                    <li><a href='#' class='hover-animation' @click='present()'>Present</a></li>
+                    <li><a href='#' class='hover-animation' @click='modal("#offsite-modal")'>Offsite</a></li>
+                    <li><a href='#' class='hover-animation' @click='modal("#late-modal")'>Late</a></li>
+                    <li><a href='#' class='hover-animation' @click='modal("#field-trip-modal")'>Field trip</a></li>
                 </span>
-                <li class='pull-right'><a class='button hoverAnimation' href='user.html'>User Page</a></li>
+                <li class='pull-right'><a class='button hover-animation' href='user.html'>profile pic goes here<i data-feather='chevron-down'></i></a></li>
             </ul>
         </nav>`,
     methods: {
@@ -292,13 +305,12 @@ var vm = new Vue({
                     });
                     var font = new FontFaceObserver('Nunito');
                     font.load().then(function () {
-                        $('#loading').css('display', 'none');
-                        $("#attendance").fadeIn();
+                        $('#loading').fadeOut();
+                        $("#content").fadeIn();
                     }, function () {
-                        let html = document.getElementsByTagName('html')[0];
-                        html.style.setProperty("--defFont", 'sans-serif');
-                        $('#loading').css('display', 'none');
-                        $("#attendance").fadeIn();
+                        $('html').get(0).style.setProperty("--defFont", 'sans-serif');
+                        $('#loading').fadeOut();
+                        $("#content").fadeIn();
                     });
                 })
                 .catch(function (error) {
@@ -307,8 +319,8 @@ var vm = new Vue({
                 });
         },
         errorMessage: function (message) {
-            //make this a message at the top of the page instead of an alert
-            alert(message);
+            $('#error-container #error-message').text(message);
+            $('#error-container').css('display', 'inline');
         },
         changeStatus: function (status, returnTime, info) {
             selected = this.selected;
