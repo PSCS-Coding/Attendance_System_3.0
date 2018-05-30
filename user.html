@@ -29,7 +29,20 @@
     <div id='user-page'>
         <error-message></error-message>
         <div id='content'>
-            <h3 style='text-align: center'>In progress</h3>
+            <page-title></page-title>
+            <tabs>
+                <tab name="Actions" :selected="true">
+                    Status actions
+                </tab>
+
+                <tab name="Reports">
+                    Reports
+                </tab>
+
+                <tab name="Settings">
+                    Settings
+                </tab>
+            </tabs>
         </div>
     </div>
 </body>

@@ -1,3 +1,16 @@
+Vue.component('page-title', {
+    template: `
+    <div id='title'>
+        <h1>{{$root.firstName}} {{[...$root.lastName][0]}}.</h1>
+        <h3>is {{$root.statusName.toLowerCase()}}</h3>
+    </div>`,
+    methods: {
+        close: function () {
+            $('#error-container').css('display', 'none');
+        }
+    }
+});
+
 Vue.component('error-message', {
     template: `
     <div id='error-container' style='display: none'>
@@ -49,7 +62,7 @@ Vue.component('tabs', {
 
 Vue.component('tab', {
     template: `
-        <div v-show="isActive"><slot></slot></div>
+        <div class='tab' v-show="isActive"><slot></slot></div>
     `,
 
     props: {
@@ -70,11 +83,14 @@ Vue.component('tab', {
     computed: {
         href() {
             return '#' + this.name.toLowerCase().replace(/ /g, '-');
+        },
+        isSelected: function () {
+            return window.location.hash != '' ? (window.location.hash.substring(1) == this.name.toLowerCase().replace(/ /g, '-') ? true : false) : this.selected;
         }
     },
 
     mounted() {
-        this.isActive = this.selected;
+        this.isActive = this.isSelected;
     },
 });
 
@@ -82,7 +98,9 @@ Vue.component('tab', {
 var vm = new Vue({
     el: '#user-page',
     data: {
-
+        firstName: '',
+        lastName: '',
+        statusName: ''
     },
     computed: {
         studentId: function () {
@@ -94,6 +112,10 @@ var vm = new Vue({
             let self = this;
             axios.get('./backend/request.php?f=user&id=' + this.$root.studentId)
                 .then(function (response) {
+                    self.firstName = response.data.first_name;
+                    self.lastName = response.data.last_name;
+                    self.statusName = response.data.status_name;
+
                     var font = new FontFaceObserver('Nunito');
                     font.load().then(function () {
                         $('#loading').fadeOut();
@@ -106,7 +128,7 @@ var vm = new Vue({
                 })
                 .catch(function (error) {
                     console.error('Request failed: [' + error + ']');
-                    self.errorMessage('Fetching data failed. Please try again, or speak to a developer.');
+                    self.errorMessage('Fetching data failed. Try reloading the page.');
                 });
         },
         errorMessage: function (message) {

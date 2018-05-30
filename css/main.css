@@ -252,3 +252,13 @@ nav li {
     right: 0;
     margin: auto;
 }
+
+.tabs li {
+    display: inline;
+    padding-left: 5px;
+}
+
+.tabs li:not(:last-child) {
+    padding-right: 5px;
+    border-right: 2px solid #d2d5e4;
+}

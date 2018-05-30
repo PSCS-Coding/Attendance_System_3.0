@@ -282,6 +282,11 @@ var vm = new Vue({
                         });
                     });
 
+                    groups.push({
+                        name: 'All students',
+                        students: _.map(self.students, 'studentId')
+                    });
+
                     self.groups = groups;
 
                     $('.timepicker').timepicker({
@@ -315,7 +320,7 @@ var vm = new Vue({
                 })
                 .catch(function (error) {
                     console.error('Request failed: [' + error + ']');
-                    self.errorMessage('Fetching data failed. Please try again, or speak to a developer.');
+                    self.errorMessage('Fetching data failed. Try reloading the page.');
                 });
         },
         errorMessage: function (message) {
