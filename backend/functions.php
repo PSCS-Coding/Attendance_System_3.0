@@ -121,4 +121,7 @@ function elapsed_recalc($event_id) { // recalculates and updates elapsed value f
   $query = "UPDATE history SET elapsed = '$time_elapsed' WHERE event_id = '$older_event_id'";
   $db->query($query);
 }
+function add_preplan($student,$status,$start,$end,$info){
+
+}
 ?>
