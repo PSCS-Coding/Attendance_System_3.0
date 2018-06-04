@@ -12,14 +12,16 @@ require_once("head.php");
   	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="style.css">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	
+
 </head>
 <body class="back">
 	<div class = "sidebar" id="admin">
 	</div>
 	<div>
 		<?php
-			echo add_preplan('8','7','gone forever','2018-5-30 12:00:00','2018-5-30 15:40:00');
+		for ($i=0; $i < 8; $i++) {
+			echo add_preplan('8',$i,'gone forever','2018-5-30 12:00:00','2018-5-30 15:40:00').';<br>';
+		}
 		 ?>
 	</div>
 </body>
