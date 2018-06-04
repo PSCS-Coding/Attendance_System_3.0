@@ -16,58 +16,26 @@ function view_reports_for_student($student_id){
     echo "<br/>Offsite Left: ", floor(($OffsiteLeft)/60), " Hours and ", $OffsiteLeft%60, " Minutes<br/>";
     $PercentOffsiteUsed = round(($OffsiteTimeUsed/$total_offsite)*100, 2) . '%';
     echo "<br/>Percent Offsite Used: ",$PercentOffsiteUsed . '<br/><br/>';
-    get_all_lates($student_id);
+    echo actual_lates($student_id);
 }
 
-view_reports_for_student(5);
+view_reports_for_student(12);
 
-function get_all_lates($student_id) {
-    global $db;
-    // gets all lates for student
-    $query = "SELECT * FROM history WHERE status_id= 5 AND student_id = " . $student_id;
-    $result = $db->query($query);
-    //for ($i=0; $i < strlen($result->fetch_array()); $i++) {
-    //   # code...
-    //}
-    /*  Milo gave us this little gem. The code below was totally copied shamelessly from him, but it gets the result of the above query
-    structured line by line and printed somewhat neatly below.  */
-    /*$statusData = array();
-    while ($stat_row = $result->fetch_assoc()) {
-      array_push ($statusData, $stat_row);
-    }
-    echo("<pre>");
-    print_r($statusData);
-    echo("</pre>");
-
-    // TODO: change the above function such that it only counts ONE LATE PER DAY
-
-    /* TODO:  add in the 'Actually Late' function below (it will only count one per day, and each one will mean that the student was
-    (expectedly or no) late that day, arriving after 9:00am*/
-    // IDEA: for each late event check if the very previous (right before) event was a late event
-    // IDEA: check if the student signs in before the start of school after signing in as late.
-    //$result = $db->query("SELECT * FROM history WHERE status_id = 5 AND student_id =" . $student_id);
-
-    //$query2 = "SELECT";
-    //$NumLateEvents = ;
-    actual_lates($student_id);
-    return 0;
-
-}
 
 function actual_lates($student_id) {
     global $db;
 
     //get list of all events where the student_id is the one in question (pulled by the function input)
-
-    $result = $db->query("SELECT * FROM history WHERE student_id =" . $student_id);
-    $count = $db->query("SELECT COUNT(*) FROM history WHERE student_id =" . $student_id);
-    $number_events = $count->fetch_array()[0];
+    $q = 'SELECT * FROM history WHERE student_id = "'. $student_id.'" ORDER BY timestamp DESC';
+    $result = $db->query($q);
 
     $all_events = $result->fetch_all();
-    print_r($all_events[0]);
-
+    $number_events = count($all_events);
+    if ($number_events < 1){
+        return 'what a fail';
+    }
     //print_r($all_events);
-    echo "count " . $number_events . '<br/>';
+    echo "count " . $number_events . '<br/><br/>';
 
     //print out the timestamps of each event
     $lates = 0;
@@ -87,9 +55,7 @@ function actual_lates($student_id) {
           $REALates++;
         }
       }
-      echo "<br/>";
-      echo "Event " . ($i+1) . ' Timestamp: ';
-      print_r($all_events[$i][2]);
+      echo "Event " . ($i+1) . ' Timestamp: '.$all_events[$i][2].'</br>';
     }
 
 
