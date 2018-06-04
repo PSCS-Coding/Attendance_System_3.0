@@ -16,7 +16,7 @@ function view_reports_for_student($student_id){
     echo "<br/>Offsite Left: ", floor(($OffsiteLeft)/60), " Hours and ", $OffsiteLeft%60, " Minutes<br/>";
     $PercentOffsiteUsed = round(($OffsiteTimeUsed/$total_offsite)*100, 2) . '%';
     echo "<br/>Percent Offsite Used: ",$PercentOffsiteUsed . '<br/><br/>';
-    echo actual_lates($student_id);
+    actual_lates($student_id);
 }
 
 view_reports_for_student(12);
@@ -57,14 +57,6 @@ function actual_lates($student_id) {
       }
       echo "Event " . ($i+1) . ' Timestamp: '.$all_events[$i][2].'</br>';
     }
-
-
-
-
-    print_r($array_of_lates);
-    echo $lates . '<br/>';
-    echo $REALates;
-
 
     $unexpectedlates = 0;
     $date1 = new DateTime ($all_events[0][2]);
