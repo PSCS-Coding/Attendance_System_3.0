@@ -19,7 +19,7 @@ function view_reports_for_student($student_id){
     actual_lates($student_id);
 }
 
-view_reports_for_student(3);
+view_reports_for_student(12);
 
 
 function actual_lates($student_id) {
@@ -58,7 +58,7 @@ function actual_lates($student_id) {
                 $latedate = new DateTime($late[2]);
                 if($latedate->format('y-m-d') == $date->format('y-m-d') && $latedate->format('H:i:s') < $date->format('H:i:s')){
                     $expected_lates++;
-                    $lastlate = new DateTime($date);
+                    $lastlate = $date;
                     break;
                 }
             }
