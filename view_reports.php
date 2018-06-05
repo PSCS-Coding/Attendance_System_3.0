@@ -19,14 +19,14 @@ function view_reports_for_student($student_id){
     actual_lates($student_id);
 }
 
-view_reports_for_student(11);
+view_reports_for_student(9);
 
 
 function actual_lates($student_id) {
     global $db;
 
     //get list of all events where the student_id is the one in question (pulled by the function input)
-    $q = 'SELECT * FROM history WHERE student_id = "'. $student_id.'" ORDER BY timestamp DESC';
+    $q = 'SELECT * FROM history WHERE student_id = "'. $student_id.'" ORDER BY timestamp ASC';
     $result = $db->query($q);
     $stati = $db->query('SELECT * FROM status_data ORDER BY status_id ASC')->fetch_all();
     $all_events = $result->fetch_all();
@@ -44,14 +44,14 @@ function actual_lates($student_id) {
       if ($all_events[$i][3] == 5) {
         array_push($array_of_lates, $all_events[$i]);
       }
-      echo "Event " . ($i+1) . ' Timestamp: '.$all_events[$i][2].'</br>';
+      echo "Event " . ($i+1) . ' Timestamp: '.$all_events[$i][2].' Status: '.$stati[$all_events[$i][3]][1].'</br>';
     }
 
     $expected_lates = 0;
     $late_arrivals = 0;
     //print_r($date1);
     for ($k = 0; $k < $number_events; $k++) {
-
+      $bad_day = false;
       $date1 = new DateTime($all_events[$k][2]);
       //print_r($test1);
       if ($k != 0) {
@@ -62,31 +62,31 @@ function actual_lates($student_id) {
         }
       }
       if($stati[$all_events[$k][3]][2] == 0){
-          for( $x = $k ; $x < $number_events - ($k + 1) ; $x++){
+          for( $x = $k ; $x < $number_events ; $x++){
               $eventdate = new DateTime($all_events[$x][2]);
               if($eventdate->format('Y-m-d') != $date1->format('Y-m-d')){
+                  $bad_day = true;
                   break;
               }
-              if($stati[$all_events[$k][3]][2] == 1){
-                  $date1 = new DateTime($all_events[$x][2]);
+              if($stati[$all_events[$x][3]][2] == 1){
+                  $date1 = $eventdate;
                   break;
               }
           }
+      }if($bad_day){
+        continue;
       }
-      //$date2 = new DateTime($all_events[$k][2]);
-      $date2 = new DateTime($date1->format('Y-m-d' . '9:00:00'));
-      if($date1 > $date2 && $date1->format("w") != 0 && $date1->format("w") != 6) {
+      if($date1->format('H:i:s') > '09:00:00' && $date1->format("w")%6 != 0) {
+          echo $all_events[$k][0];
           $late_arrivals++;
           foreach($array_of_lates as $late){
               $latedate = new DateTime($late[2]);
-              if($latedate->format('y-m-d') == $date1->format('y-m-d')){
+              if($latedate->format('y-m-d') == $date1->format('y-m-d') && $latedate->format('H:i:s') < $date1->format('H:i:s')){
                   $expected_lates++;
                   break;
               }
           }
       }
-      // Simon I know you wont like this else-if condition but I had to start somewhere
-      #the while loop I wrote will make sure that if someone's first and second events of the day are late (as jack's conditional is supposed to verify) that ALL of their events up until 9:00 are late to make sure that they don't have duplicate lates before 9:00 giving them a false positive.
     }
     echo '<br/> unexpected: ' . ($late_arrivals - $expected_lates) . '<br/>' . 'expected: ' . $expected_lates;
 }
