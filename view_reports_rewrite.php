@@ -34,9 +34,6 @@ function actual_lates($student_id) {
     if ($number_events < 1){
         return 'what a fail';
     }
-    //print_r($all_events);
-    echo "count " . $number_events . '<br/><br/>';
-
     //print out the timestamps of each event
     $array_of_lates = array();
     #sloppily count up all the late events and put into their own array that can reference the 'all events' array. The reason I call this sloppy is that it'd likely be more efficient if merged with some of the processes that come afterwards. But what the heck, it's a step forward.
@@ -52,13 +49,13 @@ function actual_lates($student_id) {
     //print_r($date);
     for ($k = 0; $k < $number_events; $k++) {
         $date = new DateTime($all_events[$k][2]);
-        if($stati[$all_events[$k][3]][2] != 0 && $date != $lastdate && $date->format('H:i:s') > '09:00:00' && $date->format("w")%6 != 0){
+        if($stati[$all_events[$k][3]][2] != 0 && $date->format('y-m-d') != $lastdate && $date->format('H:i:s') > '09:00:00' && $date->format("w")%6 != 0){
             $late_arrivals++;
             foreach($array_of_lates as $late){
                 $latedate = new DateTime($late[2]);
                 if($latedate->format('y-m-d') == $date->format('y-m-d') && $latedate->format('H:i:s') < $date->format('H:i:s')){
                     $expected_lates++;
-                    $lastlate = $date;
+                    $lastdate = $date->format('y-m-d');
                     break;
                 }
             }
