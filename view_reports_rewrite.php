@@ -49,20 +49,22 @@ function actual_lates($student_id) {
     //print_r($date);
     for ($k = 0; $k < $number_events; $k++) {
         $date = new DateTime($all_events[$k][2]);
-        if($stati[$all_events[$k][3]][2] != 0 && $date->format('y-m-d') != $lastdate && $date->format('H:i:s') > '09:00:00' && $date->format("w")%6 != 0){
-            $late_arrivals++;
-            foreach($array_of_lates as $late){
-                $latedate = new DateTime($late[2]);
-                if($latedate->format('y-m-d') == $date->format('y-m-d') && $latedate->format('H:i:s') < $date->format('H:i:s')){
-                    $expected_lates++;
-                    $lastdate = $date->format('y-m-d');
-                    break;
+        if($stati[$all_events[$k][3]][2] != 0 && $date->format('y-m-d') != $lastdate && $date->format("w")%6 != 0){
+            $lastdate = $date->format('y-m-d');
+            if( $date->format('H:i:s') > '09:00:00' ){
+                $late_arrivals++;
+                foreach($array_of_lates as $late){
+                    $latedate = new DateTime($late[2]);
+                    if($latedate->format('y-m-d') == $date->format('y-m-d') && $latedate->format('H:i:s') < $date->format('H:i:s')){
+                        $expected_lates++;
+                        break;
+                    }
                 }
             }
             
         }
     }
-    echo '<br/> unexpected: ' . ($late_arrivals - $expected_lates) . '<br/>' . 'expected: ' . $expected_lates;
+    echo '<br/> Unexpected: ' . ($late_arrivals - $expected_lates) . '<br/>' . 'Expected: ' . $expected_lates;
 }
 
 ?>
