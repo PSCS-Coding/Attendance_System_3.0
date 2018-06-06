@@ -19,7 +19,7 @@ function view_reports_for_student($student_id){
     actual_lates($student_id);
 }
 
-view_reports_for_student(12);
+view_reports_for_student(102);
 
 
 function actual_lates($student_id) {
@@ -31,6 +31,7 @@ function actual_lates($student_id) {
     $stati = $db->query('SELECT * FROM status_data ORDER BY status_id ASC')->fetch_all();
     $all_events = $result->fetch_all();
     $number_events = count($all_events);
+    echo 'Student ID: ' . $student_id . '</br></br>';
     if ($number_events < 1){
         return 'what a fail';
     }
