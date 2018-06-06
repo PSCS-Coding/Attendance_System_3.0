@@ -179,7 +179,7 @@ Vue.component('main-navbar', {
                     <li><a href='#' class='hover-animation' @click='modal("#late-modal")'>Late</a></li>
                     <li><a href='#' class='hover-animation' @click='modal("#field-trip-modal")'>Field trip</a></li>
                 </span>
-                <li class='pull-right'><a class='button hover-animation' href='user.html'>profile pic goes here<i data-feather='chevron-down'></i></a></li>
+                <li class='pull-right'><a class='button hover-animation' href='user.html'>User page</a></li>
             </ul>
         </nav>`,
     methods: {

@@ -1,14 +1,22 @@
 Vue.component('page-title', {
     template: `
-    <div id='title'>
+    <div v-if='$root.statusData' id='title'>
         <h1>{{$root.firstName}} {{[...$root.lastName][0]}}.</h1>
-        <h3>is {{$root.statusName.toLowerCase()}}</h3>
-    </div>`,
-    methods: {
-        close: function () {
-            $('#error-container').css('display', 'none');
-        }
-    }
+        <h3>Status: {{$root.statusData[$root.statusId].statusName.toLowerCase()}}</h3>
+    </div>`
+});
+
+Vue.component('status-change', {
+    props: {
+        statusName: String,
+        hasInfo: Boolean,
+        hasReturnTime: Boolean
+    },
+    template: `
+    <div class='status-change'>
+        {{statusName}}
+        <!-- Form, method for changing status-->
+    </div>`
 });
 
 Vue.component('error-message', {
@@ -100,21 +108,44 @@ var vm = new Vue({
     data: {
         firstName: '',
         lastName: '',
-        statusName: ''
-    },
-    computed: {
-        studentId: function () {
-            return getUrlParameter('student');
-        }
+        statusId: '',
+        statusData: false,
+        studentId: getUrlParameter('student') ? getUrlParameter('student') : null,
+        locations: [],
+        facilitators: [],
+        globals: []
     },
     methods: {
         load: function () {
             let self = this;
+            //will be replaced when I integrate login:
+            if (!this.studentId) {
+                this.studentId = '1';
+            }
             axios.get('./backend/request.php?f=user&id=' + this.$root.studentId)
                 .then(function (response) {
-                    self.firstName = response.data.first_name;
-                    self.lastName = response.data.last_name;
-                    self.statusName = response.data.status_name;
+                    self.firstName = decodeAndParse(response.data.split('/')[0] + '').first_name;
+                    self.lastName = decodeAndParse(response.data.split('/')[0] + '').last_name;
+                    self.statusId = decodeAndParse(response.data.split('/')[0] + '').status_id;
+
+                    let statusList = [];
+                    decodeAndParse(response.data.split('/')[1] + '').forEach(status => {
+                        statusList.push({
+                            statusName: status.status_name,
+                            hasReturnTime: (status.has_return_time == 1 ? true : false),
+                            hasInfo: (status.has_info == 1 ? true : false)
+                        });
+                    });
+
+                    self.statusData = statusList;
+
+                    self.locations = Object.values(decodeAndParse(response.data.split('/')[2] + ''));
+                    self.facilitators = Object.values(decodeAndParse(response.data.split('/')[3] + ''));
+                    globalsArray = Object.values(decodeAndParse(response.data.split('/')[4] + ''));
+                    self.globals = {
+                        startTime: moment(globalsArray[0], 'HH:mm:ss'),
+                        endTime: moment(globalsArray[1], 'HH:mm:ss')
+                    }
 
                     var font = new FontFaceObserver('Nunito');
                     font.load().then(function () {
@@ -137,7 +168,7 @@ var vm = new Vue({
         },
         changeStatus: function (status, returnTime, info) {
             self = this;
-            let q = './backend/request.php?f=changestatus&status=' + status + '&students=' + selected.join();
+            let q = './backend/request.php?f=changestatus&status=' + status + '&students=' + self.studentId;
             let usingReturn = false;
             if (returnTime) {
                 usingReturn = true;
@@ -148,7 +179,7 @@ var vm = new Vue({
             if (!usingReturn || moment(returnTime, 'h:mma', true).isValid()) {
                 axios.get(q)
                     .then(function (response) {
-
+                        self.load();
                     })
                     .catch(function (error) {
                         self.errorMessage('Could not perform the action. Try again, or speak to a developer.');

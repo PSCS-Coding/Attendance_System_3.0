@@ -67,9 +67,28 @@ if (!empty($_GET['f'])) {
         }
     } elseif($_GET['f'] == 'user') {
         $student = $_GET['id'];
-        $q = 'SELECT `first_name`,`last_name`,`status_name` FROM student_data INNER JOIN current ON student_data.student_id =  current.student_id INNER JOIN status_data ON current.status_id = status_data.status_id WHERE student_data.student_id = "'.$student.'"';
+        $q = 'SELECT `first_name`,`last_name`,`status_id` FROM student_data INNER JOIN current ON student_data.student_id =  current.student_id WHERE student_data.student_id = "'.$student.'"';
         $student_data = $db->query($q)->fetch_all($resulttype = MYSQLI_ASSOC)[0];
-        echo json_encode($student_data, JSON_PRETTY_PRINT);
+        encodeAndEcho($student_data);
+
+        $status_array = $db->query("SELECT status_name, has_return_time, has_info FROM status_data")->fetch_all($resulttype = MYSQLI_ASSOC);
+
+        encodeAndEcho($status_array);
+
+        $offsite_locations = $db->query("SELECT * FROM offsite_locations")->fetch_all($resulttype = MYSQLI_ASSOC);
+        $offsite_locations = array_column($offsite_locations, 'location_name', 'location_id');
+
+        encodeAndEcho($offsite_locations);
+
+        $facilitators = $db->query("SELECT * FROM facilitators")->fetch_all($resulttype = MYSQLI_ASSOC);
+        $facilitators = array_column($facilitators, 'facilitator_name', 'facilitator_id');
+
+        encodeAndEcho($facilitators);
+
+        $school_timing = $db->query("SELECT start_time, end_time FROM globals")->fetch_all($resulttype = MYSQLI_ASSOC);
+        $school_timing = array_replace(array(), $school_timing[0]);
+
+        encodeAndEcho($school_timing);
     }
 }
 
