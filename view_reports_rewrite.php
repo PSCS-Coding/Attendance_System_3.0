@@ -19,7 +19,7 @@ function view_reports_for_student($student_id){
     actual_lates($student_id);
 }
 
-view_reports_for_student(17);
+view_reports_for_student(28);
 
 
 function actual_lates($student_id) {
@@ -42,7 +42,7 @@ function actual_lates($student_id) {
         if ($all_events[$i][3] == 5) {
             array_push($array_of_lates, $all_events[$i]);
         }
-        echo "Event " . ($i+1) . ' Timestamp: '.$all_events[$i][2].' Status: '.$stati[$all_events[$i][3]][1].'</br>';
+        //echo "Event " . ($i+1) . ' Timestamp: '.$all_events[$i][2].' Status: '.$stati[$all_events[$i][3]][1].'</br>';
     }
     $expected_lates = 0;
     $late_arrivals = 0;
@@ -54,23 +54,24 @@ function actual_lates($student_id) {
         if ($k != $number_events-1) {
           $test_date = new DateTime($all_events[$k+1][2]);
           if ($all_events[$k][3] == 7 && $date->format('y-m-d') != $test_date->format('y-m-d') ) {
+            $lastdate = $date->format('Y-m-d');
               $absents++;
+              continue;
           }
         }
-
-        if($stati[$all_events[$k][3]][2] != 0 && $date->format('y-m-d') != $lastdate && $date->format("w")%6 != 0){
-            $lastdate = $date->format('y-m-d');
+        if($stati[$all_events[$k][3]][2] != 0 && $date->format('Y-m-d') != $lastdate && $date->format("w")%6 != 0){
             if( $date->format('H:i:s') > '09:00:00' ){
+                echo 'current date:' . $date->format('Y-m-d') . ' last first present: ' . $lastdate . '</br>';
                 $late_arrivals++;
                 foreach($array_of_lates as $late){
                     $latedate = new DateTime($late[2]);
-                    if($latedate->format('y-m-d') == $date->format('y-m-d') && $latedate->format('H:i:s') < $date->format('H:i:s')){
+                    if($latedate->format('Y-m-d') == $date->format('Y-m-d') && $latedate->format('H:i:s') < $date->format('H:i:s')){
                         $expected_lates++;
                         break;
                     }
                 }
             }
-
+            $lastdate = $date->format('Y-m-d');
         }
     }
     echo '<br/> Unexpected: ' . ($late_arrivals - $expected_lates) . '<br/>' . 'Expected: ' . $expected_lates . '<br/>Absents: ' . $absents;

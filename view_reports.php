@@ -19,7 +19,7 @@ function view_reports_for_student($student_id){
     actual_lates($student_id);
 }
 
-view_reports_for_student(12);
+view_reports_for_student(17);
 
 
 function actual_lates($student_id) {
