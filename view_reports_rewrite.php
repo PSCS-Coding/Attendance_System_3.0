@@ -19,7 +19,7 @@ function view_reports_for_student($student_id){
     actual_lates($student_id);
 }
 
-view_reports_for_student(28);
+view_reports_for_student($_GET['student']);
 
 
 function actual_lates($student_id) {
@@ -61,7 +61,7 @@ function actual_lates($student_id) {
         }
         if($stati[$all_events[$k][3]][2] != 0 && $date->format('Y-m-d') != $lastdate && $date->format("w")%6 != 0){
             if( $date->format('H:i:s') > '09:00:00' ){
-                echo 'current date:' . $date->format('Y-m-d') . ' last first present: ' . $lastdate . '</br>';
+                echo 'date:' . $date->format('Y-m-d') . ' time: ' . $date->format('H:i:s') . '</br>';
                 $late_arrivals++;
                 foreach($array_of_lates as $late){
                     $latedate = new DateTime($late[2]);
