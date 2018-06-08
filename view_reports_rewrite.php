@@ -60,7 +60,7 @@ function actual_lates($student_id) {
           }
         }
         if($stati[$all_events[$k][3]][2] != 0 && $date->format('Y-m-d') != $lastdate && $date->format("w")%6 != 0){
-            if( $date->format('H:i:s') > '09:00:00' ){
+            if( $date->format('H:i:s') > '09:00:00' && $date->format('H:i:s') < '15:40:00' ){
                 echo 'date:' . $date->format('Y-m-d') . ' time: ' . $date->format('H:i:s') . '</br>';
                 $late_arrivals++;
                 foreach($array_of_lates as $late){
