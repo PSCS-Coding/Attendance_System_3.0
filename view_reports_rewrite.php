@@ -53,7 +53,7 @@ function actual_lates($student_id) {
         $date = new DateTime($all_events[$k][2]);
         if ($k != $number_events-1) {
           $test_date = new DateTime($all_events[$k+1][2]);
-          if ($all_events[$k][3] == 7 && $date->format('y-m-d') != $test_date->format('y-m-d') ) {
+          if ($all_events[$k][3] == 7 && ($date->format('y-m-d') != $test_date->format('y-m-d') || $test_date->format('H:i:s') > '15:40:00' || $stati[$all_events[$k+1][3]][2] == 0) || $all_events[$k+1][3] == 5) {
             $lastdate = $date->format('Y-m-d');
               $absents++;
               continue;
