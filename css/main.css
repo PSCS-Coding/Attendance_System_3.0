@@ -96,8 +96,9 @@ body {
 
 /* WHEN A STUDENT IS LATE */
 
-.late-shading {
-    border: var(--studentBorder) var(--dangerRed);
+.late-shading .info {
+    /*border: var(--studentBorder) var(--dangerRed);*/
+    color: var(--dangerRed) !important;
 }
 
 .hover-animation {
@@ -137,7 +138,9 @@ body {
     float: left;
 }
 
-.navbar li a {
+.navbar li a,
+.navbar li small {
+    user-select: none;
     display: block;
     color: var(--defaultTextColor);
     text-align: center;

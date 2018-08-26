@@ -173,6 +173,9 @@ Vue.component('main-navbar', {
     template: `
         <nav class='main-navbar'>
             <ul class='navbar'>
+                <span v-show='$root.selected.length < 1'>
+                    <li><small>(Select a student)</small></li>
+                </span>
                 <span v-show='$root.selected.length > 0'>
                     <li><a href='#' class='hover-animation' @click='present()'>Present</a></li>
                     <li><a href='#' class='hover-animation' @click='modal("#offsite-modal")'>Offsite</a></li>
@@ -223,6 +226,7 @@ var vm = new Vue({
     },
     watch: {
         selected: function (val) {
+            //there must be a more computationally efficient way to do this.
             let self = this;
             let studentsInGroup;
             let selectedStudents;
@@ -233,7 +237,7 @@ var vm = new Vue({
                 //eg. if no students in a group are selected
                 if (_.isEqual(_.difference(studentsInGroup, selectedStudents).sort(), studentsInGroup.sort())) {
                     //deselect that group
-                    self.selectedGroups.splice(_.indexOf(self.selectedGroups, name), 1);;
+                    self.selectedGroups.splice(_.indexOf(self.selectedGroups, name), 1);
                 }
             });
         }
@@ -320,6 +324,7 @@ var vm = new Vue({
                 })
                 .catch(function (error) {
                     console.error('Request failed: [' + error + ']');
+                    $('#loading').fadeOut();
                     self.errorMessage('Fetching data failed. Try reloading the page.');
                 });
         },

@@ -32,7 +32,8 @@
             <page-title></page-title>
             <tabs>
                 <tab name="Actions" :selected="true">
-                    <status-change v-for='(status, index) in statusData' :key='index' :status-name='status.statusName' :has-return-time='status.hasReturnTime'
+                    <h3>Set status to:</h3>
+                    <status-change v-for='(status, index) in statusData' :key='index' :status-id='index' :status-name='status.statusName' :has-return-time='status.hasReturnTime'
                         :has-info='status.hasInfo'></status-change>
                 </tab>
 

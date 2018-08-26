@@ -10,13 +10,30 @@ Vue.component('status-change', {
     props: {
         statusName: String,
         hasInfo: Boolean,
-        hasReturnTime: Boolean
+        hasReturnTime: Boolean,
+        statusId: Number
     },
     template: `
     <div class='status-change'>
-        {{statusName}}
+        <input v-if='hasReturnTime' placeholder='Return Time' class='return-time timepicker'>
+        <input v-if='hasInfo' :placeholder='infoText' :class='infoClasses'>
+        <input type='submit' @click='statusChange' :value='statusName'>
         <!-- Form, method for changing status-->
-    </div>`
+    </div>`,
+    methods: {
+        statusChange: function () {
+            alert(this.statusId);
+            return 0;
+        }
+    },
+    computed: {
+        infoText: function () {
+            return this.statusId == 3 ? 'Location' : 'Facilitator';
+        },
+        infoClasses: function () {
+            return 'info ' + this.statusName.toLowerCase();
+        }
+    }
 });
 
 Vue.component('error-message', {
