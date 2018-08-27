@@ -10,6 +10,7 @@
     <link rel='stylesheet' type='text/css' href='css/main.css'>
 
     <script src="js/vue.js"></script>
+    <script src="js/vue-tippy.min.js"></script>
     <script src="js/axios.min.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src='js/lodash.min.js'></script>
@@ -33,12 +34,12 @@
             <main-navbar></main-navbar>
             <main>
                 <student-list></student-list>
-                <groups-select></groups-select>
             </main>
         </div>
         <offsite-modal></offsite-modal>
         <field-trip-modal></field-trip-modal>
         <late-modal></late-modal>
+        <groups-select id='tippy-title' v-tippy-html></groups-select>
     </div>
 </body>
 

@@ -90,7 +90,6 @@ Vue.component('group', {
 Vue.component('groups-select', {
     template: `
         <div class='groups-select'>
-        <p>groups</p>
             <group v-for='group of $root.groups' :key='group.name' :group-name='group.name' :students='group.students'></group>
         </div>`
 });
@@ -182,6 +181,7 @@ Vue.component('main-navbar', {
                     <li><a href='#' class='hover-animation' @click='modal("#late-modal")'>Late</a></li>
                     <li><a href='#' class='hover-animation' @click='modal("#field-trip-modal")'>Field trip</a></li>
                 </span>
+                <li class='pull-right'><a class='button hover-animation' v-tippy="{ html : '#tippy-title'  , interactive : true , reactive : true }">Groups<i data-feather='chevron-down'></i></a></li>
                 <li class='pull-right'><a class='button hover-animation' href='user.html'>User page</a></li>
             </ul>
         </nav>`,

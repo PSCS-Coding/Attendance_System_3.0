@@ -23,6 +23,7 @@ html {
     font-family: var(--defFont);
     line-height: 1.6;
     background-color: var(--bgColor);
+    user-select: none;
 }
 
 body {
@@ -264,4 +265,11 @@ nav li {
 .tabs li:not(:last-child) {
     padding-right: 5px;
     border-right: 2px solid #d2d5e4;
+}
+
+.feather-chevron-down {
+    height:1em;
+    width:1em;
+    top: .125em;
+    position: relative;
 }
