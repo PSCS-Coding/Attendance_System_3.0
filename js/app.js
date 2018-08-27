@@ -69,8 +69,12 @@ Vue.component('group', {
     },
     methods: {
         group: function () {
+            let self = this;
             if ($('.group #' + this.groupId).prop('checked')) {
                 let add = this.students;
+                add = add.filter(st => {
+                    return _.find(self.$root.students, ['studentId', st]).status == '1';
+                });
                 add = add.concat(this.$root.selected);
                 this.$root.selected = _.uniq(add);
             } else {
@@ -181,8 +185,10 @@ Vue.component('main-navbar', {
                     <li><a href='#' class='hover-animation' @click='modal("#late-modal")'>Late</a></li>
                     <li><a href='#' class='hover-animation' @click='modal("#field-trip-modal")'>Field trip</a></li>
                 </span>
-                <li class='pull-right'><a class='button hover-animation' v-tippy="{ html : '#tippy-title'  , interactive : true , reactive : true }">Groups<i data-feather='chevron-down'></i></a></li>
-                <li class='pull-right'><a class='button hover-animation' href='user.html'>User page</a></li>
+                <span class='pull-right'>
+                    <li><a class='button hover-animation' v-tippy="{ html : '#tippy-title'  , interactive : true , reactive : true }">Groups<i data-feather='chevron-down'></i></a></li>
+                    <li><a class='button hover-animation' href='user.html'>User page</a></li>
+                </span>
             </ul>
         </nav>`,
     methods: {
@@ -258,7 +264,7 @@ var vm = new Vue({
                             firstName: student.first_name,
                             lastName: student.last_name,
                             studentId: parseInt(student.student_id),
-                            status: student.status_id,
+                            status: String(student.status_id),
                             returnTime: student.return_time == '00:00:00' ? null : moment(student.return_time, 'HH:mm:ss'),
                             info: student.info
                         }));
